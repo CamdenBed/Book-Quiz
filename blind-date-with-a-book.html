@@ -252,15 +252,25 @@
     text-align: center; font-size: 15px; color: var(--ink-mid);
     background: var(--paper-warm); border: 1px solid var(--ink-faint);
     border-radius: 6px; padding: 0.75rem 1.25rem; margin-bottom: 2rem;
-    animation: fadeIn 0.6s ease 0.3s both;
+    animation: fadeIn 0.6s ease 0.35s both;
   }
+
+  .reader-portrait {
+    text-align: center; font-size: 17px; color: var(--ink-mid);
+    font-style: italic; font-family: var(--body);
+    margin: -1.5rem 0 2.5rem; line-height: 1.7;
+    animation: fadeIn 0.6s ease 0.25s both;
+    padding: 0 1rem;
+  }
+  .reader-portrait::before { content: '\2014\2003'; }
+  .reader-portrait::after  { content: '\2003\2014'; }
+
   .reveal-books-list { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
 
   .ranked-card {
     display: grid; grid-template-columns: 64px 1fr;
     border: 1px solid var(--ink-faint); background: var(--paper-warm);
-    position: relative;
-    animation: revealCard 0.7s cubic-bezier(0.4,0,0.2,1) both;
+    position: relative; will-change: transform, opacity;
     transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer;
   }
   .ranked-card:hover:not(.is-read) { border-color: var(--ink-mid); }
@@ -271,11 +281,31 @@
   .ranked-card.selected .rank-col { background: var(--ink); }
   .ranked-card.selected .rank-num { color: var(--paper) !important; }
   .ranked-card.selected .rank-label { color: var(--ink-faint) !important; }
-  .ranked-card:nth-child(1) { animation-delay: 0.3s; }
-  .ranked-card:nth-child(2) { animation-delay: 0.5s; }
-  .ranked-card:nth-child(3) { animation-delay: 0.7s; }
   .ranked-card.is-read { opacity: 0.45; }
-  @keyframes revealCard { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── Book throw animations (each card lands from a different angle) ── */
+  .ranked-card:nth-child(1) { animation: cardThrow1 0.72s cubic-bezier(0.34,1.35,0.64,1) 0.15s both; }
+  .ranked-card:nth-child(2) { animation: cardThrow2 0.72s cubic-bezier(0.34,1.35,0.64,1) 0.40s both; }
+  .ranked-card:nth-child(3) { animation: cardThrow3 0.72s cubic-bezier(0.34,1.35,0.64,1) 0.65s both; }
+
+  @keyframes cardThrow1 {
+    0%   { opacity: 0; transform: translate(-70px, -50px) rotate(-22deg) scale(0.78); }
+    58%  { opacity: 1; transform: translate(8px, 6px) rotate(2.5deg) scale(1.03); }
+    78%  { transform: translate(-3px, -2px) rotate(-0.6deg) scale(1.005); }
+    100% { opacity: 1; transform: none; }
+  }
+  @keyframes cardThrow2 {
+    0%   { opacity: 0; transform: translate(70px, -55px) rotate(18deg) scale(0.78); }
+    58%  { opacity: 1; transform: translate(-8px, 6px) rotate(-2deg) scale(1.03); }
+    78%  { transform: translate(3px, -2px) rotate(0.5deg) scale(1.005); }
+    100% { opacity: 1; transform: none; }
+  }
+  @keyframes cardThrow3 {
+    0%   { opacity: 0; transform: translate(-50px, -65px) rotate(-14deg) scale(0.8); }
+    58%  { opacity: 1; transform: translate(6px, 6px) rotate(1.8deg) scale(1.02); }
+    78%  { transform: translate(-2px, -2px) rotate(-0.4deg) scale(1.005); }
+    100% { opacity: 1; transform: none; }
+  }
 
   .rank-col {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -733,11 +763,16 @@
     /* Reveal */
     .reveal-container { padding: 1.75rem 1.25rem; }
     .reveal-headline { font-size: clamp(24px, 6vw, 34px); }
-    .reveal-sub { font-size: 16px; margin-bottom: 2rem; }
+    .reveal-sub { font-size: 16px; margin-bottom: 1.25rem; }
+    .reader-portrait { font-size: 15px; margin: 0 0 1.75rem; padding: 0; }
     .ranked-card { grid-template-columns: 44px 1fr; }
     .rank-col { padding: 1.25rem 0; }
     .rank-num { font-size: 20px; }
     .rank-label { display: none; }
+    /* Tighter throw on small screens so cards don't clip the edges */
+    @keyframes cardThrow1 { 0%{opacity:0;transform:translate(-32px,-30px) rotate(-18deg) scale(0.8)} 58%{opacity:1;transform:translate(5px,5px) rotate(2deg) scale(1.02)} 78%{transform:translate(-2px,-2px) rotate(-0.5deg)} 100%{opacity:1;transform:none} }
+    @keyframes cardThrow2 { 0%{opacity:0;transform:translate(32px,-35px) rotate(15deg) scale(0.8)} 58%{opacity:1;transform:translate(-5px,5px) rotate(-2deg) scale(1.02)} 78%{transform:translate(2px,-2px) rotate(0.4deg)} 100%{opacity:1;transform:none} }
+    @keyframes cardThrow3 { 0%{opacity:0;transform:translate(-24px,-40px) rotate(-11deg) scale(0.82)} 58%{opacity:1;transform:translate(4px,5px) rotate(1.5deg) scale(1.02)} 78%{transform:translate(-2px,-1px) rotate(-0.3deg)} 100%{opacity:1;transform:none} }
     .card-body { padding: 1rem 1rem; }
     .card-top { flex-direction: column; gap: 0.5rem; }
     .book-title { font-size: clamp(18px, 4.5vw, 24px); }
@@ -892,6 +927,7 @@
     <div class="reveal-eyebrow">❧ &nbsp; Epilogue &nbsp; ❧</div>
     <h2 class="reveal-headline" id="reveal-headline">Three books made for you</h2>
     <p class="reveal-sub" id="reveal-sub">Ranked by how well they match your answers.</p>
+    <p class="reader-portrait" id="reader-portrait"></p>
     <div class="reveal-hint">📖 Click on a book card to see it in depth — first line, full description, and a direct link to buy it.</div>
 
     <div class="all-read-banner" id="all-read-banner">
@@ -1059,7 +1095,58 @@ const AMAZON_ASINS = {
   "Malibu Rising":                           "1524798649",
   "The Song of Achilles":                    "0062060627",
   "White Noise":                             "0143105434",
-  "The Invisible Life of Addie LaRue":       "0765387565"
+  "The Invisible Life of Addie LaRue":       "0765387565",
+
+  /* ── 49 new books ── */
+  "The Handmaid's Tale":                     "038549081X",
+  "Wolf Hall":                               "0312429983",
+  "The Bell Jar":                            "0061543349",
+  "Stoner":                                  "1590171993",
+  "The Hours":                               "0312243022",
+  "Mrs Dalloway":                            "0156628708",
+  "To Kill a Mockingbird":                   "0446310786",
+  "The Corrections":                         "0312421273",
+  "The Sympathizer":                         "0802124941",
+  "The Bluest Eye":                          "0307278441",
+  "All Quiet on the Western Front":          "0449213943",
+  "The Pillars of the Earth":                "0451166892",
+  "Jonathan Strange & Mr Norrell":           "0765356155",
+  "The Name of the Rose":                    "0544176022",
+  "The Nightingale":                         "0312577222",
+  "Persuasion":                              "0141439688",
+  "Jane Eyre":                               "0141441143",
+  "The Girl with the Dragon Tattoo":         "0307949486",
+  "Big Little Lies":                         "0425274866",
+  "The Silent Patient":                      "1250301696",
+  "The Thursday Murder Club":                "1984880985",
+  "In Cold Blood":                           "0679745580",
+  "The Left Hand of Darkness":               "0441478123",
+  "Kindred":                                 "0807083690",
+  "The Long Way to a Small Angry Planet":    "0062444131",
+  "Good Omens":                              "0060853980",
+  "The Ocean at the End of the Lane":        "0062459368",
+  "A Memory Called Empire":                  "1250186439",
+  "1984":                                    "0451524934",
+  "Brave New World":                         "0060850523",
+  "Beach Read":                              "1984806734",
+  "People We Meet on Vacation":              "1984806750",
+  "Daisy Jones and the Six":                 "1524798678",
+  "Remarkably Bright Creatures":             "0063204150",
+  "Yellowface":                              "0063026465",
+  "The Alchemist":                           "0062315005",
+  "Catch-22":                                "1451626657",
+  "Crime and Punishment":                    "0486415872",
+  "The Great Gatsby":                        "0743273567",
+  "Wuthering Heights":                       "0141439556",
+  "The Year of Magical Thinking":            "1400078431",
+  "When Breath Becomes Air":                 "0812988418",
+  "Say Nothing":                             "0385543999",
+  "Tom Lake":                                "0063327724",
+  "The Last Thing He Told Me":               "1501171348",
+  "Fingersmith":                             "1573229733",
+  "Outline":                                 "0374534209",
+  "The Vanishing Half":                      "0525536299",
+  "Things Fall Apart":                       "0385474547"
 };
 
 function amazonURL(title) {
@@ -1324,6 +1411,175 @@ const BOOK_EXTRAS = {
   },
   "The Invisible Life of Addie LaRue": {
     bestRead: "Best read slowly, in the dark, when you have time to think about what you'd give up."
+  },
+
+  /* ── 49 new books ── */
+  "The Handmaid's Tale": {
+    firstLine: "We slept in what had once been the gymnasium.",
+    bestRead: "Best read when you want a book that makes you look twice at the world around you."
+  },
+  "Wolf Hall": {
+    firstLine: "So now get up.",
+    bestRead: "Best read on a long weekend when you can sink fully into another century."
+  },
+  "The Bell Jar": {
+    firstLine: "It was a queer, sultry summer, the summer they electrocuted the Rosenbergs.",
+    bestRead: "Best read when you want something that tells the truth, quietly and precisely."
+  },
+  "Stoner": {
+    bestRead: "Best read when you need a book that asks what a life is actually worth."
+  },
+  "The Hours": {
+    bestRead: "Best read on a single afternoon, all in one quiet sitting."
+  },
+  "Mrs Dalloway": {
+    firstLine: "Mrs Dalloway said she would buy the flowers herself.",
+    bestRead: "Best read on a June morning when the city feels alive and you want to walk through it."
+  },
+  "To Kill a Mockingbird": {
+    firstLine: "When he was nearly thirteen, my brother Jem got his arm badly broken at the elbow.",
+    bestRead: "Best read when you want a book that stays with you the rest of your life."
+  },
+  "The Corrections": {
+    bestRead: "Best read when you are ready for something relentlessly honest about family."
+  },
+  "The Sympathizer": {
+    bestRead: "Best read when you want a novel that challenges everything it touches."
+  },
+  "The Bluest Eye": {
+    firstLine: "Quiet as it's kept, there were no marigolds in the fall of 1941.",
+    bestRead: "Best read slowly, giving each sentence the weight it deserves."
+  },
+  "All Quiet on the Western Front": {
+    firstLine: "We are at rest five miles behind the front.",
+    bestRead: "Best read when you want the truth of war, not the myth of it."
+  },
+  "The Pillars of the Earth": {
+    bestRead: "Best read on a long holiday when you have nowhere to be for a week."
+  },
+  "Jonathan Strange & Mr Norrell": {
+    bestRead: "Best read over several weeks, like a long correspondence with a brilliant friend."
+  },
+  "The Name of the Rose": {
+    firstLine: "In the beginning was the Word and the Word was with God.",
+    bestRead: "Best read when you are in the mood to solve something alongside the narrator."
+  },
+  "The Nightingale": {
+    bestRead: "Best read when you want to be undone by courage and the cost of it."
+  },
+  "Persuasion": {
+    firstLine: "Sir Walter Elliot, of Kellynch Hall, in Somersetshire, was a man who, for his own amusement, never took up any book but the Baronetage.",
+    bestRead: "Best read on an autumn afternoon when second chances feel possible."
+  },
+  "Jane Eyre": {
+    firstLine: "There was no possibility of taking a walk that day.",
+    bestRead: "Best read on a stormy weekend with something warm and no obligations."
+  },
+  "The Girl with the Dragon Tattoo": {
+    bestRead: "Best read when you want a thriller that is also genuinely strange and gripping."
+  },
+  "Big Little Lies": {
+    bestRead: "Best read in a single compulsive sitting — probably a Sunday."
+  },
+  "The Silent Patient": {
+    bestRead: "Best read when you are in the mood to be completely deceived."
+  },
+  "The Thursday Murder Club": {
+    bestRead: "Best read when you want to feel clever and charmed at the same time."
+  },
+  "In Cold Blood": {
+    firstLine: "The village of Holcomb stands on the high wheat plains of western Kansas.",
+    bestRead: "Best read late at night when the house is quiet and you keep looking up."
+  },
+  "The Left Hand of Darkness": {
+    bestRead: "Best read when you want science fiction that asks the deepest human questions."
+  },
+  "Kindred": {
+    firstLine: "I lost an arm on my last trip home.",
+    bestRead: "Best read when you want a book that refuses to let you look away from history."
+  },
+  "The Long Way to a Small Angry Planet": {
+    bestRead: "Best read when you want to feel like the universe is a friendly, complicated place."
+  },
+  "Good Omens": {
+    bestRead: "Best read when the world feels dark and you need to laugh at it."
+  },
+  "The Ocean at the End of the Lane": {
+    firstLine: "It was only a duckpond, out at the back of the farm.",
+    bestRead: "Best read in one sitting, ideally when you were once a child who felt too much."
+  },
+  "A Memory Called Empire": {
+    bestRead: "Best read when you want space opera that is also genuinely literary."
+  },
+  "1984": {
+    firstLine: "It was a bright cold day in April, and the clocks were striking thirteen.",
+    bestRead: "Best read when you want a book that makes the present feel urgent."
+  },
+  "Brave New World": {
+    bestRead: "Best read alongside 1984 for a full week of productive unease."
+  },
+  "Beach Read": {
+    bestRead: "Best read somewhere warm, with a drink in hand and nothing urgent to do."
+  },
+  "People We Meet on Vacation": {
+    bestRead: "Best read on a plane or train — any kind of journey will do."
+  },
+  "Daisy Jones and the Six": {
+    bestRead: "Best read with music on, ideally something with a guitar."
+  },
+  "Remarkably Bright Creatures": {
+    bestRead: "Best read when you want a book that surprises you with how much you feel."
+  },
+  "Yellowface": {
+    bestRead: "Best read when you want a novel that is funny, sharp, and deeply uncomfortable."
+  },
+  "The Alchemist": {
+    firstLine: "The boy's name was Santiago.",
+    bestRead: "Best read when you are at a crossroads and need a story to travel with you."
+  },
+  "Catch-22": {
+    firstLine: "It was love at first sight.",
+    bestRead: "Best read when you want something that makes you laugh until it makes you ache."
+  },
+  "Crime and Punishment": {
+    firstLine: "On an exceptionally hot evening early in July a young man came out of the garret.",
+    bestRead: "Best read slowly, following a mind unravelling with uncomfortable attention."
+  },
+  "The Great Gatsby": {
+    firstLine: "In my younger and more vulnerable years my father gave me some advice.",
+    bestRead: "Best read on a summer evening when everything feels a little too beautiful."
+  },
+  "Wuthering Heights": {
+    firstLine: "1801. — I have just returned from a visit to my landlord.",
+    bestRead: "Best read on a cold, wild night when the weather matches the story."
+  },
+  "The Year of Magical Thinking": {
+    bestRead: "Best read when you want to understand grief from the inside."
+  },
+  "When Breath Becomes Air": {
+    bestRead: "Best read when you are ready for a book that changes what you think matters."
+  },
+  "Say Nothing": {
+    bestRead: "Best read when you want narrative nonfiction that reads like a thriller."
+  },
+  "Tom Lake": {
+    bestRead: "Best read in summer, in a garden, without your phone."
+  },
+  "The Last Thing He Told Me": {
+    bestRead: "Best read when you want something propulsive and unexpectedly tender."
+  },
+  "Fingersmith": {
+    bestRead: "Best read when you want to be completely fooled — twice."
+  },
+  "Outline": {
+    bestRead: "Best read when you want a novel that leaves space for you to think inside it."
+  },
+  "The Vanishing Half": {
+    bestRead: "Best read when you want a novel about identity that spans generations and never lets go."
+  },
+  "Things Fall Apart": {
+    firstLine: "Okonkwo was well known throughout the nine villages and even beyond.",
+    bestRead: "Best read when you want a story that is both intimate and world-historical."
   }
 };
 
@@ -2563,9 +2819,402 @@ const books = [
     why: "A young woman makes a deal with a dark god — and is cursed to be forgotten by everyone she meets, forever. Then, three hundred years later, someone remembers her. A novel about legacy, loneliness, and what we leave behind.",
     search: "The Invisible Life of Addie LaRue V.E. Schwab",
     match: { feeling:['moved','hopeful'], pace:['medium'], world:['invented'], theme:['identity','love','memory'], avoid:['none','violence'], character:['complex','hero'], length:['long'], mood:['escape','understand'], time:['night'], secret:['cry','line'] }
+  },
+
+  /* ══ 50 NEW BOOKS ══════════════════════════════════════════════════ */
+  {
+    title: "The Handmaid's Tale",
+    author: "Margaret Atwood",
+    tags: ["Dystopia","Feminist","Dark","Urgent"],
+    why: "The Republic of Gilead has taken everything: freedom, identity, a name. Offred's account is whispered testimony from inside a regime that could have arrived anywhere. One of the most important novels of the last century — and one of the most unputdownable.",
+    search: "The Handmaid's Tale Margaret Atwood",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['invented'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','observer'], length:['medium'], mood:['challenge','understand'], time:['night','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "Wolf Hall",
+    author: "Hilary Mantel",
+    tags: ["Historical","Tudor","Political","Prize-winning"],
+    why: "Thomas Cromwell rises through Henry VIII's court on nerve, intelligence, and the ability to survive. Mantel's revolutionary use of the present tense puts you inside Tudor England so completely you emerge blinking. The most immersive historical novel in decades.",
+    search: "Wolf Hall Hilary Mantel",
+    match: { feeling:['exhilarated','moved'], pace:['slow'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['complex','observer'], length:['long'], mood:['understand','challenge'], time:['night','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Bell Jar",
+    author: "Sylvia Plath",
+    tags: ["Classic","Mental health","Coming of age","Autobiographical"],
+    why: "Esther Greenwood arrives in New York, brilliant and ambitious, and slowly the world stops making sense. Plath's only novel is a document of a particular kind of unravelling — precise, wry, and written so closely from the inside it can feel like someone reading your own thoughts back to you.",
+    search: "The Bell Jar Sylvia Plath",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['historical'], theme:['identity'], avoid:['none','sad'], character:['observer','hero'], length:['short'], mood:['understand','challenge'], time:['night','morning'], secret:['line','empathy'] }
+  },
+  {
+    title: "Stoner",
+    author: "John Williams",
+    tags: ["Literary","Quiet","Devastating","Academia"],
+    why: "A man goes to university to study agriculture, discovers literature, and becomes a professor. That is almost everything that happens. Somehow the most affecting novel of an ordinary life ever written — a study in what it means to do one thing with integrity for your entire existence.",
+    search: "Stoner John Williams",
+    match: { feeling:['moved'], pace:['slow'], world:['historical'], theme:['identity','love'], avoid:['none','sad'], character:['observer','hero'], length:['short'], mood:['understand','company'], time:['morning','stolen'], secret:['line','cry'] }
+  },
+  {
+    title: "The Hours",
+    author: "Michael Cunningham",
+    tags: ["Literary","Woolf","Three women","Layered"],
+    why: "Three women, three eras, one day each — Virginia Woolf writing Mrs Dalloway, a 1940s housewife reading it, a contemporary New Yorker living it. An act of profound literary homage that stands entirely on its own. Every sentence is chosen.",
+    search: "The Hours Michael Cunningham",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical','domestic'], theme:['identity','memory'], avoid:['none','sad'], character:['observer'], length:['short'], mood:['understand','challenge'], time:['morning','night'], secret:['line','cry'] }
+  },
+  {
+    title: "Mrs Dalloway",
+    author: "Virginia Woolf",
+    tags: ["Classic","Stream of consciousness","London","One day"],
+    why: "Clarissa Dalloway prepares for a party. Septimus Smith walks through London. One June day, 1923 — and inside it, everything that has ever happened to both of them. Woolf invented a way of writing time and consciousness that no one has bettered since.",
+    search: "Mrs Dalloway Virginia Woolf",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['memory','identity'], avoid:['none','sad'], character:['observer','complex'], length:['short'], mood:['challenge','understand'], time:['morning','stolen'], secret:['line','empathy'] }
+  },
+  {
+    title: "To Kill a Mockingbird",
+    author: "Harper Lee",
+    tags: ["Classic","Justice","American South","Coming of age"],
+    why: "Scout Finch watches her father defend a Black man wrongly accused in Alabama, 1930s. Narrated from childhood with the clarity that children sometimes have about adult failures. The American conscience, compressed into one summer. A book you should have and haven't read, or have read and should read again.",
+    search: "To Kill a Mockingbird Harper Lee",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['observer','hero'], length:['medium'], mood:['understand','company'], time:['morning','transit'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Corrections",
+    author: "Jonathan Franzen",
+    tags: ["Literary","Family","America","Dark comedy"],
+    why: "Three adult children are summoned home for Christmas by an aging father who is losing his grip on himself. A vast and merciless portrait of a family — and of the specific ways American optimism fails the people inside it. Funny, painful, and exhaustively observed.",
+    search: "The Corrections Jonathan Franzen",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['domestic'], theme:['identity','love'], avoid:['none','sad'], character:['complex','observer'], length:['long'], mood:['understand','challenge'], time:['night','stolen'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Sympathizer",
+    author: "Viet Thanh Nguyen",
+    tags: ["Vietnam War","Identity","Double agent","Prize-winning"],
+    why: "A communist spy embedded with the South Vietnamese army flees to America — and keeps watching, and reporting, and questioning everything, including himself. A novel of radical double consciousness: funny, furious, and unlike anything else on this shelf.",
+    search: "The Sympathizer Viet Thanh Nguyen",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence'], character:['unreliable','complex'], length:['medium'], mood:['understand','challenge'], time:['night','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Bluest Eye",
+    author: "Toni Morrison",
+    tags: ["Classic","Race","Childhood","Devastating"],
+    why: "Pecola Breedlove wants blue eyes. Morrison's first novel is the story of what that wanting means — and what it costs a Black girl to grow up in an America that does not see her. Short, devastating, and written with a clarity that makes it impossible to look away.",
+    search: "The Bluest Eye Toni Morrison",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical','domestic'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['observer','complex'], length:['short'], mood:['understand','challenge'], time:['night','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "All Quiet on the Western Front",
+    author: "Erich Maria Remarque",
+    tags: ["WWI","Anti-war","Classic","Devastating"],
+    why: "Paul Bäumer enlists, full of patriotic fervour, and learns what a trench actually smells like. The definitive anti-war novel — not because it argues against war but because it simply, methodically shows you what war is. Published in 1929 and still the most important document on the subject.",
+    search: "All Quiet on the Western Front Erich Maria Remarque",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['historical'], theme:['survival','identity'], avoid:['none','violence','sad'], character:['observer','hero'], length:['short'], mood:['understand','challenge'], time:['night','transit'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Pillars of the Earth",
+    author: "Ken Follett",
+    tags: ["Historical","Epic","Cathedral","Medieval"],
+    why: "The building of a cathedral in twelfth-century England across generations of workers, bishops, and enemies. A thousand pages of medieval politics, ambition, love, and structural engineering — and somehow compulsively readable. Follett understood that a building could be the best protagonist a novel ever had.",
+    search: "The Pillars of the Earth Ken Follett",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['historical'], theme:['survival','identity'], avoid:['none','violence','romance'], character:['hero','complex'], length:['long'], mood:['escape','understand'], time:['night','transit'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Jonathan Strange & Mr Norrell",
+    author: "Susanna Clarke",
+    tags: ["Fantasy","Alternate history","Magic","Regency"],
+    why: "Two magicians in Napoleonic England attempt to restore magic to Britain — and fall into profound disagreement about how. A novel structured like Austen, written like Dickens, and set in a world where English faeries are quietly and terrifyingly real. Footnotes included. Worth every one.",
+    search: "Jonathan Strange Mr Norrell Susanna Clarke",
+    match: { feeling:['unsettled','exhilarated'], pace:['slow'], world:['invented'], theme:['identity','survival'], avoid:['none','romance'], character:['complex','observer'], length:['long'], mood:['challenge','escape'], time:['night','morning'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Name of the Rose",
+    author: "Umberto Eco",
+    tags: ["Medieval","Mystery","Labyrinthine","Philosophical"],
+    why: "A monk and his novice investigate murders at a remote Italian abbey — and the investigation leads to a library, a labyrinth, and secrets about forbidden knowledge. Part thriller, part philosophical treatise, entirely gripping. A book that trusts you to keep up.",
+    search: "The Name of the Rose Umberto Eco",
+    match: { feeling:['exhilarated','unsettled'], pace:['slow'], world:['historical'], theme:['survival','memory'], avoid:['none','violence','romance'], character:['observer','complex'], length:['long'], mood:['challenge','understand'], time:['night','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Nightingale",
+    author: "Kristin Hannah",
+    tags: ["WWII","Sisters","France","Heroism"],
+    why: "Two sisters in occupied France, two different kinds of resistance. One hides airmen in her house; one joins the underground. Hannah's novel about the women who fought in the shadows of the Second World War is propulsive, emotional, and impossible to put down.",
+    search: "The Nightingale Kristin Hannah",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['historical'], theme:['survival','love'], avoid:['none','violence','sad'], character:['hero','complex'], length:['long'], mood:['escape','understand'], time:['transit','stolen'], secret:['cry','empathy'] }
+  },
+  {
+    title: "Persuasion",
+    author: "Jane Austen",
+    tags: ["Classic","Romance","Second chances","Regency"],
+    why: "Eight years ago, Anne Elliot was persuaded to refuse Captain Wentworth. Now he is back. Austen's most mature and most romantic novel — quieter than the others, sadder, and more aware of time passing. The letter in Chapter 23 is the greatest declaration of love in English fiction.",
+    search: "Persuasion Jane Austen",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['historical'], theme:['love','identity'], avoid:['none','violence','sad'], character:['observer','hero'], length:['short'], mood:['company','understand'], time:['morning','stolen'], secret:['cry','line'] }
+  },
+  {
+    title: "Jane Eyre",
+    author: "Charlotte Brontë",
+    tags: ["Classic","Gothic","Romance","Victorian"],
+    why: "An orphan with no fortune, no beauty, and no connections refuses to be less than she is. Brontë's novel invented the independent heroine — and Mr Rochester, and Thornfield Hall, and one of the great mysteries in Victorian fiction. Still startlingly modern.",
+    search: "Jane Eyre Charlotte Brontë",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['historical'], theme:['identity','love'], avoid:['none','romance'], character:['hero','unreliable'], length:['long'], mood:['escape','company'], time:['night','morning'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The Girl with the Dragon Tattoo",
+    author: "Stieg Larsson",
+    tags: ["Nordic noir","Thriller","Mystery","Propulsive"],
+    why: "A disgraced journalist and a hacker with a photographic memory and a complicated past investigate a forty-year-old disappearance. Sweden has never looked more sinister or more compelling. The first instalment of a trilogy that redefined Nordic noir.",
+    search: "The Girl with the Dragon Tattoo Stieg Larsson",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['survival','identity'], avoid:['none','violence'], character:['complex','observer'], length:['long'], mood:['escape','understand'], time:['night','transit'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Big Little Lies",
+    author: "Liane Moriarty",
+    tags: ["Domestic noir","Friendship","Secrets","Gripping"],
+    why: "A trivia night at an Australian primary school ends in murder. We know this from page one — what we don't know is who died, and why, and which of these brilliant women finally snapped. Moriarty writes female friendships and domestic violence with equal precision.",
+    search: "Big Little Lies Liane Moriarty",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['domestic'], theme:['survival','love'], avoid:['none','violence','sad'], character:['unreliable','hero'], length:['medium'], mood:['escape','company'], time:['transit','stolen'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Silent Patient",
+    author: "Alex Michaelides",
+    tags: ["Psychological thriller","Twist","Propulsive","Dark"],
+    why: "Alicia Berenson shoots her husband five times and then never speaks again. A psychotherapist becomes obsessed with uncovering why. The twist is genuinely earned and the pace is relentless — a thriller that knows exactly what it's doing and does it with full commitment.",
+    search: "The Silent Patient Alex Michaelides",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['domestic'], theme:['identity','love'], avoid:['none','violence'], character:['unreliable','complex'], length:['medium'], mood:['escape'], time:['transit','night'], secret:['surprise'] }
+  },
+  {
+    title: "The Thursday Murder Club",
+    author: "Richard Osman",
+    tags: ["Cosy mystery","Funny","Retirement village","British"],
+    why: "Four octogenarians in a luxurious retirement village meet weekly to discuss cold cases — until a real murder lands on their doorstep. Warm, clever, and genuinely funny, with a mystery plot that holds up. Osman has no right to be this good at this and yet.",
+    search: "The Thursday Murder Club Richard Osman",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['domestic'], theme:['memory','identity'], avoid:['none','violence','sad'], character:['observer','complex'], length:['medium'], mood:['escape','company'], time:['transit','stolen'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "In Cold Blood",
+    author: "Truman Capote",
+    tags: ["True crime","Literary","Nonfiction novel","Kansas"],
+    why: "The Clutter family was murdered in their Kansas farmhouse in 1959. Capote spent six years reconstructing what happened and why — and invented a new form doing so. Neither journalism nor fiction but something more troubling than either, written in prose that never wastes a syllable.",
+    search: "In Cold Blood Truman Capote",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['historical','domestic'], theme:['survival','identity'], avoid:['none','violence','sad'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['night','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Left Hand of Darkness",
+    author: "Ursula K. Le Guin",
+    tags: ["Science fiction","Gender","Anthropology","Classic"],
+    why: "An envoy from a galactic federation arrives on a world where the inhabitants have no fixed gender. Le Guin uses science fiction as it should be used — to think, genuinely, about what we take for granted. One of the most important speculative novels ever written, and also a gripping political thriller.",
+    search: "The Left Hand of Darkness Ursula Le Guin",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['invented'], theme:['identity','survival'], avoid:['none','violence'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['night','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Kindred",
+    author: "Octavia Butler",
+    tags: ["Science fiction","Slavery","Time travel","Essential"],
+    why: "Dana, a Black woman in 1970s California, is pulled back in time to an antebellum plantation — and discovers she must keep the white slaveholder alive in order to exist herself. Butler's masterpiece is the most visceral and necessary exploration of American slavery in fiction.",
+    search: "Kindred Octavia Butler",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['historical'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['hero','observer'], length:['medium'], mood:['understand','challenge'], time:['night','transit'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "The Long Way to a Small, Angry Planet",
+    author: "Becky Chambers",
+    tags: ["Space opera","Found family","Hopeful","Cosy sci-fi"],
+    why: "A crew of misfits tunnels through space-time, arguing, cooking, falling in love, and making each other feel at home in an impossible universe. Chambers writes found family as the most serious subject there is — a science fiction novel about what it means to belong somewhere.",
+    search: "The Long Way to a Small Angry Planet Becky Chambers",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['invented'], theme:['identity','love'], avoid:['none','violence','sad'], character:['observer','hero'], length:['medium'], mood:['escape','company'], time:['transit','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Good Omens",
+    author: "Terry Pratchett & Neil Gaiman",
+    tags: ["Comedy","Fantasy","Apocalypse","British"],
+    why: "An angel and a demon who have been friends since the Beginning are trying to prevent the apocalypse — mostly because they've become rather fond of Earth and its humans. Pratchett and Gaiman at their best is either of them at their best, and somehow the combination is better than either.",
+    search: "Good Omens Terry Pratchett Neil Gaiman",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['invented','domestic'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['complex','hero'], length:['medium'], mood:['escape','company'], time:['transit','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Ocean at the End of the Lane",
+    author: "Neil Gaiman",
+    tags: ["Fantasy","Childhood","Dark","Mythic"],
+    why: "A middle-aged man returns to his childhood home and remembers the summer when he was seven, a family at the end of a lane, and something ancient that nearly took him. Gaiman's most personal novel — brief, dark, and quietly devastating about what children experience and adults forget.",
+    search: "The Ocean at the End of the Lane Neil Gaiman",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['invented'], theme:['memory','identity'], avoid:['none','violence'], character:['observer','unreliable'], length:['short'], mood:['escape','challenge'], time:['night','morning'], secret:['line','surprise'] }
+  },
+  {
+    title: "A Memory Called Empire",
+    author: "Arkady Martine",
+    tags: ["Science fiction","Politics","Identity","Poetry"],
+    why: "Ambassador Mahit Dzmare arrives at the centre of a vast interstellar empire, carrying a dead man's memories, to discover why he was murdered. A novel about colonialism, identity, and what it means to love the culture that is consuming yours — told through a mystery that accelerates beautifully.",
+    search: "A Memory Called Empire Arkady Martine",
+    match: { feeling:['exhilarated','unsettled'], pace:['medium'], world:['invented'], theme:['identity','survival'], avoid:['none','violence'], character:['hero','complex'], length:['medium'], mood:['challenge','escape'], time:['night','transit'], secret:['empathy','line'] }
+  },
+  {
+    title: "1984",
+    author: "George Orwell",
+    tags: ["Dystopia","Classic","Political","Surveillance"],
+    why: "Winston Smith works at the Ministry of Truth, rewriting history. He begins a forbidden love affair and a forbidden journal. Orwell's terrifying portrait of a totalitarian state is not a prediction so much as an anatomy — and the language it gave us ('doublethink', 'thoughtcrime') is now simply how we speak.",
+    search: "1984 George Orwell",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['invented'], theme:['survival','identity'], avoid:['none','violence','sad'], character:['hero','observer'], length:['medium'], mood:['challenge','understand'], time:['night','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Brave New World",
+    author: "Aldous Huxley",
+    tags: ["Dystopia","Classic","Satire","Philosophical"],
+    why: "In a future where humans are engineered, conditioned, and permanently medicated into contentment, one man insists on the right to be miserable. Huxley's vision is less obviously brutal than Orwell's — and somehow more disturbing, because the horror is that everyone is fine with it.",
+    search: "Brave New World Aldous Huxley",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['invented'], theme:['identity','survival'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['challenge','understand'], time:['morning','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "Beach Read",
+    author: "Emily Henry",
+    tags: ["Romance","Contemporary","Writers","Funny"],
+    why: "A romance novelist who no longer believes in love moves next door to a literary fiction writer who has never written a happy ending. They make a bet: swap genres for the summer. Henry's breakthrough novel is both a real love story and a genuinely clever meditation on why we read what we read.",
+    search: "Beach Read Emily Henry",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['domestic'], theme:['love','identity'], avoid:['none','violence','sad'], character:['hero','unreliable'], length:['medium'], mood:['escape','company'], time:['transit','stolen'], secret:['cry','empathy'] }
+  },
+  {
+    title: "People We Meet on Vacation",
+    author: "Emily Henry",
+    tags: ["Romance","Friendship","Nostalgia","Contemporary"],
+    why: "Alex and Poppy have been best friends for a decade, taking one vacation together every summer — until two years ago when something happened and they stopped speaking. Told in alternating timelines, this is the best-executed will-they-won't-they of recent years, funny and warm and surprisingly aching.",
+    search: "People We Meet on Vacation Emily Henry",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['domestic'], theme:['love','memory'], avoid:['none','violence','sad'], character:['hero','observer'], length:['medium'], mood:['escape','company'], time:['transit','stolen'], secret:['cry','surprise'] }
+  },
+  {
+    title: "Daisy Jones and the Six",
+    author: "Taylor Jenkins Reid",
+    tags: ["Rock music","1970s","Oral history","Nostalgia"],
+    why: "An oral history of a rock band's rise and spectacular implosion, told through interviews conducted years later. Reid invented a band so convincing you'll google them. A novel about creative obsession, the particular madness of collaborative art, and the specific grief of something that should have been but wasn't.",
+    search: "Daisy Jones and the Six Taylor Jenkins Reid",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['historical'], theme:['love','identity'], avoid:['none','violence'], character:['unreliable','complex'], length:['medium'], mood:['escape','company'], time:['transit','night'], secret:['cry','empathy'] }
+  },
+  {
+    title: "Remarkably Bright Creatures",
+    author: "Shelby Van Pelt",
+    tags: ["Octopus","Grief","Mystery","Hopeful"],
+    why: "Tova Sullivan cleans an aquarium at night, grieving her son. Marcellus the giant Pacific octopus observes her with eight arms, three hearts, and more intelligence than the staff realise. A novel about grief, connection, and what the smartest invertebrate in the tank knows about you — quietly and completely moving.",
+    search: "Remarkably Bright Creatures Shelby Van Pelt",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['domestic'], theme:['memory','identity'], avoid:['none','violence','sad'], character:['observer','unreliable'], length:['medium'], mood:['company','understand'], time:['morning','stolen'], secret:['cry','empathy'] }
+  },
+  {
+    title: "Yellowface",
+    author: "R.F. Kuang",
+    tags: ["Satire","Publishing","Identity","Compulsive"],
+    why: "An unsuccessful white author steals her dead Chinese-American friend's manuscript and publishes it as her own. Then everything starts to go wrong. Kuang's satirical thriller about race, publishing, and the internet is so uncomfortably insightful about literary culture you'll feel implicated just reading it.",
+    search: "Yellowface R.F. Kuang",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast'], world:['domestic'], theme:['identity','survival'], avoid:['none','sad'], character:['unreliable','complex'], length:['medium'], mood:['challenge','understand'], time:['night','transit'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Alchemist",
+    author: "Paulo Coelho",
+    tags: ["Fable","Quest","Spiritual","Beloved"],
+    why: "A shepherd boy sets out across the Sahara following a dream. Simple in form, enormous in scope — Coelho's parable about following your Personal Legend has sold over 150 million copies in more than 70 languages. You either find it life-changing or you don't; there is almost no middle ground.",
+    search: "The Alchemist Paulo Coelho",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['historical'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['hero','observer'], length:['short'], mood:['escape','understand'], time:['morning','transit'], secret:['line','empathy'] }
+  },
+  {
+    title: "Catch-22",
+    author: "Joseph Heller",
+    tags: ["WWII","Satire","Dark comedy","Classic"],
+    why: "Yossarian is a USAF bombardier who wants to be grounded on grounds of insanity. He can't be, because only a sane man would want to stop flying. Catch-22 — the first and best articulation of institutional absurdity — is simultaneously the funniest and most horrifying war novel ever written.",
+    search: "Catch-22 Joseph Heller",
+    match: { feeling:['exhilarated','unsettled'], pace:['medium'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['unreliable','complex'], length:['long'], mood:['challenge','understand'], time:['night','stolen'], secret:['line','surprise'] }
+  },
+  {
+    title: "Crime and Punishment",
+    author: "Fyodor Dostoevsky",
+    tags: ["Russian classic","Psychological","Guilt","Intense"],
+    why: "Raskolnikov murders a pawnbroker to prove he is an extraordinary man — then falls apart. Dostoevsky's novel about guilt, pride, and the impossibility of escaping your own conscience is also, somehow, a thriller. The psychological pressure is immense and does not let up for five hundred pages.",
+    search: "Crime and Punishment Fyodor Dostoevsky",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['complex','hero'], length:['long'], mood:['challenge','understand'], time:['night','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    tags: ["American classic","Jazz Age","Obsession","Lyrical"],
+    why: "Jay Gatsby throws parties every weekend hoping the woman across the water will come back to him. She doesn't. He keeps trying. Fitzgerald's prose is the most beautiful in American fiction — and his story of desire, class, and the green light at the end of the dock has never been surpassed.",
+    search: "The Great Gatsby F. Scott Fitzgerald",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['historical'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','unreliable'], length:['short'], mood:['understand','challenge'], time:['night','morning'], secret:['line','cry'] }
+  },
+  {
+    title: "Wuthering Heights",
+    author: "Emily Brontë",
+    tags: ["Gothic","Obsessive love","Yorkshire","Classic"],
+    why: "Heathcliff and Catherine. The moors. A love so consuming it extends twenty years, across death, across class, into revenge and inheritance and the children of enemies. Brontë's only novel is unclassifiable — part ghost story, part social critique, entirely something that will not let you go.",
+    search: "Wuthering Heights Emily Brontë",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['historical'], theme:['love','identity'], avoid:['none','violence','sad'], character:['unreliable','complex'], length:['medium'], mood:['escape','challenge'], time:['night','morning'], secret:['cry','line'] }
+  },
+  {
+    title: "The Year of Magical Thinking",
+    author: "Joan Didion",
+    tags: ["Memoir","Grief","Marriage","Essential"],
+    why: "Didion's husband of forty years died at the dinner table, suddenly, while their daughter was in hospital. This book is the year that followed — an attempt, through extreme precision, to understand how grief actually works. The most honest account of bereavement ever written.",
+    search: "The Year of Magical Thinking Joan Didion",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['domestic'], theme:['memory','love'], avoid:['none','sad'], character:['observer','unreliable'], length:['short'], mood:['understand','company'], time:['night','morning'], secret:['cry','line'] }
+  },
+  {
+    title: "When Breath Becomes Air",
+    author: "Paul Kalanithi",
+    tags: ["Memoir","Medicine","Mortality","Luminous"],
+    why: "A neurosurgeon is diagnosed with stage IV lung cancer at 36 and spends his remaining time asking what makes a life meaningful. Unfinished at his death and completed by his wife, this memoir about mortality is also one of the most beautiful pieces of writing about what medicine means and what it costs.",
+    search: "When Breath Becomes Air Paul Kalanithi",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['domestic'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','hero'], length:['short'], mood:['understand','company'], time:['morning','stolen'], secret:['cry','line'] }
+  },
+  {
+    title: "Say Nothing",
+    author: "Patrick Radden Keefe",
+    tags: ["True crime","The Troubles","Ireland","Gripping"],
+    why: "Jean McConville, a Belfast widow and mother of ten, was abducted from her home in 1972 by the IRA. Keefe reconstructs not just the murder but the entire moral world of the Troubles — through interviews, archives, and the most propulsive narrative nonfiction writing of the last decade.",
+    search: "Say Nothing Patrick Radden Keefe",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['night','transit'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Tom Lake",
+    author: "Ann Patchett",
+    tags: ["Family","Memory","Theatre","Summer"],
+    why: "During the pandemic lockdown, a mother tells her three daughters the story of the summer she was briefly famous, playing Emily in Our Town at a theatre company — and of the man she almost loved instead of their father. Patchett's warmest novel, and perhaps her best.",
+    search: "Tom Lake Ann Patchett",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['domestic'], theme:['love','memory'], avoid:['none','violence','sad'], character:['unreliable','observer'], length:['medium'], mood:['company','understand'], time:['morning','stolen'], secret:['cry','line'] }
+  },
+  {
+    title: "The Last Thing He Told Me",
+    author: "Laura Dave",
+    tags: ["Thriller","Mystery","Propulsive","Marriage"],
+    why: "Before her husband disappears, he leaves one note: 'Protect her.' His daughter from a previous marriage is the 'her'. Hannah sets out to find him, and discovers she never knew him at all. A tight, propulsive thriller with a mystery that actually pays off.",
+    search: "The Last Thing He Told Me Laura Dave",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['domestic'], theme:['love','survival'], avoid:['none','sad'], character:['hero','unreliable'], length:['medium'], mood:['escape'], time:['transit','night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Fingersmith",
+    author: "Sarah Waters",
+    tags: ["Victorian","Thriller","Queer","Twist"],
+    why: "A pickpocket is recruited to help con a naïve heiress out of her inheritance — then everything turns. Waters's Victorian thriller has one of the great plot reversals in British fiction. Read it cold, knowing nothing; it works like a machine built for maximum impact.",
+    search: "Fingersmith Sarah Waters",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['historical'], theme:['identity','love'], avoid:['none','violence'], character:['unreliable','complex'], length:['long'], mood:['escape','challenge'], time:['night','transit'], secret:['surprise','line'] }
+  },
+  {
+    title: "Outline",
+    author: "Rachel Cusk",
+    tags: ["Literary","Autofiction","Minimalist","Radical"],
+    why: "A writer travels to Athens to teach a summer writing course and has a series of conversations — mostly she listens. Cusk's novel contains almost no plot and yet accumulates into something precise and quietly devastating about identity, marriage, and the self we construct from other people's stories.",
+    search: "Outline Rachel Cusk",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['domestic'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','unreliable'], length:['short'], mood:['challenge','understand'], time:['morning','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Vanishing Half",
+    author: "Brit Bennett",
+    tags: ["Identity","Race","Sisters","Generational"],
+    why: "Twin sisters grow up in a small Black community in the American South, then separate. One returns; one passes for white and disappears. Bennett follows both into the 1970s and beyond, across generations, asking what identity means when it can be chosen, hidden, or inherited. Beautifully constructed.",
+    search: "The Vanishing Half Brit Bennett",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical','domestic'], theme:['identity','love'], avoid:['none','violence','sad'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['night','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Things Fall Apart",
+    author: "Chinua Achebe",
+    tags: ["Classic","Nigeria","Colonial","Essential"],
+    why: "Okonkwo is the greatest wrestler in his region of Nigeria — a man of strict values and fierce pride. Then the missionaries arrive. Achebe's 1958 novel tells the story of Ibo society's encounter with colonialism from the inside, and does so in prose of extraordinary economy and restraint.",
+    search: "Things Fall Apart Chinua Achebe",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['complex','hero'], length:['short'], mood:['understand','challenge'], time:['morning','stolen'], secret:['empathy','line'] }
   }
 ];
-
 
 const endNotes = {
   hopeful:     "We chose a book that earns its hope honestly — not cheap optimism, but light that actually reaches through.",
@@ -2997,7 +3646,82 @@ function buildListPickerBtn(bookTitle, bookAuthor, cardIndex) {
     + '</div></div>';
 }
 
+function generateReaderProfile() {
+  const a = answers;
+
+  // Disposition — from feeling
+  const disposition = {
+    hopeful:     'a reader who turns toward the light',
+    unsettled:   'a reader who turns toward the dark',
+    moved:       'a reader who reads with their heart open',
+    exhilarated: 'a reader who wants to be grabbed and run somewhere'
+  }[a.feeling] || 'a reader';
+
+  // Where — world and its branches
+  let where = null;
+  if (a.era_pick) {
+    where = ({ era_ancient:'in the ancient world', era_victorian:'somewhere Victorian', era_wartime:'in the wars', era_midcentury:'in the mid-century' })[a.era_pick] || 'somewhere in the past';
+  } else if (a.world === 'historical') {
+    where = 'somewhere in the past';
+  } else if (a.magic_style) {
+    where = ({ magic_full:'in a world of full fantasy', magic_quiet:'in a quietly strange world', magic_scifi:'in science fiction', magic_fairy:'inside a dark fairy tale' })[a.magic_style] || 'somewhere invented';
+  } else if (a.world === 'invented') {
+    where = 'somewhere that doesn\'t exist yet';
+  } else if (a.cold_feel) {
+    where = ({ cold_noir:'in the long northern dark', cold_wild:'somewhere vast and wild', cold_village:'in an isolated community keeping secrets', cold_atmos:'somewhere cold and atmospheric' })[a.cold_feel] || 'somewhere remote and cold';
+  } else if (a.world === 'cold') {
+    where = 'somewhere remote and cold';
+  } else if (a.domestic_angle) {
+    where = ({ dom_family:'in a family with something buried', dom_marriage:'in the close quarters of a marriage', dom_solo:'inside one person\'s life in a city', dom_community:'in the life of a community' })[a.domestic_angle] || 'in ordinary life';
+  } else if (a.world === 'domestic') {
+    where = 'in the quiet of ordinary life';
+  }
+
+  // Subject — theme and its branches
+  let subject = null;
+  if (a.identity_angle) {
+    subject = ({ id_belong:'questions of belonging', id_reinvent:'the possibility of reinvention', id_perception:'how others construct us', id_inherit:'what we inherit without being asked' })[a.identity_angle] || 'identity';
+  } else if (a.theme === 'identity') {
+    subject = 'identity and belonging';
+  } else if (a.love_depth) {
+    subject = ({ love_slow:'a slow burn', love_doomed:'love that was never going to work', love_quiet:'quiet domestic love', love_obsess:'obsessive, consuming love' })[a.love_depth] || 'love';
+  } else if (a.theme === 'love') {
+    subject = 'love in all its forms';
+  } else if (a.survival_stakes) {
+    subject = ({ surv_physical:'physical survival at its limits', surv_emotional:'emotional survival after the worst', surv_moral:'the line you won\'t cross', surv_social:'the individual against the system' })[a.survival_stakes] || 'survival';
+  } else if (a.theme === 'survival') {
+    subject = 'what people are made of under pressure';
+  } else if (a.memory_treatment) {
+    subject = ({ mem_nonlinear:'time woven out of order', mem_retrospect:'the past seen in retrospect', mem_documents:'lives pieced together from fragments', mem_compressed:'one stretch of time seen in close-up' })[a.memory_treatment] || 'memory and time';
+  } else if (a.theme === 'memory') {
+    subject = 'memory and the passage of time';
+  }
+
+  // Secret — final question
+  const secret = ({
+    cry:     'You\'re secretly hoping to cry, just a little.',
+    surprise:'You\'re secretly hoping to be outwitted.',
+    line:    'You\'re secretly hoping for one sentence you\'ll never forget.',
+    empathy: 'You\'re secretly hoping to borrow a life unlike your own.'
+  })[a.secret] || '';
+
+  // Assemble
+  let s = 'You are ' + disposition;
+  if (where && subject) s += ' — ' + where + ', drawn to ' + subject;
+  else if (where)        s += ' — drawn ' + where;
+  else if (subject)      s += ' — drawn to ' + subject;
+  s += '.';
+  if (secret) s += ' ' + secret;
+  return s;
+}
+
 function renderReveal(bookList) {
+  const portrait = document.getElementById('reader-portrait');
+  if (portrait) {
+    const text = generateReaderProfile();
+    portrait.textContent = text;
+    portrait.style.display = text ? '' : 'none';
+  }
   const readTitles = getReadTitles();
   const list = document.getElementById('reveal-books-list');
   list.innerHTML = bookList.map((book, i) => {
