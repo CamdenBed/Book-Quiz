@@ -233,8 +233,8 @@
   @keyframes pulse { 0%,100%{background:var(--ink-faint);transform:scale(1)} 50%{background:var(--ink);transform:scale(1.4)} }
 
   /* ═══════════ REVEAL ═══════════ */
-  #screen-reveal { align-items: flex-start; justify-content: center; overflow-y: auto; }
-  .reveal-container { max-width: 920px; width: 100%; padding: 4rem 3rem; }
+  #screen-reveal { align-items: center; justify-content: center; overflow-y: auto; }
+  .reveal-container { max-width: 920px; width: 100%; padding: 4rem 3rem; margin: 0 auto; }
   .reveal-eyebrow {
     font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--ink-light); margin-bottom: 0.75rem; animation: fadeIn 0.6s ease both; text-align: center;
@@ -248,6 +248,12 @@
     margin-bottom: 3rem; animation: fadeIn 0.6s ease 0.2s both;
   }
 
+  .reveal-hint {
+    text-align: center; font-size: 15px; color: var(--ink-mid);
+    background: var(--paper-warm); border: 1px solid var(--ink-faint);
+    border-radius: 6px; padding: 0.75rem 1.25rem; margin-bottom: 2rem;
+    animation: fadeIn 0.6s ease 0.3s both;
+  }
   .reveal-books-list { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
 
   .ranked-card {
@@ -367,8 +373,8 @@
   .all-read-banner p { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-mid); margin-bottom: 1rem; }
 
   /* ═══════════ BOOK DETAIL ═══════════ */
-  #screen-detail { align-items: flex-start; justify-content: center; overflow-y: auto; }
-  .detail-container { max-width: 820px; width: 100%; padding: 4rem 3rem; }
+  #screen-detail { align-items: center; justify-content: center; overflow-y: auto; }
+  .detail-container { max-width: 820px; width: 100%; padding: 4rem 3rem; margin: 0 auto; }
 
   .detail-nav {
     display: flex; justify-content: space-between; align-items: center;
@@ -437,7 +443,7 @@
   }
   .btn-buy-amazon:hover { background: #e68a00; transform: translateY(-1px); }
   .buy-box-note {
-    margin-top: 1rem; font-size: 14px; color: var(--ink-faint);
+    margin-top: 1rem; font-size: 14px; color: var(--ink-mid);
     font-style: italic; letter-spacing: 0.05em;
   }
 
@@ -885,7 +891,8 @@
   <div class="reveal-container">
     <div class="reveal-eyebrow">❧ &nbsp; Epilogue &nbsp; ❧</div>
     <h2 class="reveal-headline" id="reveal-headline">Three books made for you</h2>
-    <p class="reveal-sub" id="reveal-sub">Ranked by how well they match your answers. Click a book to choose it.</p>
+    <p class="reveal-sub" id="reveal-sub">Ranked by how well they match your answers.</p>
+    <div class="reveal-hint">📖 Click on a book card to see it in depth — first line, full description, and a direct link to buy it.</div>
 
     <div class="all-read-banner" id="all-read-banner">
       <p>You've read all three. Impressive. Slightly alarming. Here are three more.</p>
@@ -1012,7 +1019,47 @@ const AMAZON_ASINS = {
   "The Way of Kings":                        "0765326353",
   "Giovanni's Room":                         "0345806565",
   "On Earth We're Briefly Gorgeous":         "0525562044",
-  "The Power of the Dog":                    "0316610895"
+  "The Power of the Dog":                    "0316610895",
+  "Educated":                                "0399590528",
+  "The Kite Runner":                         "1594631931",
+  "Rebecca":                                 "0380730405",
+  "Circe":                                   "0316556345",
+  "The Night Circus":                        "0307744434",
+  "Beloved":                                 "1400033411",
+  "Klara and the Sun":                       "059331817X",
+  "Where the Crawdads Sing":                 "0735224935",
+  "The Midnight Library":                    "0525559477",
+  "Project Hail Mary":                       "0593135229",
+  "Beartown":                                "1501160761",
+  "The God of Small Things":                 "0812979656",
+  "A Man Called Ove":                        "1476738025",
+  "The Seven Husbands of Evelyn Hugo":       "1501161938",
+  "And Then There Were None":                "0062073486",
+  "In the Woods":                            "0143113496",
+  "Shuggie Bain":                            "0802148816",
+  "Atonement":                               "0385721676",
+  "Gone Girl":                               "0307588378",
+  "Lessons in Chemistry":                    "038554734X",
+  "A Gentleman in Moscow":                   "0143110438",
+  "One Hundred Years of Solitude":           "0060883286",
+  "The Picture of Dorian Gray":              "0141439572",
+  "Cloud Atlas":                             "0375507256",
+  "The Hitchhiker's Guide to the Galaxy":    "0345391802",
+  "Fourth Wing":                             "1649374046",
+  "It Ends with Us":                         "1501110365",
+  "The House of the Spirits":                "1501117017",
+  "Homegoing":                               "1101971061",
+  "The Shadow of the Wind":                  "0143034901",
+  "Anxious People":                          "1501160834",
+  "The Starless Sea":                        "038554121X",
+  "The Covenant of Water":                   "0802162177",
+  "Invisible Man":                           "0679724764",
+  "The Atlas Six":                           "1250854547",
+  "Flowers for Algernon":                    "015603008X",
+  "Malibu Rising":                           "1524798649",
+  "The Song of Achilles":                    "0062060627",
+  "White Noise":                             "0143105434",
+  "The Invisible Life of Addie LaRue":       "0765387565"
 };
 
 function amazonURL(title) {
@@ -1143,6 +1190,140 @@ const BOOK_EXTRAS = {
   },
   "The Power of the Dog": {
     bestRead: "Best read slowly — the dread builds quietly and then all at once."
+  },
+  "Educated": {
+    bestRead: "Best read when you want to be reminded what humans are capable of surviving."
+  },
+  "The Kite Runner": {
+    firstLine: "I became what I am today at the age of twelve, on a frigid overcast day in the winter of 1975.",
+    bestRead: "Best read when you are prepared to forgive someone — including yourself."
+  },
+  "Rebecca": {
+    firstLine: "Last night I dreamt I went to Manderley again.",
+    bestRead: "Best read at night, ideally in a house with at least one room you haven't fully explored."
+  },
+  "Circe": {
+    firstLine: "When I was born, the name for what I was did not exist.",
+    bestRead: "Best read over a long weekend when you want to feel quietly powerful."
+  },
+  "The Night Circus": {
+    firstLine: "The circus arrives without warning.",
+    bestRead: "Best read by lamplight, slowly, as a treat."
+  },
+  "Beloved": {
+    firstLine: "124 was spiteful.",
+    bestRead: "Best read when you are ready to sit with something enormous."
+  },
+  "Klara and the Sun": {
+    bestRead: "Best read slowly, and then sit with it for a while after."
+  },
+  "Where the Crawdads Sing": {
+    firstLine: "Marsh is not swamp.",
+    bestRead: "Best read on a slow afternoon when you want to be somewhere far away."
+  },
+  "The Midnight Library": {
+    bestRead: "Best read when you need reminding that things can still change."
+  },
+  "Project Hail Mary": {
+    bestRead: "Best read in long stretches — you will not want to stop."
+  },
+  "Beartown": {
+    bestRead: "Best read when you want to understand how a whole town can be wrong."
+  },
+  "The God of Small Things": {
+    firstLine: "May in Ayemenem is a hot, brooding month.",
+    bestRead: "Best read slowly, in the heat, with every sentence."
+  },
+  "A Man Called Ove": {
+    bestRead: "Best read when you need proof that people can surprise you."
+  },
+  "The Seven Husbands of Evelyn Hugo": {
+    bestRead: "Best read in one long sitting. You will absolutely not pace yourself."
+  },
+  "And Then There Were None": {
+    bestRead: "Best read on a stormy night with nowhere to go."
+  },
+  "In the Woods": {
+    bestRead: "Best read late at night when you can give it your full attention."
+  },
+  "Shuggie Bain": {
+    firstLine: "1992. A Glasgow Housing Scheme.",
+    bestRead: "Best read when you are ready to be broken open and put back together."
+  },
+  "Atonement": {
+    bestRead: "Best read slowly — the final act hits harder if you haven't rushed."
+  },
+  "Gone Girl": {
+    bestRead: "Best read in one sitting. Do not look up spoilers."
+  },
+  "Lessons in Chemistry": {
+    bestRead: "Best read when you need someone to be brilliantly angry on your behalf."
+  },
+  "A Gentleman in Moscow": {
+    firstLine: "At half past six on the twenty-first of June 1922, Count Alexander Ilyich Rostov was escorted through the doors of the Metropol Hotel.",
+    bestRead: "Best read slowly, over many evenings, like a long dinner with a good friend."
+  },
+  "One Hundred Years of Solitude": {
+    firstLine: "Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.",
+    bestRead: "Best read with patience and without hurry. It rewards both."
+  },
+  "The Picture of Dorian Gray": {
+    bestRead: "Best read in one evening — it is short and perfect and slightly poisonous."
+  },
+  "Cloud Atlas": {
+    bestRead: "Best read without googling the structure first. Trust the book."
+  },
+  "The Hitchhiker's Guide to the Galaxy": {
+    firstLine: "Far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the Galaxy lies a small unregarded yellow sun.",
+    bestRead: "Best read whenever everything feels too serious. Which is always."
+  },
+  "Fourth Wing": {
+    bestRead: "Best read when you want to be completely swept away with no apologies."
+  },
+  "It Ends with Us": {
+    bestRead: "Best read when you are ready to feel something difficult and important."
+  },
+  "The House of the Spirits": {
+    bestRead: "Best read slowly — it is the kind of book that gets larger as you go."
+  },
+  "Homegoing": {
+    firstLine: "The night Effia Otcher was born into the musky heat of Fanteland, a fire burned and blackened a stand of trees just outside her father's compound.",
+    bestRead: "Best read over a week, one chapter at a time, with space to think between them."
+  },
+  "The Shadow of the Wind": {
+    bestRead: "Best read at night in a city — any city with old streets and secrets."
+  },
+  "Anxious People": {
+    bestRead: "Best read when you need proof that everything is going to be okay, probably."
+  },
+  "The Starless Sea": {
+    bestRead: "Best read slowly, late at night, by someone who loves books about books."
+  },
+  "The Covenant of Water": {
+    bestRead: "Best read over several weeks — it earns every page."
+  },
+  "Invisible Man": {
+    firstLine: "I am an invisible man.",
+    bestRead: "Best read carefully, with a pencil — you will want to mark things."
+  },
+  "The Atlas Six": {
+    bestRead: "Best read when you want characters who are brilliant, terrible, and impossible to put down."
+  },
+  "Flowers for Algernon": {
+    bestRead: "Best read in one sitting if you can bear it — and you should bear it."
+  },
+  "Malibu Rising": {
+    bestRead: "Best read in summer, preferably near water."
+  },
+  "The Song of Achilles": {
+    firstLine: "My father was a king and the son of kings.",
+    bestRead: "Best read when you want to feel everything. It will oblige."
+  },
+  "White Noise": {
+    bestRead: "Best read when you want a book that makes the ordinary feel deeply strange."
+  },
+  "The Invisible Life of Addie LaRue": {
+    bestRead: "Best read slowly, in the dark, when you have time to think about what you'd give up."
   }
 };
 
@@ -1682,6 +1863,326 @@ const books = [
     why: "1920s Montana: Phil Burbank is the most dangerous kind of person — the one who is almost certainly right about everything. A slow, suffocating novel with a final act you will not recover from.",
     search: "The Power of the Dog Thomas Savage",
     match: { feeling:['unsettled'], pace:['slow'], world:['cold'], theme:['survival'], avoid:['none','romance'], character:['complex'], length:['medium'], mood:['challenge'], time:['night'], secret:['surprise'] }
+  },
+  {
+    title: "Educated",
+    author: "Tara Westover",
+    tags: ["Memoir","Identity","Survival","Family"],
+    why: "A woman who grew up off-grid in the mountains of Idaho, kept from school and doctors, who eventually earns a PhD from Cambridge. A book about the cost of becoming yourself — and whether it's worth it.",
+    search: "Educated Tara Westover memoir",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['cold','domestic'], theme:['identity','survival'], avoid:['none','romance'], character:['hero'], length:['medium'], mood:['understand','challenge'], time:['any','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Kite Runner",
+    author: "Khaled Hosseini",
+    tags: ["Afghanistan","Guilt","Friendship","Redemption"],
+    why: "A boy who watches something terrible happen and spends the rest of his life trying to make it right. Hosseini writes about guilt and love and distance in a way that stays with you for years.",
+    search: "The Kite Runner Khaled Hosseini",
+    match: { feeling:['moved'], pace:['fast'], world:['historical'], theme:['love','survival','memory'], avoid:['none'], character:['hero'], length:['medium'], mood:['understand'], time:['night','transit'], secret:['cry','empathy'] }
+  },
+  {
+    title: "Rebecca",
+    author: "Daphne du Maurier",
+    tags: ["Gothic","Psychological","Atmospheric","Classic"],
+    why: "A young woman marries a widower and moves into his estate — where the memory of his first wife, Rebecca, has never left. One of the greatest opening lines in literature, and it only gets stranger from there.",
+    search: "Rebecca Daphne du Maurier",
+    match: { feeling:['unsettled'], pace:['medium'], world:['historical'], theme:['identity','love'], avoid:['none','violence'], character:['unreliable','observer'], length:['medium'], mood:['escape','challenge'], time:['night'], secret:['surprise','line'] }
+  },
+  {
+    title: "Circe",
+    author: "Madeline Miller",
+    tags: ["Mythology","Fantasy","Female protagonist","Transformation"],
+    why: "The witch of Greek mythology, told from the inside. A novel about discovering your own power slowly, painfully, and on your own terms. Miller's prose is quietly stunning.",
+    search: "Circe Madeline Miller",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['invented'], theme:['identity','survival'], avoid:['none','romance'], character:['complex','hero'], length:['medium'], mood:['escape','understand'], time:['any'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Night Circus",
+    author: "Erin Morgenstern",
+    tags: ["Magical","Romance","Atmospheric","Victorian"],
+    why: "A competition between two young magicians inside a circus that only appears at night. Lush, dreamlike, and so precisely detailed you can smell the caramel apples. A book you disappear into.",
+    search: "The Night Circus Erin Morgenstern",
+    match: { feeling:['exhilarated','moved'], pace:['medium'], world:['invented'], theme:['love'], avoid:['violence','romance'], character:['complex'], length:['medium'], mood:['escape'], time:['night'], secret:['line','empathy'] }
+  },
+  {
+    title: "Beloved",
+    author: "Toni Morrison",
+    tags: ["Historical","Haunting","Prize-winning","American"],
+    why: "A former enslaved woman is haunted — literally — by the ghost of her daughter. Morrison's most celebrated novel is dense, devastating, and unlike anything else. Not an easy book. An essential one.",
+    search: "Beloved Toni Morrison",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['survival','memory','love'], avoid:['none'], character:['complex'], length:['medium'], mood:['challenge','understand'], time:['night'], secret:['cry','line','empathy'] }
+  },
+  {
+    title: "Klara and the Sun",
+    author: "Kazuo Ishiguro",
+    tags: ["Science fiction","Quiet","AI","Near future"],
+    why: "An Artificial Friend named Klara watches from a shop window, learning to understand humans — their love, their cruelty, their faith. Ishiguro at his quietest and most devastating.",
+    search: "Klara and the Sun Kazuo Ishiguro",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['invented'], theme:['love','identity','memory'], avoid:['violence','romance'], character:['observer'], length:['medium'], mood:['understand','challenge'], time:['morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Where the Crawdads Sing",
+    author: "Delia Owens",
+    tags: ["Nature","Mystery","Coming of age","Southern"],
+    why: "A girl raised alone in the North Carolina marshland becomes a suspect in a murder case. Part nature writing, part mystery, part love story — and entirely absorbing.",
+    search: "Where the Crawdads Sing Delia Owens",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['domestic'], theme:['survival','love','identity'], avoid:['violence','romance'], character:['observer','hero'], length:['medium'], mood:['escape','understand'], time:['any'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The Midnight Library",
+    author: "Matt Haig",
+    tags: ["Hopeful","Fantasy","Choices","Mental health"],
+    why: "Between life and death lies a library of infinite books — each one a life Nora Seed could have lived. A novel about regret that somehow ends up being about hope.",
+    search: "The Midnight Library Matt Haig",
+    match: { feeling:['hopeful'], pace:['fast'], world:['invented'], theme:['identity','memory'], avoid:['sad','violence'], character:['hero'], length:['short','medium'], mood:['escape','understand','company'], time:['any'], secret:['empathy','line'] }
+  },
+  {
+    title: "Project Hail Mary",
+    author: "Andy Weir",
+    tags: ["Science fiction","Adventure","Problem-solving","Hopeful"],
+    why: "A lone astronaut wakes up with no memory, far from Earth, on a mission to save humanity. What follows is one of the most propulsive, joyful, and genuinely moving science fiction novels in years.",
+    search: "Project Hail Mary Andy Weir",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['invented'], theme:['survival','identity'], avoid:['none','violence','romance'], character:['hero'], length:['medium'], mood:['escape','challenge'], time:['any','transit'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Beartown",
+    author: "Fredrik Backman",
+    tags: ["Community","Sweden","Moral complexity","Sports"],
+    why: "A small Swedish hockey town whose team is on the verge of greatness — until one night changes everything. A novel about what communities protect and what they sacrifice. Uncomfortable and brilliant.",
+    search: "Beartown Fredrik Backman",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['survival','identity'], avoid:['none'], character:['complex'], length:['medium'], mood:['understand','challenge'], time:['night'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The God of Small Things",
+    author: "Arundhati Roy",
+    tags: ["India","Family","Literary","Prize-winning"],
+    why: "Twins in Kerala whose lives are shaped by a tragedy they were too young to understand. Roy's prose is extraordinary — every sentence does more than one thing. A novel that earns all its praise.",
+    search: "The God of Small Things Arundhati Roy",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical','domestic'], theme:['love','memory','identity'], avoid:['none'], character:['complex'], length:['medium'], mood:['challenge','understand'], time:['night'], secret:['line','cry'] }
+  },
+  {
+    title: "A Man Called Ove",
+    author: "Fredrik Backman",
+    tags: ["Heartwarming","Comedy","Grief","Neighbourhood"],
+    why: "Ove is the most irritating man on his street. He is also, possibly, the most decent. A novel about grief disguised as a grumpy man comedy — it will ambush you completely.",
+    search: "A Man Called Ove Fredrik Backman",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['domestic'], theme:['love','identity'], avoid:['sad','violence'], character:['complex'], length:['short'], mood:['company','escape'], time:['any','stolen'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins Reid",
+    tags: ["Hollywood","Secrets","Love","Female protagonist"],
+    why: "A reclusive Hollywood icon finally agrees to tell her story — to a journalist she has no obvious reason to choose. Seven marriages, decades of glamour, and one secret she's been keeping the whole time.",
+    search: "The Seven Husbands of Evelyn Hugo Taylor Jenkins Reid",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['historical'], theme:['love','identity'], avoid:['none','romance'], character:['complex','unreliable'], length:['medium'], mood:['escape'], time:['night','transit'], secret:['surprise','cry'] }
+  },
+  {
+    title: "And Then There Were None",
+    author: "Agatha Christie",
+    tags: ["Mystery","Thriller","Classic","Isolated"],
+    why: "Ten strangers are summoned to an island and begin dying one by one. Christie's most famous novel is a masterclass in tension — you will suspect everyone and still be wrong.",
+    search: "And Then There Were None Agatha Christie",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['historical','cold'], theme:['survival'], avoid:['none','romance'], character:['unreliable'], length:['short'], mood:['escape','challenge'], time:['night'], secret:['surprise'] }
+  },
+  {
+    title: "In the Woods",
+    author: "Tana French",
+    tags: ["Mystery","Ireland","Psychological","Dark"],
+    why: "A detective investigating a murder in the woods where, as a child, he was the only survivor of something he can no longer remember. Tana French writes the most literary crime fiction alive.",
+    search: "In the Woods Tana French",
+    match: { feeling:['unsettled'], pace:['medium'], world:['domestic'], theme:['memory','identity'], avoid:['none','violence'], character:['unreliable'], length:['medium'], mood:['challenge','escape'], time:['night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Shuggie Bain",
+    author: "Douglas Stuart",
+    tags: ["Scotland","Family","Addiction","Love"],
+    why: "A boy growing up in 1980s Glasgow, devoted to his mother — who is devoted to alcohol. Brutal, tender, and written with so much love it almost hurts. Deserved every prize it won.",
+    search: "Shuggie Bain Douglas Stuart",
+    match: { feeling:['moved'], pace:['slow'], world:['historical','domestic'], theme:['love','survival'], avoid:['none'], character:['observer','hero'], length:['long'], mood:['challenge','understand'], time:['night'], secret:['cry','empathy'] }
+  },
+  {
+    title: "Atonement",
+    author: "Ian McEwan",
+    tags: ["War","Love","Memory","Guilt"],
+    why: "A thirteen-year-old girl misunderstands what she sees and destroys two lives. Decades later, she's still trying to fix it. McEwan's greatest novel — and the ending will stay with you permanently.",
+    search: "Atonement Ian McEwan",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['memory','love','survival'], avoid:['none'], character:['unreliable'], length:['medium'], mood:['challenge','understand'], time:['night'], secret:['cry','surprise','line'] }
+  },
+  {
+    title: "Gone Girl",
+    author: "Gillian Flynn",
+    tags: ["Thriller","Marriage","Dark","Twisty"],
+    why: "A woman disappears on her fifth wedding anniversary. Her husband is the obvious suspect. Both of them are unreliable, and neither of them is who you think. Read it before someone spoils it.",
+    search: "Gone Girl Gillian Flynn",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['domestic'], theme:['love','survival'], avoid:['none','violence'], character:['unreliable'], length:['medium'], mood:['escape','challenge'], time:['night','transit'], secret:['surprise'] }
+  },
+  {
+    title: "Lessons in Chemistry",
+    author: "Bonnie Garmus",
+    tags: ["Feminist","Funny","1960s","Science"],
+    why: "A chemist who becomes an accidental cooking show host in 1960s America — and changes everything. Witty, warm, and quietly furious about all the right things.",
+    search: "Lessons in Chemistry Bonnie Garmus",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['historical'], theme:['identity','survival'], avoid:['violence','sad'], character:['complex'], length:['medium'], mood:['escape','understand'], time:['any'], secret:['line','empathy'] }
+  },
+  {
+    title: "A Gentleman in Moscow",
+    author: "Amor Towles",
+    tags: ["Russia","Historical","Elegant","Hopeful"],
+    why: "A count sentenced to house arrest in a luxury Moscow hotel — for the rest of his life. A novel about finding meaning in constrained circumstances, written with wit, warmth, and impeccable style.",
+    search: "A Gentleman in Moscow Amor Towles",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['historical'], theme:['identity','love','memory'], avoid:['violence','romance'], character:['complex','observer'], length:['long'], mood:['escape','company'], time:['morning','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "One Hundred Years of Solitude",
+    author: "Gabriel Garcia Marquez",
+    tags: ["Magical realism","Epic","Family saga","Prize-winning"],
+    why: "Seven generations of the Buendía family in a fictional Colombian town where the magical is ordinary and the ordinary is strange. The founding text of magical realism — still unmatched.",
+    search: "One Hundred Years of Solitude Gabriel Garcia Marquez",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['invented'], theme:['love','memory','survival'], avoid:['none'], character:['complex'], length:['long'], mood:['challenge'], time:['night'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Picture of Dorian Gray",
+    author: "Oscar Wilde",
+    tags: ["Classic","Victorian","Decadence","Psychological"],
+    why: "A beautiful young man makes a Faustian bargain — he stays young, his portrait ages in his place. Wilde's only novel is short, sharp, and full of lines you'll want to quote for the rest of your life.",
+    search: "The Picture of Dorian Gray Oscar Wilde",
+    match: { feeling:['unsettled'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence'], character:['complex','observer'], length:['short'], mood:['challenge'], time:['night'], secret:['line','surprise'] }
+  },
+  {
+    title: "Cloud Atlas",
+    author: "David Mitchell",
+    tags: ["Ambitious","Sci-fi","Historical","Nested narratives"],
+    why: "Six nested stories spanning centuries — from a Pacific sea voyage in 1850 to a post-apocalyptic future — each one interrupted by the next. Audacious, brilliantly constructed, and deeply human.",
+    search: "Cloud Atlas David Mitchell",
+    match: { feeling:['exhilarated','moved'], pace:['medium'], world:['invented','historical'], theme:['memory','survival','identity'], avoid:['none'], character:['unreliable','complex'], length:['long'], mood:['challenge'], time:['night'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Hitchhiker's Guide to the Galaxy",
+    author: "Douglas Adams",
+    tags: ["Comedy","Sci-fi","Absurdist","Classic"],
+    why: "Earth is demolished to make way for a hyperspace bypass. Arthur Dent survives in his dressing gown. The rest is the funniest science fiction ever written — and secretly one of the most philosophical.",
+    search: "The Hitchhiker's Guide to the Galaxy Douglas Adams",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['invented'], theme:['identity','survival'], avoid:['violence','sad','romance'], character:['hero'], length:['short'], mood:['escape','company'], time:['transit','stolen'], secret:['line','empathy'] }
+  },
+  {
+    title: "Fourth Wing",
+    author: "Rebecca Yarros",
+    tags: ["Fantasy","Dragons","Romance","Action"],
+    why: "A war college where students bond with dragons — and most of them don't survive first year. Enormous fun, enormous stakes, and the kind of pacing that makes you genuinely lose track of time.",
+    search: "Fourth Wing Rebecca Yarros",
+    match: { feeling:['exhilarated'], pace:['fast'], world:['invented'], theme:['love','survival'], avoid:['none','violence'], character:['hero','complex'], length:['long'], mood:['escape'], time:['night','transit'], secret:['surprise','cry'] }
+  },
+  {
+    title: "It Ends with Us",
+    author: "Colleen Hoover",
+    tags: ["Romance","Contemporary","Emotional","Important"],
+    why: "A love story that becomes something more complicated and more honest than you expect. Colleen Hoover writes about difficult things with care — this one in particular.",
+    search: "It Ends with Us Colleen Hoover",
+    match: { feeling:['moved'], pace:['fast'], world:['domestic'], theme:['love','survival'], avoid:['none'], character:['hero'], length:['medium'], mood:['understand'], time:['night'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The House of the Spirits",
+    author: "Isabel Allende",
+    tags: ["Magical realism","Family saga","Chile","Female protagonist"],
+    why: "Four generations of a Chilean family, spanning a century of political upheaval and magic. Allende's debut novel — written as a letter to her dying grandfather — is rich, strange, and magnificent.",
+    search: "The House of the Spirits Isabel Allende",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['invented'], theme:['love','memory','survival'], avoid:['none'], character:['complex'], length:['long'], mood:['challenge','understand'], time:['night'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Homegoing",
+    author: "Yaa Gyasi",
+    tags: ["Generational","Ghana","Slavery","Family"],
+    why: "Two half-sisters in 18th century Ghana take different paths — one married to an Englishman, one sold into slavery — and the novel follows their descendants across seven generations. Devastating and essential.",
+    search: "Homegoing Yaa Gyasi",
+    match: { feeling:['moved'], pace:['fast'], world:['historical'], theme:['identity','survival','memory'], avoid:['none','violence'], character:['complex'], length:['medium'], mood:['understand','challenge'], time:['any'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Shadow of the Wind",
+    author: "Carlos Ruiz Zafon",
+    tags: ["Mystery","Barcelona","Gothic","Books"],
+    why: "A boy in post-Civil War Barcelona finds a mysterious novel and sets out to discover its author — only to find that someone is destroying every copy of every book the man ever wrote. A novel for people who love novels.",
+    search: "The Shadow of the Wind Carlos Ruiz Zafon",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['historical'], theme:['love','memory','survival'], avoid:['none','violence'], character:['observer'], length:['long'], mood:['escape'], time:['night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Anxious People",
+    author: "Fredrik Backman",
+    tags: ["Comedy","Hopeful","Ensemble","Sweden"],
+    why: "A failed bank robbery leads to a hostage situation at an apartment viewing. All the hostages are disasters. So are the cops. So is everyone. And somehow it becomes a novel about how we save each other.",
+    search: "Anxious People Fredrik Backman",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['domestic'], theme:['love','identity'], avoid:['sad','violence'], character:['complex'], length:['medium'], mood:['company','escape'], time:['any','stolen'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Starless Sea",
+    author: "Erin Morgenstern",
+    tags: ["Magical","Books","Mystery","Labyrinthine"],
+    why: "A graduate student finds a book containing a story about his own childhood — and disappears into a vast underground world of books, stories, and secrets. For people who love reading about reading.",
+    search: "The Starless Sea Erin Morgenstern",
+    match: { feeling:['exhilarated','moved'], pace:['slow'], world:['invented'], theme:['love','identity','memory'], avoid:['none','violence'], character:['observer','hero'], length:['long'], mood:['escape'], time:['night'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Covenant of Water",
+    author: "Abraham Verghese",
+    tags: ["India","Family saga","Medicine","Epic"],
+    why: "Three generations of a family in South India, spanning the twentieth century, united by a mysterious condition and the water that runs through all their lives. Rich, sweeping, and profoundly humane.",
+    search: "The Covenant of Water Abraham Verghese",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['historical'], theme:['love','memory','survival'], avoid:['none'], character:['complex'], length:['long'], mood:['understand','challenge'], time:['morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Invisible Man",
+    author: "Ralph Ellison",
+    tags: ["Identity","Race","American","Literary classic"],
+    why: "A nameless narrator moves through American society, invisible in the most devastating sense of the word. Ellison's only novel is one of the most important ever written — electric, furious, and essential.",
+    search: "Invisible Man Ralph Ellison",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none'], character:['observer','unreliable'], length:['long'], mood:['challenge','understand'], time:['night'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Atlas Six",
+    author: "Olivie Blake",
+    tags: ["Dark academia","Magic","Morally grey","Competition"],
+    why: "Six magicians. Five places in a secret society. One year to prove themselves — by any means necessary. Dark academia at its sharpest: everyone is brilliant, no one is good, and the competition is lethal.",
+    search: "The Atlas Six Olivie Blake",
+    match: { feeling:['exhilarated','unsettled'], pace:['medium'], world:['invented'], theme:['survival','identity'], avoid:['none','violence'], character:['complex','unreliable'], length:['long'], mood:['challenge'], time:['night'], secret:['surprise'] }
+  },
+  {
+    title: "Flowers for Algernon",
+    author: "Daniel Keyes",
+    tags: ["Science fiction","Identity","Heartbreaking","Classic"],
+    why: "Charlie Gordon has an IQ of 68. Then a surgery changes everything — and his journal entries let you watch, in real time, as he becomes a genius and discovers what that costs. The most quietly devastating science fiction ever written.",
+    search: "Flowers for Algernon Daniel Keyes",
+    match: { feeling:['moved'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['sad','violence'], character:['unreliable','hero'], length:['medium'], mood:['understand','challenge'], time:['any'], secret:['cry','empathy','line'] }
+  },
+  {
+    title: "Malibu Rising",
+    author: "Taylor Jenkins Reid",
+    tags: ["Family","California","Summer","Secrets"],
+    why: "Four famous siblings. One legendary party. One night in 1983 that changes everything. Reid tells the whole story in a single night while weaving in decades of family history — propulsive and deeply felt.",
+    search: "Malibu Rising Taylor Jenkins Reid",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['historical'], theme:['love','identity','survival'], avoid:['none'], character:['complex'], length:['medium'], mood:['escape'], time:['night','transit'], secret:['surprise','cry'] }
+  },
+  {
+    title: "The Song of Achilles",
+    author: "Madeline Miller",
+    tags: ["Mythology","Love","War","Beautiful prose"],
+    why: "The Iliad retold through the eyes of Patroclus — Achilles's companion, and the person who loves him most. A war epic that is really a love story, written in prose so beautiful it feels unfair.",
+    search: "The Song of Achilles Madeline Miller",
+    match: { feeling:['moved'], pace:['medium'], world:['historical','invented'], theme:['love','survival','memory'], avoid:['none','sad'], character:['observer'], length:['medium'], mood:['escape','understand'], time:['night'], secret:['cry','line'] }
+  },
+  {
+    title: "White Noise",
+    author: "Don DeLillo",
+    tags: ["Literary","American","Satire","Death"],
+    why: "A professor of Hitler Studies lives a comfortable suburban life — until a toxic cloud descends on his town and forces him to confront what he's been avoiding. DeLillo's masterpiece: funny, strange, and deeply unsettling.",
+    search: "White Noise Don DeLillo",
+    match: { feeling:['unsettled'], pace:['medium'], world:['domestic'], theme:['survival','identity'], avoid:['none'], character:['observer','unreliable'], length:['medium'], mood:['challenge'], time:['night'], secret:['line'] }
+  },
+  {
+    title: "The Invisible Life of Addie LaRue",
+    author: "V.E. Schwab",
+    tags: ["Fantasy","Memory","Romance","Immortality"],
+    why: "A young woman makes a deal with a dark god — and is cursed to be forgotten by everyone she meets, forever. Then, three hundred years later, someone remembers her. A novel about legacy, loneliness, and what we leave behind.",
+    search: "The Invisible Life of Addie LaRue V.E. Schwab",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['invented'], theme:['identity','love','memory'], avoid:['none','violence'], character:['complex','hero'], length:['long'], mood:['escape','understand'], time:['night'], secret:['cry','line'] }
   }
 ];
 
@@ -2010,7 +2511,7 @@ function showReveal() {
     qi++;
   }
   showNextQuote();
-  const quoteInterval = setInterval(showNextQuote, 3000);
+  const quoteInterval = setInterval(showNextQuote, 4000);
 
   // Compute results immediately but hold in background
   let resultsReady = false;
@@ -2034,7 +2535,7 @@ function showReveal() {
   setTimeout(() => {
     minTimeReady = true;
     tryTransition();
-  }, 6000);
+  }, 8000);
 }
 
 function checkAllRead(bookList) {
