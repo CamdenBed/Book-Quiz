@@ -1364,8 +1364,8 @@ const allQuestions = [
     text: 'The pace you need right now —',
     sub: 'Some books walk with you. Others drag you by the collar.',
     options: [
-      { label: 'Slow and immersive',   hint: 'Long sentences, deep rooms, no hurry',    value: 'slow' },
-      { label: 'Propulsive',           hint: "You'll miss your stop on the train",        value: 'fast' },
+      { label: 'Slow and immersive',   hint: 'Long sentences, deep rooms, no hurry',    value: 'slow',   next: 'slow_world' },
+      { label: 'Propulsive',           hint: "You'll miss your stop on the train",        value: 'fast',   next: 'fast_stakes' },
       { label: 'Somewhere between',    hint: 'Lyrical, but with momentum',               value: 'medium' },
       { label: 'Surprise me entirely', hint: 'I have no preference — only trust',        value: 'any' }
     ],
@@ -1381,10 +1381,10 @@ const allQuestions = [
     text: 'Where would you like to be taken?',
     sub: 'Every book is a door. Which would you open?',
     options: [
-      { label: 'Somewhere cold and remote', hint: 'Tundra, fjords, a suspicious amount of fog', value: 'cold' },
-      { label: 'A city, long ago',          hint: 'Gaslights, fog, streets that no longer exist', value: 'historical' },
-      { label: 'Nowhere real',              hint: "Invented worlds, rules that don't exist yet",  value: 'invented', next: 'magic_style' },
-      { label: 'Close to home',             hint: 'Ordinary life made quietly extraordinary',     value: 'domestic' }
+      { label: 'Somewhere cold and remote', hint: 'Tundra, fjords, a suspicious amount of fog', value: 'cold',       next: 'cold_feel' },
+      { label: 'A city, long ago',          hint: 'Gaslights, fog, streets that no longer exist', value: 'historical', next: 'era_pick' },
+      { label: 'Nowhere real',              hint: "Invented worlds, rules that don't exist yet",  value: 'invented',   next: 'magic_style' },
+      { label: 'Close to home',             hint: 'Ordinary life made quietly extraordinary',     value: 'domestic',   next: 'domestic_angle' }
     ],
     reactions: {
       cold:       "Cold and remote! You want isolation and the faint possibility of a wolf in the distance. Good. Normal. Nothing to unpack there.",
@@ -1398,10 +1398,10 @@ const allQuestions = [
     text: 'What subject keeps pulling at you?',
     sub: 'The thread that will keep you reading past midnight.',
     options: [
-      { label: 'Identity and belonging',   hint: 'Who am I, and to whom do I belong',                  value: 'identity' },
-      { label: 'Love in all its forms',    hint: 'Romantic, familial, obsessive, spectacularly doomed', value: 'love', next: 'love_depth' },
-      { label: 'Survival and consequence', hint: 'What we do when everything is at stake',              value: 'survival' },
-      { label: 'Memory and time',          hint: 'What we keep, what slips away',                       value: 'memory' }
+      { label: 'Identity and belonging',   hint: 'Who am I, and to whom do I belong',                  value: 'identity', next: 'identity_angle' },
+      { label: 'Love in all its forms',    hint: 'Romantic, familial, obsessive, spectacularly doomed', value: 'love',     next: 'love_depth' },
+      { label: 'Survival and consequence', hint: 'What we do when everything is at stake',              value: 'survival', next: 'survival_stakes' },
+      { label: 'Memory and time',          hint: 'What we keep, what slips away',                       value: 'memory',   next: 'memory_treatment' }
     ],
     reactions: {
       identity: "The oldest question, still completely unanswered! Great news — it means the books about it are endless.",
@@ -1415,10 +1415,10 @@ const allQuestions = [
     text: "One thing you'd rather leave out —",
     sub: "We'll note it. A preference, not a commandment.",
     options: [
-      { label: 'Nothing — full surrender', hint: 'I trust you with my whole heart',          value: 'none' },
-      { label: 'Graphic violence',         hint: 'Dark is fine, gratuitous is a bit much',   value: 'violence' },
-      { label: 'A sad ending',             hint: 'I need to close the book with my soul intact', value: 'sad' },
-      { label: 'Romance at the centre',    hint: 'Love as a side dish, not the whole meal',  value: 'romance' }
+      { label: 'Nothing — full surrender', hint: 'I trust you with my whole heart',          value: 'none',    next: 'open_tone' },
+      { label: 'Graphic violence',         hint: 'Dark is fine, gratuitous is a bit much',   value: 'violence', next: 'violence_level' },
+      { label: 'A sad ending',             hint: 'I need to close the book with my soul intact', value: 'sad',  next: 'gentle_end' },
+      { label: 'Romance at the centre',    hint: 'Love as a side dish, not the whole meal',  value: 'romance',  next: 'romance_depth' }
     ],
     reactions: {
       none:     "Full trust. We are honoured and slightly terrified by the responsibility. We will not let you down. Probably.",
@@ -1432,10 +1432,10 @@ const allQuestions = [
     text: 'What kind of narrator calls to you?',
     sub: 'Someone has to carry the story. Who should it be?',
     options: [
-      { label: 'A flawed hero trying hard',  hint: 'Good intentions, chaotic execution',          value: 'hero' },
-      { label: 'An unreliable narrator',     hint: "They're lying to you. You'll love it.",        value: 'unreliable' },
-      { label: 'A quiet observer',           hint: 'Watching everything, saying very little',      value: 'observer' },
-      { label: 'Someone morally complex',    hint: 'Not a villain, but not not a villain either',  value: 'complex' }
+      { label: 'A flawed hero trying hard',  hint: 'Good intentions, chaotic execution',          value: 'hero',       next: 'hero_type' },
+      { label: 'An unreliable narrator',     hint: "They're lying to you. You'll love it.",        value: 'unreliable', next: 'liar_style' },
+      { label: 'A quiet observer',           hint: 'Watching everything, saying very little',      value: 'observer',   next: 'observer_lens' },
+      { label: 'Someone morally complex',    hint: 'Not a villain, but not not a villain either',  value: 'complex',    next: 'grey_shade' }
     ],
     reactions: {
       hero:       "The loveable disaster! Trying their best, failing beautifully. You root for them anyway. Classic. Timeless. Correct.",
@@ -1449,9 +1449,9 @@ const allQuestions = [
     text: 'How long are you willing to stay?',
     sub: "Some books ask for a weekend. Others ask for a month and a half.",
     options: [
-      { label: 'Short and perfect',      hint: 'Under 250 pages — in, out, wrecked',   value: 'short' },
-      { label: 'A proper commitment',    hint: '300–500 pages, fully inhabited',        value: 'medium' },
-      { label: 'Something epic',         hint: "600+ pages — I want to live there",     value: 'long' },
+      { label: 'Short and perfect',      hint: 'Under 250 pages — in, out, wrecked',   value: 'short',  next: 'short_impact' },
+      { label: 'A proper commitment',    hint: '300–500 pages, fully inhabited',        value: 'medium', next: 'medium_feel' },
+      { label: 'Something epic',         hint: "600+ pages — I want to live there",     value: 'long',   next: 'epic_type' },
       { label: "Length doesn't matter",  hint: 'Just make every page earn its keep',    value: 'any' }
     ],
     reactions: {
@@ -1466,10 +1466,10 @@ const allQuestions = [
     text: 'Where are you in life right now?',
     sub: 'A book always knows when it finds the right reader.',
     options: [
-      { label: 'Seeking escape',         hint: "My brain needs a holiday from itself",       value: 'escape',    next: 'escape_detail' },
-      { label: 'Craving understanding',  hint: 'Something is not making sense and I want help', value: 'understand' },
-      { label: 'Ready to be challenged', hint: "Comfort is for people who haven't read enough", value: 'challenge' },
-      { label: 'Just need company',      hint: 'A book that sits with me like a good friend', value: 'company' }
+      { label: 'Seeking escape',         hint: "My brain needs a holiday from itself",       value: 'escape',     next: 'escape_detail' },
+      { label: 'Craving understanding',  hint: 'Something is not making sense and I want help', value: 'understand', next: 'understand_lens' },
+      { label: 'Ready to be challenged', hint: "Comfort is for people who haven't read enough", value: 'challenge',  next: 'challenge_mode' },
+      { label: 'Just need company',      hint: 'A book that sits with me like a good friend', value: 'company',    next: 'company_voice' }
     ],
     reactions: {
       escape:     "The brain needs a holiday from itself. Completely valid. Deeply relatable. We are not going to ask follow-up questions.",
@@ -1600,6 +1600,386 @@ const allQuestions = [
       esc_world:   "The real world. Hard to blame you. We will find you somewhere else to be entirely.",
       esc_routine: "Routine! Everything is fine, it's just the same. The right book makes the world feel wide again.",
       esc_general: "Somewhere else, anywhere. No conditions, no requirements. The purest reason to read."
+    }
+  },
+
+  /* ══ EXPANDED BRANCH QUESTIONS ══════════════════════════════════════
+     Added to grow the question bank to 35+ questions total.
+     Each branch replaces one step in the default flow (total stays at 10).
+  ═══════════════════════════════════════════════════════════════════ */
+
+  {
+    id: 'slow_world',        /* triggered by pace=slow — replaces world */
+    text: 'What kind of immersion are you after?',
+    sub: 'Slow has flavours. Which one do you crave?',
+    options: [
+      { label: 'Language you want to live in',      hint: 'Prose so beautiful you read sentences twice',       value: 'sw_language', next: 'theme' },
+      { label: 'A world built brick by brick',      hint: 'Details, atmosphere, a place you can feel',        value: 'sw_world',    next: 'theme' },
+      { label: "A character's mind, fully inhabited", hint: 'Interior monologue, thought spirals, total access', value: 'sw_interior', next: 'theme' },
+      { label: 'Slow-burn tension',                 hint: 'The dread that builds across four hundred pages',   value: 'sw_tension',  next: 'theme' }
+    ],
+    reactions: {
+      sw_language: "You're a prose reader first. The story is almost secondary — the sentences are the experience. The highest form.",
+      sw_world:    "You want to feel the cold, smell the rooms, know the streets. Fully inhabitable fiction. We know your books.",
+      sw_interior: "Complete access to one consciousness — the self-deception, the spirals, the moments of clarity. Intense and rewarding.",
+      sw_tension:  "Slow-burn dread. Something is wrong from page one, but you can't name it until page 350. Our favourite kind."
+    }
+  },
+  {
+    id: 'fast_stakes',       /* triggered by pace=fast — replaces world */
+    text: 'What makes a book impossible to put down?',
+    sub: "Fast reads aren't all the same. What's the engine?",
+    options: [
+      { label: 'Something terrible might happen', hint: 'Danger, stakes, the floor keeps dropping',          value: 'fs_danger',       next: 'theme' },
+      { label: 'A mystery I have to solve',       hint: 'Clues accumulating, a picture slowly forming',     value: 'fs_mystery',      next: 'theme' },
+      { label: 'A relationship on the edge',      hint: 'Will they, won\'t they — the emotional tension',   value: 'fs_relationship', next: 'theme' },
+      { label: 'The prose itself pulls me',       hint: 'Not plot — just momentum in the sentences',        value: 'fs_prose',        next: 'theme' }
+    ],
+    reactions: {
+      fs_danger:       "Danger! Stakes! The floor keeps dropping! We are constitutionally unable to say no to this.",
+      fs_mystery:      "The accumulating clue. You're assembling the picture faster than you're supposed to. We respect the competitiveness.",
+      fs_relationship: "The slow-motion almost-collision of two people. Faster than a thriller, in some ways. We have exactly what you need.",
+      fs_prose:        "Prose momentum. Not plot — just the sentences dragging you forward. The rarest and best kind of speed."
+    }
+  },
+  {
+    id: 'era_pick',          /* triggered by world=historical — replaces theme */
+    text: 'Which era?',
+    sub: 'History is enormous. Let\'s narrow the door.',
+    options: [
+      { label: 'Ancient or classical',       hint: 'Greece, Rome, Persia — the original everything',            value: 'era_ancient',    next: 'avoid' },
+      { label: 'Victorian or Edwardian',     hint: 'Corsets, class, candlelight, and simmering resentment',    value: 'era_victorian',  next: 'avoid' },
+      { label: 'The twentieth-century wars', hint: '1914–1945 — history at its most undeniably itself',        value: 'era_wartime',    next: 'avoid' },
+      { label: 'Mid-century onwards',        hint: '1950s–70s — society reshaping itself in real time',        value: 'era_midcentury', next: 'avoid' }
+    ],
+    reactions: {
+      era_ancient:    "Ancient worlds! Where everything we are was invented. The original characters still haven't been topped.",
+      era_victorian:  "Victorian! Candlelight, enormous houses, and the absolute crushing weight of propriety. Perfect atmosphere.",
+      era_wartime:    "The wars. Nothing made the modern world more, or at greater cost. Some writers did it justice. We'll find them.",
+      era_midcentury: "Mid-century. The world deciding what it wanted to be. Incredible tension, incredible style. Great books came from it."
+    }
+  },
+  {
+    id: 'cold_feel',         /* triggered by world=cold — replaces theme */
+    text: 'What draws you to remote places?',
+    sub: 'Cold and isolated comes in different atmospheres.',
+    options: [
+      { label: 'The darkness and the crime',       hint: 'Nordic noir — society\'s underside in long winter light', value: 'cold_noir',   next: 'avoid' },
+      { label: 'Wilderness as a force',            hint: 'Nature vast and indifferent, humans small',               value: 'cold_wild',   next: 'avoid' },
+      { label: 'A closed community, keeping secrets', hint: 'Everyone knows everyone, and no one talks',            value: 'cold_village', next: 'avoid' },
+      { label: 'Pure atmosphere',                  hint: 'Fog, silence, a sense of something coming',               value: 'cold_atmos',  next: 'avoid' }
+    ],
+    reactions: {
+      cold_noir:    "Nordic noir! The long dark. Violence beneath the welfare state. The coffee is good and everyone is lying.",
+      cold_wild:    "Wilderness as a character in its own right. Indifferent, magnificent, entirely indifferent to your feelings. Perfect.",
+      cold_village: "The closed community. Everyone knows something, no one tells anyone else, and you're going to find out anyway.",
+      cold_atmos:   "Pure atmosphere. Not a destination — a feeling. Cold, vast, quiet, something gathering on the horizon. Yes."
+    }
+  },
+  {
+    id: 'domestic_angle',    /* triggered by world=domestic — replaces theme */
+    text: 'What makes the ordinary world interesting?',
+    sub: 'Domestic fiction is more varied than it sounds.',
+    options: [
+      { label: 'A family with something buried',  hint: 'Old wounds, silences, a secret about to surface',     value: 'dom_family',    next: 'avoid' },
+      { label: 'A marriage, closely examined',    hint: 'Two people who chose each other, in all its complexity', value: 'dom_marriage', next: 'avoid' },
+      { label: 'One consciousness in a city',     hint: 'One person, thinking hard, navigating everyday life',  value: 'dom_solo',      next: 'avoid' },
+      { label: 'A community, seen from inside',   hint: 'How a place shapes its people and is shaped by them', value: 'dom_community', next: 'avoid' }
+    ],
+    reactions: {
+      dom_family:    "The family secret. It's been there in every silence. You want to be in the room when it surfaces. We understand.",
+      dom_marriage:  "A marriage in close-up. Everything a relationship is, with nowhere to hide. Honest fiction at its best.",
+      dom_solo:      "One person in a city, thinking hard. Interior, observational, and quietly extraordinary when done well.",
+      dom_community: "A community, from the inside. How a place makes people. Some of the best novels ever written work exactly this way."
+    }
+  },
+  {
+    id: 'identity_angle',    /* triggered by theme=identity — replaces avoid */
+    text: 'Which aspect of identity pulls at you?',
+    sub: "It's a big question. Let's find your corner of it.",
+    options: [
+      { label: 'Belonging — where and whether you fit', hint: 'Family, culture, home — and the cost of leaving',      value: 'id_belong',    next: 'character' },
+      { label: 'Reinvention — becoming someone new',    hint: 'Who you choose to be, versus who you were',            value: 'id_reinvent',  next: 'character' },
+      { label: 'Perception — how others define you',    hint: "The self as constructed by someone else's gaze",       value: 'id_perception', next: 'character' },
+      { label: "Inheritance — what you didn't choose",  hint: 'History, trauma, expectation, passed quietly down',   value: 'id_inherit',   next: 'character' }
+    ],
+    reactions: {
+      id_belong:     "Belonging. The universal question — still unanswered. It means the books about it are infinite and we can find your one.",
+      id_reinvent:   "Reinvention. You want someone who becomes something new — and the grief of what they had to leave behind.",
+      id_perception: "How we are constructed by other people's eyes. One of literature's great subjects. Unsettling and illuminating at once.",
+      id_inherit:    "What we inherit without being asked — trauma, history, expectation. The past in the present. Heavy, crucial, compelling."
+    }
+  },
+  {
+    id: 'survival_stakes',   /* triggered by theme=survival — replaces avoid */
+    text: "What's at stake in the survival?",
+    sub: 'Not all survival stories are the same kind.',
+    options: [
+      { label: 'Physical — getting out alive',      hint: 'Environment, danger, the body at its limits',               value: 'surv_physical', next: 'character' },
+      { label: 'Emotional — getting through intact', hint: 'Grief, trauma, the long aftermath',                        value: 'surv_emotional', next: 'character' },
+      { label: 'Moral — getting through with your soul', hint: "What you'll do, what you won't, where the line is",   value: 'surv_moral',    next: 'character' },
+      { label: 'Social — surviving a system',       hint: 'Institutions, power, the world working against you',        value: 'surv_social',   next: 'character' }
+    ],
+    reactions: {
+      surv_physical:  "Physical survival. The body at its limits. Terrain, cold, danger, the arithmetic of staying alive. Gripping every time.",
+      surv_emotional: "Emotional survival — not escaping something, but enduring it. The long aftermath. Among the bravest subjects in fiction.",
+      surv_moral:     "The moral line. What will you do, and what won't you? Literature's most loaded question. Some books answer it unforgettably.",
+      surv_social:    "Surviving a system. The individual against the institution. Power, injustice, the ingenuity required to navigate them."
+    }
+  },
+  {
+    id: 'memory_treatment',  /* triggered by theme=memory — replaces avoid */
+    text: 'How do you want time to work in the novel?',
+    sub: 'Memory-driven books handle time very differently.',
+    options: [
+      { label: 'Non-linear — past and present woven', hint: 'Scenes from different eras, assembled into meaning',    value: 'mem_nonlinear',   next: 'character' },
+      { label: 'A narrator looking back',             hint: 'Time has passed. They are telling us what happened.',  value: 'mem_retrospect',  next: 'character' },
+      { label: 'Letters, diaries, fragments',         hint: 'Documents from the past, assembling a picture',        value: 'mem_documents',   next: 'character' },
+      { label: 'A single long day or week',           hint: 'Compressed time — everything in close-up',             value: 'mem_compressed',  next: 'character' }
+    ],
+    reactions: {
+      mem_nonlinear:  "Non-linear time — the past arriving in the present without warning. Some books make this an art form. We'll find those.",
+      mem_retrospect: "The retrospective narrator. They already know the ending and are telling us carefully. Irony and weight built in.",
+      mem_documents:  "Letters, diaries, found objects. The epistolary form. Reconstructing a life from its evidence. One of the great pleasures.",
+      mem_compressed: "A single day or week under the microscope. Woolf, McEwan. Compressed time revealing everything. Yes."
+    }
+  },
+  {
+    id: 'open_tone',         /* triggered by avoid=none — replaces character */
+    text: 'Since we have free rein — what tone do you lean toward?',
+    sub: 'You trust us. So tell us which direction to lean.',
+    options: [
+      { label: 'Wry and slightly funny',  hint: 'Wit as a way of handling the serious things',   value: 'tone_wry',     next: 'length' },
+      { label: 'Earnest and deeply sincere', hint: 'No irony — just direct emotional engagement', value: 'tone_earnest', next: 'length' },
+      { label: 'Cold and precise',        hint: 'Restrained, exact, quietly devastating',         value: 'tone_cold',    next: 'length' },
+      { label: 'Warm and generous',       hint: 'The prose equivalent of a good meal',            value: 'tone_warm',    next: 'length' }
+    ],
+    reactions: {
+      tone_wry:     "Wry! You want humour in the darkest places. Some of the most devastating books are also very funny. We will find you one.",
+      tone_earnest: "Full sincerity. No protective irony. The emotional risk is enormous and so is the reward. We know exactly which books.",
+      tone_cold:    "Cold precision. Restrained prose where every word is doing work. The iceberg — most of the feeling is underneath.",
+      tone_warm:    "Warm and generous. Writing that holds you. Difficult to do and immediately recognisable when someone gets it right."
+    }
+  },
+  {
+    id: 'gentle_end',        /* triggered by avoid=sad — replaces character */
+    text: 'What kind of ending do you need?',
+    sub: "There are many kinds of 'not sad'. Be specific.",
+    options: [
+      { label: 'Genuinely happy — earned and real', hint: 'Not easy, but resolved, and I deserve it',            value: 'end_happy',       next: 'length' },
+      { label: 'Hopeful — things could be okay',   hint: 'Not tied up, but lit from somewhere',                  value: 'end_hopeful',     next: 'length' },
+      { label: 'Ambiguous — but not devastating',  hint: 'Open-ended, for me to finish in my own mind',          value: 'end_ambiguous',   next: 'length' },
+      { label: 'Bittersweet — loss, but also beauty', hint: 'Sad at the edges, but worth every page',            value: 'end_bittersweet', next: 'length' }
+    ],
+    reactions: {
+      end_happy:       "A real happy ending. Earned, not easy — but genuinely happy. You have been through things and you deserve it. Noted.",
+      end_hopeful:     "Hopeful. Not resolution, but possibility. Things aren't fixed, but the light is on somewhere. We like this very much.",
+      end_ambiguous:   "Ambiguous — the kind of ending you finish yourself. Honest. Life rarely resolves. The best books respect that.",
+      end_bittersweet: "Bittersweet. Loss, but also beauty. The minor key. A kind of sadness that is also, paradoxically, a relief."
+    }
+  },
+  {
+    id: 'violence_level',    /* triggered by avoid=violence — replaces character */
+    text: 'How dark can the rest of it go?',
+    sub: "No gratuitous violence — we heard you. Beyond that?",
+    options: [
+      { label: 'Keep it mostly gentle',          hint: 'Tension yes, graphic content no — stay in the light', value: 'viol_gentle',  next: 'length' },
+      { label: 'Dark themes, restrained depiction', hint: 'The darkness implied, not shown in detail',         value: 'viol_implied', next: 'length' },
+      { label: 'Psychological intensity is fine', hint: 'The horror of the mind, not the body',                value: 'viol_psych',   next: 'length' },
+      { label: 'Moral complexity is fine',        hint: 'Difficult situations and choices, just not graphic',  value: 'viol_moral',   next: 'length' }
+    ],
+    reactions: {
+      viol_gentle:  "Gentle! The world is difficult enough. A book where good things can also happen. Noble and completely understandable.",
+      viol_implied: "Darkness implied, not shown. The space between scenes where you know what happened. Often more disturbing, honestly.",
+      viol_psych:   "Psychological horror is fine. The mind is a much scarier place than any body. We have exactly the books for this.",
+      viol_moral:   "Moral complexity — people in terrible situations making imperfect choices. The human condition. We know the books."
+    }
+  },
+  {
+    id: 'romance_depth',     /* triggered by avoid=romance — replaces character */
+    text: 'Love as a side dish — what should be the main course?',
+    sub: 'You want romance as flavour, not subject. What\'s the heart of it?',
+    options: [
+      { label: 'Friendship and loyalty',    hint: 'The bonds that last when romance doesn\'t enter into it', value: 'rom_friend',    next: 'length' },
+      { label: 'A great plot',              hint: 'Things happening, twists, forward momentum',              value: 'rom_plot',      next: 'length' },
+      { label: 'Ideas and questions',       hint: 'A novel of thought — what does it mean, what should we do', value: 'rom_ideas',  next: 'length' },
+      { label: 'One extraordinary character', hint: 'A person so compelling the book doesn\'t need anything else', value: 'rom_char', next: 'length' }
+    ],
+    reactions: {
+      rom_friend: "Friendship! The underrated literary subject. Bonds without romance — devotion, betrayal, the long arc of knowing someone.",
+      rom_plot:   "A great plot as the engine. Things happening, things going wrong, forward momentum, the architecture of suspense. Yes.",
+      rom_ideas:  "A novel of ideas. Not just story — thought. The best of these are also the most propulsive. We know which ones.",
+      rom_char:   "A great character as the entire reason. Everything else serves that one consciousness. When it works, nothing is better."
+    }
+  },
+  {
+    id: 'hero_type',         /* triggered by character=hero — replaces length */
+    text: 'What kind of flawed hero?',
+    sub: "There are many ways to be trying-and-failing.",
+    options: [
+      { label: 'Idealistic — the world hasn\'t beaten them yet', hint: 'Still believing, still trying, still occasionally wrong', value: 'hero_ideal',     next: 'mood' },
+      { label: 'Reluctant — they didn\'t ask for this',          hint: 'Dragged in, doing their best, slightly resentful',       value: 'hero_reluctant', next: 'mood' },
+      { label: 'Weathered — they know exactly how hard it is',   hint: 'Worn down but still going, and you feel every mile',     value: 'hero_weathered', next: 'mood' },
+      { label: 'Ordinary person in extraordinary circumstances',  hint: 'Not special — just present when history turned',        value: 'hero_ordinary',  next: 'mood' }
+    ],
+    reactions: {
+      hero_ideal:     "The idealist! Still believing in something. The world hasn't fully gotten to them yet. Hopeful and heartbreaking at once.",
+      hero_reluctant: "The reluctant hero. They didn't want this. They wanted a quiet life. We're deeply here for the ones who got dragged in.",
+      hero_weathered: "The weathered one. They've been through it before. They know what's coming and they go anyway. The most affecting kind.",
+      hero_ordinary:  "The ordinary person when history turns. Not chosen, not special — just present. The most true-to-life heroism there is."
+    }
+  },
+  {
+    id: 'liar_style',        /* triggered by character=unreliable — replaces length */
+    text: 'How unreliable, exactly?',
+    sub: "There are many flavours of narrative dishonesty.",
+    options: [
+      { label: 'Lying to you deliberately',        hint: 'They know what they\'re hiding and are hiding it well',  value: 'liar_deliberate', next: 'mood' },
+      { label: 'Lying to themselves',              hint: 'They believe every word — that\'s what makes it land',   value: 'liar_self',       next: 'mood' },
+      { label: 'Limited by their own perspective', hint: 'Not lying — just only able to see so much',              value: 'liar_limited',    next: 'mood' },
+      { label: 'An innocent who misunderstands',   hint: 'A child, or outsider — innocence as a distorting lens',  value: 'liar_innocent',   next: 'mood' }
+    ],
+    reactions: {
+      liar_deliberate: "The calculated liar. They know exactly what they're doing. The game is figuring out why — and when you've been had.",
+      liar_self:       "The self-deceiver. The most human kind. They believe every word. So do you, until suddenly, terribly, you don't.",
+      liar_limited:    "Limited perspective — not lying, just unable to see the whole room. You piece together what they miss. One of the best pleasures.",
+      liar_innocent:   "The innocent narrator. A child, an outsider, someone who doesn't understand what they're witnessing. Often the most devastating kind."
+    }
+  },
+  {
+    id: 'observer_lens',     /* triggered by character=observer — replaces length */
+    text: 'What is the observer watching?',
+    sub: 'The quiet witness is defined by what they see.',
+    options: [
+      { label: "A family's hidden life",    hint: 'From close proximity and real distance at once',              value: 'obs_family',  next: 'mood' },
+      { label: 'Society and its rituals',   hint: 'The way a world organises itself, seen from its edges',       value: 'obs_society', next: 'mood' },
+      { label: 'One exceptional person',    hint: 'The satellite orbiting a more dramatic planet',               value: 'obs_person',  next: 'mood' },
+      { label: 'Their own life, at a distance', hint: 'Watching themselves as if from outside. Precise, a little sad.', value: 'obs_self', next: 'mood' }
+    ],
+    reactions: {
+      obs_family:  "Watching a family from inside it. Close proximity, real distance. The most unsettling kind of observation there is.",
+      obs_society: "Society's observer — standing at the edge of a party, seeing exactly what everyone else is pretending not to see.",
+      obs_person:  "The satellite character, orbiting someone more dramatic. Often about the narrator's quiet grief about that fact.",
+      obs_self:    "The person watching themselves at a distance. Detached from their own life. A rare and precise narrator. Quietly devastating."
+    }
+  },
+  {
+    id: 'grey_shade',        /* triggered by character=complex — replaces length */
+    text: 'What makes them morally complex?',
+    sub: "Not all grey is the same grey.",
+    options: [
+      { label: 'Bad things done for good reasons',  hint: "The ends-justify-means type — and you're not sure they're wrong", value: 'grey_means',  next: 'mood' },
+      { label: 'Shaped by something terrible',      hint: "Their worst qualities have a history you'll understand",          value: 'grey_shaped', next: 'mood' },
+      { label: 'Charismatic and dangerous',         hint: "You like them. You shouldn't. You do anyway.",                    value: 'grey_charm',  next: 'mood' },
+      { label: "Principled — just not our principles", hint: 'Their moral code is coherent and entirely alien to yours',    value: 'grey_alien',  next: 'mood' }
+    ],
+    reactions: {
+      grey_means:  "The ends-justify-means person. You're not sure they're wrong. That doubt is the book's engine. Excellent choice.",
+      grey_shaped: "Shaped by damage. Their worst qualities have a history. You understand them, and it costs you something. Best kind of empathy.",
+      grey_charm:  "Charismatic and dangerous. You like them. You know you shouldn't. You do anyway. The reader's oldest and best trap.",
+      grey_alien:  "A coherent morality that is not yours. Not wrong exactly — just operating on different premises. The most genuinely challenging type."
+    }
+  },
+  {
+    id: 'short_impact',      /* triggered by length=short — replaces mood */
+    text: 'Short and devastatingly what?',
+    sub: 'Under 250 pages is a canvas, not a limitation.',
+    options: [
+      { label: 'A gut punch — brutal efficiency', hint: 'Every word working, nothing wasted, leaves a mark',       value: 'si_punch',    next: 'time' },
+      { label: 'A meditation — slow and still',   hint: 'Small and complete, like a poem in long form',            value: 'si_meditate', next: 'time' },
+      { label: 'A perfect self-contained world',  hint: 'Brief but entire — a universe in miniature',             value: 'si_world',    next: 'time' },
+      { label: 'A dark fable',                    hint: 'Parable logic — familiar and strange at once',           value: 'si_fable',    next: 'time' }
+    ],
+    reactions: {
+      si_punch:    "The gut punch! Brutal economy. Every sentence doing work. You finish it and sit there for six stops after. We know these books.",
+      si_meditate: "A meditation — short, still, and complete. Takes more from you than any 600-page doorstop. In the best way.",
+      si_world:    "A whole world in miniature. Brief, entire, and somehow more lasting than epics. We know exactly which books do this.",
+      si_fable:    "The dark fable. Parable logic. Familiar and strange in the same sentence. Kafka knew. A few others do too."
+    }
+  },
+  {
+    id: 'epic_type',         /* triggered by length=long — replaces mood */
+    text: 'What kind of epic are you committing to?',
+    sub: 'Six hundred pages earns you the right to be specific.',
+    options: [
+      { label: 'A family saga — generations and consequence', hint: 'The long arc of bloodline and what passes through it', value: 'epic_family',  next: 'time' },
+      { label: 'A doorstop fantasy — whole world, deep lore', hint: 'Maps, magic systems, a glossary you\'ll actually read', value: 'epic_fantasy', next: 'time' },
+      { label: 'A literary monument',                         hint: 'The kind of book people argue about for decades',       value: 'epic_literary', next: 'time' },
+      { label: 'Interconnected stories, one large picture',   hint: 'Many voices and lives assembling into something larger', value: 'epic_inter',   next: 'time' }
+    ],
+    reactions: {
+      epic_family:  "The generational saga. Three families, five decades, nine hundred implications. The satisfying architecture of deep time.",
+      epic_fantasy: "A doorstop fantasy! You want to live there for months. We know the ones that earn every page of their length.",
+      epic_literary: "The literary monument. Difficult, rewarding, discussed forever. The mountain you'll have climbed. We respect it enormously.",
+      epic_inter:   "Interconnected stories. Many voices assembling into one picture. Each piece good alone; together, extraordinary."
+    }
+  },
+  {
+    id: 'medium_feel',       /* triggered by length=medium — replaces mood */
+    text: '300–500 pages — in what spirit?',
+    sub: 'The middle ground, but with a personality.',
+    options: [
+      { label: 'A world fully inhabited',         hint: 'Enough space to live in it, not so much you\'re lost',   value: 'med_world',     next: 'time' },
+      { label: 'A tight, purposeful narrative',   hint: 'Never a wasted page — built from start to end',          value: 'med_tight',     next: 'time' },
+      { label: 'Character-driven, room to breathe', hint: 'The pace of a life, the depth of a person',            value: 'med_character', next: 'time' },
+      { label: 'Ideas with momentum',             hint: 'A novel that thinks, at speed',                          value: 'med_ideas',     next: 'time' }
+    ],
+    reactions: {
+      med_world:     "A fully inhabited world in the medium-length form. Enough pages to build something real, not so many it becomes indulgent.",
+      med_tight:     "A tight narrative — every scene earning its place. The most satisfying architecture. We love a book that doesn't overstay.",
+      med_character: "Character-driven, room to breathe. The pages exist for the person. When the character is right, this is the best of everything.",
+      med_ideas:     "A novel that thinks at speed. Ideas and momentum together. The hardest thing to do. Some writers manage it brilliantly."
+    }
+  },
+  {
+    id: 'understand_lens',   /* triggered by mood=understand — replaces time */
+    text: 'What do you need to understand better?',
+    sub: "The question is serious. Your answer will sharpen our aim.",
+    options: [
+      { label: 'Other people — why they do what they do', hint: 'Empathy as understanding, not just sympathy',              value: 'und_people',  next: 'secret' },
+      { label: 'A historical moment',                     hint: 'How did the world come to look like this',                 value: 'und_history', next: 'secret' },
+      { label: 'How grief or loss works',                 hint: 'Someone has been through it and written it clearly',       value: 'und_grief',   next: 'secret' },
+      { label: 'Your own life — obliquely',               hint: 'A book that reads you while you read it',                  value: 'und_self',    next: 'secret' }
+    ],
+    reactions: {
+      und_people:  "Why people do what they do. The oldest question. Fiction is the only place where you can be inside someone else's reasoning.",
+      und_history: "How the world came to look like this. Historical fiction and narrative nonfiction are different answers to the same question.",
+      und_grief:   "Grief, written honestly. There are a handful of books that do this with real clarity. They change something. We'll find you one.",
+      und_self:    "A book that reads you back. Oblique autobiography. You finish it and realise something you couldn't have put into words before."
+    }
+  },
+  {
+    id: 'challenge_mode',    /* triggered by mood=challenge — replaces time */
+    text: 'Challenged in what way?',
+    sub: "Challenge comes in more than one form.",
+    options: [
+      { label: 'Structurally — the form itself is the idea', hint: 'The how and the what are inseparable',                value: 'chal_form',     next: 'secret' },
+      { label: "Morally — it won't let you stay comfortable", hint: 'Your positions, tested, page by page',               value: 'chal_moral',    next: 'secret' },
+      { label: 'Emotionally — it demands that you actually feel', hint: 'No armour. No distance. You will be affected.',  value: 'chal_emotion',  next: 'secret' },
+      { label: 'Intellectually — it makes you think harder',  hint: 'Ideas, philosophy, the kind of book you discuss for hours', value: 'chal_intellect', next: 'secret' }
+    ],
+    reactions: {
+      chal_form:     "Structural challenge! Form as meaning. The way it's written is inseparable from what it says. The most ambitious kind.",
+      chal_moral:    "Moral challenge. You want to be made uncomfortable by your own positions. You might finish it disagreeing with yourself. Good.",
+      chal_emotion:  "Emotional demand. No distance, no armour. You are going in fully exposed. A brave choice and a deeply rewarding one.",
+      chal_intellect: "Intellectual challenge — the kind of book you stop reading every few pages to just think. We love these books enormously."
+    }
+  },
+  {
+    id: 'company_voice',     /* triggered by mood=company — replaces time */
+    text: 'What kind of company do you need?',
+    sub: "Company has moods. What's yours right now?",
+    options: [
+      { label: 'Funny and warm — a friend who makes you laugh', hint: 'Wit, warmth, the sense that someone gets you',      value: 'comp_funny',  next: 'secret' },
+      { label: 'Quiet and gentle — a presence, not a performance', hint: 'Calm, low-key, not requiring much from you',    value: 'comp_quiet',  next: 'secret' },
+      { label: 'A wry observer — notices everything, says it sideways', hint: 'Dry wit, the person you want at dinner', value: 'comp_wry',    next: 'secret' },
+      { label: 'Someone who has been through something too',    hint: 'Not advice — just recognition that you are not alone', value: 'comp_fellow', next: 'secret' }
+    ],
+    reactions: {
+      comp_funny:  "Funny and warm! The writer who makes you laugh in the middle of something serious. A particular and rare gift.",
+      comp_quiet:  "Quiet company. A presence — the book sitting with you, not performing at you. A very specific need and we can meet it.",
+      comp_wry:    "The wry observer! Sharp, dry, noticing everything and saying it sideways. Often the most comforting kind of intelligence.",
+      comp_fellow: "Someone who has been through it too. Not wisdom — recognition. You are not reading alone. That is sometimes the whole point."
     }
   }
 ];
