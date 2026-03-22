@@ -1,0 +1,2468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blind Date with a Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1714; --ink-mid: #4a4540; --ink-light: #8a837a;
+    --ink-faint: #c8c0b4; --paper: #f5efe4; --paper-warm: #ede4d6;
+    --paper-dark: #e0d4c0; --accent: #8b4513; --accent-light: #c47a3a;
+    --serif: 'Playfair Display', Georgia, serif;
+    --body: 'EB Garamond', Georgia, serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #faf6ef;
+    background-image: linear-gradient(160deg, #fdfaf5 0%, #f5ede0 50%, #faf6ee 100%);
+    color: var(--ink);
+    font-family: var(--body); font-size: 22px; line-height: 1.7; min-height: 100vh;
+  }
+  /* grain / paper fibre texture */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    opacity: 0.1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+  /* vignette — darker edges like an old library book */
+  body::after {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 998;
+    background: radial-gradient(ellipse 90% 85% at 50% 50%, transparent 60%, rgba(90,55,10,0.08) 100%);
+  }
+
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ═══════════ LANDING ═══════════ */
+  .landing-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 3rem; border-bottom: 1px solid var(--ink-faint);
+  }
+  .brand { font-family: var(--serif); font-size: 20px; letter-spacing: 0.02em; }
+  .nav-tagline { font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+
+  .landing-hero { flex: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; }
+  .hero-left {
+    padding: 5rem 3.5rem 4rem; border-right: 1px solid var(--ink-faint);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero-kicker {
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-kicker::before { content: ''; display: block; width: 28px; height: 1px; background: var(--ink-faint); }
+  .hero-headline {
+    font-family: var(--serif); font-size: clamp(42px, 5.5vw, 66px);
+    font-weight: 400; line-height: 1.15; margin-bottom: 2rem;
+  }
+  .hero-headline em { font-style: italic; color: var(--accent); }
+  .hero-body { font-size: 22px; line-height: 1.8; color: var(--ink-mid); max-width: 440px; margin-bottom: 3rem; }
+
+  .btn-start {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    padding: 1.1rem 2.75rem; border: 1px solid var(--ink); background: transparent;
+    font-family: var(--body); font-size: 20px; letter-spacing: 0.04em;
+    color: var(--ink); cursor: pointer; position: relative; overflow: hidden;
+  }
+  .btn-start::before {
+    content: ''; position: absolute; inset: 0; background: var(--ink);
+    transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .btn-start:hover::before { transform: translateX(0); }
+  .btn-start span { position: relative; z-index: 1; transition: color 0.3s; }
+  .btn-start:hover span { color: var(--paper); }
+
+  .hero-right {
+    background: var(--paper-warm); display: flex; align-items: center;
+    justify-content: center; padding: 4rem; position: relative; overflow: hidden;
+  }
+  .hero-right::after { content: ''; position: absolute; inset: 2rem; border: 1px solid var(--ink-faint); pointer-events: none; }
+  .wrapped-book { position: relative; width: 190px; height: 255px; animation: float 4s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(1.5deg)} }
+  .paper-wrap {
+    width: 100%; height: 100%; background: var(--paper-dark); border: 1px solid var(--ink-faint);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative;
+  }
+  .wrap-twine-h { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--accent-light); opacity: 0.6; }
+  .wrap-twine-v { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--accent-light); opacity: 0.6; }
+  .wrap-q { font-family: var(--serif); font-size: 90px; color: var(--ink-faint); line-height: 1; position: relative; z-index: 1; }
+  .wrap-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); position: relative; z-index: 1; }
+
+  .landing-promise { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--ink-faint); }
+  .promise-item { padding: 2.25rem 3rem; border-right: 1px solid var(--ink-faint); }
+  .promise-item:last-child { border-right: none; }
+  .promise-num { font-family: var(--serif); font-size: 13px; letter-spacing: 0.15em; color: var(--ink-light); margin-bottom: 0.4rem; }
+  .promise-title { font-family: var(--serif); font-size: 21px; margin-bottom: 0.5rem; }
+  .promise-desc { font-size: 17px; color: var(--ink-mid); line-height: 1.6; }
+
+  /* ═══════════ QUIZ ═══════════ */
+  #screen-quiz { justify-content: space-between; }
+
+  .quiz-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 3rem; border-bottom: 1px solid var(--ink-faint); flex-shrink: 0;
+  }
+  .quiz-brand { font-family: var(--serif); font-size: 17px; color: var(--ink-light); }
+  .progress-bar-wrap { flex: 1; max-width: 380px; margin: 0 2rem; height: 1px; background: var(--ink-faint); position: relative; }
+  .progress-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--ink); transition: width 0.55s cubic-bezier(0.4,0,0.2,1); }
+  .progress-label { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+
+  /* PAGE FLIP STAGE */
+  .quiz-body {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 3rem; overflow: hidden;
+  }
+
+  .page-flip-stage {
+    width: 100%; max-width: 780px;
+    position: relative;
+  }
+
+  .question-card {
+    width: 100%;
+  }
+
+  #flip-canvas {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 10; display: none;
+  }
+
+  .q-number {
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .q-number::before { content: ''; display: block; width: 22px; height: 1px; background: var(--ink-faint); }
+
+  .q-text {
+    font-family: var(--serif); font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400; line-height: 1.25; margin-bottom: 0.65rem;
+  }
+  .q-sub { font-size: 19px; color: var(--ink-mid); margin-bottom: 2.25rem; font-style: italic; }
+
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+
+  .option-btn {
+    padding: 1.3rem 1.75rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
+    text-align: left; transition: border-color 0.2s; position: relative; overflow: hidden; line-height: 1.4;
+  }
+  .option-btn::before {
+    content: ''; position: absolute; inset: 0; background: var(--paper-warm);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+  .option-btn:hover { border-color: var(--ink-mid); }
+  .option-btn:hover::before { transform: scaleX(1); }
+  .option-btn.selected { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .option-btn.selected::before { display: none; }
+  .option-inner { position: relative; z-index: 1; }
+  .option-label { font-weight: 500; display: block; font-size: 21px; }
+  .option-hint { font-size: 16px; color: var(--ink-light); display: block; margin-top: 4px; font-style: italic; }
+  .option-btn.selected .option-hint { color: var(--ink-faint); }
+
+  /* REACTION */
+  .reaction-box {
+    margin-top: 2rem; padding: 1.4rem 2rem;
+    border-left: 3px solid var(--accent-light); background: var(--paper-warm);
+    animation: reactionPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes reactionPop {
+    0%   { opacity: 0; transform: translateY(12px) scale(0.97); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .reaction-label {
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 0.5rem;
+  }
+  .reaction-text {
+    font-family: var(--serif); font-style: italic;
+    font-size: 22px; line-height: 1.6; color: var(--ink-mid);
+  }
+
+  .quiz-footer {
+    padding: 1.5rem 3rem; border-top: 1px solid var(--ink-faint);
+    display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+  }
+  .btn-back {
+    background: none; border: none; cursor: pointer; font-family: var(--body);
+    font-size: 19px; color: var(--ink-light); letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; transition: color 0.2s;
+  }
+  .btn-back:hover { color: var(--ink); }
+  .btn-back:disabled { opacity: 0.25; pointer-events: none; }
+  .btn-next {
+    padding: 1rem 3rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: var(--body); font-size: 19px; letter-spacing: 0.04em; cursor: pointer;
+    opacity: 0; pointer-events: none; transform: translateY(5px);
+    transition: opacity 0.3s, transform 0.3s, background 0.2s, color 0.2s;
+  }
+  .btn-next.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .btn-next:hover { background: transparent; color: var(--ink); }
+
+  /* ═══════════ LOADING ═══════════ */
+  #screen-loading { align-items: center; justify-content: center; }
+  .loading-content { text-align: center; }
+  .loading-title {
+    font-family: var(--serif); font-size: 36px; font-weight: 400;
+    margin-bottom: 0.75rem; animation: fadeIn 0.5s ease both;
+  }
+  .loading-sub {
+    font-size: 20px; color: var(--ink-mid); font-style: italic;
+    margin-bottom: 3rem; animation: fadeIn 0.5s ease 0.2s both;
+  }
+  .loading-dots { display: flex; gap: 14px; justify-content: center; animation: fadeIn 0.5s ease 0.4s both; }
+  .loading-dot {
+    width: 8px; height: 8px; background: var(--ink-faint); border-radius: 50%;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%,100%{background:var(--ink-faint);transform:scale(1)} 50%{background:var(--ink);transform:scale(1.4)} }
+
+  /* ═══════════ REVEAL ═══════════ */
+  #screen-reveal { align-items: flex-start; justify-content: center; overflow-y: auto; }
+  .reveal-container { max-width: 920px; width: 100%; padding: 4rem 3rem; }
+  .reveal-eyebrow {
+    font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 0.75rem; animation: fadeIn 0.6s ease both; text-align: center;
+  }
+  .reveal-headline {
+    font-family: var(--serif); font-size: clamp(28px,4vw,40px); font-weight: 400;
+    text-align: center; margin-bottom: 0.5rem; animation: fadeIn 0.6s ease 0.1s both;
+  }
+  .reveal-sub {
+    font-size: 18px; color: var(--ink-mid); font-style: italic; text-align: center;
+    margin-bottom: 3rem; animation: fadeIn 0.6s ease 0.2s both;
+  }
+
+  .reveal-books-list { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
+
+  .ranked-card {
+    display: grid; grid-template-columns: 64px 1fr;
+    border: 1px solid var(--ink-faint); background: var(--paper-warm);
+    position: relative;
+    animation: revealCard 0.7s cubic-bezier(0.4,0,0.2,1) both;
+    transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer;
+  }
+  .ranked-card:hover:not(.is-read) { border-color: var(--ink-mid); }
+  .ranked-card.selected {
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink-faint);
+  }
+  .ranked-card.selected .rank-col { background: var(--ink); }
+  .ranked-card.selected .rank-num { color: var(--paper) !important; }
+  .ranked-card.selected .rank-label { color: var(--ink-faint) !important; }
+  .ranked-card:nth-child(1) { animation-delay: 0.3s; }
+  .ranked-card:nth-child(2) { animation-delay: 0.5s; }
+  .ranked-card:nth-child(3) { animation-delay: 0.7s; }
+  .ranked-card.is-read { opacity: 0.45; }
+  @keyframes revealCard { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .rank-col {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border-right: 1px solid var(--ink-faint); padding: 1.5rem 0; gap: 0.25rem;
+    background: var(--paper-dark);
+  }
+  .rank-num {
+    font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--ink); line-height: 1;
+  }
+  .rank-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-mid); }
+  .rank-col.top .rank-num { color: var(--accent); }
+  .rank-col.top .rank-label { color: var(--accent-light); }
+  .rank-col.second .rank-num { color: var(--ink-mid); }
+  .rank-col.third .rank-num { color: var(--ink-mid); }
+
+  .card-body { padding: 1.75rem 2rem; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+  .card-titles { flex: 1; }
+  .book-title { font-family: var(--serif); font-size: clamp(22px,3vw,30px); font-weight: 400; line-height: 1.2; margin-bottom: 0.25rem; }
+  .book-author { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink-mid); }
+  .book-why { font-size: 18px; line-height: 1.75; color: var(--ink-mid); font-style: italic; margin-bottom: 1.25rem; }
+  .book-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .book-tag { padding: 0.3rem 0.85rem; border: 1px solid var(--ink-faint); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+
+  .card-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .btn-find-book {
+    padding: 0.65rem 1.5rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: var(--body); font-size: 16px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .btn-find-book:hover { background: transparent; color: var(--ink); }
+  .btn-read {
+    padding: 0.65rem 1.5rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 16px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-read:hover { border-color: var(--accent-light); color: var(--accent); }
+  .btn-read.marked { border-color: var(--accent-light); color: var(--accent-light); cursor: default; }
+  .btn-read.marked:hover { border-color: var(--accent-light); color: var(--accent-light); }
+
+  .read-badge {
+    position: absolute; top: 12px; right: 14px;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent-light); opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .ranked-card.is-read .read-badge { opacity: 1; }
+
+  /* ── Confirm modal overlay ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(26,23,20,0.55);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal-box {
+    background: var(--paper); border: 1px solid var(--ink);
+    max-width: 480px; width: 90%; padding: 2.5rem;
+    animation: revealCard 0.3s cubic-bezier(0.4,0,0.2,1) both;
+  }
+  .modal-eyebrow {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 1rem;
+  }
+  .modal-title {
+    font-family: var(--serif); font-size: clamp(22px,3vw,28px);
+    font-weight: 400; margin-bottom: 0.35rem; line-height: 1.25;
+  }
+  .modal-author {
+    font-family: var(--serif); font-style: italic; font-size: 17px;
+    color: var(--ink-mid); margin-bottom: 1.5rem;
+  }
+  .modal-question {
+    font-size: 19px; line-height: 1.7; color: var(--ink-mid);
+    margin-bottom: 2rem; font-style: italic;
+  }
+  .modal-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .modal-confirm {
+    padding: 0.85rem 2rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: var(--body); font-size: 18px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .modal-confirm:hover { background: transparent; color: var(--ink); }
+  .modal-cancel {
+    padding: 0.85rem 2rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 18px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .modal-cancel:hover { border-color: var(--ink); color: var(--ink); }
+
+  .all-read-banner {
+    border: 1px solid var(--ink-faint); background: var(--paper-warm);
+    padding: 2rem; text-align: center; margin-bottom: 1.5rem;
+    display: none; animation: fadeIn 0.5s ease both;
+  }
+  .all-read-banner.visible { display: block; }
+  .all-read-banner p { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-mid); margin-bottom: 1rem; }
+
+  /* ═══════════ BOOK DETAIL ═══════════ */
+  #screen-detail { align-items: flex-start; justify-content: center; overflow-y: auto; }
+  .detail-container { max-width: 820px; width: 100%; padding: 4rem 3rem; }
+
+  .detail-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 3rem;
+  }
+  .detail-back {
+    background: none; border: none; cursor: pointer; font-family: var(--body);
+    font-size: 18px; color: var(--ink-light); display: flex; align-items: center;
+    gap: 0.5rem; padding: 0; transition: color 0.2s;
+  }
+  .detail-back:hover { color: var(--ink); }
+  .detail-shelf-btn {
+    padding: 0.6rem 1.5rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 16px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .detail-shelf-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .detail-shelf-btn.on-shelf { border-color: var(--accent-light); color: var(--accent-light); cursor: default; }
+
+  .detail-header { margin-bottom: 2.5rem; }
+  .detail-eyebrow {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 1rem;
+  }
+  .detail-title {
+    font-family: var(--serif); font-size: clamp(32px,5vw,52px);
+    font-weight: 400; line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .detail-author {
+    font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-mid);
+    margin-bottom: 1.5rem;
+  }
+  .detail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .detail-tag {
+    padding: 0.35rem 1rem; border: 1px solid var(--ink-faint);
+    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid);
+  }
+  .detail-divider { width: 52px; height: 1px; background: var(--ink-faint); margin-bottom: 2rem; }
+  .detail-why {
+    font-family: var(--serif); font-size: 22px; line-height: 1.8;
+    color: var(--ink-mid); font-style: italic; margin-bottom: 2.5rem;
+    padding-left: 1.5rem; border-left: 2px solid var(--accent-light);
+  }
+
+  .detail-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .detail-btn-learn {
+    padding: 0.9rem 2.25rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: var(--body); font-size: 18px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .detail-btn-learn:hover { background: transparent; color: var(--ink); }
+
+  .detail-buy-box {
+    border: 1px solid var(--ink-faint); background: var(--paper-warm);
+    padding: 3rem 2rem; text-align: center;
+  }
+  .buy-box-label {
+    font-family: var(--serif); font-size: 20px; color: var(--ink-mid);
+    margin-bottom: 1.5rem; font-style: italic;
+  }
+  .btn-buy-amazon {
+    display: inline-block; padding: 1rem 2.75rem;
+    background: #FF9900; border: none; color: #111;
+    font-family: var(--body); font-size: 20px; font-weight: 500;
+    letter-spacing: 0.03em; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-buy-amazon:hover { background: #e68a00; transform: translateY(-1px); }
+  .buy-box-note {
+    margin-top: 1rem; font-size: 14px; color: var(--ink-faint);
+    font-style: italic; letter-spacing: 0.05em;
+  }
+
+  .reveal-bottom { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeIn 0.6s ease 1s both; }
+  .btn-restart {
+    padding: 1rem 2.5rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 19px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .btn-restart:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-shelf-link {
+    padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
+    font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .btn-shelf-link:hover { background: var(--ink); color: var(--paper); }
+
+  /* ═══════════ SHELF ═══════════ */
+  #screen-shelf { align-items: flex-start; justify-content: center; overflow-y: auto; }
+  .shelf-container { max-width: 860px; width: 100%; padding: 4rem 3rem; }
+  .shelf-header-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--ink-faint); padding-bottom: 1.25rem; margin-bottom: 2.5rem;
+  }
+  .shelf-title { font-family: var(--serif); font-size: clamp(28px,4vw,38px); font-weight: 400; }
+  .shelf-count { font-size: 15px; color: var(--ink-light); font-style: italic; }
+  .shelf-empty {
+    text-align: center; padding: 5rem 2rem;
+    font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-light);
+  }
+  .shelf-grid { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--ink-faint); margin-bottom: 2.5rem; }
+  .shelf-row {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: center; gap: 1.5rem;
+    padding: 1.4rem 1.75rem; background: var(--paper-warm);
+    border-bottom: 1px solid var(--ink-faint); transition: background 0.15s;
+  }
+  .shelf-row:last-child { border-bottom: none; }
+  .shelf-row:hover { background: var(--paper-dark); }
+  .shelf-book-title { font-family: var(--serif); font-size: 21px; font-weight: 400; }
+  .shelf-book-author { font-size: 16px; color: var(--ink-mid); font-style: italic; }
+  .shelf-date { font-size: 13px; color: var(--ink-faint); margin-top: 2px; }
+  .btn-remove {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-mid); padding: 0.4rem 0.6rem; transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .btn-remove:hover { color: var(--accent); }
+  .shelf-back {
+    padding: 0.9rem 2.25rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 18px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .shelf-back:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* nav shelf badge */
+  .nav-shelf-btn {
+    font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light);
+    background: none; border: none; cursor: pointer; font-family: var(--body);
+    display: flex; align-items: center; gap: 0.5rem; padding: 0; transition: color 0.2s;
+  }
+  .nav-shelf-btn:hover { color: var(--ink); }
+  .shelf-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--ink); color: var(--paper);
+    font-size: 11px; font-family: var(--body);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .shelf-badge.visible { opacity: 1; }
+
+  /* ── List picker dropdown ── */
+  .list-picker-wrap { position: relative; display: inline-block; }
+  .list-picker-btn {
+    padding: 0.65rem 1.5rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 16px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .list-picker-btn:hover { border-color: var(--ink-mid); color: var(--ink); }
+  .list-picker-btn.has-list { border-color: var(--accent-light); color: var(--accent-light); }
+  .list-picker-btn .lp-arrow { font-size: 11px; transition: transform 0.2s; display: inline-block; }
+  .list-picker-btn.open .lp-arrow { transform: rotate(180deg); }
+  .list-picker-dropdown {
+    display: none; z-index: 1000;
+    background: var(--paper); border: 1px solid var(--ink); min-width: 240px;
+    box-shadow: 4px 4px 0 var(--paper-dark);
+  }
+  .list-picker-dropdown.open { display: block; }
+  .list-picker-option {
+    padding: 0.9rem 1.25rem; cursor: pointer; font-family: var(--body);
+    border-bottom: 1px solid var(--ink-faint); transition: background 0.15s;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .list-picker-option:last-child { border-bottom: none; }
+  .list-picker-option:hover { background: var(--paper-warm); }
+  .list-picker-option.active { background: var(--paper-dark); }
+  .list-picker-option .opt-label { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .list-picker-option .opt-sub { font-size: 13px; color: var(--ink-light); font-style: italic; }
+
+  /* ═══════════ SHELF ═══════════ */
+  #screen-shelf { align-items: flex-start; justify-content: center; overflow-y: auto; }
+  .shelf-container { max-width: 860px; width: 100%; padding: 4rem 3rem; }
+  .shelf-header-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--ink-faint); padding-bottom: 1.25rem; margin-bottom: 3rem;
+  }
+  .shelf-title { font-family: var(--serif); font-size: clamp(28px,4vw,38px); font-weight: 400; }
+  .shelf-total { font-size: 15px; color: var(--ink-light); font-style: italic; }
+
+  .shelf-section { margin-bottom: 3rem; }
+  .shelf-section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.1rem; }
+  .shelf-section-title { font-family: var(--serif); font-size: 22px; font-weight: 400; }
+  .shelf-section-count { font-size: 14px; color: var(--ink-light); font-style: italic; }
+  .shelf-section-empty {
+    padding: 1.4rem 1.75rem; border: 1px dashed var(--ink-faint);
+    font-size: 17px; color: var(--ink-light); font-style: italic;
+  }
+
+  .shelf-grid { display: flex; flex-direction: column; border: 1px solid var(--ink-faint); }
+  .shelf-row {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1.5rem;
+    padding: 1.2rem 1.75rem; background: var(--paper-warm);
+    border-bottom: 1px solid var(--ink-faint); transition: background 0.15s;
+  }
+  .shelf-row:last-child { border-bottom: none; }
+  .shelf-row:hover { background: var(--paper-dark); }
+  .shelf-book-title { font-family: var(--serif); font-size: 20px; font-weight: 400; }
+  .shelf-book-author { font-size: 16px; color: var(--ink-mid); font-style: italic; }
+  .shelf-book-meta { font-size: 13px; color: var(--ink-faint); margin-top: 2px; }
+  .shelf-row-actions { display: flex; gap: 0.4rem; align-items: center; flex-shrink: 0; }
+  .btn-move {
+    background: none; border: 1px solid var(--ink-faint); cursor: pointer;
+    font-family: var(--body); font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--ink-mid); padding: 0.3rem 0.65rem; transition: all 0.2s; white-space: nowrap;
+  }
+  .btn-move:hover { border-color: var(--ink-mid); color: var(--ink); }
+  .btn-remove {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-mid); padding: 0.3rem 0.6rem; transition: color 0.2s; white-space: nowrap;
+  }
+  .btn-remove:hover { color: var(--accent); }
+
+  /* Currently reading — prominent single card */
+  .cr-card {
+    border: 1px solid var(--ink); background: var(--paper-warm); padding: 1.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
+  }
+  .cr-label {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 0.5rem;
+  }
+  .cr-title { font-family: var(--serif); font-size: 24px; font-weight: 400; margin-bottom: 0.25rem; }
+  .cr-author { font-size: 16px; color: var(--ink-mid); font-style: italic; }
+  .cr-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+  .shelf-back {
+    padding: 0.9rem 2.25rem; border: 1px solid var(--ink-faint); background: transparent;
+    font-family: var(--body); font-size: 18px; color: var(--ink-mid); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s; margin-top: 2rem; display: inline-block;
+  }
+  .shelf-back:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── Loading quotes ── */
+  .loading-quote {
+    font-family: var(--serif); font-style: italic; font-size: clamp(20px,3vw,28px);
+    font-weight: 400; line-height: 1.5; max-width: 600px; margin: 0 auto 1rem;
+    color: var(--ink); text-align: center;
+    transition: opacity 0.3s ease; animation: fadeIn 0.5s ease both;
+  }
+  .loading-quote-author {
+    font-size: 16px; letter-spacing: 0.1em; color: var(--ink-light);
+    text-align: center; margin-bottom: 3rem;
+    transition: opacity 0.3s ease; animation: fadeIn 0.5s ease 0.2s both;
+  }
+
+  /* ── Best read when ── */
+  .book-best-read {
+    font-size: 15px; color: var(--ink-light); font-style: italic;
+    margin-bottom: 1rem; letter-spacing: 0.02em;
+  }
+  .detail-best-read {
+    font-size: 17px; color: var(--ink-light); font-style: italic;
+    margin-bottom: 2rem; letter-spacing: 0.02em;
+  }
+
+  /* ── First line on detail screen ── */
+  .detail-first-line {
+    margin-bottom: 2.5rem; padding: 1.5rem 2rem;
+    border-left: 3px solid var(--accent-light); background: var(--paper-warm);
+  }
+  .detail-fl-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 0.75rem;
+  }
+  .detail-fl-text {
+    font-family: var(--serif); font-style: italic; font-size: 21px;
+    line-height: 1.7; color: var(--ink);
+  }
+
+  /* ── Book-themed UI elements ── */
+  .chapter-ornament {
+    font-size: 18px; color: var(--accent-light); margin-right: 0.4rem;
+    display: inline-block; transform: scaleX(-1);
+  }
+  .page-number {
+    font-family: var(--serif); font-size: 15px; font-style: italic;
+    color: var(--ink-faint); letter-spacing: 0.08em; user-select: none;
+    text-align: center; flex: 1;
+  }
+  .quiz-footer {
+    padding: 1.5rem 3rem; border-top: 1px solid var(--ink-faint);
+    display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+  }
+
+  /* ── Tablet (≤ 860px) ── */
+  @media (max-width: 860px) {
+    .landing-hero { grid-template-columns: 1fr; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--ink-faint); padding: 3.5rem 2.5rem 3rem; }
+    .hero-right { padding: 2.5rem; border-top: none; }
+    .wrapped-book { width: 150px; height: 200px; }
+    .landing-promise { grid-template-columns: 1fr 1fr; }
+    .promise-item:nth-child(2) { border-right: none; }
+    .promise-item:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid var(--ink-faint); }
+    .options-grid { grid-template-columns: 1fr; }
+    .quiz-body { padding: 2rem; }
+  }
+
+  /* ── Mobile (≤ 600px) ── */
+  @media (max-width: 600px) {
+    body { font-size: 17px; }
+
+    /* Nav */
+    .landing-nav { padding: 1rem 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
+    .nav-tagline { display: none; }
+    .landing-nav > div { gap: 1rem; }
+
+    /* Landing hero */
+    .hero-left { padding: 2.25rem 1.25rem 2rem; }
+    .hero-headline { font-size: clamp(30px, 8.5vw, 42px); margin-bottom: 1.25rem; }
+    .hero-body { font-size: 17px; margin-bottom: 2rem; }
+    .btn-start { font-size: 17px; padding: 0.9rem 2rem; width: 100%; justify-content: center; }
+    .hero-right { padding: 2rem 1.25rem; }
+    .wrapped-book { width: 110px; height: 150px; }
+    .wrap-q { font-size: 65px; }
+
+    /* Landing promise — show but stack */
+    .landing-promise { grid-template-columns: 1fr; }
+    .promise-item { padding: 1.25rem 1.25rem; border-right: none; border-bottom: 1px solid var(--ink-faint); }
+    .promise-item:last-child { border-bottom: none; }
+    .promise-item:nth-child(3) { grid-column: auto; border-top: none; }
+    .promise-title { font-size: 18px; }
+    .promise-desc { font-size: 15px; }
+
+    /* Quiz header */
+    .quiz-header { padding: 0.75rem 1.25rem; gap: 0.5rem; flex-wrap: wrap; }
+    .quiz-brand { display: none; }
+    .progress-bar-wrap { margin: 0; min-width: 0; flex: 1; }
+    .progress-label { font-size: 12px; white-space: nowrap; }
+    .nav-shelf-btn { font-size: 12px; }
+
+    /* Quiz body */
+    .quiz-body { padding: 1.25rem 1.25rem; align-items: flex-start; }
+    .q-number { margin-bottom: 0.75rem; font-size: 11px; }
+    .q-text { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 0.5rem; }
+    .q-sub { font-size: 15px; margin-bottom: 1.5rem; }
+    .option-btn { padding: 0.9rem 1.1rem; }
+    .option-label { font-size: 17px; }
+    .option-hint { font-size: 14px; }
+    .reaction-box { padding: 1rem 1.25rem; margin-top: 1.25rem; }
+    .reaction-text { font-size: 17px; }
+
+    /* Quiz footer */
+    .quiz-footer { padding: 0.75rem 1.25rem; }
+    .btn-back { font-size: 15px; }
+    .btn-next { font-size: 15px; padding: 0.75rem 1.5rem; }
+    .page-number { font-size: 12px; }
+
+    /* Loading */
+    .loading-quote { font-size: clamp(16px, 4.5vw, 21px); padding: 0 1.25rem; }
+    .loading-quote-author { font-size: 14px; }
+
+    /* Reveal */
+    .reveal-container { padding: 1.75rem 1.25rem; }
+    .reveal-headline { font-size: clamp(24px, 6vw, 34px); }
+    .reveal-sub { font-size: 16px; margin-bottom: 2rem; }
+    .ranked-card { grid-template-columns: 44px 1fr; }
+    .rank-col { padding: 1.25rem 0; }
+    .rank-num { font-size: 20px; }
+    .rank-label { display: none; }
+    .card-body { padding: 1rem 1rem; }
+    .card-top { flex-direction: column; gap: 0.5rem; }
+    .book-title { font-size: clamp(18px, 4.5vw, 24px); }
+    .book-author { font-size: 15px; }
+    .book-why { font-size: 15px; margin-bottom: 1rem; }
+    .book-tag { font-size: 11px; padding: 0.2rem 0.6rem; }
+    .book-best-read { font-size: 13px; }
+    .card-actions { flex-direction: column; gap: 0.5rem; }
+    .btn-find-book, .btn-read { font-size: 14px; padding: 0.6rem 1.1rem; width: 100%; text-align: center; justify-content: center; }
+    .reveal-bottom { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+    .btn-restart, .btn-shelf-link { text-align: center; font-size: 16px; }
+
+    /* Book detail */
+    .detail-container { padding: 1.75rem 1.25rem; }
+    .detail-nav { margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem; }
+    .detail-back { font-size: 15px; }
+    .detail-title { font-size: clamp(26px, 7vw, 36px); }
+    .detail-author { font-size: 18px; margin-bottom: 1.25rem; }
+    .detail-why { font-size: 17px; padding-left: 1rem; }
+    .detail-fl-text { font-size: 17px; }
+    .detail-first-line { padding: 1.1rem 1.25rem; }
+    .detail-best-read { font-size: 15px; }
+    .detail-actions { flex-direction: column; gap: 0.5rem; }
+    .detail-btn-learn { font-size: 16px; padding: 0.8rem 1.5rem; }
+    .detail-buy-box { padding: 1.75rem 1.25rem; }
+    .btn-buy-amazon { padding: 0.9rem 1.75rem; font-size: 17px; width: 100%; text-align: center; display: block; }
+    .buy-box-label { font-size: 17px; }
+
+    /* Shelf */
+    .shelf-container { padding: 1.75rem 1.25rem; }
+    .shelf-title { font-size: clamp(24px, 6vw, 32px); }
+    .shelf-header-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .shelf-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem 1.25rem; }
+    .shelf-row-actions { justify-content: flex-start; flex-wrap: wrap; }
+    .shelf-book-title { font-size: 17px; }
+    .shelf-book-author { font-size: 14px; }
+    .cr-card { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1.25rem; }
+    .cr-actions { width: 100%; }
+    .cr-title { font-size: 20px; }
+    .shelf-back { font-size: 16px; padding: 0.75rem 1.75rem; }
+
+    /* Modal */
+    .modal-box { padding: 1.5rem 1.25rem; }
+    .modal-actions { flex-direction: column; gap: 0.5rem; }
+    .modal-confirm, .modal-cancel { font-size: 16px; padding: 0.75rem 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<section id="screen-landing" class="screen active">
+  <nav class="landing-nav">
+    <div class="brand">Blind Date with a Book</div>
+    <div style="display:flex;align-items:center;gap:2rem;">
+      <button class="nav-shelf-btn" onclick="openShelf()">My Library <span class="shelf-badge" id="shelf-badge-landing">0</span></button>
+      <div class="nav-tagline">❧ &nbsp; Est. for the curious reader</div>
+    </div>
+  </nav>
+  <div class="landing-hero">
+    <div class="hero-left">
+      <div class="hero-kicker">A new kind of bookstore</div>
+      <h1 class="hero-headline">You won't know<br>what you're getting.<br><em>That's the point.</em></h1>
+      <p class="hero-body">Tell us how you want to feel. Answer ten questions. At the end, we reveal the book that's been waiting for you — one you never would have found on your own.</p>
+      <button class="btn-start" onclick="startQuiz()">
+        <span>Begin your date</span><span>→</span>
+      </button>
+    </div>
+    <div class="hero-right">
+      <div class="wrapped-book">
+        <div class="paper-wrap">
+          <div class="wrap-twine-h"></div>
+          <div class="wrap-twine-v"></div>
+          <div class="wrap-q">?</div>
+          <div class="wrap-label">Your next read</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="landing-promise">
+    <div class="promise-item">
+      <div class="promise-num">I.</div>
+      <div class="promise-title">Answer ten questions</div>
+      <p class="promise-desc">Not about genres. About moods, feelings, and where you want to go.</p>
+    </div>
+    <div class="promise-item">
+      <div class="promise-num">II.</div>
+      <div class="promise-title">We find your match</div>
+      <p class="promise-desc">Every answer narrows the field until one book rises to the surface.</p>
+    </div>
+    <div class="promise-item">
+      <div class="promise-num">III.</div>
+      <div class="promise-title">Your date is revealed</div>
+      <p class="promise-desc">You'll learn why we chose it — and where to find a copy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="screen-quiz" class="screen">
+  <div class="quiz-header">
+    <div class="quiz-brand">Blind Date with a Book</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    <div style="display:flex;align-items:center;gap:1.5rem;">
+      <button class="nav-shelf-btn" onclick="openShelf()">My Library <span class="shelf-badge" id="shelf-badge-quiz">0</span></button>
+      <div class="progress-label" id="progress-label">Chapter 1 of 10</div>
+    </div>
+  </div>
+  <div class="quiz-body">
+    <div class="page-flip-stage">
+      <div class="question-card" id="question-card"></div>
+      <canvas id="flip-canvas"></canvas>
+    </div>
+  </div>
+  <div class="quiz-footer">
+    <button class="btn-back" id="btn-back" onclick="goBack()">← Previous page</button>
+    <div class="page-number" id="page-number">p. 7</div>
+    <button class="btn-next" id="btn-next" onclick="goNext()">Turn the page →</button>
+  </div>
+</section>
+
+<!-- LOADING -->
+<section id="screen-loading" class="screen">
+  <div class="loading-content">
+    <p class="loading-quote" id="loading-quote">"A reader lives a thousand lives before he dies."</p>
+    <p class="loading-quote-author" id="loading-quote-author">— George R.R. Martin</p>
+    <div class="loading-dots">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal-box">
+    <div class="modal-eyebrow">You've chosen your date</div>
+    <div class="modal-title" id="modal-book-title"></div>
+    <div class="modal-author" id="modal-book-author"></div>
+    <p class="modal-question">This is the one? We think you'll get along very well.</p>
+    <div class="modal-actions">
+      <button class="modal-confirm" onclick="confirmSelection()">Yes, this is my book →</button>
+      <button class="modal-cancel" onclick="closeModal()">Let me look again</button>
+    </div>
+  </div>
+</div>
+
+<!-- REVEAL -->
+<section id="screen-reveal" class="screen">
+  <div class="reveal-container">
+    <div class="reveal-eyebrow">❧ &nbsp; Epilogue &nbsp; ❧</div>
+    <h2 class="reveal-headline" id="reveal-headline">Three books made for you</h2>
+    <p class="reveal-sub" id="reveal-sub">Ranked by how well they match your answers. Click a book to choose it.</p>
+
+    <div class="all-read-banner" id="all-read-banner">
+      <p>You've read all three. Impressive. Slightly alarming. Here are three more.</p>
+      <button class="btn-shelf-link" onclick="loadMoreSuggestions()">Show me more →</button>
+    </div>
+
+    <div class="reveal-books-list" id="reveal-books-list"></div>
+
+    <div class="reveal-bottom">
+      <button class="btn-restart" onclick="restart()">Read it from the start</button>
+      <button class="btn-shelf-link" onclick="openShelf()">My Library →</button>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK DETAIL -->
+<section id="screen-detail" class="screen">
+  <div class="detail-container">
+    <div class="detail-nav">
+      <button class="detail-back" onclick="showScreen('screen-reveal')">← Back to the shortlist</button>
+      <div class="list-picker-wrap" id="detail-picker-wrap">
+        <button class="list-picker-btn" id="detail-shelf-btn" onclick="toggleDetailPicker(event)">
+          Add to list <span class="lp-arrow">▾</span>
+        </button>
+        <div class="list-picker-dropdown" id="detail-picker-dropdown">
+          <div class="list-picker-option" onclick="detailAddToList('reading')">
+            <span class="opt-label">Currently Reading</span>
+            <span class="opt-sub">I'm reading this right now</span>
+          </div>
+          <div class="list-picker-option" onclick="detailAddToList('want')">
+            <span class="opt-label">Want to Read</span>
+            <span class="opt-sub">I'm planning to read this</span>
+          </div>
+          <div class="list-picker-option" onclick="detailAddToList('read')">
+            <span class="opt-label">Already Read</span>
+            <span class="opt-sub">I've finished this book</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-header">
+      <div class="detail-eyebrow">Your chosen date</div>
+      <div class="detail-title" id="detail-title"></div>
+      <div class="detail-author" id="detail-author"></div>
+      <div class="detail-tags" id="detail-tags"></div>
+    </div>
+
+    <div class="detail-divider"></div>
+
+    <div class="detail-first-line" id="detail-first-line" style="display:none">
+      <div class="detail-fl-label">The first line</div>
+      <p class="detail-fl-text" id="detail-fl-text"></p>
+    </div>
+
+    <p class="detail-why" id="detail-why"></p>
+    <div class="detail-best-read" id="detail-best-read" style="display:none">
+      <span id="detail-best-read-text"></span>
+    </div>
+
+    <div class="detail-actions">
+      <button class="detail-btn-learn" id="detail-btn-learn">Learn more about this book →</button>
+    </div>
+
+    <div class="detail-buy-box" id="detail-buy-box">
+      <div class="buy-box-inner">
+        <div class="buy-box-label">Ready to read it?</div>
+        <a class="btn-buy-amazon" id="detail-buy-link" href="#" target="_blank" rel="noopener">
+          Buy on Amazon →
+        </a>
+        <p class="buy-box-note">Opens Amazon in a new tab</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHELF -->
+<section id="screen-shelf" class="screen">
+  <div class="shelf-container">
+    <div class="shelf-header-row">
+      <div>
+        <h2 class="shelf-title">My Library</h2>
+        <p class="shelf-total" id="shelf-total"></p>
+      </div>
+      <button class="shelf-back" onclick="goBackFromShelf()">← Back</button>
+    </div>
+    <div id="shelf-content"></div>
+  </div>
+</section>
+
+<script>
+/* ── Amazon Affiliate Tag ── */
+const AMAZON_TAG = 'YOURTAG-20'; // ← Replace with your Amazon Associates tag
+
+/* ── Direct Amazon ASINs (paperback editions) ── */
+const AMAZON_ASINS = {
+  "The Luminaries":                          "0316074292",
+  "A Little Life":                           "0804172706",
+  "The Secret History":                      "1400031702",
+  "Station Eleven":                          "0804172447",
+  "Never Let Me Go":                         "1400078776",
+  "Normal People":                           "1984822187",
+  "The Name of the Wind":                    "0756405890",
+  "Piranesi":                                "1635577802",
+  "The Goldfinch":                           "0316055441",
+  "Hamnet":                                  "1984898876",
+  "All the Light We Cannot See":             "1501173219",
+  "Annihilation":                            "0374104093",
+  "Lincoln in the Bardo":                    "0812985400",
+  "Pachinko":                                "1455563935",
+  "The Road":                                "0307387895",
+  "Convenience Store Woman":                 "0802129625",
+  "Middlemarch":                             "0141439548",
+  "The Remains of the Day":                  "0679731725",
+  "Mexican Gothic":                          "052562080X",
+  "Crying in H Mart":                        "1984898957",
+  "Tomorrow, and Tomorrow, and Tomorrow":    "0593466497",
+  "The Buried Giant":                        "0307455793",
+  "Demon Copperhead":                        "0063267462",
+  "Babel":                                   "0063294184",
+  "The House in the Cerulean Sea":           "1250217288",
+  "No Longer Human":                         "0811204812",
+  "Eleanor Oliphant is Completely Fine":     "0735220689",
+  "The Way of Kings":                        "0765326353",
+  "Giovanni's Room":                         "0345806565",
+  "On Earth We're Briefly Gorgeous":         "0525562044",
+  "The Power of the Dog":                    "0316610895"
+};
+
+function amazonURL(title) {
+  const asin = AMAZON_ASINS[title];
+  if (asin) return 'https://www.amazon.com/dp/' + asin + '?tag=' + AMAZON_TAG;
+  return 'https://www.amazon.com/s?k=' + encodeURIComponent(title) + '&tag=' + AMAZON_TAG;
+}
+
+/* ── Literary quotes for the loading screen ── */
+const LOADING_QUOTES = [
+  { text: "A reader lives a thousand lives before he dies. The man who never reads lives only one.", author: "George R.R. Martin" },
+  { text: "There is no friend as loyal as a book.", author: "Ernest Hemingway" },
+  { text: "We read to know we are not alone.", author: "C.S. Lewis" },
+  { text: "A book is a dream that you hold in your hands.", author: "Neil Gaiman" },
+  { text: "Outside of a dog, a book is man's best friend. Inside of a dog it's too dark to read.", author: "Groucho Marx" },
+  { text: "So many books, so little time.", author: "Frank Zappa" },
+  { text: "The world is a book, and those who do not travel read only one page.", author: "Saint Augustine" },
+  { text: "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.", author: "Haruki Murakami" }
+];
+
+/* ── Extra book details: first lines & best-read-when ── */
+const BOOK_EXTRAS = {
+  "The Luminaries": {
+    bestRead: "Best read on a cold night when you want to disappear for a week."
+  },
+  "A Little Life": {
+    bestRead: "Best read when you are emotionally prepared. Perhaps not alone."
+  },
+  "The Secret History": {
+    firstLine: "The snow in the mountains was melting and Bunny had been dead for several weeks before we came to understand the gravity of our situation.",
+    bestRead: "Best read on a winter evening with nowhere to be tomorrow."
+  },
+  "Station Eleven": {
+    bestRead: "Best read slowly, over several quiet mornings."
+  },
+  "Never Let Me Go": {
+    firstLine: "My name is Kathy H. I'm thirty-one years old, and I've been a carer now for over eleven years.",
+    bestRead: "Best read on a long train journey, window seat mandatory."
+  },
+  "Normal People": {
+    firstLine: "Marianne stands at the kitchen counter eating cereal and reading a novel.",
+    bestRead: "Best read in one sitting. You will not want to stop."
+  },
+  "The Name of the Wind": {
+    firstLine: "It was night again. The Waystone Inn lay in silence, and it was a silence of three parts.",
+    bestRead: "Best read over a long weekend when the world can wait."
+  },
+  "Piranesi": {
+    bestRead: "Best read alone, in one sitting, with all notifications off."
+  },
+  "The Goldfinch": {
+    bestRead: "Best read across a week of slow evenings."
+  },
+  "Hamnet": {
+    firstLine: "A boy is coming down a track on a summer's afternoon.",
+    bestRead: "Best read on a quiet afternoon with no interruptions."
+  },
+  "All the Light We Cannot See": {
+    firstLine: "At dusk they pour from the sky.",
+    bestRead: "Best read over several evenings, slowly and with care."
+  },
+  "Annihilation": {
+    firstLine: "The tower, which was not supposed to be there, plunges into the earth in a place just before the black pine forest begins to give way to swamp.",
+    bestRead: "Best read late at night. Or maybe not at night."
+  },
+  "Lincoln in the Bardo": {
+    bestRead: "Best read aloud, ideally with someone else in the room."
+  },
+  "Pachinko": {
+    firstLine: "History has failed us, but no matter.",
+    bestRead: "Best read over a long weekend when you want to be moved."
+  },
+  "The Road": {
+    firstLine: "When he woke in the woods in the dark and the cold of the night he'd reach out to touch the child sleeping beside him.",
+    bestRead: "Best read when you need reminding what love actually looks like."
+  },
+  "Convenience Store Woman": {
+    bestRead: "Best read quickly, in a single afternoon."
+  },
+  "Middlemarch": {
+    firstLine: "Miss Brooke had that kind of beauty which seems to be thrown into relief by poor dress.",
+    bestRead: "Best read slowly, over many weeks, like a long friendship."
+  },
+  "The Remains of the Day": {
+    firstLine: "It seems increasingly likely that I really will undertake the expedition that has been preoccupying my imagination now for some days.",
+    bestRead: "Best read on a grey afternoon with a cup of tea going cold."
+  },
+  "Mexican Gothic": {
+    bestRead: "Best read late at night with every light in the house on."
+  },
+  "Crying in H Mart": {
+    firstLine: "Ever since my mom died, I cry in H Mart.",
+    bestRead: "Best read when you want to feel something real."
+  },
+  "Tomorrow, and Tomorrow, and Tomorrow": {
+    firstLine: "On a late afternoon in November 1987, Sadie Green was playing Nintendo in her brother's hospital room when she first met Sam Masur.",
+    bestRead: "Best read over a week, reluctantly put down each night."
+  },
+  "The Buried Giant": {
+    bestRead: "Best read slowly, in the fog of an early morning."
+  },
+  "Demon Copperhead": {
+    firstLine: "First, I got myself born.",
+    bestRead: "Best read in long stretches — you will not want to leave Demon alone."
+  },
+  "Babel": {
+    bestRead: "Best read when you want to feel angry and brilliant simultaneously."
+  },
+  "The House in the Cerulean Sea": {
+    bestRead: "Best read on a rainy weekend when you need to feel good about the world."
+  },
+  "No Longer Human": {
+    bestRead: "Best read when you are feeling brave."
+  },
+  "Eleanor Oliphant is Completely Fine": {
+    bestRead: "Best read with snacks. You'll need something to do with your hands."
+  },
+  "The Way of Kings": {
+    firstLine: "Szeth-son-son-Vallano, Truthless of Shinovar, wore white on the day he was to kill a king.",
+    bestRead: "Best read with a week of free evenings and a large blanket."
+  },
+  "Giovanni's Room": {
+    firstLine: "I stand at the window of this great house in the south of France as night falls, the night which is leading me to the most terrible morning of my life.",
+    bestRead: "Best read in a single evening. You will not be able to stop."
+  },
+  "On Earth We're Briefly Gorgeous": {
+    bestRead: "Best read slowly, pencil in hand, for the sentences you will want to keep."
+  },
+  "The Power of the Dog": {
+    bestRead: "Best read slowly — the dread builds quietly and then all at once."
+  }
+};
+
+/* ─────────────────────────────────────────────
+   QUESTION MAP  — id-keyed, supports branching.
+   Each option may have  next: 'questionId'
+   which overrides the defaultFlow for that pick.
+   Branch questions always route back into the
+   main flow so the total stays exactly 10.
+───────────────────────────────────────────── */
+
+const defaultFlow = [
+  'feeling','pace','world','theme',
+  'avoid','character','length','mood','time','secret'
+];
+
+const allQuestions = [
+  /* ══ MAIN FLOW ══════════════════════════════ */
+  {
+    id: 'feeling',
+    text: 'When you close the last page, you want to feel —',
+    sub: 'Be honest. No one is watching.',
+    options: [
+      { label: 'Hopeful',     hint: 'Like the world is wider than you thought',      value: 'hopeful' },
+      { label: 'Unsettled',   hint: 'With something strange still clinging to you',  value: 'unsettled',  next: 'darkness' },
+      { label: 'Moved',       hint: 'Quietly undone, perhaps a little changed',      value: 'moved' },
+      { label: 'Exhilarated', hint: 'Like you just ran very fast somewhere',          value: 'exhilarated', next: 'thrill_type' }
+    ],
+    reactions: {
+      hopeful:     "Hope! Bold move. Most people pick something brooding and then spend the whole book crying on a train. Respect.",
+      unsettled:   "Oh good, you're one of THOSE. We mean that as the highest compliment. We have been waiting for you.",
+      moved:       "You want your heart rearranged a little. That's emotionally healthy, actually. Surprisingly. We can work with this.",
+      exhilarated: "You want to be grabbed by the collar and run somewhere against your will. Perfect. Absolutely unhinged. We love it."
+    }
+  },
+  {
+    id: 'pace',
+    text: 'The pace you need right now —',
+    sub: 'Some books walk with you. Others drag you by the collar.',
+    options: [
+      { label: 'Slow and immersive',   hint: 'Long sentences, deep rooms, no hurry',    value: 'slow' },
+      { label: 'Propulsive',           hint: "You'll miss your stop on the train",        value: 'fast' },
+      { label: 'Somewhere between',    hint: 'Lyrical, but with momentum',               value: 'medium' },
+      { label: 'Surprise me entirely', hint: 'I have no preference — only trust',        value: 'any' }
+    ],
+    reactions: {
+      slow:   "A slow reader! You're the person who actually tastes their food. You re-read sentences. You dog-ear pages. You're doing it right.",
+      fast:   "You need to be grabbed and dragged, preferably through several continents. We know exactly the type. Come with us.",
+      medium: "Lyrical but with momentum — the literary equivalent of 'I just want to jog, not sprint.' Valid. Extremely valid.",
+      any:    "Full surrender. Either you're very zen or very tired. Statistically it's the second one, but we're not judging."
+    }
+  },
+  {
+    id: 'world',
+    text: 'Where would you like to be taken?',
+    sub: 'Every book is a door. Which would you open?',
+    options: [
+      { label: 'Somewhere cold and remote', hint: 'Tundra, fjords, a suspicious amount of fog', value: 'cold' },
+      { label: 'A city, long ago',          hint: 'Gaslights, fog, streets that no longer exist', value: 'historical' },
+      { label: 'Nowhere real',              hint: "Invented worlds, rules that don't exist yet",  value: 'invented', next: 'magic_style' },
+      { label: 'Close to home',             hint: 'Ordinary life made quietly extraordinary',     value: 'domestic' }
+    ],
+    reactions: {
+      cold:       "Cold and remote! You want isolation and the faint possibility of a wolf in the distance. Good. Normal. Nothing to unpack there.",
+      historical: "The past! Where everyone wore uncomfortable shoes and died at forty. And yet — better light, somehow. We agree.",
+      invented:   "You want to go somewhere that doesn't exist yet. Extremely reasonable. This world has been a lot lately.",
+      domestic:   "Ordinary life, closely observed. The bravest choice on this list. The mundane is the most unsettling thing of all."
+    }
+  },
+  {
+    id: 'theme',
+    text: 'What subject keeps pulling at you?',
+    sub: 'The thread that will keep you reading past midnight.',
+    options: [
+      { label: 'Identity and belonging',   hint: 'Who am I, and to whom do I belong',                  value: 'identity' },
+      { label: 'Love in all its forms',    hint: 'Romantic, familial, obsessive, spectacularly doomed', value: 'love', next: 'love_depth' },
+      { label: 'Survival and consequence', hint: 'What we do when everything is at stake',              value: 'survival' },
+      { label: 'Memory and time',          hint: 'What we keep, what slips away',                       value: 'memory' }
+    ],
+    reactions: {
+      identity: "The oldest question, still completely unanswered! Great news — it means the books about it are endless.",
+      love:     "Love. Obviously. It's always love. Even the books that claim to be about something else are about love. Fine. We'll find you a good one.",
+      survival: "You want to know what people are made of under pressure. Spoiler: mostly panic and sandwiches. But also: surprising grace.",
+      memory:   "Time and memory. The most literary obsession there is. You're going to underline so many things. Bring a pencil."
+    }
+  },
+  {
+    id: 'avoid',
+    text: "One thing you'd rather leave out —",
+    sub: "We'll note it. A preference, not a commandment.",
+    options: [
+      { label: 'Nothing — full surrender', hint: 'I trust you with my whole heart',          value: 'none' },
+      { label: 'Graphic violence',         hint: 'Dark is fine, gratuitous is a bit much',   value: 'violence' },
+      { label: 'A sad ending',             hint: 'I need to close the book with my soul intact', value: 'sad' },
+      { label: 'Romance at the centre',    hint: 'Love as a side dish, not the whole meal',  value: 'romance' }
+    ],
+    reactions: {
+      none:     "Full trust. We are honoured and slightly terrified by the responsibility. We will not let you down. Probably.",
+      violence: "Noted. Dark we can do. Gratuitous we will politely decline on your behalf. You're welcome.",
+      sad:      "You want to close the book and still feel like a functioning person. Completely reasonable. Not all of us can be Cormac McCarthy fans.",
+      romance:  "Love as seasoning, not the entrée. Excellent taste. We have just the thing. Several things, actually."
+    }
+  },
+  {
+    id: 'character',
+    text: 'What kind of narrator calls to you?',
+    sub: 'Someone has to carry the story. Who should it be?',
+    options: [
+      { label: 'A flawed hero trying hard',  hint: 'Good intentions, chaotic execution',          value: 'hero' },
+      { label: 'An unreliable narrator',     hint: "They're lying to you. You'll love it.",        value: 'unreliable' },
+      { label: 'A quiet observer',           hint: 'Watching everything, saying very little',      value: 'observer' },
+      { label: 'Someone morally complex',    hint: 'Not a villain, but not not a villain either',  value: 'complex' }
+    ],
+    reactions: {
+      hero:       "The loveable disaster! Trying their best, failing beautifully. You root for them anyway. Classic. Timeless. Correct.",
+      unreliable: "You want to be lied to with style and commitment. That is a personality trait. We respect it enormously.",
+      observer:   "The quiet one who notices everything. In every friend group, someone is this person. Often it is you, isn't it.",
+      complex:    "Morally grey! Not good, not evil, just deeply inconvenient to categorise. The best kind of company for 400 pages."
+    }
+  },
+  {
+    id: 'length',
+    text: 'How long are you willing to stay?',
+    sub: "Some books ask for a weekend. Others ask for a month and a half.",
+    options: [
+      { label: 'Short and perfect',      hint: 'Under 250 pages — in, out, wrecked',   value: 'short' },
+      { label: 'A proper commitment',    hint: '300–500 pages, fully inhabited',        value: 'medium' },
+      { label: 'Something epic',         hint: "600+ pages — I want to live there",     value: 'long' },
+      { label: "Length doesn't matter",  hint: 'Just make every page earn its keep',    value: 'any' }
+    ],
+    reactions: {
+      short:  "Short and devastating! You like a book that comes in, destroys you, and leaves before you can process it. Efficient.",
+      medium: "The Goldilocks zone of books. Long enough to care about everyone, short enough to finish before you forget who they are.",
+      long:   "Six hundred pages! You are a person who brings snacks to a long film and genuinely enjoys being there. A rare and beautiful type.",
+      any:    "A true reader. It's not about the pages, it's about the sentences. We couldn't agree more if we tried."
+    }
+  },
+  {
+    id: 'mood',
+    text: 'Where are you in life right now?',
+    sub: 'A book always knows when it finds the right reader.',
+    options: [
+      { label: 'Seeking escape',         hint: "My brain needs a holiday from itself",       value: 'escape',    next: 'escape_detail' },
+      { label: 'Craving understanding',  hint: 'Something is not making sense and I want help', value: 'understand' },
+      { label: 'Ready to be challenged', hint: "Comfort is for people who haven't read enough", value: 'challenge' },
+      { label: 'Just need company',      hint: 'A book that sits with me like a good friend', value: 'company' }
+    ],
+    reactions: {
+      escape:     "The brain needs a holiday from itself. Completely valid. Deeply relatable. We are not going to ask follow-up questions.",
+      understand: "Something isn't making sense and you want a book to help think it through. That is, objectively, the best use of literature.",
+      challenge:  "You want to be stretched! Uncomfortable! Maybe a little confused! This is peak reading energy and we salute you.",
+      company:    "You want a book that just sits with you. Not a lecture, not an adventure — just good company. Some of the best books are exactly that."
+    }
+  },
+  {
+    id: 'time',
+    text: 'When do you most often read?',
+    sub: "The hour shapes the book. When do you actually disappear into one?",
+    options: [
+      { label: 'Late at night',           hint: 'When everything else has finally shut up',           value: 'night' },
+      { label: 'Early in the morning',    hint: 'Before the day can ruin everything',                 value: 'morning' },
+      { label: 'In transit',              hint: 'Trains, waiting rooms, school pick-up lines',        value: 'transit' },
+      { label: 'Whenever I can steal it', hint: 'Three pages while pasta boils. I take what I can get.', value: 'stolen' }
+    ],
+    reactions: {
+      night:   "The night reader! You and the book, alone, when the world has finally run out of things to demand from you. This is the correct time.",
+      morning: "Morning! You read before the emails get you. This is a form of armour and we deeply respect it.",
+      transit: "Commuter reader! Nobody on that train knows you're currently in 1880s New Zealand. It's a superpower, honestly.",
+      stolen:  "Three pages while pasta boils. Half a chapter in a waiting room. Fifteen minutes before the kids wake up. The most dedicated reader of all."
+    }
+  },
+  {
+    id: 'secret',
+    text: 'What do you secretly want from a book?',
+    sub: "The real answer. Not the impressive one.",
+    options: [
+      { label: 'To cry, just a little',          hint: 'And feel strangely better for it',             value: 'cry' },
+      { label: 'To be genuinely surprised',      hint: "A twist I absolutely did not clock",            value: 'surprise' },
+      { label: "A line I'll remember forever",   hint: 'One sentence that becomes part of my brain',   value: 'line' },
+      { label: 'To understand someone unlike me',hint: "To borrow a life I'd never otherwise live",    value: 'empathy' }
+    ],
+    reactions: {
+      cry:     "To cry a little and feel better for it. Science confirms this works. Books figured it out centuries before therapists did. Wise choice.",
+      surprise:"You want to be outwitted by a novel. That's both humble and slightly competitive and we are completely here for it.",
+      line:    "You want one line that moves in permanently. You'll text it to someone at midnight. We know exactly the books that do this.",
+      empathy: "You want to borrow a life you'd never live. That is the entire point of literature, stated perfectly. We're a little emotional, honestly."
+    }
+  },
+
+  /* ══ BRANCH QUESTIONS ═══════════════════════
+     Each replaces one step in the default flow.
+     All options specify next: to re-join it.
+  ═══════════════════════════════════════════ */
+  {
+    id: 'darkness',          /* triggered by feeling=unsettled — replaces pace */
+    text: 'How dark are we actually talking?',
+    sub: "There's a spectrum. Where on it do you live?",
+    options: [
+      { label: 'Pitch black',            hint: "Disturbing, bleak, won't leave you alone",      value: 'dark_pitch',  next: 'world' },
+      { label: 'Eerie and strange',      hint: 'Weird fiction, dread that creeps up quietly',   value: 'dark_eerie',  next: 'world' },
+      { label: 'Psychologically tense',  hint: 'Unreliable, unsettling, quietly terrifying',    value: 'dark_psych',  next: 'world' },
+      { label: 'Just an edge of it',     hint: 'Melancholy and ambiguous — not full horror',    value: 'dark_edge',   next: 'world' }
+    ],
+    reactions: {
+      dark_pitch: "Pitch black. Someone who doesn't flinch. We will not waste your time with anything gentle.",
+      dark_eerie: "Eerie and strange. You want the feeling that something is wrong before you can name what it is. Perfect.",
+      dark_psych: "Psychological dread. The horror of realising the narrator has been lying the whole time. Exquisite taste.",
+      dark_edge:  "Dark but not devastating. The shadow of sadness, not its full weight. We can do that very well."
+    }
+  },
+  {
+    id: 'thrill_type',       /* triggered by feeling=exhilarated — replaces pace */
+    text: 'What kind of exhilarated, exactly?',
+    sub: "Not all fast is the same. Be specific.",
+    options: [
+      { label: "Can't-put-it-down thriller", hint: 'Danger, stakes, things going very wrong',   value: 'thrill_danger', next: 'world' },
+      { label: 'Epic adventure',             hint: 'Sweeping scale, journeys, something vast',  value: 'thrill_epic',   next: 'world' },
+      { label: 'Razor-sharp plot twists',    hint: "I want to be outwitted by the structure",   value: 'thrill_twist',  next: 'world' },
+      { label: 'Pure momentum',              hint: "Prose that just moves — I can't stop",       value: 'thrill_prose',  next: 'world' }
+    ],
+    reactions: {
+      thrill_danger: "Danger and stakes! The kind of book you read with your pulse slightly elevated. We've got one.",
+      thrill_epic:   "Epic scale. You want to feel small in a very large world. Completely understandable.",
+      thrill_twist:  "Plot twists! You want to be wrong about everything. We take that as a personal challenge.",
+      thrill_prose:  "Pure momentum. The sentences pull you forward like a current. Yes. We know exactly the books."
+    }
+  },
+  {
+    id: 'magic_style',       /* triggered by world=invented — replaces theme */
+    text: 'What kind of invented world?',
+    sub: "Invented is a broad territory. Narrow it down.",
+    options: [
+      { label: 'Full fantasy — maps, magic, lore', hint: 'The kind with a glossary at the back', value: 'magic_full',  next: 'avoid' },
+      { label: 'Quietly strange',                  hint: 'Realism with one impossible thing',    value: 'magic_quiet', next: 'avoid' },
+      { label: 'Science fiction',                  hint: 'Technology, space, the far future',    value: 'magic_scifi', next: 'avoid' },
+      { label: 'Dark fairy tale',                  hint: 'Folklore logic — beautiful and cruel', value: 'magic_fairy', next: 'avoid' }
+    ],
+    reactions: {
+      magic_full:  "Maps, glossaries, and a magic system someone spent years designing. You are the target audience.",
+      magic_quiet: "One impossible thing in an otherwise real world. The restraint makes it stranger. Perfect choice.",
+      magic_scifi: "Science fiction! The great engine of ideas. You want the future to terrify and fascinate you simultaneously.",
+      magic_fairy: "Dark fairy tales! Where beauty and cruelty live in the same sentence. Very sophisticated of you."
+    }
+  },
+  {
+    id: 'love_depth',        /* triggered by theme=love — replaces character */
+    text: 'What kind of love story calls to you?',
+    sub: "Love has a lot of varieties. Be specific.",
+    options: [
+      { label: 'Slow burn',              hint: 'The tension that takes 300 pages to resolve',   value: 'love_slow',   next: 'avoid' },
+      { label: 'Doomed from the start',  hint: 'Beautiful and absolutely not going to work',    value: 'love_doomed', next: 'avoid' },
+      { label: 'Quiet and domestic',     hint: 'The love of ordinary life, seen up close',      value: 'love_quiet',  next: 'avoid' },
+      { label: 'Obsessive',              hint: 'Consuming, a bit unhinged, genuinely gripping', value: 'love_obsess', next: 'avoid' }
+    ],
+    reactions: {
+      love_slow:   "The slow burn! You want to earn it. Every almost-moment, every near miss. We respect the patience.",
+      love_doomed: "Doomed love! You knew going in that it wouldn't work, and you're going to read every single page anyway.",
+      love_quiet:  "The quiet domestic kind. Ordinary love, closely observed. Often the most devastating kind of all.",
+      love_obsess: "Obsessive love. Just slightly too much. Absolutely compelling. We are not judging you even slightly."
+    }
+  },
+  {
+    id: 'escape_detail',     /* triggered by mood=escape — replaces time */
+    text: 'What exactly do you need to escape from?',
+    sub: "We ask because the destination depends on the departure point.",
+    options: [
+      { label: 'My own head',      hint: 'Overthinking, anxiety, circular thoughts', value: 'esc_head',    next: 'secret' },
+      { label: 'The real world',   hint: 'News, responsibilities, other people',     value: 'esc_world',   next: 'secret' },
+      { label: 'Routine',          hint: "Everything is fine — it's just the same",  value: 'esc_routine', next: 'secret' },
+      { label: 'Nothing specific', hint: 'Just need to be somewhere else entirely',  value: 'esc_general', next: 'secret' }
+    ],
+    reactions: {
+      esc_head:    "Your own head. We hear you. A good book is one of the only things that reliably turns that off.",
+      esc_world:   "The real world. Hard to blame you. We will find you somewhere else to be entirely.",
+      esc_routine: "Routine! Everything is fine, it's just the same. The right book makes the world feel wide again.",
+      esc_general: "Somewhere else, anywhere. No conditions, no requirements. The purest reason to read."
+    }
+  }
+];
+
+const questionsMap = {};
+allQuestions.forEach(q => { questionsMap[q.id] = q; });
+
+function nextQId(fromId, value) {
+  const q = questionsMap[fromId];
+  const opt = q.options.find(o => o.value === value);
+  if (opt && opt.next) return opt.next;
+  const idx = defaultFlow.indexOf(fromId);
+  if (idx !== -1 && idx < defaultFlow.length - 1) return defaultFlow[idx + 1];
+  return null;
+}
+const books = [
+  {
+    title: "The Luminaries",
+    author: "Eleanor Catton",
+    tags: ["Mystery","Historical","Epic","Prize-winning"],
+    why: "A labyrinthine mystery on the New Zealand gold fields — twelve men, one secret, and the stars overhead determining everything. Intricate architecture, dazzling prose, and a surprise on every other page.",
+    search: "The Luminaries Eleanor Catton",
+    match: { feeling:['exhilarated'], pace:['slow'], world:['historical'], theme:['survival'], avoid:['none','romance'], character:['unreliable'], length:['long'], mood:['challenge'], time:['night'], secret:['surprise'] }
+  },
+  {
+    title: "A Little Life",
+    author: "Hanya Yanagihara",
+    tags: ["Literary fiction","Friendship","Devastating","New York"],
+    why: "Four friends in New York, and the unbearable weight of one man's past. You will not emerge unchanged. The most emotionally demanding novel on this shelf — chosen only when you are ready.",
+    search: "A Little Life Hanya Yanagihara",
+    match: { feeling:['moved'], pace:['slow'], world:['domestic'], theme:['love'], avoid:['none'], character:['complex'], length:['long'], mood:['understand'], time:['night'], secret:['cry'] }
+  },
+  {
+    title: "The Secret History",
+    author: "Donna Tartt",
+    tags: ["Dark academia","Thriller","Campus","Obsession"],
+    why: "The murder happens on page one. The rest of the book is the slow, terrible unraveling of what led there. Propulsive and literary at once — a rare combination.",
+    search: "The Secret History Donna Tartt",
+    match: { feeling:['unsettled'], pace:['fast'], world:['historical'], theme:['survival'], avoid:['none','romance'], character:['unreliable'], length:['medium'], mood:['escape'], time:['night'], secret:['surprise'] }
+  },
+  {
+    title: "Station Eleven",
+    author: "Emily St. John Mandel",
+    tags: ["Post-apocalyptic","Hopeful","Art","Memory"],
+    why: "A traveling Shakespeare company crosses the Great Lakes twenty years after civilization ended. A novel about art as survival — gentle, luminous, and genuinely hopeful.",
+    search: "Station Eleven Emily St. John Mandel",
+    match: { feeling:['hopeful'], pace:['medium'], world:['invented'], theme:['memory'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['understand'], time:['morning'], secret:['empathy'] }
+  },
+  {
+    title: "Never Let Me Go",
+    author: "Kazuo Ishiguro",
+    tags: ["Quiet dread","Love","Memory","Dystopia"],
+    why: "Kathy H. narrates her life at Hailsham with suspicious calm. A meditation on memory, love, and accepting the unbearable — you feel the dread arriving before you understand why.",
+    search: "Never Let Me Go Kazuo Ishiguro",
+    match: { feeling:['moved'], pace:['slow'], world:['domestic'], theme:['memory'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand'], time:['morning'], secret:['line'] }
+  },
+  {
+    title: "Normal People",
+    author: "Sally Rooney",
+    tags: ["Contemporary","Love","Class","Ireland"],
+    why: "Connell and Marianne, in and out of each other's orbit for years. A precise, almost surgical study in how two people can be everything to each other and still keep getting it wrong.",
+    search: "Normal People Sally Rooney",
+    match: { feeling:['moved'], pace:['fast'], world:['domestic'], theme:['love'], avoid:['none','violence','sad'], character:['hero'], length:['short'], mood:['company'], time:['transit'], secret:['cry'] }
+  },
+  {
+    title: "The Name of the Wind",
+    author: "Patrick Rothfuss",
+    tags: ["Fantasy","Magic","Epic","Storytelling"],
+    why: "Kvothe — the most legendary figure of his age — tells his own story, and it is extraordinary. Invented worlds, arcane universities, prose so lush you read sentences twice.",
+    search: "The Name of the Wind Patrick Rothfuss",
+    match: { feeling:['exhilarated'], pace:['slow'], world:['invented'], theme:['identity'], avoid:['none','romance','sad'], character:['unreliable'], length:['long'], mood:['escape'], time:['night'], secret:['line'] }
+  },
+  {
+    title: "Piranesi",
+    author: "Susanna Clarke",
+    tags: ["Labyrinthine","Strange","Solitude","Wonder"],
+    why: "A man lives alone in a House of infinite halls and tidal statues, keeping meticulous notes. What he doesn't know will astonish you. Brief, cold, and quietly magnificent.",
+    search: "Piranesi Susanna Clarke",
+    match: { feeling:['unsettled'], pace:['medium'], world:['invented'], theme:['identity'], avoid:['none','romance','violence'], character:['unreliable'], length:['short'], mood:['challenge'], time:['morning'], secret:['surprise'] }
+  },
+  {
+    title: "The Goldfinch",
+    author: "Donna Tartt",
+    tags: ["Coming of age","Art","Loss","New York"],
+    why: "A boy keeps a stolen masterpiece for thirteen years, and it keeps him. About beauty as an anchor — and what it costs to love something that much.",
+    search: "The Goldfinch Donna Tartt",
+    match: { feeling:['moved'], pace:['slow'], world:['historical'], theme:['memory'], avoid:['none','romance'], character:['hero'], length:['long'], mood:['understand'], time:['stolen'], secret:['line'] }
+  },
+  {
+    title: "Hamnet",
+    author: "Maggie O'Farrell",
+    tags: ["Historical","Grief","Shakespeare","Beautiful"],
+    why: "Agnes and a glover's son, Stratford, 1596. The death of their boy Hamnet. What the father does with his grief will echo four hundred years. Luminous and quietly shattering.",
+    search: "Hamnet Maggie O'Farrell",
+    match: { feeling:['moved'], pace:['slow'], world:['historical'], theme:['love'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['company'], time:['morning'], secret:['cry'] }
+  },
+  {
+    title: "All the Light We Cannot See",
+    author: "Anthony Doerr",
+    tags: ["WWII","Hopeful","Lyrical","Prize-winning"],
+    why: "A blind French girl and a German boy, converging through occupied France. Luminous, hopeful in the teeth of devastation — a novel that makes you believe beauty stubbornly persists.",
+    search: "All the Light We Cannot See Anthony Doerr",
+    match: { feeling:['hopeful'], pace:['medium'], world:['historical'], theme:['survival'], avoid:['none','sad'], character:['hero'], length:['long'], mood:['escape'], time:['transit'], secret:['empathy'] }
+  },
+  {
+    title: "Annihilation",
+    author: "Jeff VanderMeer",
+    tags: ["Weird fiction","Dread","Nature","Unsettling"],
+    why: "Four women enter Area X — a wilderness that has swallowed every expedition before them. What they find cannot be explained, and the book knows this. Short, propulsive, and deeply strange.",
+    search: "Annihilation Jeff VanderMeer",
+    match: { feeling:['unsettled'], pace:['fast'], world:['cold'], theme:['identity'], avoid:['none','romance'], character:['unreliable'], length:['short'], mood:['challenge'], time:['transit'], secret:['surprise'] }
+  },
+  {
+    title: "Lincoln in the Bardo",
+    author: "George Saunders",
+    tags: ["Experimental","Grief","Ghosts","Devastating"],
+    why: "Lincoln visits his son's crypt, surrounded by ghosts who don't know they're dead. Structurally unlike anything else ever written. The grief arrives sideways and hits very hard.",
+    search: "Lincoln in the Bardo George Saunders",
+    match: { feeling:['moved'], pace:['medium'], world:['historical'], theme:['memory'], avoid:['none','violence'], character:['complex'], length:['short'], mood:['challenge'], time:['night'], secret:['cry'] }
+  },
+  {
+    title: "Pachinko",
+    author: "Min Jin Lee",
+    tags: ["Family saga","Identity","Korea","Epic"],
+    why: "Four generations of a Korean family in Japan — navigating discrimination, shame, and the things we inherit without being asked. Sweeping, compassionate, impossible to put down.",
+    search: "Pachinko Min Jin Lee",
+    match: { feeling:['hopeful'], pace:['slow'], world:['historical'], theme:['identity'], avoid:['none','sad'], character:['hero'], length:['long'], mood:['understand'], time:['stolen'], secret:['empathy'] }
+  },
+  {
+    title: "The Road",
+    author: "Cormac McCarthy",
+    tags: ["Post-apocalyptic","Sparse","Father and son","Devastating"],
+    why: "A father and son walking south through a dead world, carrying fire. Spare to the point of agony — and the most devastating love story in American fiction. Not a single word is wasted.",
+    search: "The Road Cormac McCarthy",
+    match: { feeling:['moved'], pace:['slow'], world:['cold'], theme:['survival'], avoid:['none','romance'], character:['hero'], length:['short'], mood:['challenge'], time:['night'], secret:['line'] }
+  },
+  {
+    title: "Convenience Store Woman",
+    author: "Sayaka Murata",
+    tags: ["Quiet subversion","Identity","Japan","Darkly funny"],
+    why: "Keiko has worked in the same convenience store for eighteen years and she is perfectly happy about it. A sharp, strange, funny novel about refusing the roles the world assigns you.",
+    search: "Convenience Store Woman Sayaka Murata",
+    match: { feeling:['unsettled'], pace:['fast'], world:['domestic'], theme:['identity'], avoid:['none','violence','sad'], character:['observer'], length:['short'], mood:['escape'], time:['transit'], secret:['surprise'] }
+  },
+  {
+    title: "Middlemarch",
+    author: "George Eliot",
+    tags: ["Classic","Provincial life","Marriage","Vast"],
+    why: "A provincial English town in the 1830s, examined with microscopic compassion. The greatest English novel, according to a large number of serious people. Long, warm, and inexhaustibly wise.",
+    search: "Middlemarch George Eliot",
+    match: { feeling:['hopeful'], pace:['slow'], world:['historical'], theme:['love'], avoid:['none','violence'], character:['observer'], length:['long'], mood:['understand'], time:['night'], secret:['empathy'] }
+  },
+  {
+    title: "The Remains of the Day",
+    author: "Kazuo Ishiguro",
+    tags: ["Regret","English","Quiet","Heartbreaking"],
+    why: "A butler drives across England, remembering a life spent in perfect service — and what that cost him. A novel about dignity, denial, and what we quietly give up without ever quite deciding to.",
+    search: "The Remains of the Day Kazuo Ishiguro",
+    match: { feeling:['moved'], pace:['slow'], world:['historical'], theme:['memory'], avoid:['none','violence','sad'], character:['unreliable'], length:['medium'], mood:['understand'], time:['morning'], secret:['line'] }
+  },
+  {
+    title: "Mexican Gothic",
+    author: "Silvia Moreno-Garcia",
+    tags: ["Gothic","Horror","Mexico","Glamorous"],
+    why: "1950s Mexico: a socialite investigates a mysterious English manor in the mountains. Atmospheric, unsettling, and beautifully constructed — horror that genuinely delivers.",
+    search: "Mexican Gothic Silvia Moreno-Garcia",
+    match: { feeling:['unsettled'], pace:['fast'], world:['historical'], theme:['survival'], avoid:['none','romance','sad'], character:['hero'], length:['medium'], mood:['escape'], time:['night'], secret:['surprise'] }
+  },
+  {
+    title: "Crying in H Mart",
+    author: "Michelle Zauner",
+    tags: ["Memoir","Grief","Food","Korean-American"],
+    why: "A musician reckons with her mother's death through the lens of Korean food and culture. Funny, furious, devastating, and incredibly alive. You'll finish it and immediately miss someone.",
+    search: "Crying in H Mart Michelle Zauner",
+    match: { feeling:['moved'], pace:['fast'], world:['domestic'], theme:['love'], avoid:['none','violence'], character:['hero'], length:['short'], mood:['company'], time:['transit'], secret:['cry'] }
+  },
+  {
+    title: "Tomorrow, and Tomorrow, and Tomorrow",
+    author: "Gabrielle Zevin",
+    tags: ["Friendship","Video games","Ambition","Tender"],
+    why: "Sam and Sadie make video games for thirty years. It is not a love story, except that it is entirely a love story. Warm, smart, and more emotionally devastating than it has any right to be.",
+    search: "Tomorrow and Tomorrow and Tomorrow Gabrielle Zevin",
+    match: { feeling:['hopeful'], pace:['medium'], world:['domestic'], theme:['love'], avoid:['none','violence','sad'], character:['hero'], length:['long'], mood:['company'], time:['stolen'], secret:['empathy'] }
+  },
+  {
+    title: "The Buried Giant",
+    author: "Kazuo Ishiguro",
+    tags: ["Fable","Arthurian","Memory","Fog"],
+    why: "Post-Arthurian Britain, and a strange collective amnesia has settled over the land. An elderly couple journeys to find their son. What they're really looking for is the truth about their own past.",
+    search: "The Buried Giant Kazuo Ishiguro",
+    match: { feeling:['unsettled'], pace:['slow'], world:['invented'], theme:['memory'], avoid:['none','romance'], character:['observer'], length:['medium'], mood:['understand'], time:['morning'], secret:['line'] }
+  },
+  {
+    title: "Demon Copperhead",
+    author: "Barbara Kingsolver",
+    tags: ["Appalachia","Coming of age","Opioid crisis","Prize-winning"],
+    why: "David Copperfield retold in the opioid-ravaged Appalachian South. Furious, compassionate, and alive — Kingsolver at full force. You will care about Demon more than you thought possible.",
+    search: "Demon Copperhead Barbara Kingsolver",
+    match: { feeling:['moved'], pace:['fast'], world:['domestic'], theme:['survival'], avoid:['none','romance'], character:['hero'], length:['long'], mood:['understand'], time:['stolen'], secret:['empathy'] }
+  },
+  {
+    title: "Babel",
+    author: "R.F. Kuang",
+    tags: ["Dark academia","Magic","Oxford","Colonial rage"],
+    why: "1830s Oxford: a translation institute that powers the British Empire, and four students who start to understand what that means. Angry, brilliant, and absolutely uncompromising.",
+    search: "Babel R.F. Kuang",
+    match: { feeling:['exhilarated'], pace:['medium'], world:['historical'], theme:['identity'], avoid:['none','sad'], character:['complex'], length:['long'], mood:['challenge'], time:['night'], secret:['line'] }
+  },
+  {
+    title: "The House in the Cerulean Sea",
+    author: "TJ Klune",
+    tags: ["Cozy fantasy","Found family","Gentle","Warm"],
+    why: "A caseworker for magical children is sent to investigate a mysterious orphanage. Wholesome, funny, and unexpectedly moving. The antidote to books that want to devastate you.",
+    search: "The House in the Cerulean Sea TJ Klune",
+    match: { feeling:['hopeful'], pace:['medium'], world:['invented'], theme:['love'], avoid:['none','violence','sad'], character:['hero'], length:['medium'], mood:['company'], time:['morning'], secret:['empathy'] }
+  },
+  {
+    title: "No Longer Human",
+    author: "Osamu Dazai",
+    tags: ["Japanese classic","Alienation","Confessional","Bleak"],
+    why: "A man recalls his life as a series of performances for people whose inner world he cannot access. Deeply bleak and utterly riveting — the most honest portrait of alienation in literature.",
+    search: "No Longer Human Osamu Dazai",
+    match: { feeling:['unsettled'], pace:['fast'], world:['historical'], theme:['identity'], avoid:['none','romance'], character:['unreliable'], length:['short'], mood:['challenge'], time:['night'], secret:['line'] }
+  },
+  {
+    title: "Eleanor Oliphant is Completely Fine",
+    author: "Gail Honeyman",
+    tags: ["Contemporary","Loneliness","Dark humour","Tender"],
+    why: "Eleanor lives a rigorously structured life and is absolutely, completely fine. Until she isn't. Darkly funny and quietly devastating — one of the most surprising emotional gut-punches in recent fiction.",
+    search: "Eleanor Oliphant is Completely Fine Gail Honeyman",
+    match: { feeling:['hopeful'], pace:['fast'], world:['domestic'], theme:['identity'], avoid:['none','violence'], character:['unreliable'], length:['medium'], mood:['company'], time:['transit'], secret:['cry'] }
+  },
+  {
+    title: "The Way of Kings",
+    author: "Brandon Sanderson",
+    tags: ["Epic fantasy","World-building","War","Vast"],
+    why: "An enormous, meticulously constructed fantasy world on the edge of apocalypse. Three storylines, a thousand pages, and world-building so intricate it becomes its own reward.",
+    search: "The Way of Kings Brandon Sanderson",
+    match: { feeling:['exhilarated'], pace:['slow'], world:['invented'], theme:['survival'], avoid:['none','romance','sad'], character:['hero'], length:['long'], mood:['escape'], time:['stolen'], secret:['surprise'] }
+  },
+  {
+    title: "Giovanni's Room",
+    author: "James Baldwin",
+    tags: ["Paris","Desire","Shame","Classic"],
+    why: "An American in Paris falls in love with an Italian bartender, and cannot accept it. Seventy years old and still devastatingly urgent. A novella that will haunt you like a dream you can't quite shake.",
+    search: "Giovanni's Room James Baldwin",
+    match: { feeling:['unsettled'], pace:['medium'], world:['historical'], theme:['love'], avoid:['none','violence'], character:['unreliable'], length:['short'], mood:['understand'], time:['morning'], secret:['line'] }
+  },
+  {
+    title: "On Earth We're Briefly Gorgeous",
+    author: "Ocean Vuong",
+    tags: ["Poetry-prose","Letter","Immigrant","Tender"],
+    why: "A letter from a son to a mother who cannot read. Vietnamese-American, lyrical, and almost unbearably beautiful. For the reader who wants sentences they will remember for years.",
+    search: "On Earth We're Briefly Gorgeous Ocean Vuong",
+    match: { feeling:['moved'], pace:['slow'], world:['domestic'], theme:['love'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand'], time:['morning'], secret:['line'] }
+  },
+  {
+    title: "The Power of the Dog",
+    author: "Thomas Savage",
+    tags: ["Western","Psychological","Ranch","Menace"],
+    why: "1920s Montana: Phil Burbank is the most dangerous kind of person — the one who is almost certainly right about everything. A slow, suffocating novel with a final act you will not recover from.",
+    search: "The Power of the Dog Thomas Savage",
+    match: { feeling:['unsettled'], pace:['slow'], world:['cold'], theme:['survival'], avoid:['none','romance'], character:['complex'], length:['medium'], mood:['challenge'], time:['night'], secret:['surprise'] }
+  }
+];
+
+
+const endNotes = {
+  hopeful:     "We chose a book that earns its hope honestly — not cheap optimism, but light that actually reaches through.",
+  unsettled:   "You asked to be unsettled. Consider yourself unsettled. You're welcome, and we're sorry.",
+  moved:       "You wanted your heart rearranged just a little. We found a book with very capable hands.",
+  exhilarated: "You wanted to run. Buckle up. This one does not slow down."
+};
+
+/* ─ Navigation state ─────────────────────────
+   path   : array of question IDs visited
+   TOTAL  : always 10 — branches swap, not add
+─────────────────────────────────────────── */
+const TOTAL = 10;
+const pageNumbers = [7, 23, 41, 58, 76, 94, 112, 131, 149, 167]; // realistic page numbers per chapter
+let path = [];
+let answers = {};
+let selectedValue = null;
+let isAnimating = false;
+let flipRAF = null;
+
+function currentQId()    { return path[path.length - 1]; }
+function isLastQuestion(){ return path.length === TOTAL; }
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz() {
+  path = ['feeling'];
+  answers = {};
+  selectedValue = null;
+  showScreen('screen-quiz');
+  renderQuestion(false);
+}
+
+/* ── Canvas page flip ── */
+function easeInOut(t) {
+  return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+}
+
+function drawFlipFrame(ctx, W, H, t, direction) {
+  ctx.clearRect(0, 0, W, H);
+
+  // For forward: fold sweeps right→left (foldX: W→0)
+  // For back:    fold sweeps left→right (foldX: 0→W)
+  const foldX = direction === 'forward' ? W * (1 - t) : W * t;
+
+  // How much of the back-of-page is showing (arc: 0 at start/end, peak at t=0.5)
+  const backPeak = W * 0.10;
+  const backW = Math.sin(t * Math.PI) * backPeak;
+
+  // How much the right edge of the front page curves inward (paper bending)
+  const curveMag = Math.sin(t * Math.PI) * H * 0.045;
+
+  // ── FRONT OF PAGE (not yet folded) ──
+  if (foldX > 0) {
+    ctx.save();
+    ctx.beginPath();
+    if (direction === 'forward') {
+      // Front page: left part of screen up to foldX
+      ctx.moveTo(0, 0);
+      ctx.lineTo(foldX, 0);
+      // Right edge curves slightly inward (the paper bends at the fold)
+      ctx.bezierCurveTo(
+        foldX - curveMag, H * 0.25,
+        foldX - curveMag, H * 0.75,
+        foldX, H
+      );
+      ctx.lineTo(0, H);
+    } else {
+      // Back-flipping: front page is the right part
+      ctx.moveTo(foldX, 0);
+      ctx.lineTo(W, 0);
+      ctx.lineTo(W, H);
+      ctx.lineTo(foldX, H);
+      ctx.bezierCurveTo(
+        foldX + curveMag, H * 0.75,
+        foldX + curveMag, H * 0.25,
+        foldX, 0
+      );
+    }
+    ctx.closePath();
+
+    // Paper with shadow gradient near fold
+    const shadowLen = Math.min(foldX, 120);
+    const gStart = direction === 'forward' ? foldX - shadowLen : foldX;
+    const gEnd   = direction === 'forward' ? foldX            : foldX + shadowLen;
+    const grad = ctx.createLinearGradient(gStart, 0, gEnd, 0);
+    grad.addColorStop(0,   '#faf7f2');
+    grad.addColorStop(0.6, '#f5f0e8');
+    grad.addColorStop(1,   '#e8dfd0');
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // ── BACK OF PAGE (thin sliver at fold — the reverse side) ──
+  if (backW > 0.5) {
+    ctx.save();
+    const bx = direction === 'forward' ? foldX : foldX - backW;
+    ctx.beginPath();
+    ctx.rect(bx, 0, backW, H);
+    ctx.clip();
+
+    const backGrad = ctx.createLinearGradient(bx, 0, bx + backW, 0);
+    if (direction === 'forward') {
+      backGrad.addColorStop(0, 'rgba(160,148,130,0.96)');
+      backGrad.addColorStop(1, 'rgba(178,165,148,0.0)');
+    } else {
+      backGrad.addColorStop(0, 'rgba(178,165,148,0.0)');
+      backGrad.addColorStop(1, 'rgba(160,148,130,0.96)');
+    }
+    ctx.fillStyle = backGrad;
+    ctx.fillRect(bx, 0, backW, H);
+    ctx.restore();
+  }
+
+  // ── CAST SHADOW on the new page under the fold ──
+  const shadowW = Math.sin(t * Math.PI) * 55;
+  if (shadowW > 0) {
+    ctx.save();
+    const sx = direction === 'forward' ? foldX + backW : foldX - backW - shadowW;
+    const shadowGrad = ctx.createLinearGradient(sx, 0, sx + shadowW, 0);
+    if (direction === 'forward') {
+      shadowGrad.addColorStop(0, 'rgba(0,0,0,0.16)');
+      shadowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    } else {
+      shadowGrad.addColorStop(0, 'rgba(0,0,0,0)');
+      shadowGrad.addColorStop(1, 'rgba(0,0,0,0.16)');
+    }
+    ctx.fillStyle = shadowGrad;
+    ctx.fillRect(sx, 0, shadowW, H);
+    ctx.restore();
+  }
+
+  // ── CREASE HIGHLIGHT at the fold line ──
+  if (foldX > 0 && foldX < W) {
+    ctx.save();
+    ctx.globalAlpha = 0.55 * Math.sin(t * Math.PI);
+    ctx.strokeStyle = 'rgba(255,252,245,0.9)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    if (direction === 'forward') {
+      ctx.moveTo(foldX, 0);
+      ctx.bezierCurveTo(foldX - curveMag, H*0.25, foldX - curveMag, H*0.75, foldX, H);
+    } else {
+      ctx.moveTo(foldX, 0);
+      ctx.bezierCurveTo(foldX + curveMag, H*0.25, foldX + curveMag, H*0.75, foldX, H);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function playCanvasFlip(direction, onMidpoint, onComplete) {
+  const canvas = document.getElementById('flip-canvas');
+  const stage  = canvas.parentElement;
+
+  // Size canvas to match the stage element exactly
+  const rect = stage.getBoundingClientRect();
+  const W = rect.width;
+  const H = rect.height;
+  canvas.width  = W;
+  canvas.height = H;
+  canvas.style.display = 'block';
+
+  const ctx = canvas.getContext('2d');
+  const DURATION = 1050; // ms — satisfyingly slow
+  let midpointFired = false;
+  const startTime = performance.now();
+
+  function frame(now) {
+    const raw = Math.min((now - startTime) / DURATION, 1);
+    const t   = easeInOut(raw);
+
+    // At the midpoint (fold crosses centre), swap in new content
+    if (!midpointFired && raw >= 0.48) {
+      midpointFired = true;
+      onMidpoint();
+    }
+
+    drawFlipFrame(ctx, W, H, t, direction);
+
+    if (raw < 1) {
+      flipRAF = requestAnimationFrame(frame);
+    } else {
+      // Clean up
+      ctx.clearRect(0, 0, W, H);
+      canvas.style.display = 'none';
+      if (onComplete) onComplete();
+      isAnimating = false;
+      // Show continue button if answer already selected
+      if (selectedValue) {
+        const btn = document.getElementById('btn-next');
+        btn.classList.add('visible');
+        btn.textContent = isLastQuestion() ? 'Open the cover →' : 'Turn the page →';
+      }
+    }
+  }
+
+  flipRAF = requestAnimationFrame(frame);
+}
+
+/* ── Render question content ── */
+function buildQuestionHTML(qId) {
+  const q = questionsMap[qId];
+  const sel = answers[qId] || null;
+  const optionsHTML = q.options.map(o => `
+    <button class="option-btn ${sel === o.value ? 'selected' : ''}" onclick="selectOption('${o.value}', this)">
+      <span class="option-inner">
+        <span class="option-label">${o.label}</span>
+        <span class="option-hint">${o.hint}</span>
+      </span>
+    </button>`).join('');
+  const reactionHTML = sel && q.reactions[sel]
+    ? `<div class="reaction-box"><div class="reaction-label">✦ Margin note —</div><div class="reaction-text">${q.reactions[sel]}</div></div>` : '';
+  return `
+    <div class="q-number"><span class="chapter-ornament">❧</span> Chapter ${path.length}</div>
+    <h2 class="q-text">${q.text}</h2>
+    <p class="q-sub">${q.sub}</p>
+    <div class="options-grid">${optionsHTML}</div>
+    <div id="reaction-area">${reactionHTML}</div>`;
+}
+
+function renderQuestion(animate, direction) {
+  const qId = currentQId();
+  const card = document.getElementById('question-card');
+  document.getElementById('progress-fill').style.width = ((path.length / TOTAL) * 100) + '%';
+  document.getElementById('progress-label').textContent = 'Chapter ' + path.length + ' of ' + TOTAL;
+  document.getElementById('page-number').textContent = 'p. ' + pageNumbers[path.length - 1];
+  document.getElementById('btn-back').disabled = false;
+  document.getElementById('btn-next').classList.remove('visible');
+  selectedValue = answers[qId] || null;
+
+  if (!animate) {
+    card.innerHTML = buildQuestionHTML(qId);
+    if (selectedValue) {
+      const btn = document.getElementById('btn-next');
+      btn.classList.add('visible');
+      btn.textContent = isLastQuestion() ? 'Open the cover →' : 'Turn the page →';
+    }
+    return;
+  }
+
+  isAnimating = true;
+  // Step 1: clear the margin note so the card shrinks to question+options size.
+  const reactionArea = document.getElementById('reaction-area');
+  if (reactionArea) reactionArea.innerHTML = '';
+  // Step 2: wait one frame so the browser reflows the card to its new height,
+  // then lock THAT height — the canvas will be sized to just the question+options.
+  requestAnimationFrame(() => {
+    card.style.minHeight = card.offsetHeight + 'px';
+    card.style.overflow  = 'hidden';
+    playCanvasFlip(direction, () => {
+      // Midpoint: inject new content while height is locked (no jump).
+      card.innerHTML = buildQuestionHTML(qId);
+    }, () => {
+      // Animation done: release so card adopts its natural height.
+      card.style.minHeight = '';
+      card.style.overflow  = '';
+    });
+  });
+}
+
+function selectOption(value, el) {
+  if (isAnimating) return;
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedValue = value;
+  answers[currentQId()] = value;
+
+  const q = questionsMap[currentQId()];
+  const area = document.getElementById('reaction-area');
+  if (q.reactions && q.reactions[value]) {
+    area.innerHTML = `<div class="reaction-box"><div class="reaction-label">✦ Margin note —</div><div class="reaction-text">${q.reactions[value]}</div></div>`;
+  }
+  const btn = document.getElementById('btn-next');
+  btn.classList.add('visible');
+  btn.textContent = isLastQuestion() ? 'Open the cover →' : 'Turn the page →';
+}
+
+function goNext() {
+  if (!selectedValue || isAnimating) return;
+  if (isLastQuestion()) {
+    showReveal();
+  } else {
+    const nxt = nextQId(currentQId(), selectedValue);
+    if (!nxt) { showReveal(); return; }
+    path.push(nxt);
+    selectedValue = answers[currentQId()] || null;
+    renderQuestion(true, 'forward');
+  }
+}
+
+function goBack() {
+  if (isAnimating) return;
+  if (path.length <= 1) {
+    showScreen('screen-landing');
+  } else {
+    path.pop();
+    selectedValue = answers[currentQId()] || null;
+    renderQuestion(true, 'back');
+  }
+}
+
+function showReveal() {
+  showScreen('screen-loading');
+  // Cycle through literary quotes while loading
+  let qi = Math.floor(Math.random() * LOADING_QUOTES.length);
+  const qEl = document.getElementById('loading-quote');
+  const aEl = document.getElementById('loading-quote-author');
+  function showNextQuote() {
+    const q = LOADING_QUOTES[qi % LOADING_QUOTES.length];
+    qEl.style.opacity = 0;
+    aEl.style.opacity = 0;
+    setTimeout(() => {
+      qEl.textContent = '\u201c' + q.text + '\u201d';
+      aEl.textContent = '\u2014 ' + q.author;
+      qEl.style.opacity = 1;
+      aEl.style.opacity = 1;
+    }, 300);
+    qi++;
+  }
+  showNextQuote();
+  const quoteInterval = setInterval(showNextQuote, 3000);
+
+  // Compute results immediately but hold in background
+  let resultsReady = false;
+  let minTimeReady = false;
+  function tryTransition() {
+    if (resultsReady && minTimeReady) {
+      clearInterval(quoteInterval);
+      showScreen('screen-reveal');
+    }
+  }
+
+  // Kick off book matching (near-instant, but non-blocking)
+  setTimeout(() => {
+    currentSuggestions = matchBooks(3, getReadTitles());
+    renderReveal(currentSuggestions);
+    resultsReady = true;
+    tryTransition();
+  }, 0);
+
+  // Enforce 6-second minimum — but keep cycling quotes every 3s if needed
+  setTimeout(() => {
+    minTimeReady = true;
+    tryTransition();
+  }, 6000);
+}
+
+function checkAllRead(bookList) {
+  const readTitles = getReadTitles();
+  const allRead = bookList.length > 0 && bookList.every(b => readTitles.includes(b.title));
+  const banner = document.getElementById('all-read-banner');
+  if (banner) banner.classList.toggle('visible', allRead);
+}
+
+function loadMoreSuggestions() {
+  const exclude = getReadTitles();
+  const more = matchBooks(3, exclude);
+  if (more.length === 0) {
+    document.getElementById('all-read-banner').innerHTML =
+      `<p>You've read everything we have. At this point we're taking notes from you.</p>`;
+    return;
+  }
+  currentSuggestions = more;
+  document.getElementById('reveal-headline').textContent = 'Three more books for you';
+  document.getElementById('reveal-sub').textContent = "Since you've been so thorough about it.";
+  document.getElementById('all-read-banner').classList.remove('visible');
+  renderReveal(more);
+}
+function matchBooks(count, exclude) {
+  const weights = { feeling:4, theme:4, world:4, secret:3, mood:3, character:3, avoid:2, pace:2, length:2, time:1 };
+  const branchToMatch = { darkness:'feeling', thrill_type:'feeling', magic_style:'world', love_depth:'theme', escape_detail:'mood' };
+
+  const scores = books
+    .filter(b => !exclude.includes(b.title))
+    .map(book => {
+      let score = 0;
+      for (const [key, wt] of Object.entries(weights)) {
+        const userVal = answers[key];
+        if (!userVal || userVal === 'any') continue;
+        const matchKey = branchToMatch[key] || key;
+        const bookVals = book.match[matchKey] || [];
+        if (bookVals[0] === userVal) score += wt * 2;
+        else if (bookVals.includes(userVal)) score += wt;
+      }
+      // also score any branch answers the user hit
+      for (const [branchId, matchKey] of Object.entries(branchToMatch)) {
+        const userVal = answers[branchId];
+        if (!userVal) continue;
+        const bookVals = book.match[matchKey] || [];
+        if (bookVals[0] === userVal) score += 2;
+        else if (bookVals.includes(userVal)) score += 1;
+      }
+      const userAvoid = answers['avoid'];
+      if (userAvoid && userAvoid !== 'none') {
+        const bookAvoid = book.match['avoid'] || [];
+        if (!bookAvoid.includes(userAvoid) && !bookAvoid.includes('none')) score -= 4;
+      }
+      return { book, score };
+    });
+
+  scores.sort((a, b) => b.score - a.score);
+  return scores.slice(0, count).map(s => s.book);
+}
+
+const rankLabels   = ['Perfect match', 'Strong match', 'Good match'];
+const rankOrdinal  = ['1st', '2nd', '3rd'];
+const rankColClass = ['top', 'second', 'third'];
+
+function buildListPickerBtn(bookTitle, bookAuthor, cardIndex) {
+  const current = getBookList(bookTitle);
+  const btnClass = 'list-picker-btn' + (current ? ' has-list' : '');
+  const btnLabel = current ? '&#10003; ' + listLabel(current) : 'Add to list &#9662;';
+  const t = bookTitle.replace(/'/g, "\\'");
+  const a = bookAuthor.replace(/'/g, "\\'");
+  return '<div class="list-picker-wrap">'
+    + '<button class="' + btnClass + '" id="lp-btn-' + cardIndex + '" onclick="toggleCardPicker(event,' + cardIndex + ')">' + btnLabel + '</button>'
+    + '<div class="list-picker-dropdown" id="lp-dd-' + cardIndex + '">'
+    + '<div class="list-picker-option' + (current === 'reading' ? ' active' : '') + '" onclick="cardAddToList(event,\'' + t + '\',\'' + a + '\',\'reading\',' + cardIndex + ')">'
+    + '<span class="opt-label">Currently Reading</span><span class="opt-sub">I\'m reading this right now</span></div>'
+    + '<div class="list-picker-option' + (current === 'want' ? ' active' : '') + '" onclick="cardAddToList(event,\'' + t + '\',\'' + a + '\',\'want\',' + cardIndex + ')">'
+    + '<span class="opt-label">Want to Read</span><span class="opt-sub">I\'m planning to read this</span></div>'
+    + '<div class="list-picker-option' + (current === 'read' ? ' active' : '') + '" onclick="cardAddToList(event,\'' + t + '\',\'' + a + '\',\'read\',' + cardIndex + ')">'
+    + '<span class="opt-label">Already Read</span><span class="opt-sub">I\'ve finished this book</span></div>'
+    + '</div></div>';
+}
+
+function renderReveal(bookList) {
+  const readTitles = getReadTitles();
+  const list = document.getElementById('reveal-books-list');
+  list.innerHTML = bookList.map((book, i) => {
+    const isRead = readTitles.includes(book.title);
+    const tagsHTML = book.tags.map(t => '<span class="book-tag">' + t + '</span>').join('');
+    const searchURL = amazonURL(book.title);
+    return '<div class="ranked-card ' + (isRead ? 'is-read' : '') + '" id="card-' + i + '" onclick="selectCard(' + i + ')">'
+      + '<div class="rank-col ' + rankColClass[i] + '">'
+      + '<div class="rank-num">' + rankOrdinal[i] + '</div>'
+      + '<div class="rank-label">' + rankLabels[i] + '</div>'
+      + '</div>'
+      + '<div class="card-body">'
+      + '<span class="read-badge">Already read</span>'
+      + '<div class="card-top"><div class="card-titles">'
+      + '<div class="book-title">' + book.title + '</div>'
+      + '<div class="book-author">by ' + book.author + '</div>'
+      + '</div></div>'
+      + '<p class="book-why">' + book.why + '</p>'
+      + (BOOK_EXTRAS[book.title]?.bestRead ? '<div class="book-best-read">☕ ' + BOOK_EXTRAS[book.title].bestRead + '</div>' : '')
+      + '<div class="book-tags">' + tagsHTML + '</div>'
+      + '<div class="card-actions" onclick="event.stopPropagation()">'
+      + '<button class="btn-find-book" onclick="window.open(\'' + searchURL + '\',\'_blank\')">Find this book &#8594;</button>'
+      + buildListPickerBtn(book.title, book.author, i)
+      + '</div>'
+      + '</div></div>';
+  }).join('');
+
+  checkAllRead(bookList);
+}
+
+let selectedBookIndex = null;
+
+function selectCard(i) {
+  const card = document.getElementById(`card-${i}`);
+  if (!card || card.classList.contains('is-read')) return;
+
+  // Highlight the card
+  document.querySelectorAll('.ranked-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedBookIndex = i;
+
+  // Open confirmation modal
+  const book = currentSuggestions[i];
+  document.getElementById('modal-book-title').textContent = book.title;
+  document.getElementById('modal-book-author').textContent = 'by ' + book.author;
+  document.getElementById('confirm-modal').classList.add('visible');
+}
+
+function closeModal() {
+  document.getElementById('confirm-modal').classList.remove('visible');
+  // Deselect card
+  document.querySelectorAll('.ranked-card').forEach(c => c.classList.remove('selected'));
+  selectedBookIndex = null;
+}
+
+function confirmSelection() {
+  document.getElementById('confirm-modal').classList.remove('visible');
+  if (selectedBookIndex === null) return;
+  const book = currentSuggestions[selectedBookIndex];
+  openDetailScreen(book);
+}
+
+function openDetailScreen(book) {
+  document.getElementById('detail-title').textContent = book.title;
+  document.getElementById('detail-author').textContent = 'by ' + book.author;
+  document.getElementById('detail-why').textContent = book.why;
+  document.getElementById('detail-tags').innerHTML = book.tags.map(t =>
+    `<span class="detail-tag">${t}</span>`).join('');
+  document.getElementById('detail-btn-learn').onclick = () =>
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(book.search + ' book review'), '_blank');
+
+  // Amazon affiliate buy link — direct product page
+  document.getElementById('detail-buy-link').href = amazonURL(book.title);
+
+  // First line & best-read-when from BOOK_EXTRAS
+  const extras = BOOK_EXTRAS[book.title] || {};
+  const flBox = document.getElementById('detail-first-line');
+  const flText = document.getElementById('detail-fl-text');
+  if (extras.firstLine) {
+    flText.textContent = '\u201c' + extras.firstLine + '\u201d';
+    flBox.style.display = 'block';
+  } else {
+    flBox.style.display = 'none';
+  }
+  const brBox = document.getElementById('detail-best-read');
+  const brText = document.getElementById('detail-best-read-text');
+  if (extras.bestRead) {
+    brText.textContent = '☕  ' + extras.bestRead;
+    brBox.style.display = 'block';
+  } else {
+    brBox.style.display = 'none';
+  }
+
+  // Shelf button state
+  const btn = document.getElementById('detail-shelf-btn');
+  btn._book = book;
+  const currentList = getBookList(book.title);
+  if (currentList) {
+    btn.innerHTML = `✓ ${listLabel(currentList)} <span class="lp-arrow">▾</span>`;
+    btn.classList.add('has-list');
+  } else {
+    btn.innerHTML = `Add to list <span class="lp-arrow">▾</span>`;
+    btn.classList.remove('has-list');
+  }
+  // Refresh active states in dropdown
+  document.querySelectorAll('#detail-picker-dropdown .list-picker-option').forEach((opt, i) => {
+    const ids = ['reading','want','read'];
+    opt.classList.toggle('active', ids[i] === currentList);
+  });
+
+  showScreen('screen-detail');
+}
+
+// Close modal on overlay click
+document.getElementById('confirm-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ══════════ THREE-LIST SHELF SYSTEM ══════════ */
+
+const LIST_KEYS = { reading: 'bdb_reading', want: 'bdb_want_to_read', read: 'bdb_already_read' };
+const LIST_NAMES = { reading: 'Currently Reading', want: 'Want to Read', read: 'Already Read' };
+const LIST_SUBS  = { reading: 'I\'m reading this right now', want: 'I\'m planning to read this', read: 'I\'ve finished this book' };
+
+function getList(listId) {
+  try { const r = localStorage.getItem(LIST_KEYS[listId]); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+
+function saveList(listId, arr) {
+  localStorage.setItem(LIST_KEYS[listId], JSON.stringify(arr));
+}
+
+function getBookList(title) {
+  for (const id of ['reading','want','read']) {
+    if (getList(id).find(b => b.title === title)) return id;
+  }
+  return null;
+}
+
+function listLabel(listId) {
+  return { reading: 'Currently Reading', want: 'Want to Read', read: 'Already Read' }[listId] || '';
+}
+
+function addBookToList(title, author, listId) {
+  // Remove from any existing list first
+  for (const id of ['reading','want','read']) {
+    const arr = getList(id).filter(b => b.title !== title);
+    saveList(id, arr);
+  }
+  // Currently Reading only allows one book
+  if (listId === 'reading') {
+    saveList('reading', [{ title, author, date: new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'}) }]);
+  } else {
+    const arr = getList(listId);
+    arr.push({ title, author, date: new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'}) });
+    saveList(listId, arr);
+  }
+  updateShelfBadges();
+}
+
+function removeBookFromList(title, listId) {
+  saveList(listId, getList(listId).filter(b => b.title !== title));
+  updateShelfBadges();
+  renderShelf();
+  if (currentSuggestions.length) renderReveal(currentSuggestions);
+}
+
+function moveBook(title, author, fromList, toList) {
+  addBookToList(title, author, toList);
+  updateShelfBadges();
+  renderShelf();
+}
+
+// Legacy compat — "already read" list is used for exclusion
+function getReadTitles() { return getList('read').map(b => b.title); }
+
+function updateShelfBadges() {
+  const total = ['reading','want','read'].reduce((n,id) => n + getList(id).length, 0);
+  ['shelf-badge-landing','shelf-badge-quiz'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = total;
+    el.classList.toggle('visible', total > 0);
+  });
+}
+
+/* ── Card list picker ── */
+let openPickerCardIndex = null;
+
+function openDropdown(btn, dd) {
+  if (dd.parentElement !== document.body) document.body.appendChild(dd);
+  const r = btn.getBoundingClientRect();
+  dd.style.position = 'fixed';
+  dd.style.top  = (r.bottom + 4) + 'px';
+  dd.style.left = Math.min(r.left, window.innerWidth - 252) + 'px';
+  dd.classList.add('open');
+  btn.classList.add('open');
+}
+
+function toggleCardPicker(e, cardIndex) {
+  e.stopPropagation();
+  const dd  = document.getElementById('lp-dd-' + cardIndex);
+  const btn = document.getElementById('lp-btn-' + cardIndex);
+  const isOpen = dd.classList.contains('open');
+  closeAllPickers();
+  if (!isOpen) {
+    openDropdown(btn, dd);
+    openPickerCardIndex = cardIndex;
+  }
+}
+
+function cardAddToList(e, title, author, listId, cardIndex) {
+  e.stopPropagation();
+  addBookToList(title, author, listId);
+  closeAllPickers();
+  // Update button label
+  const btn = document.getElementById(`lp-btn-${cardIndex}`);
+  if (btn) {
+    btn.innerHTML = `✓ ${listLabel(listId)}`;
+    btn.classList.add('has-list');
+  }
+  // Mark card as dimmed only if "already read"
+  const card = document.getElementById(`card-${cardIndex}`);
+  if (card) card.classList.toggle('is-read', listId === 'read');
+  checkAllRead(currentSuggestions);
+}
+
+function closeAllPickers() {
+  document.querySelectorAll('.list-picker-dropdown.open').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('.list-picker-btn.open').forEach(el => el.classList.remove('open'));
+  openPickerCardIndex = null;
+}
+
+document.addEventListener('click', closeAllPickers);
+
+/* ── Detail screen picker ── */
+function toggleDetailPicker(e) {
+  e.stopPropagation();
+  const dd  = document.getElementById('detail-picker-dropdown');
+  const btn = document.getElementById('detail-shelf-btn');
+  const isOpen = dd.classList.contains('open');
+  closeAllPickers();
+  if (!isOpen) openDropdown(btn, dd);
+}
+
+function detailAddToList(listId) {
+  const btn = document.getElementById('detail-shelf-btn');
+  const book = btn._book;
+  if (!book) return;
+  addBookToList(book.title, book.author, listId);
+  closeAllPickers();
+  // Update button state
+  btn.innerHTML = `✓ ${listLabel(listId)} <span class="lp-arrow">▾</span>`;
+  btn.classList.add('has-list');
+  // Refresh active states in dropdown
+  document.querySelectorAll('#detail-picker-dropdown .list-picker-option').forEach((opt, i) => {
+    const ids = ['reading','want','read'];
+    opt.classList.toggle('active', ids[i] === listId);
+  });
+}
+
+/* ── Shelf screen ── */
+let prevScreen = 'screen-landing';
+
+function openShelf() {
+  prevScreen = document.querySelector('.screen.active')?.id || 'screen-landing';
+  showScreen('screen-shelf');
+  renderShelf();
+}
+
+function goBackFromShelf() { showScreen(prevScreen); }
+
+function renderShelf() {
+  const total = ['reading','want','read'].reduce((n,id) => n + getList(id).length, 0);
+  const totalEl = document.getElementById('shelf-total');
+  if (totalEl) totalEl.textContent = total === 0 ? '' : `${total} book${total !== 1 ? 's' : ''} tracked`;
+
+  const contentEl = document.getElementById('shelf-content');
+
+  const readingBooks = getList('reading');
+  const wantBooks    = getList('want');
+  const readBooks    = getList('read');
+
+  if (total === 0) {
+    contentEl.innerHTML = `<div class="shelf-empty">❧ Your library is empty. Every great collection begins with a single book.</div><button class="shelf-back" onclick="goBackFromShelf()">← Back to the reading room</button>`;
+    return;
+  }
+
+  const renderCR = () => {
+    if (readingBooks.length === 0) return '<div class="shelf-section-empty">Nothing in progress right now.</div>';
+    const b = readingBooks[0];
+    return '<div class="cr-card"><div>'
+      + '<div class="cr-label">Currently reading</div>'
+      + '<div class="cr-title">' + b.title + '</div>'
+      + '<div class="cr-author">' + b.author + '</div>'
+      + '</div><div class="cr-actions">'
+      + '<button class="btn-move" onclick="moveBook(\'' + esc(b.title) + '\',\'' + esc(b.author) + '\',\'reading\',\'read\')">Mark as read</button>'
+      + '<button class="btn-remove" onclick="removeBookFromList(\'' + esc(b.title) + '\',\'reading\')">Remove</button>'
+      + '</div></div>';
+  };
+
+  const moveLabel = { reading: '&#8594; Reading', want: '&#8594; Want to read', read: '&#8594; Already read' };
+
+  const renderGrid = (booksArr, listId) => {
+    if (booksArr.length === 0) return '<div class="shelf-section-empty">Nothing here yet.</div>';
+    const otherLists = ['reading','want','read'].filter(l => l !== listId);
+    let html = '<div class="shelf-grid">';
+    for (const b of booksArr) {
+      html += '<div class="shelf-row"><div>'
+        + '<div class="shelf-book-title">' + b.title + '</div>'
+        + '<div class="shelf-book-author">' + b.author + '</div>'
+        + '<div class="shelf-book-meta">Added ' + b.date + '</div>'
+        + '</div><div class="shelf-row-actions">';
+      for (const l of otherLists) {
+        html += '<button class="btn-move" onclick="moveBook(\'' + esc(b.title) + '\',\'' + esc(b.author) + '\',\'' + listId + '\',\'' + l + '\')">' + moveLabel[l] + '</button>';
+      }
+      html += '<button class="btn-remove" onclick="removeBookFromList(\'' + esc(b.title) + '\',\'' + listId + '\')">Remove</button>'
+        + '</div></div>';
+    }
+    html += '</div>';
+    return html;
+  };
+
+  contentEl.innerHTML = `
+    <div class="shelf-section">
+      <div class="shelf-section-header">
+        <span class="shelf-section-title">Currently Reading</span>
+        <span class="shelf-section-count">${readingBooks.length > 0 ? '1 book' : ''}</span>
+      </div>
+      ${renderCR()}
+    </div>
+    <div class="shelf-section">
+      <div class="shelf-section-header">
+        <span class="shelf-section-title">Want to Read</span>
+        <span class="shelf-section-count">${wantBooks.length > 0 ? wantBooks.length + ' book' + (wantBooks.length !== 1 ? 's' : '') : ''}</span>
+      </div>
+      ${renderGrid(wantBooks, 'want')}
+    </div>
+    <div class="shelf-section">
+      <div class="shelf-section-header">
+        <span class="shelf-section-title">Already Read</span>
+        <span class="shelf-section-count">${readBooks.length > 0 ? readBooks.length + ' book' + (readBooks.length !== 1 ? 's' : '') : ''}</span>
+      </div>
+      ${renderGrid(readBooks, 'read')}
+    </div>
+    <button class="shelf-back" onclick="goBackFromShelf()">← Back</button>`;
+}
+
+function esc(s) { return s.replace(/'/g,"\\'"); }
+
+/* ── Init ── */
+let currentSuggestions = [];
+updateShelfBadges();
+
+function restart() { startQuiz(); }
+</script>
+</body>
+</html>
