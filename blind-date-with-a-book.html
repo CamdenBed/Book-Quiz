@@ -4657,25 +4657,39 @@ function renderQuestion(animate, direction) {
   // Step 1: clear the margin note so the card shrinks to question+options size.
   const reactionArea = document.getElementById('reaction-area');
   if (reactionArea) reactionArea.innerHTML = '';
-  // Step 2: wait one frame so the browser reflows the card to its collapsed
-  // height, then lock it — the canvas will be sized to exactly this.
+  // Step 2: wait one frame so the browser reflows to the collapsed height.
   requestAnimationFrame(() => {
-    const oldH = card.offsetHeight;
+    const stage    = card.parentElement;          // .page-flip-stage
+    const quizBody = stage.parentElement;         // .quiz-body
+
+    const oldH   = card.offsetHeight;
+    const bodyH  = quizBody.clientHeight;
+    // Replicate the current flex-center position as an explicit padding-top.
+    // This freezes the stage at its exact screen position for the whole
+    // animation — quiz-body can no longer shift the stage vertically even
+    // when the card height changes at the midpoint.
+    const anchorPad = Math.max(
+      parseFloat(getComputedStyle(quizBody).paddingTop),
+      (bodyH - oldH) / 2
+    );
+    quizBody.style.alignItems = 'flex-start';
+    quizBody.style.paddingTop = anchorPad + 'px';
+
     card.style.height   = oldH + 'px';
     card.style.overflow = 'hidden';
 
     playCanvasFlip(direction, () => {
-      // Midpoint: the canvas is covering the entire card, so the user sees
-      // nothing.  Inject the new content and resize to its natural height
-      // right now — by the time the canvas disappears the card is already
-      // the correct size, so there is zero shift on reveal.
+      // Midpoint: canvas covers everything — inject new content and set its
+      // natural height.  Stage cannot shift because alignItems is flex-start
+      // with a fixed paddingTop, so the canvas stays perfectly still.
       card.innerHTML    = buildQuestionHTML(qId);
       card.style.height = card.scrollHeight + 'px';
     }, () => {
-      // Animation complete: canvas gone, card already at right height — just
-      // release the explicit height so it can reflow freely from here.
-      card.style.height   = '';
-      card.style.overflow = '';
+      // Animation complete: restore flex-centering and release card lock.
+      quizBody.style.alignItems = '';
+      quizBody.style.paddingTop = '';
+      card.style.height         = '';
+      card.style.overflow       = '';
     });
   });
 }
