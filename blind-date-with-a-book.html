@@ -4654,17 +4654,29 @@ function renderQuestion(animate, direction) {
   const reactionArea = document.getElementById('reaction-area');
   if (reactionArea) reactionArea.innerHTML = '';
   // Step 2: wait one frame so the browser reflows the card to its new height,
-  // then lock THAT height — the canvas will be sized to just the question+options.
+  // then lock that height explicitly so the canvas is sized correctly.
   requestAnimationFrame(() => {
-    card.style.minHeight = card.offsetHeight + 'px';
-    card.style.overflow  = 'hidden';
+    const oldH = card.offsetHeight;
+    card.style.height  = oldH + 'px';
+    card.style.overflow = 'hidden';
+    let newH = oldH;
+
     playCanvasFlip(direction, () => {
-      // Midpoint: inject new content while height is locked (no jump).
+      // Midpoint: inject new content while canvas still covers the card.
       card.innerHTML = buildQuestionHTML(qId);
+      // Measure the new natural height via scrollHeight (no layout jump —
+      // card is still locked and the canvas is hiding everything).
+      newH = card.scrollHeight;
     }, () => {
-      // Animation done: release so card adopts its natural height.
-      card.style.minHeight = '';
-      card.style.overflow  = '';
+      // Animation done: smoothly transition from old height to new height
+      // so there is no sudden jump as the canvas disappears.
+      card.style.transition = 'height 0.22s ease';
+      card.style.height     = newH + 'px';
+      setTimeout(() => {
+        card.style.transition = '';
+        card.style.height     = '';
+        card.style.overflow   = '';
+      }, 240);
     });
   });
 }
