@@ -4563,12 +4563,16 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
 
-  // Size canvas to match the stage element exactly
+  // Size canvas to match the stage element exactly.
+  // Pin CSS pixel dimensions too so the bitmap never stretches if the
+  // stage height changes mid-animation.
   const rect = stage.getBoundingClientRect();
   const W = rect.width;
   const H = rect.height;
-  canvas.width  = W;
-  canvas.height = H;
+  canvas.width        = W;
+  canvas.height       = H;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
   canvas.style.display = 'block';
 
   const ctx = canvas.getContext('2d');
@@ -4653,30 +4657,25 @@ function renderQuestion(animate, direction) {
   // Step 1: clear the margin note so the card shrinks to question+options size.
   const reactionArea = document.getElementById('reaction-area');
   if (reactionArea) reactionArea.innerHTML = '';
-  // Step 2: wait one frame so the browser reflows the card to its new height,
-  // then lock that height explicitly so the canvas is sized correctly.
+  // Step 2: wait one frame so the browser reflows the card to its collapsed
+  // height, then lock it — the canvas will be sized to exactly this.
   requestAnimationFrame(() => {
     const oldH = card.offsetHeight;
-    card.style.height  = oldH + 'px';
+    card.style.height   = oldH + 'px';
     card.style.overflow = 'hidden';
-    let newH = oldH;
 
     playCanvasFlip(direction, () => {
-      // Midpoint: inject new content while canvas still covers the card.
-      card.innerHTML = buildQuestionHTML(qId);
-      // Measure the new natural height via scrollHeight (no layout jump —
-      // card is still locked and the canvas is hiding everything).
-      newH = card.scrollHeight;
+      // Midpoint: the canvas is covering the entire card, so the user sees
+      // nothing.  Inject the new content and resize to its natural height
+      // right now — by the time the canvas disappears the card is already
+      // the correct size, so there is zero shift on reveal.
+      card.innerHTML    = buildQuestionHTML(qId);
+      card.style.height = card.scrollHeight + 'px';
     }, () => {
-      // Animation done: smoothly transition from old height to new height
-      // so there is no sudden jump as the canvas disappears.
-      card.style.transition = 'height 0.22s ease';
-      card.style.height     = newH + 'px';
-      setTimeout(() => {
-        card.style.transition = '';
-        card.style.height     = '';
-        card.style.overflow   = '';
-      }, 240);
+      // Animation complete: canvas gone, card already at right height — just
+      // release the explicit height so it can reflow freely from here.
+      card.style.height   = '';
+      card.style.overflow = '';
     });
   });
 }
