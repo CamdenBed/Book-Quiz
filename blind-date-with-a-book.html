@@ -190,7 +190,7 @@
   }
   .reaction-text {
     font-family: var(--serif); font-style: italic;
-    font-size: 22px; line-height: 1.6; color: var(--ink-mid);
+    font-size: 26px; line-height: 1.6; color: var(--ink-mid);
   }
 
   .quiz-footer {
@@ -721,6 +721,12 @@
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }
 
+  /* ── Laptop (≤ 1280px) — hide reaction note so footer stays on screen ── */
+  @media (max-width: 1280px) {
+    .reaction-box { display: none; }
+    #reaction-area { margin-top: 0; }
+  }
+
   /* ── Tablet (≤ 860px) ── */
   @media (max-width: 860px) {
     .landing-hero { grid-template-columns: 1fr; }
@@ -778,9 +784,6 @@
     .option-btn { padding: 0.6rem 1rem; }
     .option-label { font-size: 16px; }
     .option-hint { font-size: 13px; }
-    .reaction-box { display: none; }
-    #reaction-area { margin-top: 0; }
-
     /* Quiz footer */
     .quiz-footer { padding: 0.4rem 1.25rem; }
     .btn-back { font-size: 14px; }
