@@ -160,6 +160,7 @@
     padding: 1.3rem 1.75rem; border: 1px solid var(--ink-faint); background: transparent;
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
     text-align: left; transition: border-color 0.2s; position: relative; overflow: hidden; line-height: 1.4;
+    min-height: 115px;
   }
   .option-btn::before {
     content: ''; position: absolute; inset: 0; background: var(--paper-warm);
@@ -781,7 +782,7 @@
     .q-text { font-size: clamp(18px, 5vw, 24px); margin-bottom: 0.35rem; }
     .q-sub { font-size: 14px; margin-bottom: 0.5rem; }
     .options-grid { gap: 0.4rem; }
-    .option-btn { padding: 0.6rem 1rem; }
+    .option-btn { padding: 0.6rem 1rem; min-height: 80px; }
     .option-label { font-size: 16px; }
     .option-hint { font-size: 13px; }
     /* Quiz footer */
