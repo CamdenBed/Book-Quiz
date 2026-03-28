@@ -4657,10 +4657,13 @@ function renderQuestion(animate, direction) {
   const stage    = card.parentElement;   // .page-flip-stage
   const quizBody = stage.parentElement;  // .quiz-body
 
-  // ── Step 1: Lock height and anchor quiz-body BEFORE touching any content.
-  // The reaction box is still present, so the card is at full height.
-  // Locking first means nothing can shift when we clear the reaction box.
-  const startH    = card.offsetHeight;
+  // ── Step 1: Measure the reaction box height so we can lock at the card's
+  // natural height WITHOUT the reaction.  That way the locked anchor position
+  // matches the restore position (flex-center, no reaction) exactly → no shift.
+  const reactionArea = document.getElementById('reaction-area');
+  const reactionH    = reactionArea ? reactionArea.offsetHeight : 0;
+  const startH       = card.offsetHeight - reactionH;  // height without reaction
+
   const bodyH     = quizBody.clientHeight;
   const anchorPad = Math.max(
     parseFloat(getComputedStyle(quizBody).paddingTop),
@@ -4668,12 +4671,10 @@ function renderQuestion(animate, direction) {
   );
   quizBody.style.alignItems = 'flex-start';
   quizBody.style.paddingTop = anchorPad + 'px';
-  card.style.height         = startH + 'px';
+  card.style.height         = startH + 'px';  // clips reaction via overflow
   card.style.overflow       = 'hidden';
 
-  // ── Step 2: Safe to clear the reaction note now — card height is locked
-  // so nothing moves.
-  const reactionArea = document.getElementById('reaction-area');
+  // ── Step 2: Clear the reaction note — already clipped, nothing visible changes.
   if (reactionArea) reactionArea.innerHTML = '';
 
   // ── Step 3: One rAF so the browser commits the locked state before the
@@ -4686,6 +4687,8 @@ function renderQuestion(animate, direction) {
       card.style.height = card.scrollHeight + 'px';
     }, () => {
       // Animation complete: restore normal flex-centering.
+      // Because we locked at the no-reaction height, the restore position
+      // is the same as the locked position — card stays put.
       quizBody.style.alignItems = '';
       quizBody.style.paddingTop = '';
       card.style.height         = '';
