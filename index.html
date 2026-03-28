@@ -150,8 +150,9 @@
   .q-text {
     font-family: var(--serif); font-size: clamp(28px, 4vw, 40px);
     font-weight: 400; line-height: 1.25; margin-bottom: 0.65rem;
+    color: #0d0c0a;
   }
-  .q-sub { font-size: 19px; color: var(--ink-mid); margin-bottom: 2.25rem; font-style: italic; }
+  .q-sub { font-size: 19px; color: #2e2b28; margin-bottom: 2.25rem; font-style: italic; }
 
   .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
 
@@ -159,6 +160,7 @@
     padding: 1.3rem 1.75rem; border: 1px solid var(--ink-faint); background: transparent;
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
     text-align: left; transition: border-color 0.2s; position: relative; overflow: hidden; line-height: 1.4;
+    min-height: 115px;
   }
   .option-btn::before {
     content: ''; position: absolute; inset: 0; background: var(--paper-warm);
@@ -189,7 +191,7 @@
   }
   .reaction-text {
     font-family: var(--serif); font-style: italic;
-    font-size: 22px; line-height: 1.6; color: var(--ink-mid);
+    font-size: 26px; line-height: 1.6; color: var(--ink-mid);
   }
 
   .quiz-footer {
@@ -234,29 +236,30 @@
 
   /* ═══════════ REVEAL ═══════════ */
   #screen-reveal { align-items: center; justify-content: center; overflow-y: auto; }
-  .reveal-container { max-width: 920px; width: 100%; padding: 4rem 3rem; margin: 0 auto; }
+  .reveal-container { max-width: 920px; width: 100%; padding: 4rem 3rem 8rem; margin: 0 auto; }
   .reveal-eyebrow {
-    font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--ink-light); margin-bottom: 0.75rem; animation: fadeIn 0.6s ease both; text-align: center;
+    font-size: 19px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-mid); margin-bottom: 0.75rem; animation: fadeIn 0.6s ease both; text-align: center;
   }
   .reveal-headline {
-    font-family: var(--serif); font-size: clamp(28px,4vw,40px); font-weight: 400;
+    font-family: var(--serif); font-size: clamp(36px,4.5vw,54px); font-weight: 400;
     text-align: center; margin-bottom: 0.5rem; animation: fadeIn 0.6s ease 0.1s both;
+    color: #0d0c0a;
   }
   .reveal-sub {
-    font-size: 18px; color: var(--ink-mid); font-style: italic; text-align: center;
+    font-size: 24px; color: #2e2b28; font-style: italic; text-align: center;
     margin-bottom: 3rem; animation: fadeIn 0.6s ease 0.2s both;
   }
 
   .reveal-hint {
-    text-align: center; font-size: 15px; color: var(--ink-mid);
+    text-align: center; font-size: 22px; color: #2e2b28;
     background: var(--paper-warm); border: 1px solid var(--ink-faint);
     border-radius: 6px; padding: 0.75rem 1.25rem; margin-bottom: 2rem;
     animation: fadeIn 0.6s ease 0.35s both;
   }
 
   .reader-portrait {
-    text-align: center; font-size: 17px; color: var(--ink-mid);
+    text-align: center; font-size: 23px; color: #2e2b28;
     font-style: italic; font-family: var(--body);
     margin: -1.5rem 0 2.5rem; line-height: 1.7;
     animation: fadeIn 0.6s ease 0.25s both;
@@ -306,6 +309,24 @@
     78%  { transform: translate(-2px, -2px) rotate(-0.4deg) scale(1.005); }
     100% { opacity: 1; transform: none; }
   }
+  @keyframes cardSwapIn {
+    0%   { opacity: 0; transform: translateY(18px) scale(0.97); }
+    100% { opacity: 1; transform: none; }
+  }
+  .card-swap { animation: cardSwapIn 0.35s ease both; }
+
+  /* Swap-pick mode */
+  .swap-hint {
+    text-align: center; font-size: 22px; font-style: italic; color: #2e2b28;
+    margin-bottom: 1rem; animation: cardSwapIn 0.3s ease both;
+  }
+  .swap-mode .ranked-card {
+    cursor: crosshair; outline: 2px dashed var(--ink-faint); outline-offset: 3px;
+    transition: outline-color 0.2s, transform 0.15s;
+  }
+  .swap-mode .ranked-card:hover {
+    outline-color: var(--ink-mid); transform: translateY(-2px);
+  }
 
   .rank-col {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -315,7 +336,7 @@
   .rank-num {
     font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--ink); line-height: 1;
   }
-  .rank-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-mid); }
+  .rank-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #2e2b28; }
   .rank-col.top .rank-num { color: var(--accent); }
   .rank-col.top .rank-label { color: var(--accent-light); }
   .rank-col.second .rank-num { color: var(--ink-mid); }
@@ -324,21 +345,21 @@
   .card-body { padding: 1.75rem 2rem; }
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
   .card-titles { flex: 1; }
-  .book-title { font-family: var(--serif); font-size: clamp(22px,3vw,30px); font-weight: 400; line-height: 1.2; margin-bottom: 0.25rem; }
-  .book-author { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink-mid); }
-  .book-why { font-size: 18px; line-height: 1.75; color: var(--ink-mid); font-style: italic; margin-bottom: 1.25rem; }
+  .book-title { font-family: var(--serif); font-size: clamp(24px,3vw,32px); font-weight: 400; line-height: 1.2; margin-bottom: 0.25rem; color: #0d0c0a; }
+  .book-author { font-family: var(--serif); font-style: italic; font-size: 20px; color: #2e2b28; }
+  .book-why { font-size: 20px; line-height: 1.75; color: #2e2b28; font-style: italic; margin-bottom: 1.25rem; }
   .book-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
-  .book-tag { padding: 0.3rem 0.85rem; border: 1px solid var(--ink-faint); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+  .book-tag { padding: 0.3rem 0.85rem; border: 1px solid var(--ink-faint); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: #2e2b28; }
 
   .card-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   .btn-find-book {
     padding: 0.65rem 1.5rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
-    font-family: var(--body); font-size: 16px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+    font-family: var(--body); font-size: 18px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
   }
   .btn-find-book:hover { background: transparent; color: var(--ink); }
   .btn-read {
     padding: 0.65rem 1.5rem; border: 1px solid var(--ink-faint); background: transparent;
-    font-family: var(--body); font-size: 16px; color: var(--ink-mid); cursor: pointer;
+    font-family: var(--body); font-size: 18px; color: #2e2b28; cursor: pointer;
     letter-spacing: 0.04em; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
   }
   .btn-read:hover { border-color: var(--accent-light); color: var(--accent); }
@@ -400,7 +421,7 @@
     display: none; animation: fadeIn 0.5s ease both;
   }
   .all-read-banner.visible { display: block; }
-  .all-read-banner p { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-mid); margin-bottom: 1rem; }
+  .all-read-banner p { font-family: var(--serif); font-style: italic; font-size: 22px; color: #2e2b28; margin-bottom: 1rem; }
 
   /* ═══════════ BOOK DETAIL ═══════════ */
   #screen-detail { align-items: center; justify-content: center; overflow-y: auto; }
@@ -477,6 +498,18 @@
     font-style: italic; letter-spacing: 0.05em;
   }
 
+  .reroll-bar {
+    display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+    flex-wrap: wrap; margin: 1.5rem 0 0.5rem;
+    animation: fadeIn 0.6s ease 1s both;
+  }
+  .reroll-label { font-size: 19px; color: var(--ink-mid); font-style: italic; }
+  .btn-reroll {
+    font-family: var(--body); font-size: 19px; letter-spacing: 0.04em;
+    color: var(--ink-mid); background: none; border: 1px solid var(--ink-faint);
+    padding: 0.5rem 1.25rem; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-reroll:hover { color: var(--ink); border-color: var(--ink-mid); }
   .reveal-bottom { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeIn 0.6s ease 1s both; }
   .btn-restart {
     padding: 1rem 2.5rem; border: 1px solid var(--ink-faint); background: transparent;
@@ -690,6 +723,12 @@
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }
 
+  /* ── Laptop (≤ 1280px) — hide reaction note so footer stays on screen ── */
+  @media (max-width: 1280px) {
+    .reaction-box { display: none; }
+    #reaction-area { margin-top: 0; }
+  }
+
   /* ── Tablet (≤ 860px) ── */
   @media (max-width: 860px) {
     .landing-hero { grid-template-columns: 1fr; }
@@ -744,12 +783,9 @@
     .q-text { font-size: clamp(18px, 5vw, 24px); margin-bottom: 0.35rem; }
     .q-sub { font-size: 14px; margin-bottom: 0.5rem; }
     .options-grid { gap: 0.4rem; }
-    .option-btn { padding: 0.6rem 1rem; }
+    .option-btn { padding: 0.6rem 1rem; min-height: 80px; }
     .option-label { font-size: 16px; }
     .option-hint { font-size: 13px; }
-    .reaction-box { display: none; }
-    #reaction-area { margin-top: 0; }
-
     /* Quiz footer */
     .quiz-footer { padding: 0.4rem 1.25rem; }
     .btn-back { font-size: 14px; }
@@ -762,9 +798,12 @@
 
     /* Reveal */
     .reveal-container { padding: 1.75rem 1.25rem; }
-    .reveal-headline { font-size: clamp(24px, 6vw, 34px); }
-    .reveal-sub { font-size: 16px; margin-bottom: 1.25rem; }
-    .reader-portrait { font-size: 15px; margin: 0 0 1.75rem; padding: 0; }
+    .reveal-headline { font-size: clamp(28px, 6vw, 42px); }
+    .reveal-sub { font-size: 19px; margin-bottom: 1.25rem; }
+    .reader-portrait { font-size: 18px; margin: 0 0 1.75rem; padding: 0; }
+    .reveal-hint { font-size: 16px; }
+    .reroll-label { font-size: 16px; }
+    .btn-reroll { font-size: 16px; }
     .ranked-card { grid-template-columns: 44px 1fr; }
     .rank-col { padding: 1.25rem 0; }
     .rank-num { font-size: 20px; }
@@ -784,6 +823,8 @@
     .btn-find-book, .btn-read { font-size: 14px; padding: 0.6rem 1.1rem; width: 100%; text-align: center; justify-content: center; }
     .reveal-bottom { flex-direction: column; align-items: stretch; gap: 0.75rem; }
     .btn-restart, .btn-shelf-link { text-align: center; font-size: 16px; }
+    .reroll-bar { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+    .btn-reroll { text-align: center; font-size: 16px; }
 
     /* Book detail */
     .detail-container { padding: 1.75rem 1.25rem; }
@@ -928,7 +969,12 @@
     <h2 class="reveal-headline" id="reveal-headline">Three books made for you</h2>
     <p class="reveal-sub" id="reveal-sub">Ranked by how well they match your answers.</p>
     <p class="reader-portrait" id="reader-portrait"></p>
-    <div class="reveal-hint">📖 Click on a book card to see it in depth — first line, full description, and a direct link to buy it.</div>
+
+    <div class="reroll-bar" id="reroll-bar">
+      <span class="reroll-label">Not feeling any of these?</span>
+      <button class="btn-reroll" onclick="rerollOne()">Swap one ↺</button>
+      <button class="btn-reroll" onclick="rerollAll()">Fresh three ↺</button>
+    </div>
 
     <div class="all-read-banner" id="all-read-banner">
       <p>You've read all three. Impressive. Slightly alarming. Here are three more.</p>
@@ -1146,7 +1192,59 @@ const AMAZON_ASINS = {
   "Fingersmith":                             "1573229733",
   "Outline":                                 "0374534209",
   "The Vanishing Half":                      "0525536299",
-  "Things Fall Apart":                       "0385474547"
+  "Things Fall Apart":                       "0385474547",
+
+  /* ── 50 new books ── */
+  "My Brilliant Friend":                     "1609450787",
+  "The Unbearable Lightness of Being":       "0061733806",
+  "Norwegian Wood":                          "0375704027",
+  "Kafka on the Shore":                      "1400079276",
+  "One Flew Over the Cuckoo's Nest":         "0451163966",
+  "Slaughterhouse-Five":                     "0385333846",
+  "Americanah":                              "0307455920",
+  "The Master and Margarita":                "0143108235",
+  "The Count of Monte Cristo":               "0140449264",
+  "Anna Karenina":                           "0143035008",
+  "The Brothers Karamazov":                  "0374528373",
+  "Frankenstein":                            "0486282112",
+  "Dracula":                                 "0486411095",
+  "The Grapes of Wrath":                     "0143039431",
+  "East of Eden":                            "0142004235",
+  "The Catcher in the Rye":                  "0316769487",
+  "A Farewell to Arms":                      "0684801469",
+  "To the Lighthouse":                       "0156907399",
+  "Life of Pi":                              "0156027321",
+  "Love in the Time of Cholera":             "0307389731",
+  "The Stranger":                            "0679720200",
+  "The Color Purple":                        "0156028352",
+  "Their Eyes Were Watching God":            "0061968986",
+  "White Teeth":                             "0375703861",
+  "A Thousand Splendid Suns":               "1594483000",
+  "The Namesake":                            "0618485228",
+  "Little Women":                            "0147514010",
+  "Pride and Prejudice":                     "0141439513",
+  "Emma":                                    "0141439580",
+  "The Dutch House":                         "0062963473",
+  "Little Fires Everywhere":                 "0735224293",
+  "The Overstory":                           "039359292X",
+  "Siddhartha":                              "0553208845",
+  "The English Patient":                     "0525562931",
+  "The Virgin Suicides":                     "0312428812",
+  "Middlesex":                               "0312422156",
+  "Song of Solomon":                         "1400075173",
+  "No Country for Old Men":                  "0307387135",
+  "A Confederacy of Dunces":                 "0802130208",
+  "The Little Prince":                       "0156012197",
+  "Perfume":                                 "0375725822",
+  "The Wind-Up Bird Chronicle":              "0679775439",
+  "The Trial":                               "0805209999",
+  "Orlando":                                 "0156701820",
+  "Possession":                              "0679735909",
+  "True Grit":                               "1590204492",
+  "A Fine Balance":                          "1400030651",
+  "Everything I Never Told You":             "0143127551",
+  "The Rosie Project":                       "1476729085",
+  "Lonesome Dove":                           "0671683306"
 };
 
 function amazonURL(title) {
@@ -1580,6 +1678,180 @@ const BOOK_EXTRAS = {
   "Things Fall Apart": {
     firstLine: "Okonkwo was well known throughout the nine villages and even beyond.",
     bestRead: "Best read when you want a story that is both intimate and world-historical."
+  },
+
+  /* ── 50 new books ── */
+  "My Brilliant Friend": {
+    bestRead: "Best read when you want to be consumed by a friendship so intense it feels like a love affair."
+  },
+  "The Unbearable Lightness of Being": {
+    firstLine: "The idea of eternal return is a mysterious one, and Nietzsche has often perplexed other philosophers with it.",
+    bestRead: "Best read slowly, somewhere you can stop and think after every chapter."
+  },
+  "Norwegian Wood": {
+    bestRead: "Best read alone, at night, when you are in the mood to feel something you can't quite name."
+  },
+  "Kafka on the Shore": {
+    bestRead: "Best read when you want to be completely lost in the best possible way."
+  },
+  "One Flew Over the Cuckoo's Nest": {
+    firstLine: "They're out there.",
+    bestRead: "Best read when you want a book that makes you angry and grateful at the same time."
+  },
+  "Slaughterhouse-Five": {
+    firstLine: "All this happened, more or less.",
+    bestRead: "Best read in one sitting — it's short, and it hits harder that way."
+  },
+  "Americanah": {
+    bestRead: "Best read when you want a novel that is funny and infuriating and deeply true."
+  },
+  "The Master and Margarita": {
+    firstLine: "At the hour of the hot spring sunset two citizens were to be found at Patriarch's Ponds.",
+    bestRead: "Best read when you want something that couldn't have been written anywhere else, by anyone else."
+  },
+  "The Count of Monte Cristo": {
+    bestRead: "Best read on holiday — it is long and propulsive and perfect for days with nothing else to do."
+  },
+  "Anna Karenina": {
+    firstLine: "All happy families are alike; each unhappy family is unhappy in its own way.",
+    bestRead: "Best read slowly, in winter, when you have time to live inside another world."
+  },
+  "The Brothers Karamazov": {
+    bestRead: "Best read when you are ready for the richest, most demanding, most rewarding novel ever written."
+  },
+  "Frankenstein": {
+    firstLine: "You will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings.",
+    bestRead: "Best read on a stormy night, ideally with someone to argue with about who the real monster is."
+  },
+  "Dracula": {
+    firstLine: "3 May. Bistritz.",
+    bestRead: "Best read in October, in the dark, when the nights are getting longer."
+  },
+  "The Grapes of Wrath": {
+    firstLine: "To the red country and part of the gray country of Oklahoma, the last rains came gently, and they did not cut the scarred earth.",
+    bestRead: "Best read when you want a book that makes you feel the full weight of what America has promised and failed to deliver."
+  },
+  "East of Eden": {
+    firstLine: "The Salinas Valley is in Northern California.",
+    bestRead: "Best read over several weeks, like a long correspondence with a brilliant friend."
+  },
+  "The Catcher in the Rye": {
+    firstLine: "If you really want to hear about it, the first thing you'll probably want to know is where I was born.",
+    bestRead: "Best read when you are in the mood to be spoken to very directly by someone who is trying very hard not to seem like they care."
+  },
+  "A Farewell to Arms": {
+    bestRead: "Best read when you want a love story that earns its tragedy through complete restraint."
+  },
+  "To the Lighthouse": {
+    bestRead: "Best read on a slow morning with nowhere to be — it rewards patience with everything."
+  },
+  "Life of Pi": {
+    firstLine: "My suffering left me sad and gloomy.",
+    bestRead: "Best read on a long journey, when you have time to think about which story you prefer."
+  },
+  "Love in the Time of Cholera": {
+    bestRead: "Best read when you want a book that treats love as the most serious subject in the world."
+  },
+  "The Stranger": {
+    firstLine: "Maman died today.",
+    bestRead: "Best read in a single sitting — it's short, and the detachment needs to build without interruption."
+  },
+  "The Color Purple": {
+    firstLine: "You better not never tell nobody but God.",
+    bestRead: "Best read when you need a book that believes in people more than people deserve."
+  },
+  "Their Eyes Were Watching God": {
+    firstLine: "Ships at a distance have every man's wish on board.",
+    bestRead: "Best read when you want a book that sounds like music when you read it aloud."
+  },
+  "White Teeth": {
+    firstLine: "Early in the morning, late in the century, Cricklewood Broadway.",
+    bestRead: "Best read when you want a novel that is as smart as it is warm."
+  },
+  "A Thousand Splendid Suns": {
+    bestRead: "Best read when you are ready to have your heart broken open by courage."
+  },
+  "The Namesake": {
+    bestRead: "Best read when you want a quiet book that somehow contains an entire life."
+  },
+  "Little Women": {
+    bestRead: "Best read in winter, by something warm, when you want to feel like you are somewhere safe."
+  },
+  "Pride and Prejudice": {
+    firstLine: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+    bestRead: "Best read when you want wit, warmth, and the great pleasure of watching two people be wrong about each other."
+  },
+  "Emma": {
+    firstLine: "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence.",
+    bestRead: "Best read slowly, paying close attention — the more you look, the more you see."
+  },
+  "The Dutch House": {
+    bestRead: "Best read when you want a book about siblings that understands exactly how memory works."
+  },
+  "Little Fires Everywhere": {
+    bestRead: "Best read when you want a novel that makes the comfortable feel genuinely uncomfortable."
+  },
+  "The Overstory": {
+    bestRead: "Best read somewhere near trees — it changes how you look at them permanently."
+  },
+  "Siddhartha": {
+    bestRead: "Best read at a crossroads, when you need a book that is very calm about the longest questions."
+  },
+  "The English Patient": {
+    bestRead: "Best read slowly, giving each sentence the weight it earns."
+  },
+  "The Virgin Suicides": {
+    firstLine: "On the morning the last Lisbon daughter took her turn at suicide — it was Mary this time, and sleeping pills, like Therese — the two paramedics who came were young.",
+    bestRead: "Best read on a quiet afternoon when you are in the mood for something haunting."
+  },
+  "Middlesex": {
+    firstLine: "I was born twice: first, as a baby girl, on a remarkably smogless Detroit day in January of 1960.",
+    bestRead: "Best read when you want a novel that is enormous in scope and still completely intimate."
+  },
+  "Song of Solomon": {
+    bestRead: "Best read when you want Morrison at her most mythic and her most free."
+  },
+  "No Country for Old Men": {
+    bestRead: "Best read in a single sitting, preferably in the dark."
+  },
+  "A Confederacy of Dunces": {
+    bestRead: "Best read when you need to laugh so hard it surprises you."
+  },
+  "The Little Prince": {
+    firstLine: "Once when I was six years old I saw a magnificent picture in a book, called True Stories from Nature, about the primeval forest.",
+    bestRead: "Best read in an hour, then thought about for the rest of your life."
+  },
+  "Perfume": {
+    bestRead: "Best read when you want something dark and baroque and unlike anything else on your shelf."
+  },
+  "The Wind-Up Bird Chronicle": {
+    bestRead: "Best read over several weeks, letting each strange encounter settle before the next."
+  },
+  "The Trial": {
+    firstLine: "Someone must have slandered Josef K., for one morning, without having done anything wrong, he was arrested.",
+    bestRead: "Best read when you want a book that perfectly captures a feeling you've had and never been able to name."
+  },
+  "Orlando": {
+    bestRead: "Best read when you want Woolf at her most playful and most liberated."
+  },
+  "Possession": {
+    bestRead: "Best read on a long rainy weekend when you can give it the attention it rewards."
+  },
+  "True Grit": {
+    bestRead: "Best read in a single afternoon — it is short and completely irresistible."
+  },
+  "A Fine Balance": {
+    bestRead: "Best read when you are ready to be devastated by a book that loves its characters completely."
+  },
+  "Everything I Never Told You": {
+    firstLine: "Lydia is dead. But they don't know this yet.",
+    bestRead: "Best read when you want something that unravels slowly and breaks your heart precisely."
+  },
+  "The Rosie Project": {
+    bestRead: "Best read when you want something genuinely funny that also sneaks up and moves you."
+  },
+  "Lonesome Dove": {
+    bestRead: "Best read on a long holiday — it is six hundred pages and not one of them is wasted."
   }
 };
 
@@ -1603,9 +1875,9 @@ const allQuestions = [
     text: 'When you close the last page, you want to feel —',
     sub: 'Be honest. No one is watching.',
     options: [
-      { label: 'Hopeful',     hint: 'Like the world is wider than you thought',      value: 'hopeful' },
+      { label: 'Hopeful',     hint: 'Like the world is wider than you thought',      value: 'hopeful',     next: 'warm_type' },
       { label: 'Unsettled',   hint: 'With something strange still clinging to you',  value: 'unsettled',  next: 'darkness' },
-      { label: 'Moved',       hint: 'Quietly undone, perhaps a little changed',      value: 'moved' },
+      { label: 'Moved',       hint: 'Quietly undone, perhaps a little changed',      value: 'moved',       next: 'moved_by' },
       { label: 'Exhilarated', hint: 'Like you just ran very fast somewhere',          value: 'exhilarated', next: 'thrill_type' }
     ],
     reactions: {
@@ -1622,7 +1894,7 @@ const allQuestions = [
     options: [
       { label: 'Slow and immersive',   hint: 'Long sentences, deep rooms, no hurry',    value: 'slow',   next: 'slow_world' },
       { label: 'Propulsive',           hint: "You'll miss your stop on the train",        value: 'fast',   next: 'fast_stakes' },
-      { label: 'Somewhere between',    hint: 'Lyrical, but with momentum',               value: 'medium' },
+      { label: 'Somewhere between',    hint: 'Lyrical, but with momentum',               value: 'medium', next: 'medium_texture' },
       { label: 'Surprise me entirely', hint: 'I have no preference — only trust',        value: 'any' }
     ],
     reactions: {
@@ -1778,8 +2050,8 @@ const allQuestions = [
     text: 'How dark are we actually talking?',
     sub: "There's a spectrum. Where on it do you live?",
     options: [
-      { label: 'Pitch black',            hint: "Disturbing, bleak, won't leave you alone",      value: 'dark_pitch',  next: 'world' },
-      { label: 'Eerie and strange',      hint: 'Weird fiction, dread that creeps up quietly',   value: 'dark_eerie',  next: 'world' },
+      { label: 'Pitch black',            hint: "Disturbing, bleak, won't leave you alone",      value: 'dark_pitch',  next: 'bleak_world' },
+      { label: 'Eerie and strange',      hint: 'Weird fiction, dread that creeps up quietly',   value: 'dark_eerie',  next: 'eerie_corner' },
       { label: 'Psychologically tense',  hint: 'Unreliable, unsettling, quietly terrifying',    value: 'dark_psych',  next: 'world' },
       { label: 'Just an edge of it',     hint: 'Melancholy and ambiguous — not full horror',    value: 'dark_edge',   next: 'world' }
     ],
@@ -1812,9 +2084,9 @@ const allQuestions = [
     text: 'What kind of invented world?',
     sub: "Invented is a broad territory. Narrow it down.",
     options: [
-      { label: 'Full fantasy — maps, magic, lore', hint: 'The kind with a glossary at the back', value: 'magic_full',  next: 'avoid' },
+      { label: 'Full fantasy — maps, magic, lore', hint: 'The kind with a glossary at the back', value: 'magic_full',  next: 'fantasy_style' },
       { label: 'Quietly strange',                  hint: 'Realism with one impossible thing',    value: 'magic_quiet', next: 'avoid' },
-      { label: 'Science fiction',                  hint: 'Technology, space, the far future',    value: 'magic_scifi', next: 'avoid' },
+      { label: 'Science fiction',                  hint: 'Technology, space, the far future',    value: 'magic_scifi', next: 'scifi_flavor' },
       { label: 'Dark fairy tale',                  hint: 'Folklore logic — beautiful and cruel', value: 'magic_fairy', next: 'avoid' }
     ],
     reactions: {
@@ -1869,9 +2141,9 @@ const allQuestions = [
     text: 'What kind of immersion are you after?',
     sub: 'Slow has flavours. Which one do you crave?',
     options: [
-      { label: 'Language you want to live in',      hint: 'Prose so beautiful you read sentences twice',       value: 'sw_language', next: 'theme' },
+      { label: 'Language you want to live in',      hint: 'Prose so beautiful you read sentences twice',       value: 'sw_language', next: 'language_period' },
       { label: 'A world built brick by brick',      hint: 'Details, atmosphere, a place you can feel',        value: 'sw_world',    next: 'theme' },
-      { label: "A character's mind, fully inhabited", hint: 'Interior monologue, thought spirals, total access', value: 'sw_interior', next: 'theme' },
+      { label: "A character's mind, fully inhabited", hint: 'Interior monologue, thought spirals, total access', value: 'sw_interior', next: 'interior_voice' },
       { label: 'Slow-burn tension',                 hint: 'The dread that builds across four hundred pages',   value: 'sw_tension',  next: 'theme' }
     ],
     reactions: {
@@ -1887,8 +2159,8 @@ const allQuestions = [
     sub: "Fast reads aren't all the same. What's the engine?",
     options: [
       { label: 'Something terrible might happen', hint: 'Danger, stakes, the floor keeps dropping',          value: 'fs_danger',       next: 'theme' },
-      { label: 'A mystery I have to solve',       hint: 'Clues accumulating, a picture slowly forming',     value: 'fs_mystery',      next: 'theme' },
-      { label: 'A relationship on the edge',      hint: 'Will they, won\'t they — the emotional tension',   value: 'fs_relationship', next: 'theme' },
+      { label: 'A mystery I have to solve',       hint: 'Clues accumulating, a picture slowly forming',     value: 'fs_mystery',      next: 'mystery_type' },
+      { label: 'A relationship on the edge',      hint: 'Will they, won\'t they — the emotional tension',   value: 'fs_relationship', next: 'relationship_edge' },
       { label: 'The prose itself pulls me',       hint: 'Not plot — just momentum in the sentences',        value: 'fs_prose',        next: 'theme' }
     ],
     reactions: {
@@ -1904,8 +2176,8 @@ const allQuestions = [
     sub: 'History is enormous. Let\'s narrow the door.',
     options: [
       { label: 'Ancient or classical',       hint: 'Greece, Rome, Persia — the original everything',            value: 'era_ancient',    next: 'avoid' },
-      { label: 'Victorian or Edwardian',     hint: 'Corsets, class, candlelight, and simmering resentment',    value: 'era_victorian',  next: 'avoid' },
-      { label: 'The twentieth-century wars', hint: '1914–1945 — history at its most undeniably itself',        value: 'era_wartime',    next: 'avoid' },
+      { label: 'Victorian or Edwardian',     hint: 'Corsets, class, candlelight, and simmering resentment',    value: 'era_victorian',  next: 'victorian_focus' },
+      { label: 'The twentieth-century wars', hint: '1914–1945 — history at its most undeniably itself',        value: 'era_wartime',    next: 'wartime_angle' },
       { label: 'Mid-century onwards',        hint: '1950s–70s — society reshaping itself in real time',        value: 'era_midcentury', next: 'avoid' }
     ],
     reactions: {
@@ -1920,8 +2192,8 @@ const allQuestions = [
     text: 'What draws you to remote places?',
     sub: 'Cold and isolated comes in different atmospheres.',
     options: [
-      { label: 'The darkness and the crime',       hint: 'Nordic noir — society\'s underside in long winter light', value: 'cold_noir',   next: 'avoid' },
-      { label: 'Wilderness as a force',            hint: 'Nature vast and indifferent, humans small',               value: 'cold_wild',   next: 'avoid' },
+      { label: 'The darkness and the crime',       hint: 'Nordic noir — society\'s underside in long winter light', value: 'cold_noir',   next: 'noir_focus' },
+      { label: 'Wilderness as a force',            hint: 'Nature vast and indifferent, humans small',               value: 'cold_wild',   next: 'wild_scale' },
       { label: 'A closed community, keeping secrets', hint: 'Everyone knows everyone, and no one talks',            value: 'cold_village', next: 'avoid' },
       { label: 'Pure atmosphere',                  hint: 'Fog, silence, a sense of something coming',               value: 'cold_atmos',  next: 'avoid' }
     ],
@@ -1937,10 +2209,10 @@ const allQuestions = [
     text: 'What makes the ordinary world interesting?',
     sub: 'Domestic fiction is more varied than it sounds.',
     options: [
-      { label: 'A family with something buried',  hint: 'Old wounds, silences, a secret about to surface',     value: 'dom_family',    next: 'avoid' },
+      { label: 'A family with something buried',  hint: 'Old wounds, silences, a secret about to surface',     value: 'dom_family',    next: 'family_wound' },
       { label: 'A marriage, closely examined',    hint: 'Two people who chose each other, in all its complexity', value: 'dom_marriage', next: 'avoid' },
       { label: 'One consciousness in a city',     hint: 'One person, thinking hard, navigating everyday life',  value: 'dom_solo',      next: 'avoid' },
-      { label: 'A community, seen from inside',   hint: 'How a place shapes its people and is shaped by them', value: 'dom_community', next: 'avoid' }
+      { label: 'A community, seen from inside',   hint: 'How a place shapes its people and is shaped by them', value: 'dom_community', next: 'community_type' }
     ],
     reactions: {
       dom_family:    "The family secret. It's been there in every silence. You want to be in the room when it surfaces. We understand.",
@@ -1954,9 +2226,9 @@ const allQuestions = [
     text: 'Which aspect of identity pulls at you?',
     sub: "It's a big question. Let's find your corner of it.",
     options: [
-      { label: 'Belonging — where and whether you fit', hint: 'Family, culture, home — and the cost of leaving',      value: 'id_belong',    next: 'character' },
+      { label: 'Belonging — where and whether you fit', hint: 'Family, culture, home — and the cost of leaving',      value: 'id_belong',    next: 'belong_context' },
       { label: 'Reinvention — becoming someone new',    hint: 'Who you choose to be, versus who you were',            value: 'id_reinvent',  next: 'character' },
-      { label: 'Perception — how others define you',    hint: "The self as constructed by someone else's gaze",       value: 'id_perception', next: 'character' },
+      { label: 'Perception — how others define you',    hint: "The self as constructed by someone else's gaze",       value: 'id_perception', next: 'perception_whose' },
       { label: "Inheritance — what you didn't choose",  hint: 'History, trauma, expectation, passed quietly down',   value: 'id_inherit',   next: 'character' }
     ],
     reactions: {
@@ -2073,10 +2345,10 @@ const allQuestions = [
     text: 'What kind of flawed hero?',
     sub: "There are many ways to be trying-and-failing.",
     options: [
-      { label: 'Idealistic — the world hasn\'t beaten them yet', hint: 'Still believing, still trying, still occasionally wrong', value: 'hero_ideal',     next: 'mood' },
+      { label: 'Idealistic — the world hasn\'t beaten them yet', hint: 'Still believing, still trying, still occasionally wrong', value: 'hero_ideal',     next: 'ideal_stakes' },
       { label: 'Reluctant — they didn\'t ask for this',          hint: 'Dragged in, doing their best, slightly resentful',       value: 'hero_reluctant', next: 'mood' },
       { label: 'Weathered — they know exactly how hard it is',   hint: 'Worn down but still going, and you feel every mile',     value: 'hero_weathered', next: 'mood' },
-      { label: 'Ordinary person in extraordinary circumstances',  hint: 'Not special — just present when history turned',        value: 'hero_ordinary',  next: 'mood' }
+      { label: 'Ordinary person in extraordinary circumstances',  hint: 'Not special — just present when history turned',        value: 'hero_ordinary',  next: 'ordinary_context' }
     ],
     reactions: {
       hero_ideal:     "The idealist! Still believing in something. The world hasn't fully gotten to them yet. Hopeful and heartbreaking at once.",
@@ -2090,10 +2362,10 @@ const allQuestions = [
     text: 'How unreliable, exactly?',
     sub: "There are many flavours of narrative dishonesty.",
     options: [
-      { label: 'Lying to you deliberately',        hint: 'They know what they\'re hiding and are hiding it well',  value: 'liar_deliberate', next: 'mood' },
+      { label: 'Lying to you deliberately',        hint: 'They know what they\'re hiding and are hiding it well',  value: 'liar_deliberate', next: 'deliberate_stakes' },
       { label: 'Lying to themselves',              hint: 'They believe every word — that\'s what makes it land',   value: 'liar_self',       next: 'mood' },
       { label: 'Limited by their own perspective', hint: 'Not lying — just only able to see so much',              value: 'liar_limited',    next: 'mood' },
-      { label: 'An innocent who misunderstands',   hint: 'A child, or outsider — innocence as a distorting lens',  value: 'liar_innocent',   next: 'mood' }
+      { label: 'An innocent who misunderstands',   hint: 'A child, or outsider — innocence as a distorting lens',  value: 'liar_innocent',   next: 'innocent_type' }
     ],
     reactions: {
       liar_deliberate: "The calculated liar. They know exactly what they're doing. The game is figuring out why — and when you've been had.",
@@ -2124,9 +2396,9 @@ const allQuestions = [
     text: 'What makes them morally complex?',
     sub: "Not all grey is the same grey.",
     options: [
-      { label: 'Bad things done for good reasons',  hint: "The ends-justify-means type — and you're not sure they're wrong", value: 'grey_means',  next: 'mood' },
+      { label: 'Bad things done for good reasons',  hint: "The ends-justify-means type — and you're not sure they're wrong", value: 'grey_means',  next: 'means_context' },
       { label: 'Shaped by something terrible',      hint: "Their worst qualities have a history you'll understand",          value: 'grey_shaped', next: 'mood' },
-      { label: 'Charismatic and dangerous',         hint: "You like them. You shouldn't. You do anyway.",                    value: 'grey_charm',  next: 'mood' },
+      { label: 'Charismatic and dangerous',         hint: "You like them. You shouldn't. You do anyway.",                    value: 'grey_charm',  next: 'charm_source' },
       { label: "Principled — just not our principles", hint: 'Their moral code is coherent and entirely alien to yours',    value: 'grey_alien',  next: 'mood' }
     ],
     reactions: {
@@ -2141,10 +2413,10 @@ const allQuestions = [
     text: 'Short and devastatingly what?',
     sub: 'Under 250 pages is a canvas, not a limitation.',
     options: [
-      { label: 'A gut punch — brutal efficiency', hint: 'Every word working, nothing wasted, leaves a mark',       value: 'si_punch',    next: 'time' },
+      { label: 'A gut punch — brutal efficiency', hint: 'Every word working, nothing wasted, leaves a mark',       value: 'si_punch',    next: 'punch_genre' },
       { label: 'A meditation — slow and still',   hint: 'Small and complete, like a poem in long form',            value: 'si_meditate', next: 'time' },
       { label: 'A perfect self-contained world',  hint: 'Brief but entire — a universe in miniature',             value: 'si_world',    next: 'time' },
-      { label: 'A dark fable',                    hint: 'Parable logic — familiar and strange at once',           value: 'si_fable',    next: 'time' }
+      { label: 'A dark fable',                    hint: 'Parable logic — familiar and strange at once',           value: 'si_fable',    next: 'fable_kind' }
     ],
     reactions: {
       si_punch:    "The gut punch! Brutal economy. Every sentence doing work. You finish it and sit there for six stops after. We know these books.",
@@ -2158,9 +2430,9 @@ const allQuestions = [
     text: 'What kind of epic are you committing to?',
     sub: 'Six hundred pages earns you the right to be specific.',
     options: [
-      { label: 'A family saga — generations and consequence', hint: 'The long arc of bloodline and what passes through it', value: 'epic_family',  next: 'time' },
+      { label: 'A family saga — generations and consequence', hint: 'The long arc of bloodline and what passes through it', value: 'epic_family',  next: 'family_saga_scope' },
       { label: 'A doorstop fantasy — whole world, deep lore', hint: 'Maps, magic systems, a glossary you\'ll actually read', value: 'epic_fantasy', next: 'time' },
-      { label: 'A literary monument',                         hint: 'The kind of book people argue about for decades',       value: 'epic_literary', next: 'time' },
+      { label: 'A literary monument',                         hint: 'The kind of book people argue about for decades',       value: 'epic_literary', next: 'literary_monument' },
       { label: 'Interconnected stories, one large picture',   hint: 'Many voices and lives assembling into something larger', value: 'epic_inter',   next: 'time' }
     ],
     reactions: {
@@ -2176,7 +2448,7 @@ const allQuestions = [
     sub: 'The middle ground, but with a personality.',
     options: [
       { label: 'A world fully inhabited',         hint: 'Enough space to live in it, not so much you\'re lost',   value: 'med_world',     next: 'time' },
-      { label: 'A tight, purposeful narrative',   hint: 'Never a wasted page — built from start to end',          value: 'med_tight',     next: 'time' },
+      { label: 'A tight, purposeful narrative',   hint: 'Never a wasted page — built from start to end',          value: 'med_tight',     next: 'tight_genre' },
       { label: 'Character-driven, room to breathe', hint: 'The pace of a life, the depth of a person',            value: 'med_character', next: 'time' },
       { label: 'Ideas with momentum',             hint: 'A novel that thinks, at speed',                          value: 'med_ideas',     next: 'time' }
     ],
@@ -2236,6 +2508,521 @@ const allQuestions = [
       comp_quiet:  "Quiet company. A presence — the book sitting with you, not performing at you. A very specific need and we can meet it.",
       comp_wry:    "The wry observer! Sharp, dry, noticing everything and saying it sideways. Often the most comforting kind of intelligence.",
       comp_fellow: "Someone who has been through it too. Not wisdom — recognition. You are not reading alone. That is sometimes the whole point."
+    }
+  },
+
+  /* ══ NEW BRANCH QUESTIONS (ROUND 2) ═════════════════════════════════
+     30 additional branches — total stays at exactly 10 per path.
+  ═══════════════════════════════════════════════════════════════════ */
+
+  {
+    id: 'warm_type',         /* triggered by feeling=hopeful — replaces pace */
+    text: 'What kind of hopeful are we building towards?',
+    sub: 'Hope has textures. Which one do you need right now?',
+    options: [
+      { label: 'Quiet and hard-won',         hint: 'Earned through difficulty — the kind that means something',     value: 'wt_earned',   next: 'world' },
+      { label: 'Joyful and abundant',         hint: 'Warm, generous, life-affirming and unapologetic',              value: 'wt_joyful',   next: 'world' },
+      { label: 'Fragile but present',         hint: 'Tentative hope — enough to keep going',                        value: 'wt_fragile',  next: 'world' },
+      { label: 'Hope as resistance',          hint: 'Refusing despair in the face of something difficult',          value: 'wt_resist',   next: 'world' }
+    ],
+    reactions: {
+      wt_earned:  "Hope that was earned. Through difficulty, through doubt, through failure first. The kind that actually holds. Perfect.",
+      wt_joyful:  "Generous, warm, unapologetically glad to be alive. We will find you something that leaves you feeling full. Come.",
+      wt_fragile: "Fragile hope — the kind that might break but hasn't. That tentativeness is what makes it beautiful. We know these books.",
+      wt_resist:  "Hope as an act of resistance. Refusing despair when despair would be easier. The most courageous kind of ending."
+    }
+  },
+  {
+    id: 'moved_by',          /* triggered by feeling=moved — replaces pace */
+    text: 'What usually moves you?',
+    sub: 'Different things break different hearts. Be specific.',
+    options: [
+      { label: 'A person trying their absolute best',   hint: 'Effort in the face of impossibility — the act, not the outcome', value: 'mb_effort',   next: 'world' },
+      { label: 'Love — of any kind, in any form',       hint: 'Romantic, familial, the love between friends',                   value: 'mb_love',     next: 'world' },
+      { label: 'A life told in full',                   hint: 'Watching someone grow, age, and finally understand',             value: 'mb_life',     next: 'world' },
+      { label: 'One perfect, devastating sentence',     hint: "You'll underline it. You'll send it to someone. You'll remember it for years.", value: 'mb_sentence', next: 'world' }
+    ],
+    reactions: {
+      mb_effort:   "Effort without guarantee. The person trying anyway. It makes hope feel earned and failure feel meaningful. We have your book.",
+      mb_love:     "Love in all its forms — the thing literature was invented for, more or less. We won't waste your heart on a weak one.",
+      mb_life:     "A whole life, lived on the page. Watching someone understand something late. Devastating in the best possible way.",
+      mb_sentence: "The perfect sentence. You'll read it, stop, read it again, sit very still. We know which books have them. Come."
+    }
+  },
+  {
+    id: 'medium_texture',    /* triggered by pace=medium — replaces world */
+    text: 'Lyrical but with momentum — more lyrical or more momentum?',
+    sub: 'The balance matters. Nudge us in the right direction.',
+    options: [
+      { label: 'More lyrical — beautiful sentences matter most',    hint: 'The prose is the experience, not just the delivery', value: 'mt_lyrical',  next: 'theme' },
+      { label: 'More momentum — story pulls me forward',            hint: 'Propulsive but never crude — readable and crafted',  value: 'mt_momentum', next: 'theme' },
+      { label: 'Perfectly balanced — I want both equally',          hint: 'The tightrope. Not many books walk it. Some do.',    value: 'mt_balanced', next: 'theme' },
+      { label: 'Depends on the scene — let it shift',               hint: 'Flexibility over formula. The right pace at each moment.', value: 'mt_flexible', next: 'theme' }
+    ],
+    reactions: {
+      mt_lyrical:  "Lyrical first. The sentences are the reason. Story is the architecture — the prose is what you actually live in.",
+      mt_momentum: "Story pulling you forward, crafted enough to feel good in the hand. The popular novel done properly. A pleasure.",
+      mt_balanced: "The tightrope walk. Not many books manage it — but the ones that do are some of the best ever written.",
+      mt_flexible: "Pace that shifts with the scene. The book that knows when to slow down and when to run. Sophisticated taste."
+    }
+  },
+  {
+    id: 'bleak_world',       /* triggered by darkness=dark_pitch — replaces world */
+    text: 'Bleak — but where?',
+    sub: "Pitch black fiction has different geographies. Pick yours.",
+    options: [
+      { label: 'Rural and isolated',          hint: 'Moors, forests, roads that go nowhere good',              value: 'bw_rural',   next: 'theme' },
+      { label: 'Urban and suffocating',       hint: 'The city as trap — bureaucratic, overwhelming, grey',     value: 'bw_urban',   next: 'theme' },
+      { label: 'Interior — the bleakness is psychological', hint: 'Not the world but the mind. Inescapable.', value: 'bw_psych',   next: 'theme' },
+      { label: 'Near-future or speculative',  hint: 'What comes next and why it\'s bleak',                    value: 'bw_future',  next: 'theme' }
+    ],
+    reactions: {
+      bw_rural:   "Rural bleakness. Something wrong in the landscape, in the people who live there, in the silence that falls at dusk. Excellent.",
+      bw_urban:   "The grey city. Kafkaesque or naturalistic — the built world as its own kind of prison. Very specific and very correct.",
+      bw_psych:   "The bleakness is inside. The unreliable mind, the collapsing self. No escape because the problem is the narrator. Perfect.",
+      bw_future:  "Speculative bleakness. The future as warning or lament. The best of this genre is not pessimism — it's precision."
+    }
+  },
+  {
+    id: 'eerie_corner',      /* triggered by darkness=dark_eerie — replaces world */
+    text: 'Where does the eeriness live?',
+    sub: "Dread is specific. Help us locate yours.",
+    options: [
+      { label: 'In the uncanny — familiar made strange', hint: 'The house, the person, the thing you know but slightly off', value: 'ec_uncanny',  next: 'theme' },
+      { label: 'In folklore and old dark things',        hint: 'Myths, legends, something that predates everything',         value: 'ec_folk',     next: 'theme' },
+      { label: 'In quiet cosmic dread',                  hint: 'The universe doesn\'t care and that\'s frightening',        value: 'ec_cosmic',   next: 'theme' },
+      { label: 'In social unease — something is wrong here', hint: 'The party is fine but something is off and no one says it', value: 'ec_social', next: 'theme' }
+    ],
+    reactions: {
+      ec_uncanny:  "The uncanny — familiar things at the wrong angle. The dread of recognition. One of the most effective and oldest tools in fiction.",
+      ec_folk:     "Old dark things. The pre-modern fears. They have been there since before we had names for them and they are still there.",
+      ec_cosmic:   "Cosmic dread — the universe indifferent and vast and entirely uninterested in your survival. The realest kind of horror.",
+      ec_social:   "Social unease. Everything is fine. Everything is fine. EVERYTHING IS — this is the eeriest kind. We know where to find it."
+    }
+  },
+  {
+    id: 'language_period',   /* triggered by slow_world=sw_language — replaces theme */
+    text: 'Beautiful prose from which tradition?',
+    sub: 'Different schools of beautiful. Which one suits your ear?',
+    options: [
+      { label: 'Modernist stream of consciousness',   hint: 'Woolf, Faulkner — the mind in motion, unfiltered',             value: 'lp_modernist', next: 'avoid' },
+      { label: 'Classical and controlled',            hint: 'Sentences with architecture — every clause earning its place',   value: 'lp_classical', next: 'avoid' },
+      { label: 'Contemporary and precise',            hint: 'Modern prose at its most stripped and intentional',             value: 'lp_contemp',   next: 'avoid' },
+      { label: 'Lyrical and Southern — Gothic richness', hint: 'Dense, atmospheric, decay and beauty together',             value: 'lp_gothic',    next: 'avoid' }
+    ],
+    reactions: {
+      lp_modernist: "Stream of consciousness — the interior monologue, the mind's actual motion. Beautiful and demanding and completely worth it.",
+      lp_classical: "The controlled sentence. Balanced clauses, earned pauses, architecture you can feel. A high form. We know its best practitioners.",
+      lp_contemp:   "Contemporary precision — the pared-back sentence doing enormous work. Modern at its best. Not spare, just exact.",
+      lp_gothic:    "Gothic richness — decay and beauty sharing a sentence. The American South school of the lush and strange. We are fans."
+    }
+  },
+  {
+    id: 'interior_voice',    /* triggered by slow_world=sw_interior — replaces theme */
+    text: "One consciousness — what's inside it?",
+    sub: 'Interior fiction is defined by what the mind contains.',
+    options: [
+      { label: 'Obsession — fixed on one thing, returning and returning', hint: 'The loop of an obsessive mind, mapped in full',     value: 'iv_obsess',   next: 'avoid' },
+      { label: 'Grief — learning to carry something',                     hint: 'The interior landscape of loss, patiently rendered', value: 'iv_grief',    next: 'avoid' },
+      { label: 'Anxiety and hyperawareness',                              hint: 'Noticing everything, exhausted, unable to stop',     value: 'iv_anxiety',  next: 'avoid' },
+      { label: 'A quiet life, richly observed',                           hint: 'Ordinary days made luminous by exact attention',     value: 'iv_quiet',    next: 'avoid' }
+    ],
+    reactions: {
+      iv_obsess:  "The obsessive mind — circling its subject, unable to leave it alone. The loop is the form and the meaning. Intense.",
+      iv_grief:   "Grief from the inside. The way it rewires a mind. Interior fiction at its most powerful — slow, true, irreplaceable.",
+      iv_anxiety: "Hyperawareness — the mind that can't stop noticing, can't slow down, can't not feel everything. Exhausting and beautiful.",
+      iv_quiet:   "An ordinary life made luminous. The exact attention that transforms small days into something extraordinary. We love this most."
+    }
+  },
+  {
+    id: 'mystery_type',      /* triggered by fast_stakes=fs_mystery — replaces theme */
+    text: 'What kind of mystery?',
+    sub: "The pleasure of puzzles has many forms.",
+    options: [
+      { label: 'A closed-room puzzle — pure deduction', hint: 'Classic detective fiction, a problem to be solved',           value: 'myst_classic',   next: 'avoid' },
+      { label: 'A literary mystery — the answers are uncomfortable', hint: 'The truth, when it comes, costs something',      value: 'myst_literary',  next: 'avoid' },
+      { label: 'A cold case — digging up the past',                  hint: 'History as mystery — what really happened here', value: 'myst_cold',      next: 'avoid' },
+      { label: 'Atmospheric crime — the city is the character',      hint: 'Mood, location, society, a crime at the centre', value: 'myst_atmos',     next: 'avoid' }
+    ],
+    reactions: {
+      myst_classic:  "The classic puzzle! The closed room, the impossible crime, the detective who is better at this than everyone. Pure pleasure.",
+      myst_literary: "A mystery that costs you something. The answer arrives and it changes more than the plot. Our favourite kind.",
+      myst_cold:     "The cold case — history as mystery. What really happened and why it was buried. Investigative and elegiac at once.",
+      myst_atmos:    "Atmospheric crime — the city as character, the social world as backdrop, the investigation as a way of seeing. Yes."
+    }
+  },
+  {
+    id: 'relationship_edge', /* triggered by fast_stakes=fs_relationship — replaces theme */
+    text: 'What puts the relationship on the edge?',
+    sub: 'The tension comes from somewhere. Where?',
+    options: [
+      { label: 'A secret one of them is keeping',    hint: 'Lies, omissions, the gap between what\'s said and known', value: 're_secret',   next: 'avoid' },
+      { label: 'They want completely different things', hint: 'The incompatibility is real — the love is too',         value: 're_differ',   next: 'avoid' },
+      { label: 'Circumstances keep forcing them apart', hint: 'External pressure — the world doesn\'t want this',      value: 're_circum',   next: 'avoid' },
+      { label: 'They both know it\'s ending',         hint: 'The countdown — every scene weighted by what comes next', value: 're_ending',   next: 'avoid' }
+    ],
+    reactions: {
+      re_secret:  "A kept secret. The lie that holds everything up and will eventually bring it down. The tension is structural. We feel it.",
+      re_differ:  "Incompatibility — the love is real, the gap is real. The tragedy isn't crisis, it's just two people. Often the truest.",
+      re_circum:  "The world working against them. External pressure — circumstances, history, timing, everything conspiring. The oldest story.",
+      re_ending:  "They know it's ending. The countdown — every scene is the last of something. Devastating in its precision. Yes."
+    }
+  },
+  {
+    id: 'victorian_focus',   /* triggered by era_pick=era_victorian — replaces avoid */
+    text: 'Victorian fiction has many rooms. Which do you enter?',
+    sub: 'The era had obsessions. Which one interests you?',
+    options: [
+      { label: 'Class and its machinery',    hint: 'Money, status, the rules that governed everything',          value: 'vf_class',    next: 'character' },
+      { label: 'Women and their constraints', hint: 'Agency within severe limits — and what it cost',           value: 'vf_women',    next: 'character' },
+      { label: 'Crime and its detectives',   hint: 'The Victorian underworld and those who navigated it',        value: 'vf_crime',    next: 'character' },
+      { label: 'Empire and its shadows',     hint: 'The world the Victorians built and what it required of them', value: 'vf_empire',  next: 'character' }
+    ],
+    reactions: {
+      vf_class:   "Class and its machinery! The Victorian engine. The precise gradations, the marriages of convenience, the catastrophic falls. Perfect.",
+      vf_women:   "Women navigating severe constraint. The intelligence required. The quiet resistance. Some of the best novels ever written are exactly this.",
+      vf_crime:   "Victorian crime and detection — the fog, the gaslight, the genius who sees through it all. A complete pleasure.",
+      vf_empire:  "The shadow of empire. What it took to build, what it destroyed, and the literature that couldn't pretend otherwise. Essential reading."
+    }
+  },
+  {
+    id: 'wartime_angle',     /* triggered by era_pick=era_wartime — replaces avoid */
+    text: 'War literature — from which angle?',
+    sub: "The twentieth century's wars produced different kinds of books.",
+    options: [
+      { label: 'From the front — the soldier\'s experience',         hint: 'Combat, camaraderie, the unbearable reality',              value: 'wa_front',    next: 'character' },
+      { label: 'From the home front — those left behind',            hint: 'Waiting, working, the domestic war',                       value: 'wa_home',     next: 'character' },
+      { label: 'Resistance and survival — ordinary heroism',         hint: 'People who found courage in impossible circumstances',     value: 'wa_resist',   next: 'character' },
+      { label: 'The aftermath — how people lived with what happened', hint: 'Memory, guilt, the long shadow of survival',              value: 'wa_after',    next: 'character' }
+    ],
+    reactions: {
+      wa_front:   "The front line — immersive, devastating, honest about what war actually is. The books that don't look away. We respect this.",
+      wa_home:    "The home front. The other kind of courage. Waiting, working, loving someone who might not return. Underrated and powerful.",
+      wa_resist:  "Resistance and survival. Ordinary people finding extraordinary capacity. The true stories and the novels that imagine them.",
+      wa_after:   "The aftermath. The silence, the guilt, the question of how you live with what happened. The longest war. Some great books go here."
+    }
+  },
+  {
+    id: 'noir_focus',        /* triggered by cold_feel=cold_noir — replaces avoid */
+    text: 'Nordic noir — what draws you there?',
+    sub: 'Dark Scandinavian fiction has specific pleasures.',
+    options: [
+      { label: 'The landscape as menace',       hint: 'Light, cold, the geography as active force',                  value: 'nf_land',    next: 'character' },
+      { label: 'Society\'s polished surface and dark underside', hint: 'The welfare state and what it hides',        value: 'nf_society', next: 'character' },
+      { label: 'A detective worth following',   hint: 'The investigator as the point — flawed, specific, compelling', value: 'nf_detect',  next: 'character' },
+      { label: 'The moral complexity of the crime itself', hint: 'Not whodunit but why — and what it reveals',       value: 'nf_moral',   next: 'character' }
+    ],
+    reactions: {
+      nf_land:    "The landscape as hostile — the endless dark, the cold, the geography that makes isolation possible. A specific and excellent pleasure.",
+      nf_society: "The welfare state and what it conceals. Violence beneath prosperity. The irony of it is the genre's great engine.",
+      nf_detect:  "The detective! Specific, flawed, carrying something. The Nordic detective as archetype is excellent — we know which books use it best.",
+      nf_moral:   "The moral weight of the crime. Not just who but why and at what cost. When noir asks these questions, it becomes literature."
+    }
+  },
+  {
+    id: 'wild_scale',        /* triggered by cold_feel=cold_wild — replaces avoid */
+    text: 'Wilderness — survival story or something else?',
+    sub: "Nature as a setting has different purposes.",
+    options: [
+      { label: 'A survival story — physical and psychological', hint: 'The body and mind pushed to their limits',              value: 'ws_survive',  next: 'character' },
+      { label: 'A meditation on solitude',                      hint: 'Alone by choice or chance — what it reveals',          value: 'ws_solitude', next: 'character' },
+      { label: 'Nature writing with a human story inside it',   hint: 'The land and a life — both fully rendered',            value: 'ws_nature',   next: 'character' },
+      { label: 'Wilderness as spiritual reckoning',             hint: 'Something sought in landscape that can\'t be found elsewhere', value: 'ws_spirit', next: 'character' }
+    ],
+    reactions: {
+      ws_survive:  "Survival — the body against the wild, the mind against itself. Physical and psychological at once. A complete and excellent test.",
+      ws_solitude: "Solitude in landscape. What it strips away, what it reveals. The books that understand this are some of the most true ones written.",
+      ws_nature:   "Nature writing with a human story woven through. The land and the life equally rendered. A specific and beautiful form.",
+      ws_spirit:   "The wilderness as the place where something must be faced. The journey inward disguised as a journey outward. We know these books."
+    }
+  },
+  {
+    id: 'scifi_flavor',      /* triggered by magic_style=magic_scifi — replaces avoid */
+    text: 'What kind of science fiction?',
+    sub: "The genre is enormous. Let's find your corner of it.",
+    options: [
+      { label: 'Social and political — ideas about how we organise ourselves', hint: 'The future as a lens on the present',   value: 'sf_social',  next: 'character' },
+      { label: 'Space opera — vast, adventurous, cosmically scaled',           hint: 'Worlds, civilisations, stakes',         value: 'sf_space',   next: 'character' },
+      { label: 'Near-future realism — extrapolation from now',                hint: 'Close enough to feel real and frightening', value: 'sf_near', next: 'character' },
+      { label: 'Literary science fiction — ideas in beautiful prose',         hint: 'Where the genre and serious fiction meet', value: 'sf_lit',    next: 'character' }
+    ],
+    reactions: {
+      sf_social:  "Social science fiction — the future as a way of examining how we live now. The best of it is urgent and precise.",
+      sf_space:   "Space opera! Cosmic scale, civilisations in conflict, stakes as large as the universe. The most fun the genre allows.",
+      sf_near:    "Near-future realism — one step forward from now, everything extrapolated carefully. The most frightening kind. And the most relevant.",
+      sf_lit:     "Literary science fiction — where the ideas are also prose. The books that belong in both conversations. Our very favourite territory."
+    }
+  },
+  {
+    id: 'fantasy_style',     /* triggered by magic_style=magic_full — replaces avoid */
+    text: 'Full fantasy — what kind of world?',
+    sub: "Maps and lore, yes. But what kind of story lives there?",
+    options: [
+      { label: 'A quest — journey, obstacles, transformation',       hint: 'The classic shape — earned and complete',              value: 'fs_quest',   next: 'character' },
+      { label: 'Political intrigue in a complex world',              hint: 'Courts, factions, competing powers — no simple good', value: 'fs_politics', next: 'character' },
+      { label: 'A coming-of-age within something larger',            hint: 'One person growing up while the world changes',       value: 'fs_coming',  next: 'character' },
+      { label: 'Mythology and ancient forces — the deep lore',       hint: 'Gods, creation myths, the world\'s history alive',   value: 'fs_myth',    next: 'character' }
+    ],
+    reactions: {
+      fs_quest:    "The quest! The oldest shape. Still the best when it's done with conviction and earned at every stage. We know which ones.",
+      fs_politics: "Political fantasy — complex worlds with no clean heroes, just competing interests and moral weight. Sophisticated and compelling.",
+      fs_coming:   "Coming of age inside an epic world. The personal and the universal in the same story. When it works, it's magnificent.",
+      fs_myth:     "Deep lore — the mythology of the world as a thing in itself. Ancient forces and the stories that made everything. Yes."
+    }
+  },
+  {
+    id: 'family_wound',      /* triggered by domestic_angle=dom_family — replaces avoid */
+    text: 'What kind of family wound?',
+    sub: 'Every unhappy family is unhappy differently.',
+    options: [
+      { label: 'A secret kept for generations',     hint: 'Something buried that is still, quietly, doing damage',      value: 'fw_secret',   next: 'character' },
+      { label: 'A silence that was never broken',   hint: 'What wasn\'t said — and what that cost',                     value: 'fw_silence',  next: 'character' },
+      { label: 'A reckoning between parent and child', hint: 'The accounting — love, expectation, disappointment',      value: 'fw_parent',   next: 'character' },
+      { label: 'Siblings and what they became',     hint: 'The people who grew up in the same house and diverged',      value: 'fw_siblings', next: 'character' }
+    ],
+    reactions: {
+      fw_secret:   "A generational secret. It's been doing damage this whole time and no one has named it. We know the books that do this perfectly.",
+      fw_silence:  "The silence. What was never said and what it cost. Some of the most devastating novels are built on exactly this.",
+      fw_parent:   "Parent and child, finally reckoning with each other. Love and its complications, expectation and its cruelty. Honest and necessary.",
+      fw_siblings: "Siblings who grew up in the same house and became strangers or enemies or something complicated. The richest vein in family fiction."
+    }
+  },
+  {
+    id: 'community_type',    /* triggered by domestic_angle=dom_community — replaces avoid */
+    text: 'What kind of community?',
+    sub: "Every place has its own kind of gravity.",
+    options: [
+      { label: 'A small town with a long memory',  hint: 'History, grudges, the weight of being known',                  value: 'ct_small',    next: 'character' },
+      { label: 'A neighbourhood in a city',        hint: 'Multiple lives in proximity — the accidental community',       value: 'ct_urban',    next: 'character' },
+      { label: 'An institution — school, hospital, prison', hint: 'A closed world with its own brutal logic',            value: 'ct_instit',   next: 'character' },
+      { label: 'A diaspora community — roots and distance', hint: 'A culture preserved, adapted, argued over',           value: 'ct_diaspora', next: 'character' }
+    ],
+    reactions: {
+      ct_small:    "The small town with a long memory. Everyone knows everything and has always known. The weight of being a known quantity.",
+      ct_urban:    "The urban neighbourhood — accidental community. Lives in proximity, strangers who become necessary to each other.",
+      ct_instit:   "A closed institution — the logic it runs on, the hierarchies it produces, what it does to the people inside it. Brilliant territory.",
+      ct_diaspora: "A diaspora community — the original culture held, adapted, argued over. Between two worlds and fully in neither. Profound fiction."
+    }
+  },
+  {
+    id: 'belong_context',    /* triggered by identity_angle=id_belong — replaces character */
+    text: 'Belonging — or the absence of it — where?',
+    sub: "The question of where you fit has many arenas.",
+    options: [
+      { label: 'Between two cultures',          hint: 'Neither fully claimed — the space between',                    value: 'bc_culture',  next: 'length' },
+      { label: 'Outside the family you came from', hint: 'The one place you should fit and somehow don\'t',          value: 'bc_family',   next: 'length' },
+      { label: 'In a new place — immigration, displacement', hint: 'Starting over, belonging nowhere yet',            value: 'bc_place',    next: 'length' },
+      { label: 'Within your own body or self',   hint: 'The interior version — not at home in yourself',             value: 'bc_self',     next: 'length' }
+    ],
+    reactions: {
+      bc_culture:  "Between cultures — belonging to both and fully to neither. One of the richest subjects in contemporary fiction. We know your book.",
+      bc_family:   "Not fitting in the family. The one place you're supposed to belong, and somehow the hardest. Painful and familiar to many readers.",
+      bc_place:    "Displacement — starting over, belonging nowhere yet, building it slowly or not at all. Immigration literature at its most essential.",
+      bc_self:     "Not at home in yourself. The interior version of not belonging — the hardest one because there's nowhere else to go. Deeply honest."
+    }
+  },
+  {
+    id: 'perception_whose',  /* triggered by identity_angle=id_perception — replaces character */
+    text: "Whose gaze is constructing the self?",
+    sub: "Who does the defining — and what does it cost?",
+    options: [
+      { label: 'Society and its categories',    hint: 'Race, class, gender — the larger forces that define',          value: 'pw_society',  next: 'length' },
+      { label: 'A parent or family',            hint: 'The identity imposed in childhood and carried forward',        value: 'pw_family',   next: 'length' },
+      { label: 'A romantic partner',            hint: 'Who you become in the mirror of someone who loves you',       value: 'pw_romantic', next: 'length' },
+      { label: 'The protagonist\'s own gaze',   hint: 'Self-construction, self-destruction, the internal audience', value: 'pw_self',     next: 'length' }
+    ],
+    reactions: {
+      pw_society:  "Society and its categories doing the defining. Race, class, gender as forces that shape before we have words for it. Essential.",
+      pw_family:   "The identity a family imposes. Given in childhood, carried forward, slowly and painfully renegotiated. The most intimate kind.",
+      pw_romantic: "Who you become in the mirror of love. The person you are to someone else. Sometimes a gift. Often a trap. Always interesting.",
+      pw_self:     "Self-construction — the interior audience, watching and judging yourself. The most honest kind of identity fiction."
+    }
+  },
+  {
+    id: 'ideal_stakes',      /* triggered by hero_type=hero_ideal — replaces mood */
+    text: "What are they still believing in?",
+    sub: "Idealism has an object. What's theirs?",
+    options: [
+      { label: 'Justice — that wrongs can be righted',     hint: 'The institutional or moral kind, or both',           value: 'is_justice',  next: 'time' },
+      { label: 'People — a fundamental faith in humanity', hint: 'It will be tested. It survives anyway.',             value: 'is_people',   next: 'time' },
+      { label: 'A cause or an idea',                        hint: 'Something larger than themselves worth sacrificing for', value: 'is_cause', next: 'time' },
+      { label: 'Love — that it is possible and worth it',  hint: 'Romantic or otherwise — the belief holds',           value: 'is_love',     next: 'time' }
+    ],
+    reactions: {
+      is_justice: "Belief in justice — that wrongs can be righted, that systems can be held to account. The test of it is the story. Beautiful.",
+      is_people:  "Faith in people despite everything. It will be tested terribly. It survives. That survival is the whole emotional argument.",
+      is_cause:   "Belief in something larger than themselves. The cause, the idea, worth sacrificing for. Dangerous and necessary and moving.",
+      is_love:    "Belief in love — that it's possible, that it's worth the cost. Even when the book tests this claim thoroughly. Especially then."
+    }
+  },
+  {
+    id: 'ordinary_context',  /* triggered by hero_type=hero_ordinary — replaces mood */
+    text: "Ordinary person — what extraordinary circumstance?",
+    sub: "History has a habit of arriving uninvited.",
+    options: [
+      { label: 'War — they didn\'t choose it but it chose them', hint: 'The civilian caught in the machinery of conflict',    value: 'oc_war',      next: 'time' },
+      { label: 'A crisis with no playbook',                       hint: 'Nothing prepared them for this — improvised heroism', value: 'oc_crisis',   next: 'time' },
+      { label: 'Witnessing something that can\'t be ignored',     hint: 'The bystander who can\'t stay a bystander',          value: 'oc_witness',  next: 'time' },
+      { label: 'Being in the wrong place at the right moment',    hint: 'Accidental importance — history needed someone here', value: 'oc_place',    next: 'time' }
+    ],
+    reactions: {
+      oc_war:     "The civilian in war. Not a soldier, not a hero — just a person history arrived at. Often the most human portrayal of conflict.",
+      oc_crisis:  "No playbook, no preparation — just a person improvising through something too large for them. Deeply compelling.",
+      oc_witness: "The witness who can't stay neutral. The bystander pulled in by what they saw. Moral weight, beautifully handled.",
+      oc_place:   "Accidental importance — at the right place when history needed someone there. The contingency of heroism. Absolutely correct."
+    }
+  },
+  {
+    id: 'deliberate_stakes',  /* triggered by liar_style=liar_deliberate — replaces mood */
+    text: "What is the deliberate lie protecting?",
+    sub: "Every calculated deception has a logic. What's the engine here?",
+    options: [
+      { label: 'Their own survival — literal or social',   hint: 'The lie keeps them alive, or keeps them in the room',     value: 'ds_survive',  next: 'time' },
+      { label: 'Someone else — protecting a person',       hint: 'The lie is a shield for someone vulnerable',              value: 'ds_protect',  next: 'time' },
+      { label: 'A version of themselves they prefer',      hint: 'Identity maintenance — the lie is the self they\'ve built', value: 'ds_identity', next: 'time' },
+      { label: 'Power — the lie gives them an advantage',  hint: 'Strategic deception — manipulation in service of control', value: 'ds_power',    next: 'time' }
+    ],
+    reactions: {
+      ds_survive:  "The lie as survival mechanism. You can't quite condemn them. That's exactly the complexity we want you to be sitting in.",
+      ds_protect:  "Lying to protect someone else. The noble deception. It rarely works out. The tragedy is that it was meant to. Perfect.",
+      ds_identity: "Identity maintenance — they have built a self and the lie keeps it standing. When it falls, everything falls with it.",
+      ds_power:    "Strategic deception. Not survival, not love — power. The cold kind. One of fiction's most compelling and alarming types."
+    }
+  },
+  {
+    id: 'innocent_type',     /* triggered by liar_style=liar_innocent — replaces mood */
+    text: "Innocent narrator — what kind of innocence?",
+    sub: "The distorting lens has different prescriptions.",
+    options: [
+      { label: 'A child who doesn\'t understand what they\'re witnessing', hint: 'Innocence as the most devastating perspective', value: 'it_child',    next: 'time' },
+      { label: 'A foreigner or outsider — the fresh eye',                  hint: 'Not naive, just new — seeing what locals can\'t', value: 'it_foreign', next: 'time' },
+      { label: 'Someone neurodivergent — different pattern recognition',   hint: 'Seeing everything, missing certain codes',       value: 'it_neuro',   next: 'time' },
+      { label: 'Someone who simply trusts too much',                        hint: 'The good-faith reader of a bad-faith world',     value: 'it_trust',   next: 'time' }
+    ],
+    reactions: {
+      it_child:   "The child witness. They see everything and understand differently. The reader pieces together what the narrator reports. Devastating.",
+      it_foreign: "The outsider eye — fresh, precise, noticing everything a local would edit out. Often produces the sharpest social observation.",
+      it_neuro:   "A different pattern recognition. Seeing what others miss, missing what others navigate automatically. Strange and illuminating.",
+      it_trust:   "The character who takes everything at face value in a world that isn't operating in good faith. The gap is the whole story."
+    }
+  },
+  {
+    id: 'means_context',     /* triggered by grey_shade=grey_means — replaces mood */
+    text: "Bad things for good reasons — what are the ends?",
+    sub: "The justification matters. What are they trying to achieve?",
+    options: [
+      { label: 'Justice — they believe the system failed',         hint: 'Outside-the-law justice, morally complicated',         value: 'mc_justice',  next: 'time' },
+      { label: 'Protecting someone they love',                     hint: 'The lengths people go to for the people they love',    value: 'mc_protect',  next: 'time' },
+      { label: 'A cause — something larger than themselves',       hint: 'Political, ideological — they believe in the mission', value: 'mc_cause',    next: 'time' },
+      { label: 'Their own survival at a moral cost',               hint: 'Not noble — just necessary. And you understand it.',  value: 'mc_survival', next: 'time' }
+    ],
+    reactions: {
+      mc_justice:  "Outside-the-law justice. The system failed and they decided to bypass it. Are they wrong? The book won't let you decide easily.",
+      mc_protect:  "Protecting someone loved — the things we do, the lines we cross. You understand them completely. That's the trap. Perfect.",
+      mc_cause:    "The true believer. They are certain the cause justifies it. The book will ask: are they right? You won't find it easy either.",
+      mc_survival: "Survival at a moral cost. Not noble, not ideological — just necessary. The bare human fact of it. Often the most honest kind."
+    }
+  },
+  {
+    id: 'charm_source',      /* triggered by grey_shade=grey_charm — replaces mood */
+    text: "What is the charm built from?",
+    sub: "Dangerous charisma has a particular chemistry.",
+    options: [
+      { label: 'Wit — they are genuinely funnier than everyone else', hint: 'Intelligence deployed as attraction',               value: 'cs_wit',      next: 'time' },
+      { label: 'Conviction — they believe in something completely',    hint: 'Certainty as seduction. The true believer.',        value: 'cs_belief',   next: 'time' },
+      { label: 'Attention — they make you feel fully seen',            hint: 'The narcissist\'s gift, weaponised',               value: 'cs_attention', next: 'time' },
+      { label: 'Danger itself — something that should be a warning',   hint: 'The transgressive appeal of someone who doesn\'t follow rules', value: 'cs_danger', next: 'time' }
+    ],
+    reactions: {
+      cs_wit:      "Wit as charm — the intelligence deployed socially, dangerously. You know they're dangerous. You find them attractive anyway.",
+      cs_belief:   "Conviction. They believe completely. Certainty as seduction. The most powerful and most dangerous kind of charm in fiction.",
+      cs_attention: "Full attention as a weapon. They make you feel seen. The reader falls for it too. When the character withdraws it, you feel it.",
+      cs_danger:   "The transgressive appeal — the person who doesn't follow rules. The warning sign you register and ignore. Classic and perfect."
+    }
+  },
+  {
+    id: 'punch_genre',       /* triggered by short_impact=si_punch — replaces time */
+    text: "The gut punch — delivered in what genre?",
+    sub: "Brutal efficiency across different forms.",
+    options: [
+      { label: 'Literary fiction — the quiet devastation', hint: 'No melodrama — just the exact right thing said',          value: 'pg_lit',       next: 'secret' },
+      { label: 'Crime or thriller — the punch is plot',    hint: 'The revelation lands like a physical blow',                value: 'pg_crime',     next: 'secret' },
+      { label: 'A novella-length study of one thing',      hint: 'Short, focused, relentless — one subject, total honesty', value: 'pg_novella',   next: 'secret' },
+      { label: 'Short story collection — many punches',    hint: 'Each story a complete impact. Accumulated bruising.',      value: 'pg_stories',   next: 'secret' }
+    ],
+    reactions: {
+      pg_lit:     "Literary fiction gut punch — no melodrama, just the exact true thing said at exactly the right moment. The best kind of impact.",
+      pg_crime:   "The plot revelation as physical blow. The thriller or crime novel where the truth arriving is the gut punch. Satisfying and brutal.",
+      pg_novella: "A novella-length study — one thing, completely. Short enough that nothing is wasted. Long enough to go deep. Perfect form.",
+      pg_stories: "A story collection — many punches, accumulated. Each one complete, each one a mark. Some of the best reading experiences there are."
+    }
+  },
+  {
+    id: 'fable_kind',        /* triggered by short_impact=si_fable — replaces time */
+    text: "Dark fable — what at the centre of it?",
+    sub: "Parable logic can carry many different moral weights.",
+    options: [
+      { label: 'Power and what it does to people',    hint: 'The corrupting logic of authority and dominance',            value: 'fk_power',    next: 'secret' },
+      { label: 'The cost of ambition',                hint: 'What we sacrifice for what we want',                          value: 'fk_ambition', next: 'secret' },
+      { label: 'Conformity and what happens when you resist', hint: 'The machinery of social pressure in fable form',     value: 'fk_conform',  next: 'secret' },
+      { label: 'Love and its transformations',        hint: 'What love makes of people — not always good things',         value: 'fk_love',     next: 'secret' }
+    ],
+    reactions: {
+      fk_power:    "Power and its logic — what it does to the people who hold it, and to those who don't. The fable form is perfect for this.",
+      fk_ambition: "The cost of ambition. The thing sacrificed for the thing wanted. Often the sacrificed thing turns out to have been everything.",
+      fk_conform:  "Conformity — the pressure to fit, the machinery that enforces it, what happens to the one who resists. The oldest fable.",
+      fk_love:     "Love and its transformations — the things it makes people do, become, lose. Dark fables about love are some of the oldest stories."
+    }
+  },
+  {
+    id: 'family_saga_scope',  /* triggered by epic_type=epic_family — replaces time */
+    text: "What spans the generations?",
+    sub: "Every family saga is built around something passing through time.",
+    options: [
+      { label: 'A place — the house, the land, the city',        hint: 'Geography as destiny — the setting as inheritance',   value: 'fss_place',   next: 'secret' },
+      { label: 'A secret — buried, inherited, eventually exposed', hint: 'What each generation received without knowing it', value: 'fss_secret',  next: 'secret' },
+      { label: 'A wound — trauma passed down quietly',           hint: 'The damage that travels through bloodlines',           value: 'fss_wound',   next: 'secret' },
+      { label: 'An ambition — the dream each generation carries', hint: 'What each one chases and what it costs them',        value: 'fss_ambition', next: 'secret' }
+    ],
+    reactions: {
+      fss_place:    "A place that holds the family — the house, the land, the country. As it changes, they change with it. Geography as fate.",
+      fss_secret:   "A buried secret, passed forward. Each generation receives something they don't know about and are shaped by anyway.",
+      fss_wound:    "The wound that travels down. Trauma as inheritance — not chosen, not visible, but absolutely present. The most contemporary saga.",
+      fss_ambition: "The recurring dream. The ambition each generation inherits, pursues differently, and is sometimes broken by. The most epic shape."
+    }
+  },
+  {
+    id: 'literary_monument',  /* triggered by epic_type=epic_literary — replaces time */
+    text: "Literary monument — which mountain?",
+    sub: "The ambitious novel has different peaks. Which one calls to you?",
+    options: [
+      { label: 'Dense modernist prose — the language is the challenge', hint: 'Sentences that require work. Worth every bit of it.', value: 'lm_modernist', next: 'secret' },
+      { label: 'A sweeping realist novel — vast but accessible',       hint: 'Tolstoy-scale — enormous, readable, unforgettable', value: 'lm_realist',   next: 'secret' },
+      { label: 'Postmodern — form itself is constantly challenged',    hint: 'The book questioning what a book is allowed to do',  value: 'lm_postmod',   next: 'secret' },
+      { label: 'A work of quiet, profound interiority',                hint: 'Slow, interior, bottomless — the kind that changes you slowly', value: 'lm_interior', next: 'secret' }
+    ],
+    reactions: {
+      lm_modernist: "Modernist difficulty. Sentences that require slowing down, reading twice, earning their meaning. The most rewarding kind of hard.",
+      lm_realist:   "Sweeping realism — vast, character-dense, a whole world rendered. Tolstoy knew. A handful of others have too. We'll find yours.",
+      lm_postmod:   "Postmodern — the book questioning itself. Form as meaning, structure as argument. Strange and demanding and completely its own thing.",
+      lm_interior:  "Profound interiority — quiet, slow, deep. You don't race through it. It changes you gradually, the way important things do."
+    }
+  },
+  {
+    id: 'tight_genre',        /* triggered by medium_feel=med_tight — replaces time */
+    text: "Tight and purposeful — in what territory?",
+    sub: "Narrative economy works across every genre.",
+    options: [
+      { label: 'A psychological thriller — precision at pace',       hint: 'Every chapter pulling tighter, nowhere to breathe', value: 'tg_thriller', next: 'secret' },
+      { label: 'A literary novel, not a word wasted',               hint: 'Spare and exact — the literary equivalent of tight', value: 'tg_literary', next: 'secret' },
+      { label: 'A crime novel with perfect architecture',            hint: 'The plot fitting together with no loose ends',       value: 'tg_crime',    next: 'secret' },
+      { label: 'A character study — compressed and total',           hint: 'One person, completely known, nothing extraneous',   value: 'tg_character', next: 'secret' }
+    ],
+    reactions: {
+      tg_thriller: "Psychological thriller with precision — every chapter tightening, stakes rising, no wasted motion. A complete pleasure.",
+      tg_literary: "Literary fiction at its most exact. Not sparse — precise. Every word doing something. Spare as a tool, not an aesthetic.",
+      tg_crime:    "Crime with architectural precision — the plot fitted perfectly. The satisfaction of a mechanism that works. We know these books.",
+      tg_character: "A character study — compressed, total, nothing extraneous. Three hundred pages and you know this person completely. The best kind."
     }
   }
 ];
@@ -3213,6 +4000,408 @@ const books = [
     why: "Okonkwo is the greatest wrestler in his region of Nigeria — a man of strict values and fierce pride. Then the missionaries arrive. Achebe's 1958 novel tells the story of Ibo society's encounter with colonialism from the inside, and does so in prose of extraordinary economy and restraint.",
     search: "Things Fall Apart Chinua Achebe",
     match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['complex','hero'], length:['short'], mood:['understand','challenge'], time:['morning','stolen'], secret:['empathy','line'] }
+  },
+
+  /* ── 50 new books ── */
+  {
+    title: "My Brilliant Friend",
+    author: "Elena Ferrante",
+    tags: ["Italian","Friendship","Coming of Age","Saga"],
+    why: "Two girls grow up together in a poor Naples neighbourhood in the 1950s. Elena is the narrator; Lila is the brilliant, volatile, impossible friend she can never stop measuring herself against. Ferrante writes about female friendship with a ferocity that feels entirely new — possessive, competitive, and more intimate than almost any love story.",
+    search: "My Brilliant Friend Elena Ferrante",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical','domestic'], theme:['identity','love'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['weekend','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Unbearable Lightness of Being",
+    author: "Milan Kundera",
+    tags: ["Czech","Philosophy","Love","Political"],
+    why: "Prague, 1968. A surgeon, his wife, his mistress, and a painter navigate love, infidelity, and Soviet occupation. Kundera keeps pausing the story to think aloud about weight, lightness, kitsch, and fate — and it works completely. A novel that makes you feel like you're thinking new thoughts for the first time.",
+    search: "The Unbearable Lightness of Being Milan Kundera",
+    match: { feeling:['unsettled','moved'], pace:['slow','medium'], world:['historical'], theme:['love','identity'], avoid:['none','sad'], character:['complex','observer'], length:['medium'], mood:['challenge','understand'], time:['night','stolen'], secret:['line','empathy'] }
+  },
+  {
+    title: "Norwegian Wood",
+    author: "Haruki Murakami",
+    tags: ["Japanese","Loss","Coming of Age","Quiet"],
+    why: "Toru Watanabe remembers being nineteen in 1960s Tokyo — the girl he loved who could not find her way back to the world, and the other girl who was all aliveness. Murakami's most realist novel, and his most heartbreaking. It is about grief, and about what grief leaves behind in the people who survive it.",
+    search: "Norwegian Wood Haruki Murakami",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical','domestic'], theme:['love','memory'], avoid:['none','sad'], character:['observer','hero'], length:['medium'], mood:['company','understand'], time:['night','weekend'], secret:['cry','line'] }
+  },
+  {
+    title: "Kafka on the Shore",
+    author: "Haruki Murakami",
+    tags: ["Japanese","Magical Realism","Mystery","Strange"],
+    why: "Two parallel stories: a fifteen-year-old boy who runs away from home, and an old man who can talk to cats and make fish rain from the sky. They are connected, but how is the question you spend the whole novel inside. Murakami at his most unhinged, most playful, and most strangely moving.",
+    search: "Kafka on the Shore Haruki Murakami",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['invented','domestic'], theme:['identity','memory'], avoid:['none','violence'], character:['hero','unreliable'], length:['long'], mood:['challenge','understand'], time:['night','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "One Flew Over the Cuckoo's Nest",
+    author: "Ken Kesey",
+    tags: ["Classic","American","Rebellion","Dark"],
+    why: "McMurphy arrives at a psychiatric ward and immediately starts disrupting it. Nurse Ratched runs things with perfect, smiling, unmoveable control. Kesey's novel is about freedom, conformity, and what institutions do to the people inside them — told by Chief Bromden, who has been pretending to be deaf and mute for years.",
+    search: "One Flew Over the Cuckoo's Nest Ken Kesey",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['domestic'], theme:['survival','identity'], avoid:['none','violence'], character:['complex','unreliable'], length:['medium'], mood:['challenge','understand'], time:['stolen','night'], secret:['empathy','line'] }
+  },
+  {
+    title: "Slaughterhouse-Five",
+    author: "Kurt Vonnegut",
+    tags: ["Classic","War","Satire","Time Travel"],
+    why: "Billy Pilgrim has come unstuck in time. He keeps slipping between his childhood, the firebombing of Dresden, his suburban life in upstate New York, and his time as an exhibit on the planet Tralfamadore. Vonnegut's anti-war novel is funny, furious, and utterly strange. So it goes.",
+    search: "Slaughterhouse-Five Kurt Vonnegut",
+    match: { feeling:['unsettled','moved'], pace:['fast','medium'], world:['historical','invented'], theme:['survival','memory'], avoid:['none','violence'], character:['unreliable','observer'], length:['short'], mood:['challenge','understand'], time:['stolen','night'], secret:['line','surprise'] }
+  },
+  {
+    title: "Americanah",
+    author: "Chimamanda Ngozi Adichie",
+    tags: ["Nigerian","Immigration","Race","Love"],
+    why: "Ifemelu leaves Nigeria for America, discovers she has become Black, and starts a blog about it that makes her famous. Meanwhile her first love Obinze navigates Europe, then Lagos. Adichie's novel is about race in America, class in Nigeria, and love across time — sharp, warm, and impossible to put down.",
+    search: "Americanah Chimamanda Ngozi Adichie",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical','domestic'], theme:['identity','love'], avoid:['none','sad'], character:['observer','complex'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Master and Margarita",
+    author: "Mikhail Bulgakov",
+    tags: ["Russian","Satire","Devil","Dark Comedy"],
+    why: "The Devil visits Soviet Moscow and causes mayhem. Interspersed with chapters about Pontius Pilate and a Jerusalem prisoner named Yeshua. A novel about artistic freedom, the nature of evil, and love — written in secret during Stalin's terror. Wild, funny, and like nothing else.",
+    search: "The Master and Margarita Mikhail Bulgakov",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast','medium'], world:['historical','invented'], theme:['survival','identity'], avoid:['none'], character:['complex','unreliable'], length:['medium'], mood:['challenge','understand'], time:['night','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Count of Monte Cristo",
+    author: "Alexandre Dumas",
+    tags: ["Classic","French","Revenge","Adventure"],
+    why: "Edmond Dantès is wrongly imprisoned, escapes, finds a fortune, and spends years methodically destroying everyone who betrayed him. Dumas's great revenge epic is about patience, transformation, and the question of whether vengeance is justice. It is also the most compulsively readable book of the nineteenth century.",
+    search: "The Count of Monte Cristo Alexandre Dumas",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast','medium'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','complex'], length:['long'], mood:['company','understand'], time:['weekend','stolen'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Anna Karenina",
+    author: "Leo Tolstoy",
+    tags: ["Classic","Russian","Love","Tragedy"],
+    why: "Anna leaves her husband for the brilliant, empty Count Vronsky. Tolstoy follows the consequences with absolute, pitiless attention — through drawing rooms, horse races, farms, and railway stations. One of the greatest novels in any language, and one of the saddest. Also, Levin and Kitty deserve everything.",
+    search: "Anna Karenina Leo Tolstoy",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical'], theme:['love','identity'], avoid:['none','sad'], character:['complex','observer'], length:['long'], mood:['understand','challenge'], time:['night','weekend'], secret:['cry','line'] }
+  },
+  {
+    title: "The Brothers Karamazov",
+    author: "Fyodor Dostoevsky",
+    tags: ["Classic","Russian","Philosophy","Epic"],
+    why: "Three brothers — the passionate, the intellectual, the holy — orbit their monstrous father until he is found murdered. Dostoevsky's last and greatest novel contains an argument about the existence of God so powerful that the author spent the rest of the book trying to answer it. It may be the richest novel ever written.",
+    search: "The Brothers Karamazov Fyodor Dostoevsky",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['complex','hero'], length:['long'], mood:['challenge','understand'], time:['weekend','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "Frankenstein",
+    author: "Mary Shelley",
+    tags: ["Classic","Gothic","Science Fiction","Horror"],
+    why: "Victor Frankenstein creates a creature and immediately abandons it. The creature learns to read, to feel, and to hate the man who made him. Shelley's novel is about creation, responsibility, and the loneliness of being made wrong — and it is more philosophically interesting than its reputation suggests. The creature tells his own story.",
+    search: "Frankenstein Mary Shelley",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['historical','cold'], theme:['identity','survival'], avoid:['none','sad'], character:['complex','unreliable'], length:['medium'], mood:['challenge','understand'], time:['night','stolen'], secret:['line','empathy'] }
+  },
+  {
+    title: "Dracula",
+    author: "Bram Stoker",
+    tags: ["Classic","Gothic","Horror","Victorian"],
+    why: "Told entirely through journal entries, newspaper clippings, and phonograph recordings, Stoker's novel follows a group of people trying to destroy a vampire who has come to England. It is propulsive, atmospheric, and surprisingly moving. It is also the document by which one generation of readers discovers that gothic horror can be literary.",
+    search: "Dracula Bram Stoker",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast','medium'], world:['historical','cold'], theme:['survival'], avoid:['none','violence'], character:['unreliable','hero'], length:['medium'], mood:['company','challenge'], time:['night','stolen'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Grapes of Wrath",
+    author: "John Steinbeck",
+    tags: ["Classic","American","Depression","Family"],
+    why: "The Joad family load everything they own onto a truck and drive west toward California, because the bank has taken their Oklahoma farm. Steinbeck's novel alternates between the family's journey and short chapters about the wider Dust Bowl migration. The ending is one of the most profound moments in American fiction.",
+    search: "The Grapes of Wrath John Steinbeck",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical','cold'], theme:['survival','identity'], avoid:['none','sad'], character:['hero','complex'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "East of Eden",
+    author: "John Steinbeck",
+    tags: ["Classic","American","Family","Epic"],
+    why: "Two families — the Trasks and the Hamiltons — live in California's Salinas Valley from the Civil War to World War One. Steinbeck retells the Cain and Abel story across generations, while also stopping to think aloud about the nature of evil and the meaning of the word timshel: thou mayest. An enormous, generous, American epic.",
+    search: "East of Eden John Steinbeck",
+    match: { feeling:['moved','hopeful'], pace:['slow','medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['complex','hero'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Catcher in the Rye",
+    author: "J.D. Salinger",
+    tags: ["Classic","American","Coming of Age","Voice"],
+    why: "Holden Caulfield has been expelled from another prep school. He spends three days wandering New York, hating phoniness, missing his dead brother, and trying to figure out what he is supposed to become. Salinger's novel invented a kind of narrator — alienated, funny, wounded — that literature has never quite got over.",
+    search: "The Catcher in the Rye J.D. Salinger",
+    match: { feeling:['unsettled','moved'], pace:['fast','medium'], world:['historical','domestic'], theme:['identity'], avoid:['none'], character:['unreliable','observer'], length:['short'], mood:['company','understand'], time:['stolen','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "A Farewell to Arms",
+    author: "Ernest Hemingway",
+    tags: ["Classic","War","Love","Tragedy"],
+    why: "An American ambulance driver falls in love with a British nurse on the Italian front of World War One. Hemingway's prose is stripped to the bone — no wasted words, no sentiment — and the love story is more devastating for it. The ending is one of the most quietly shattering in literature.",
+    search: "A Farewell to Arms Ernest Hemingway",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical','cold'], theme:['love','survival'], avoid:['none','violence','sad'], character:['hero','observer'], length:['medium'], mood:['understand','challenge'], time:['night','weekend'], secret:['cry','line'] }
+  },
+  {
+    title: "To the Lighthouse",
+    author: "Virginia Woolf",
+    tags: ["Classic","Stream of Consciousness","Family","Loss"],
+    why: "The Ramsay family plan to visit a lighthouse. They don't go. Ten years pass. They go. Woolf's novel is less interested in what happens than in the interior lives of everyone present — the flicker of perception, the weight of time, the things people cannot say. The dinner party scene alone is one of the great achievements of English prose.",
+    search: "To the Lighthouse Virginia Woolf",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical','cold'], theme:['memory','identity'], avoid:['none','sad'], character:['observer','complex'], length:['short'], mood:['challenge','understand'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "Life of Pi",
+    author: "Yann Martel",
+    tags: ["Canadian","Survival","Animals","Spiritual"],
+    why: "Pi Patel survives a shipwreck and spends 227 days in a lifeboat on the Pacific Ocean — with a Bengal tiger named Richard Parker. Martel's novel is about faith, survival, and the stories we need to make life bearable. The end offers a choice about which story you prefer, and what that preference says about you.",
+    search: "Life of Pi Yann Martel",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['invented','cold'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','unreliable'], length:['medium'], mood:['company','understand'], time:['weekend','stolen'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Love in the Time of Cholera",
+    author: "Gabriel García Márquez",
+    tags: ["Colombian","Love","Time","Magical Realism"],
+    why: "Florentino Ariza waits fifty-one years, nine months, and four days for Fermina Daza to be available to be loved by him. García Márquez's novel is about the persistence of desire, the passage of time, and love as a kind of illness — and also as the one true cure. Romantic and strange and completely its own thing.",
+    search: "Love in the Time of Cholera Gabriel Garcia Marquez",
+    match: { feeling:['moved','hopeful'], pace:['slow','medium'], world:['historical'], theme:['love','memory'], avoid:['none','sad'], character:['complex','observer'], length:['medium'], mood:['understand','company'], time:['night','weekend'], secret:['cry','line'] }
+  },
+  {
+    title: "The Stranger",
+    author: "Albert Camus",
+    tags: ["French","Philosophy","Existentialism","Classic"],
+    why: "Meursault's mother dies. He returns to Algiers, starts an affair, and kills a man on a beach, apparently because of the sun. Camus's absurdist masterpiece is narrated with unsettling detachment — Meursault notices everything and understands nothing. A short novel that is impossible to forget and impossible to finish thinking about.",
+    search: "The Stranger Albert Camus",
+    match: { feeling:['unsettled'], pace:['fast','medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence'], character:['unreliable','observer'], length:['short'], mood:['challenge','understand'], time:['stolen','night'], secret:['line'] }
+  },
+  {
+    title: "The Color Purple",
+    author: "Alice Walker",
+    tags: ["American","Letters","Survival","Triumphant"],
+    why: "Celie writes letters to God because there is no one else to write to. She is poor, Black, abused, and in rural Georgia in the 1930s — and Walker's novel follows her, across decades, toward something like freedom. Told in Celie's own voice, in her own grammar, with extraordinary dignity. One of the most redemptive endings in American fiction.",
+    search: "The Color Purple Alice Walker",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['historical','domestic'], theme:['identity','survival'], avoid:['none','violence','sad'], character:['hero','observer'], length:['medium'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Their Eyes Were Watching God",
+    author: "Zora Neale Hurston",
+    tags: ["American","Harlem Renaissance","Love","Voice"],
+    why: "Janie Crawford tells the story of her three marriages to her friend Pheoby — and through them, the story of a Black woman in the American South searching for her own horizon. Hurston's prose is steeped in Black vernacular and alive with wit. Written in seven weeks. One of the most original voices in American fiction.",
+    search: "Their Eyes Were Watching God Zora Neale Hurston",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['historical','domestic'], theme:['identity','love'], avoid:['none','violence','sad'], character:['hero','observer'], length:['medium'], mood:['understand','company'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "White Teeth",
+    author: "Zadie Smith",
+    tags: ["British","Immigration","Identity","Comic"],
+    why: "Two families — one Bangladeshi, one English — navigate London across three generations, from World War Two to the turn of the millennium. Smith's debut novel is sprawling, funny, and overflowing with ideas about race, history, and what it means to belong somewhere. She was twenty-four when she wrote it.",
+    search: "White Teeth Zadie Smith",
+    match: { feeling:['moved','exhilarated'], pace:['fast','medium'], world:['historical','domestic'], theme:['identity'], avoid:['none'], character:['complex','observer'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "A Thousand Splendid Suns",
+    author: "Khaled Hosseini",
+    tags: ["Afghan","Women","War","Survival"],
+    why: "Two women — Mariam and Laila, a generation apart — find themselves trapped in the same abusive marriage in Kabul, across three decades of war. Hosseini's novel is about endurance, female solidarity, and love under impossible conditions. It is the kind of book that makes you feel shame at your own complaints.",
+    search: "A Thousand Splendid Suns Khaled Hosseini",
+    match: { feeling:['moved','unsettled'], pace:['medium','fast'], world:['historical','cold'], theme:['survival','identity'], avoid:['none','violence','sad'], character:['hero','complex'], length:['medium'], mood:['understand','challenge'], time:['weekend','stolen'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The Namesake",
+    author: "Jhumpa Lahiri",
+    tags: ["Indian-American","Immigration","Identity","Quiet"],
+    why: "Ashoke and Ashima Ganguli arrive in America from Calcutta. Their son Gogol — named after a Russian writer his father survived a train crash reading — grows up caught between two worlds that neither quite fits. Lahiri's novel is quiet, precise, and deeply sad about the specific loneliness of being someone's child.",
+    search: "The Namesake Jhumpa Lahiri",
+    match: { feeling:['moved'], pace:['slow','medium'], world:['historical','domestic'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['understand'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Little Women",
+    author: "Louisa May Alcott",
+    tags: ["Classic","American","Family","Warm"],
+    why: "The March sisters — Meg, Jo, Beth, and Amy — grow up in Massachusetts while their father is away at war. Alcott's novel is about what women are asked to become, and what they want to be, and the gap between. Jo March is one of the great characters in American fiction: difficult, ambitious, and entirely real.",
+    search: "Little Women Louisa May Alcott",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['historical','domestic'], theme:['identity','love'], avoid:['none','sad'], character:['hero','observer'], length:['long'], mood:['company','understand'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    tags: ["Classic","Romance","Witty","Regency"],
+    why: "Elizabeth Bennet meets Mr Darcy. They are wrong about each other for approximately 300 pages. Austen's most beloved novel is also her sharpest — a comedy of manners that is actually about the limited choices available to women, the dangers of first impressions, and the rare pleasure of meeting someone who truly matches you.",
+    search: "Pride and Prejudice Jane Austen",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['historical','domestic'], theme:['love','identity'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['company','understand'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "Emma",
+    author: "Jane Austen",
+    tags: ["Classic","Regency","Comedy","Matchmaking"],
+    why: "Emma Woodhouse is handsome, clever, rich, and completely wrong about everyone around her. Austen's longest and most technically accomplished novel is a comedy about self-delusion and the social world that enables it. Mr Knightley is the only person who tells Emma the truth — which is of course why she eventually marries him.",
+    search: "Emma Jane Austen",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium'], world:['historical','domestic'], theme:['identity','love'], avoid:['none'], character:['unreliable','observer'], length:['long'], mood:['company','understand'], time:['morning','weekend'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Dutch House",
+    author: "Ann Patchett",
+    tags: ["American","Family","Memory","Siblings"],
+    why: "Danny and Maeve Conroy grow up in an extraordinary house in suburban Pennsylvania, lose it, and spend the next forty years sitting in a car outside it talking about what happened. Patchett's novel is about the stories families tell themselves, the things siblings share that no one else can access, and whether you can ever really go home.",
+    search: "The Dutch House Ann Patchett",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical','domestic'], theme:['memory','identity'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['understand','company'], time:['weekend','night'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Little Fires Everywhere",
+    author: "Celeste Ng",
+    tags: ["American","Suburban","Family","Race"],
+    why: "A planned community in 1990s Ohio. The Richardsons have everything ordered and perfect. Mia Warren and her daughter Pearl arrive and disrupt everything. Ng's novel moves between the two families as a custody battle over a Chinese-American baby forces everyone to examine what they actually believe about race, class, and motherhood.",
+    search: "Little Fires Everywhere Celeste Ng",
+    match: { feeling:['moved','unsettled'], pace:['medium','fast'], world:['domestic'], theme:['identity','survival'], avoid:['none','sad'], character:['complex','observer'], length:['medium'], mood:['understand','challenge'], time:['weekend','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Overstory",
+    author: "Richard Powers",
+    tags: ["American","Nature","Epic","Environmental"],
+    why: "Nine Americans whose lives become intertwined with trees — a chestnut tree that has survived a century, a girl who falls from a mulberry tree, a couple who live on a platform in a redwood. Powers's Pulitzer-winning novel is vast in scope and genuinely changes how you look at the world outside your window.",
+    search: "The Overstory Richard Powers",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['domestic','cold'], theme:['survival','identity'], avoid:['none','sad'], character:['complex','observer'], length:['long'], mood:['challenge','understand'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Siddhartha",
+    author: "Hermann Hesse",
+    tags: ["German","Spiritual","Philosophy","Short"],
+    why: "A young Brahmin leaves home to seek enlightenment, encounters the Buddha, becomes a ferryman, and learns something the Buddha's teaching could not give him. Hesse's short novel is a book people tend to read at turning points in their lives — and to find, somehow, exactly what they needed. Calm and profound and strangely timeless.",
+    search: "Siddhartha Hermann Hesse",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['historical'], theme:['identity','memory'], avoid:['none'], character:['hero','observer'], length:['short'], mood:['understand','challenge'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "The English Patient",
+    author: "Michael Ondaatje",
+    tags: ["Canadian","War","Love","Poetic"],
+    why: "An Italian villa at the end of World War Two. A burned, unnamed man. A nurse who refuses to leave him. A Sikh sapper defusing bombs. A thief. Ondaatje's novel moves between the Sahara in the 1930s and Italy in 1945 — accumulating fragments of story and character until they resolve into something heartbreaking.",
+    search: "The English Patient Michael Ondaatje",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical','cold'], theme:['love','memory'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['challenge','understand'], time:['night','weekend'], secret:['line','cry'] }
+  },
+  {
+    title: "The Virgin Suicides",
+    author: "Jeffrey Eugenides",
+    tags: ["American","Suburban","Mystery","Haunting"],
+    why: "Five teenage sisters kill themselves over the course of a year in suburban Detroit. The novel is narrated by the neighbourhood boys — now middle-aged men — who are still trying to understand why. Eugenides writes in a collective 'we' that captures something true about how obsession works, and how the dead continue to haunt us.",
+    search: "The Virgin Suicides Jeffrey Eugenides",
+    match: { feeling:['unsettled','moved'], pace:['slow','medium'], world:['historical','domestic'], theme:['memory','identity'], avoid:['none','sad'], character:['unreliable','observer'], length:['short'], mood:['challenge','understand'], time:['night','stolen'], secret:['line','empathy'] }
+  },
+  {
+    title: "Middlesex",
+    author: "Jeffrey Eugenides",
+    tags: ["American","Identity","Family","Pulitzer"],
+    why: "Cal Stephanides — born Callie, raised a girl, now living as a man — narrates three generations of a Greek-American family from a village in Asia Minor to suburban Detroit. Eugenides's Pulitzer-winning novel is about genes, identity, and what we inherit without being asked. Huge and intimate at once.",
+    search: "Middlesex Jeffrey Eugenides",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['historical','domestic'], theme:['identity'], avoid:['none','sad'], character:['unreliable','observer'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Song of Solomon",
+    author: "Toni Morrison",
+    tags: ["American","Black Literature","Myth","Family"],
+    why: "Macon Dead III — called Milkman — discovers that his family has roots, a history, and a name that has been buried for generations. Morrison's third novel is her most mythic: part family saga, part quest narrative, steeped in African-American folklore. The ending is both literally and metaphorically airborne.",
+    search: "Song of Solomon Toni Morrison",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical','domestic'], theme:['identity','memory'], avoid:['none','violence'], character:['hero','complex'], length:['medium'], mood:['challenge','understand'], time:['weekend','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "No Country for Old Men",
+    author: "Cormac McCarthy",
+    tags: ["American","Thriller","Dark","Violent"],
+    why: "A hunter finds a drug deal gone wrong and takes a case of money. A killer unlike anything in fiction comes looking for it. A sheriff watches it all fall apart. McCarthy's novel is lean, relentless, and genuinely frightening — not because of the violence but because of what Anton Chigurh represents about chance and consequence.",
+    search: "No Country for Old Men Cormac McCarthy",
+    match: { feeling:['unsettled'], pace:['fast','medium'], world:['cold','domestic'], theme:['survival'], avoid:['none','violence'], character:['complex','observer'], length:['medium'], mood:['challenge'], time:['night','stolen'], secret:['line'] }
+  },
+  {
+    title: "A Confederacy of Dunces",
+    author: "John Kennedy Toole",
+    tags: ["American","Comedy","New Orleans","Absurdist"],
+    why: "Ignatius J. Reilly is enormous, slothful, brilliant, and insufferable. He lives with his mother in New Orleans and has extremely strong opinions about everything. Toole's posthumously published comic novel is one of the funniest books in American literature — chaotic, warm, and built around a character who is somehow both monstrous and loveable.",
+    search: "A Confederacy of Dunces John Kennedy Toole",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast','medium'], world:['historical','domestic'], theme:['identity'], avoid:['none'], character:['unreliable','complex'], length:['medium'], mood:['company','understand'], time:['stolen','morning'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Little Prince",
+    author: "Antoine de Saint-Exupéry",
+    tags: ["French","Fable","Philosophy","Short"],
+    why: "A pilot stranded in the Sahara meets a small prince who has fallen from his asteroid. Told in a few hours, thought about for a lifetime. Saint-Exupéry's fable about loneliness, love, and what adults forget is one of the strangest and most tender books ever written. The fox and the taming. The rose and her thorns.",
+    search: "The Little Prince Antoine de Saint-Exupery",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['invented'], theme:['identity','love'], avoid:['none','sad'], character:['observer','hero'], length:['short'], mood:['company','understand'], time:['morning','stolen'], secret:['line','cry'] }
+  },
+  {
+    title: "Perfume",
+    author: "Patrick Süskind",
+    tags: ["German","Dark","Obsession","Historical"],
+    why: "Jean-Baptiste Grenouille is born in eighteenth-century Paris with no scent of his own but the most extraordinary nose in human history. His obsession becomes murderous. Süskind's novel is a meditation on genius, creation, and desire — told in prose of baroque, suffocating beauty. Deeply strange and impossible to look away from.",
+    search: "Perfume Patrick Suskind",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['historical'], theme:['identity','survival'], avoid:['none','violence'], character:['complex','unreliable'], length:['medium'], mood:['challenge','understand'], time:['night','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Wind-Up Bird Chronicle",
+    author: "Haruki Murakami",
+    tags: ["Japanese","Mystery","Dream","Strange"],
+    why: "Toru Okada's cat goes missing. Then his wife disappears. He spends most of the novel sitting at the bottom of a dry well, waiting. Murakami's longest and strangest novel accumulates stories — a psychic, a World War Two veteran, a teenage girl with a baseball bat — until they form a pattern that is impossible to describe and difficult to forget.",
+    search: "The Wind-Up Bird Chronicle Haruki Murakami",
+    match: { feeling:['unsettled','moved'], pace:['slow','medium'], world:['invented','domestic'], theme:['identity','memory'], avoid:['none','violence'], character:['observer','hero'], length:['long'], mood:['challenge','understand'], time:['night','weekend'], secret:['line','surprise'] }
+  },
+  {
+    title: "The Trial",
+    author: "Franz Kafka",
+    tags: ["Czech","Absurdist","Classic","Anxiety"],
+    why: "Josef K. is arrested one morning without being told what he has done. He spends the novel trying to navigate a legal system that will not explain itself, through corridors, offices, and officials who may not exist in the way he thinks they do. Kafka's unfinished novel invented a whole vocabulary for bureaucratic dread. You will recognise everything.",
+    search: "The Trial Franz Kafka",
+    match: { feeling:['unsettled'], pace:['medium'], world:['historical','invented'], theme:['survival','identity'], avoid:['none'], character:['hero','observer'], length:['short'], mood:['challenge','understand'], time:['night','stolen'], secret:['line'] }
+  },
+  {
+    title: "Orlando",
+    author: "Virginia Woolf",
+    tags: ["British","Fantasy","Identity","Playful"],
+    why: "Orlando begins as a young nobleman in the court of Queen Elizabeth and ends as a woman in 1928, having lived for four hundred years and barely aged a day. Woolf's wildest and most joyful novel — written as a love letter to Vita Sackville-West — is about gender, time, and the self as a shifting, ongoing experiment.",
+    search: "Orlando Virginia Woolf",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium'], world:['historical','invented'], theme:['identity','memory'], avoid:['none'], character:['unreliable','observer'], length:['medium'], mood:['challenge','understand'], time:['morning','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "Possession",
+    author: "A.S. Byatt",
+    tags: ["British","Literary","Romance","Mystery"],
+    why: "Two academics in 1980s London discover letters suggesting that two Victorian poets had a secret love affair. Byatt's novel alternates between past and present — and includes actual Victorian poetry, journals, and fairy tales embedded in the text. A novel about obsession, archives, and the persistence of love across time. Rich and demanding and completely worth it.",
+    search: "Possession A.S. Byatt",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical','cold'], theme:['love','memory'], avoid:['none','sad'], character:['observer','complex'], length:['long'], mood:['understand','challenge'], time:['weekend','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "True Grit",
+    author: "Charles Portis",
+    tags: ["American","Western","Voice","Short"],
+    why: "Fourteen-year-old Mattie Ross hires a drunken, one-eyed US Marshal to help her track her father's killer into hostile territory. Portis's Western is narrated by Mattie in old age, in a voice of extraordinary dry formality — and it is one of the funniest, most propulsive books you will ever read. Genuinely difficult to put down.",
+    search: "True Grit Charles Portis",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast','medium'], world:['historical','cold'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','observer'], length:['short'], mood:['company','challenge'], time:['stolen','morning'], secret:['surprise','line'] }
+  },
+  {
+    title: "A Fine Balance",
+    author: "Rohinton Mistry",
+    tags: ["Indian","Political","Tragedy","Masterpiece"],
+    why: "Four strangers — a widow, a student, and two tailors — share a flat in an Indian city during Indira Gandhi's Emergency of the 1970s. Mistry's novel is vast, warm, and devastating: it loves its characters completely and then shows you what the world does to people who are loved like that. One of the most important novels of the twentieth century.",
+    search: "A Fine Balance Rohinton Mistry",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical'], theme:['survival','identity'], avoid:['none','violence','sad'], character:['complex','hero'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Everything I Never Told You",
+    author: "Celeste Ng",
+    tags: ["American","Family","Mystery","Race"],
+    why: "The favourite daughter of a Chinese-American family in 1970s Ohio is found dead in the lake. Ng's debut novel moves backwards and forwards in time, uncovering what each family member was hiding. It is about the weight of parental expectation, the loneliness of not fitting in, and the things families cannot say to each other until it is too late.",
+    search: "Everything I Never Told You Celeste Ng",
+    match: { feeling:['moved','unsettled'], pace:['medium','fast'], world:['historical','domestic'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['weekend','night'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The Rosie Project",
+    author: "Graeme Simsion",
+    tags: ["Australian","Comedy","Romance","Warm"],
+    why: "Don Tillman is a genetics professor who has decided to find a wife using a scientific questionnaire. Rosie Jarman — who fails the questionnaire on almost every criterion — is looking for her biological father. Simsion's debut is warm, funny, and genuinely romantic in the way that only comedies about deeply unsuitable matches can be.",
+    search: "The Rosie Project Graeme Simsion",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast','medium'], world:['domestic'], theme:['love','identity'], avoid:['none','sad'], character:['unreliable','hero'], length:['medium'], mood:['company','understand'], time:['morning','stolen'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Lonesome Dove",
+    author: "Larry McMurtry",
+    tags: ["American","Western","Epic","Friendship"],
+    why: "Two former Texas Rangers — Call and Gus — drive a cattle herd from Texas to Montana in the 1870s. McMurtry's Pulitzer-winning novel is the great American Western: enormous, funny, sad, and full of minor characters who feel completely real. Gus McCrae is one of the most beloved characters in American fiction. The ending will stay with you forever.",
+    search: "Lonesome Dove Larry McMurtry",
+    match: { feeling:['moved','exhilarated'], pace:['medium','fast'], world:['historical','cold'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','complex'], length:['long'], mood:['company','understand'], time:['weekend','morning'], secret:['empathy','line'] }
   }
 ];
 
@@ -3374,12 +4563,16 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
 
-  // Size canvas to match the stage element exactly
+  // Size canvas to match the stage element exactly.
+  // Pin CSS pixel dimensions too so the bitmap never stretches if the
+  // stage height changes mid-animation.
   const rect = stage.getBoundingClientRect();
   const W = rect.width;
   const H = rect.height;
-  canvas.width  = W;
-  canvas.height = H;
+  canvas.width        = W;
+  canvas.height       = H;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
   canvas.style.display = 'block';
 
   const ctx = canvas.getContext('2d');
@@ -3461,21 +4654,42 @@ function renderQuestion(animate, direction) {
   }
 
   isAnimating = true;
-  // Step 1: clear the margin note so the card shrinks to question+options size.
+  const stage    = card.parentElement;   // .page-flip-stage
+  const quizBody = stage.parentElement;  // .quiz-body
+
+  // ── Step 1: Lock height and anchor quiz-body BEFORE touching any content.
+  // The reaction box is still present, so the card is at full height.
+  // Locking first means nothing can shift when we clear the reaction box.
+  const startH    = card.offsetHeight;
+  const bodyH     = quizBody.clientHeight;
+  const anchorPad = Math.max(
+    parseFloat(getComputedStyle(quizBody).paddingTop),
+    (bodyH - startH) / 2
+  );
+  quizBody.style.alignItems = 'flex-start';
+  quizBody.style.paddingTop = anchorPad + 'px';
+  card.style.height         = startH + 'px';
+  card.style.overflow       = 'hidden';
+
+  // ── Step 2: Safe to clear the reaction note now — card height is locked
+  // so nothing moves.
   const reactionArea = document.getElementById('reaction-area');
   if (reactionArea) reactionArea.innerHTML = '';
-  // Step 2: wait one frame so the browser reflows the card to its new height,
-  // then lock THAT height — the canvas will be sized to just the question+options.
+
+  // ── Step 3: One rAF so the browser commits the locked state before the
+  // canvas measures the stage, then play the flip.
   requestAnimationFrame(() => {
-    card.style.minHeight = card.offsetHeight + 'px';
-    card.style.overflow  = 'hidden';
     playCanvasFlip(direction, () => {
-      // Midpoint: inject new content while height is locked (no jump).
-      card.innerHTML = buildQuestionHTML(qId);
+      // Midpoint: canvas covers everything, stage is anchored — inject new
+      // content and resize the card.  Nothing visible can move.
+      card.innerHTML    = buildQuestionHTML(qId);
+      card.style.height = card.scrollHeight + 'px';
     }, () => {
-      // Animation done: release so card adopts its natural height.
-      card.style.minHeight = '';
-      card.style.overflow  = '';
+      // Animation complete: restore normal flex-centering.
+      quizBody.style.alignItems = '';
+      quizBody.style.paddingTop = '';
+      card.style.height         = '';
+      card.style.overflow       = '';
     });
   });
 }
@@ -3572,6 +4786,89 @@ function checkAllRead(bookList) {
   const allRead = bookList.length > 0 && bookList.every(b => readTitles.includes(b.title));
   const banner = document.getElementById('all-read-banner');
   if (banner) banner.classList.toggle('visible', allRead);
+}
+
+function rerollWithAnimation(newSuggestions) {
+  const list = document.getElementById('reveal-books-list');
+  // Clear first so the browser discards the old nodes
+  list.innerHTML = '';
+  // Force a reflow — this makes the browser register the cleared state
+  // so the CSS animations fire fresh on the next render
+  void list.offsetHeight;
+  currentSuggestions = newSuggestions;
+  renderReveal(newSuggestions);
+  // Scroll reveal screen back to top
+  const screen = document.getElementById('screen-reveal');
+  if (screen) screen.scrollTop = 0;
+}
+
+let swapMode = false;
+
+function rerollOne() {
+  // Enter swap-pick mode — user taps which card to replace
+  swapMode = true;
+  const list = document.getElementById('reveal-books-list');
+  list.classList.add('swap-mode');
+  // Show hint above the cards
+  let hint = document.getElementById('swap-hint');
+  if (!hint) {
+    hint = document.createElement('p');
+    hint.id = 'swap-hint';
+    hint.className = 'swap-hint';
+    hint.textContent = 'Tap the book you want to swap out.';
+    list.parentNode.insertBefore(hint, list);
+  }
+  hint.style.display = '';
+}
+
+function exitSwapMode() {
+  swapMode = false;
+  const list = document.getElementById('reveal-books-list');
+  list.classList.remove('swap-mode');
+  const hint = document.getElementById('swap-hint');
+  if (hint) hint.style.display = 'none';
+}
+
+function swapCardAt(i) {
+  const shownTitles = currentSuggestions.map(b => b.title);
+  const exclude = [...getReadTitles(), ...shownTitles];
+  const replacement = matchBooks(1, exclude);
+  if (replacement.length === 0) { exitSwapMode(); return; }
+  currentSuggestions[i] = replacement[0];
+  const book = replacement[0];
+  const isRead = getReadTitles().includes(book.title);
+  const tagsHTML = book.tags.map(t => '<span class="book-tag">' + t + '</span>').join('');
+  const searchURL = amazonURL(book.title);
+  const newCardHTML = '<div class="ranked-card card-swap ' + (isRead ? 'is-read' : '') + '" id="card-' + i + '" onclick="selectCard(' + i + ')">'
+    + '<div class="rank-col ' + rankColClass[i] + '">'
+    + '<div class="rank-num">' + rankOrdinal[i] + '</div>'
+    + '<div class="rank-label">' + rankLabels[i] + '</div>'
+    + '</div>'
+    + '<div class="card-body">'
+    + '<span class="read-badge">Already read</span>'
+    + '<div class="card-top"><div class="card-titles">'
+    + '<div class="book-title">' + book.title + '</div>'
+    + '<div class="book-author">by ' + book.author + '</div>'
+    + '</div></div>'
+    + '<p class="book-why">' + book.why + '</p>'
+    + (BOOK_EXTRAS[book.title]?.bestRead ? '<div class="book-best-read">☕ ' + BOOK_EXTRAS[book.title].bestRead + '</div>' : '')
+    + '<div class="book-tags">' + tagsHTML + '</div>'
+    + '<div class="card-actions" onclick="event.stopPropagation()">'
+    + '<button class="btn-find-book" onclick="openDetail(' + i + ')">See in depth &#8594;</button>'
+    + buildListPickerBtn(book.title, book.author, i)
+    + '</div>'
+    + '</div></div>';
+  const oldCard = document.getElementById('card-' + i);
+  if (oldCard) oldCard.outerHTML = newCardHTML;
+  checkAllRead(currentSuggestions);
+  exitSwapMode();
+}
+
+function rerollAll() {
+  const exclude = getReadTitles();
+  const fresh = matchBooks(3, [...exclude, ...currentSuggestions.map(b => b.title)]);
+  if (fresh.length === 0) return;
+  rerollWithAnimation(fresh);
 }
 
 function loadMoreSuggestions() {
@@ -3743,7 +5040,7 @@ function renderReveal(bookList) {
       + (BOOK_EXTRAS[book.title]?.bestRead ? '<div class="book-best-read">☕ ' + BOOK_EXTRAS[book.title].bestRead + '</div>' : '')
       + '<div class="book-tags">' + tagsHTML + '</div>'
       + '<div class="card-actions" onclick="event.stopPropagation()">'
-      + '<button class="btn-find-book" onclick="window.open(\'' + searchURL + '\',\'_blank\')">Find this book &#8594;</button>'
+      + '<button class="btn-find-book" onclick="openDetail(' + i + ')">See in depth &#8594;</button>'
       + buildListPickerBtn(book.title, book.author, i)
       + '</div>'
       + '</div></div>';
@@ -3757,17 +5054,14 @@ let selectedBookIndex = null;
 function selectCard(i) {
   const card = document.getElementById(`card-${i}`);
   if (!card || card.classList.contains('is-read')) return;
+  // Card click only acts in swap-pick mode
+  if (swapMode) swapCardAt(i);
+}
 
-  // Highlight the card
-  document.querySelectorAll('.ranked-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  selectedBookIndex = i;
-
-  // Open confirmation modal
+function openDetail(i) {
+  if (swapMode) return;
   const book = currentSuggestions[i];
-  document.getElementById('modal-book-title').textContent = book.title;
-  document.getElementById('modal-book-author').textContent = 'by ' + book.author;
-  document.getElementById('confirm-modal').classList.add('visible');
+  if (book) openDetailScreen(book);
 }
 
 function closeModal() {
