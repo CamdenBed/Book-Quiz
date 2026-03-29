@@ -2574,9 +2574,9 @@ const allQuestions = [
     text: 'Bleak — but where?',
     sub: "Pitch black fiction has different geographies. Pick yours.",
     options: [
-      { label: 'Rural and isolated',          hint: 'Moors, forests, roads that go nowhere good',              value: 'bw_rural',   next: 'theme' },
-      { label: 'Urban and suffocating',       hint: 'The city as trap — bureaucratic, overwhelming, grey',     value: 'bw_urban',   next: 'theme' },
-      { label: 'Interior — the bleakness is psychological', hint: 'Not the world but the mind. Inescapable.', value: 'bw_psych',   next: 'theme' },
+      { label: 'Rural and isolated',          hint: 'Moors, forests, roads that go nowhere good',              value: 'bw_rural',   next: 'rural_texture' },
+      { label: 'Urban and suffocating',       hint: 'The city as trap — bureaucratic, overwhelming, grey',     value: 'bw_urban',   next: 'urban_trap' },
+      { label: 'Interior — the bleakness is psychological', hint: 'Not the world but the mind. Inescapable.', value: 'bw_psych',   next: 'psych_spiral' },
       { label: 'Near-future or speculative',  hint: 'What comes next and why it\'s bleak',                    value: 'bw_future',  next: 'theme' }
     ],
     reactions: {
@@ -2591,8 +2591,8 @@ const allQuestions = [
     text: 'Where does the eeriness live?',
     sub: "Dread is specific. Help us locate yours.",
     options: [
-      { label: 'In the uncanny — familiar made strange', hint: 'The house, the person, the thing you know but slightly off', value: 'ec_uncanny',  next: 'theme' },
-      { label: 'In folklore and old dark things',        hint: 'Myths, legends, something that predates everything',         value: 'ec_folk',     next: 'theme' },
+      { label: 'In the uncanny — familiar made strange', hint: 'The house, the person, the thing you know but slightly off', value: 'ec_uncanny',  next: 'uncanny_locus' },
+      { label: 'In folklore and old dark things',        hint: 'Myths, legends, something that predates everything',         value: 'ec_folk',     next: 'folk_vein' },
       { label: 'In quiet cosmic dread',                  hint: 'The universe doesn\'t care and that\'s frightening',        value: 'ec_cosmic',   next: 'theme' },
       { label: 'In social unease — something is wrong here', hint: 'The party is fine but something is off and no one says it', value: 'ec_social', next: 'theme' }
     ],
@@ -2608,7 +2608,7 @@ const allQuestions = [
     text: 'Beautiful prose from which tradition?',
     sub: 'Different schools of beautiful. Which one suits your ear?',
     options: [
-      { label: 'Modernist stream of consciousness',   hint: 'Woolf, Faulkner — the mind in motion, unfiltered',             value: 'lp_modernist', next: 'avoid' },
+      { label: 'Modernist stream of consciousness',   hint: 'Woolf, Faulkner — the mind in motion, unfiltered',             value: 'lp_modernist', next: 'stream_mode' },
       { label: 'Classical and controlled',            hint: 'Sentences with architecture — every clause earning its place',   value: 'lp_classical', next: 'avoid' },
       { label: 'Contemporary and precise',            hint: 'Modern prose at its most stripped and intentional',             value: 'lp_contemp',   next: 'avoid' },
       { label: 'Lyrical and Southern — Gothic richness', hint: 'Dense, atmospheric, decay and beauty together',             value: 'lp_gothic',    next: 'avoid' }
@@ -4405,6 +4405,734 @@ const books = [
     why: "Two former Texas Rangers — Call and Gus — drive a cattle herd from Texas to Montana in the 1870s. McMurtry's Pulitzer-winning novel is the great American Western: enormous, funny, sad, and full of minor characters who feel completely real. Gus McCrae is one of the most beloved characters in American fiction. The ending will stay with you forever.",
     search: "Lonesome Dove Larry McMurtry",
     match: { feeling:['moved','exhilarated'], pace:['medium','fast'], world:['historical','cold'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','complex'], length:['long'], mood:['company','understand'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Dune",
+    author: "Frank Herbert",
+    tags: ["Science fiction","Epic","Political","Desert"],
+    why: "Paul Atreides inherits a desert planet that produces the most valuable substance in the universe, and with it an impossible destiny. Herbert built a complete civilisation — religion, ecology, politics — and then dropped a boy into the middle of it. The scope is staggering, and the prose rewards slow reading.",
+    search: "Dune Frank Herbert",
+    match: { feeling:['exhilarated','hopeful'], pace:['slow'], world:['invented'], theme:['survival','identity'], avoid:['none','romance'], character:['hero','complex'], length:['long'], mood:['escape','challenge'], time:['night','weekend'], secret:['surprise','line'] }
+  },
+  {
+    title: "Mistborn: The Final Empire",
+    author: "Brandon Sanderson",
+    tags: ["Fantasy","Heist","Magic system","Epic"],
+    why: "A crew of thieves plan to rob an immortal emperor who has ruled for a thousand years. Sanderson's magic system — allomancy, the ability to burn metals — is the most rigorously designed in fantasy, and the plot snaps shut like a trap. The ending rearranges everything.",
+    search: "Mistborn The Final Empire Brandon Sanderson",
+    match: { feeling:['exhilarated'], pace:['medium','fast'], world:['invented'], theme:['survival','identity'], avoid:['none','romance','sad'], character:['hero','complex'], length:['long'], mood:['escape','challenge'], time:['night','weekend'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Fifth Season",
+    author: "N.K. Jemisin",
+    tags: ["Science fiction","Epic","Devastating","Prize-winning"],
+    why: "Three women, one world that ends every few centuries in catastrophe. Jemisin writes the second person with such precision it feels like an accusation. The most original structural choice in recent speculative fiction — the reasons for it will wreck you.",
+    search: "The Fifth Season N.K. Jemisin",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['invented','cold'], theme:['survival','identity'], avoid:['none','romance'], character:['unreliable','complex'], length:['medium'], mood:['challenge','understand'], time:['night','weekend'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "American Gods",
+    author: "Neil Gaiman",
+    tags: ["Fantasy","American","Road trip","Mythology"],
+    why: "Shadow Moon is released from prison and hired by a man called Wednesday, who turns out to be Odin. Old gods — Anansi, Czernobog, Bilquis — are dying in America, replaced by the gods of television and credit cards. A strange, melancholy road trip through the heart of the country.",
+    search: "American Gods Neil Gaiman",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['cold','domestic'], theme:['identity','memory'], avoid:['none','romance'], character:['observer','hero'], length:['long'], mood:['escape','understand'], time:['night','stolen'], secret:['surprise','line'] }
+  },
+  {
+    title: "Ender's Game",
+    author: "Orson Scott Card",
+    tags: ["Science fiction","War","Childhood","Moral"],
+    why: "A six-year-old military genius is taken to Battle School in orbit to be trained for a war humanity cannot afford to lose. The ethical trap at the centre of this novel is one of the most disturbing in science fiction. You will not forget the final twist.",
+    search: "Ender's Game Orson Scott Card",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['invented'], theme:['survival','identity'], avoid:['none','romance','sad'], character:['hero','complex'], length:['medium'], mood:['escape','challenge'], time:['transit','night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Parable of the Sower",
+    author: "Octavia Butler",
+    tags: ["Dystopian","Visionary","Survival","American"],
+    why: "Lauren Olamina is fifteen when her walled community in a burning California is destroyed. What she builds from the wreckage — a new philosophy, a new community — is Butler's argument about what humanity is actually for. Written in 1993, it reads like news.",
+    search: "Parable of the Sower Octavia Butler",
+    match: { feeling:['hopeful','unsettled'], pace:['medium','fast'], world:['cold'], theme:['survival','identity'], avoid:['none','romance'], character:['hero'], length:['medium'], mood:['challenge','understand'], time:['night','weekend'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Hyperion",
+    author: "Dan Simmons",
+    tags: ["Science fiction","Epic","Canterbury Tales structure","Literary"],
+    why: "Seven pilgrims travel to meet a creature called the Shrike, which kills in ways that do not obey time. Each pilgrim tells their story — a poet, a soldier, a priest, a detective — and each story is a different genre of science fiction. The Canterbury Tales in space, and better than it sounds.",
+    search: "Hyperion Dan Simmons",
+    match: { feeling:['unsettled','exhilarated'], pace:['slow'], world:['invented'], theme:['memory','survival'], avoid:['none','romance'], character:['complex','observer'], length:['long'], mood:['challenge','escape'], time:['night','weekend'], secret:['surprise','line'] }
+  },
+  {
+    title: "Bring Up the Bodies",
+    author: "Hilary Mantel",
+    tags: ["Historical","Tudor","Power","Brilliant"],
+    why: "Thomas Cromwell dismantles Anne Boleyn. The second Wolf Hall novel is even tighter than the first — a case study in how to destroy a woman using only paperwork, whispers, and perfect patience. Mantel makes Tudor politics feel like a thriller.",
+    search: "Bring Up the Bodies Hilary Mantel",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium','fast'], world:['historical'], theme:['survival','identity'], avoid:['none','romance','sad'], character:['observer','complex'], length:['medium'], mood:['escape','understand'], time:['transit','night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Suite Française",
+    author: "Irène Némirovsky",
+    tags: ["WWII","French","Unfinished masterpiece","Devastating"],
+    why: "Written during the German occupation and abandoned when Némirovsky was taken to Auschwitz, where she died. The manuscript was hidden in a suitcase for sixty years. Two novellas about Paris under occupation — and the knowledge of how the author died makes every sentence unbearable and magnificent.",
+    search: "Suite Française Irène Némirovsky",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical'], theme:['survival','love'], avoid:['none','violence'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Girl, Woman, Other",
+    author: "Bernardine Evaristo",
+    tags: ["British","Identity","Prize-winning","Interconnected"],
+    why: "Twelve Black British women — a theatre director, a teacher, a farmer, a banker — whose lives rhyme with each other across decades. Evaristo's prose drops punctuation and invents its own rhythm, and it works. The most generous novel on this list: it loves every person in it.",
+    search: "Girl Woman Other Bernardine Evaristo",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['domestic','historical'], theme:['identity'], avoid:['none','violence'], character:['complex','hero'], length:['long'], mood:['understand','company'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Miniaturist",
+    author: "Jessie Burton",
+    tags: ["Historical","Amsterdam","Mystery","Atmospheric"],
+    why: "Nella Oortman arrives in seventeenth-century Amsterdam as a bride and receives a dollhouse as a gift. The anonymous miniaturist who furnishes it seems to know things no one should know. Part mystery, part meditation on what women are permitted to be — the atmosphere is thick as canal fog.",
+    search: "The Miniaturist Jessie Burton",
+    match: { feeling:['unsettled','moved'], pace:['medium','fast'], world:['historical'], theme:['identity','memory'], avoid:['none','romance'], character:['observer'], length:['medium'], mood:['escape','understand'], time:['transit','morning'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Lincoln Highway",
+    author: "Amor Towles",
+    tags: ["American","Road trip","1950s","Adventure"],
+    why: "Emmett Watson is released from a work farm and plans to drive west with his younger brother to start over. Instead, two stowaways derail everything. Set across ten days in 1954, it moves with the momentum of a train and finds, in the structure of a chase, something tender about what boys owe each other.",
+    search: "The Lincoln Highway Amor Towles",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast','medium'], world:['historical'], theme:['survival','identity'], avoid:['none','sad'], character:['complex','hero'], length:['long'], mood:['company','escape'], time:['morning','transit'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Olive Kitteridge",
+    author: "Elizabeth Strout",
+    tags: ["Short stories","New England","Difficult people","Quiet"],
+    why: "Thirteen linked stories about a math teacher in a small Maine town — a woman who is difficult, sharp, not particularly likeable, and unforgettable. Strout writes about the small catastrophes of ordinary life better than almost anyone alive.",
+    search: "Olive Kitteridge Elizabeth Strout",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['domestic'], theme:['memory','identity'], avoid:['none','romance','violence'], character:['complex','observer'], length:['medium'], mood:['understand','company'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "A Visit from the Goon Squad",
+    author: "Jennifer Egan",
+    tags: ["Music","Time","Experimental","American"],
+    why: "A record executive, his assistant, a publicist, a drummer — connected by music across thirty years of American life. One chapter is a PowerPoint presentation. Another is told in the second person from a future that might be now. About time as the thing that gets everyone in the end.",
+    search: "A Visit from the Goon Squad Jennifer Egan",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['domestic','historical'], theme:['memory','identity'], avoid:['none','romance','violence'], character:['complex','observer'], length:['medium'], mood:['understand','challenge'], time:['weekend','morning'], secret:['line','cry'] }
+  },
+  {
+    title: "Tenth of December",
+    author: "George Saunders",
+    tags: ["Short stories","American","Dark comedy","Compassionate"],
+    why: "Stories about ordinary Americans in difficult, often absurd situations — a boy rescuing a dying man in a snowfield, a worker in an experimental empathy lab, a man making a list of his failures. Saunders is the most compassionate writer working in American fiction. You laugh, then you ache.",
+    search: "Tenth of December George Saunders",
+    match: { feeling:['moved','unsettled'], pace:['medium','fast'], world:['domestic'], theme:['survival','identity'], avoid:['none','romance'], character:['complex','observer'], length:['short'], mood:['understand','challenge'], time:['transit','morning'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Dept. of Speculation",
+    author: "Jenny Offill",
+    tags: ["Literary fiction","Marriage","Fragments","Brilliant"],
+    why: "A marriage, a baby, an affair — in fragments and aphorisms rather than scenes. Offill writes the way a mind actually moves, jumping between the mundane and the cosmic. The grief is in what the narrator doesn't say. Very short. Re-readable for years.",
+    search: "Dept of Speculation Jenny Offill",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['domestic'], theme:['love','memory'], avoid:['none','violence'], character:['unreliable','observer'], length:['short'], mood:['understand','company'], time:['morning','stolen'], secret:['line','cry'] }
+  },
+  {
+    title: "Shōgun",
+    author: "James Clavell",
+    tags: ["Historical","Japan","Epic","Adventure"],
+    why: "John Blackthorne is an English navigator shipwrecked in feudal Japan — the first Englishman most of these samurai have ever seen. He must navigate a culture that has completely different rules about honour, death, and loyalty. An immense adventure that is also a serious meditation on cultural collision.",
+    search: "Shogun James Clavell",
+    match: { feeling:['exhilarated'], pace:['medium','slow'], world:['historical'], theme:['survival','identity'], avoid:['none','romance'], character:['observer','hero'], length:['long'], mood:['escape','challenge'], time:['weekend','night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Cutting for Stone",
+    author: "Abraham Verghese",
+    tags: ["Ethiopia","Medicine","Family","Epic"],
+    why: "Twin brothers born in an Addis Ababa mission hospital to a nun and a surgeon — their lives shaped by that impossible origin across decades and continents. Verghese is a physician, and it shows in the loving precision he brings to bodies, to healing, to the things medicine cannot fix.",
+    search: "Cutting for Stone Abraham Verghese",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['historical'], theme:['identity','love'], avoid:['none','violence','sad'], character:['hero','observer'], length:['long'], mood:['company','understand'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Wild",
+    author: "Cheryl Strayed",
+    tags: ["Memoir","Hiking","Grief","Recovery"],
+    why: "Strayed lost her mother, destroyed her marriage, and made a series of decisions that alarmed everyone who loved her — then hiked 1,100 miles of the Pacific Crest Trail alone, with an overpacked backpack and insufficient experience. A memoir about what you can walk yourself back to.",
+    search: "Wild Cheryl Strayed",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['cold'], theme:['survival','identity'], avoid:['none','romance','violence'], character:['hero','unreliable'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Between the World and Me",
+    author: "Ta-Nehisi Coates",
+    tags: ["Memoir","Race","America","Essential"],
+    why: "A letter from Coates to his teenage son about what it means to live in a Black body in America. Written as a response to James Baldwin, and worthy of the comparison. The most important book on this list if you want to understand the country you live in.",
+    search: "Between the World and Me Ta-Nehisi Coates",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['domestic'], theme:['identity'], avoid:['none','romance','violence'], character:['observer','hero'], length:['short'], mood:['understand','challenge'], time:['morning','night'], secret:['empathy','line'] }
+  },
+  {
+    title: "Just Kids",
+    author: "Patti Smith",
+    tags: ["Memoir","Art","New York","Friendship"],
+    why: "Patti Smith and Robert Mapplethorpe arrive in New York as teenagers with nothing — no money, no connections, no plan. What they build together, in a Chelsea Hotel room, in the parks and diners of lower Manhattan, is one of the great origin stories of American art. Achingly beautiful.",
+    search: "Just Kids Patti Smith",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['historical'], theme:['love','identity'], avoid:['none','romance','violence'], character:['observer','hero'], length:['medium'], mood:['company','understand'], time:['morning','stolen'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Glass Castle",
+    author: "Jeannette Walls",
+    tags: ["Memoir","Family","Poverty","Survival"],
+    why: "Walls grew up moving from desert to desert with parents who were brilliant, charismatic, and catastrophically irresponsible. Her father taught her to read the stars and never paid the electricity bill. The love in this memoir is as complicated as it is real.",
+    search: "The Glass Castle Jeannette Walls",
+    match: { feeling:['moved','unsettled'], pace:['medium','fast'], world:['domestic','cold'], theme:['survival','identity'], avoid:['none','violence','romance'], character:['hero','observer'], length:['medium'], mood:['understand','challenge'], time:['transit','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Alice Network",
+    author: "Kate Quinn",
+    tags: ["WWII","Spy","Historical thriller","Women"],
+    why: "Two timelines, two wars: a female spy recruiter in WWI France, and an American woman in 1947 searching for her cousin who disappeared during the Occupation. Quinn writes female courage in wartime with the urgency it deserves. Propulsive and emotionally satisfying.",
+    search: "The Alice Network Kate Quinn",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['historical'], theme:['survival','identity'], avoid:['none','sad'], character:['hero','complex'], length:['long'], mood:['escape','company'], time:['transit','morning'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Tattooist of Auschwitz",
+    author: "Heather Morris",
+    tags: ["WWII","Holocaust","Love","True story"],
+    why: "Lale Sokolov is forced to tattoo numbers onto the arms of his fellow prisoners in Auschwitz. When he tattoos Gita, he falls in love, and spends the rest of the war trying to keep them both alive. Based on a true story, told with directness and without sentimentality.",
+    search: "The Tattooist of Auschwitz Heather Morris",
+    match: { feeling:['moved','hopeful'], pace:['fast','medium'], world:['historical'], theme:['survival','love'], avoid:['none','violence','sad'], character:['hero'], length:['short'], mood:['company','understand'], time:['transit','stolen'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Sharp Objects",
+    author: "Gillian Flynn",
+    tags: ["Thriller","Dark","Family","Southern Gothic"],
+    why: "A Chicago journalist returns to her small Missouri hometown to cover the murders of two little girls — and to her mother's house, which she has been avoiding for years. Flynn's debut is a study in what families do to daughters. The reveal lands like a fist.",
+    search: "Sharp Objects Gillian Flynn",
+    match: { feeling:['unsettled'], pace:['fast'], world:['domestic','cold'], theme:['identity','memory'], avoid:['none','romance'], character:['unreliable'], length:['short'], mood:['escape','challenge'], time:['night','transit'], secret:['surprise','cry'] }
+  },
+  {
+    title: "The Girl on the Train",
+    author: "Paula Hawkins",
+    tags: ["Thriller","Unreliable narrator","Suburban","Psychological"],
+    why: "Rachel takes the same commuter train every day and watches a couple in a house by the tracks — until the woman disappears. An unreliable narrator who doesn't fully know herself, a mystery that tightens methodically, and a skewering of suburban respectability.",
+    search: "The Girl on the Train Paula Hawkins",
+    match: { feeling:['unsettled'], pace:['fast'], world:['domestic'], theme:['memory'], avoid:['none','romance'], character:['unreliable'], length:['medium'], mood:['escape','challenge'], time:['transit','night'], secret:['surprise','cry'] }
+  },
+  {
+    title: "North and South",
+    author: "Elizabeth Gaskell",
+    tags: ["Victorian","Industrial","Romance","Social"],
+    why: "Margaret Hale moves from a Hampshire village to a northern mill town and collides with a factory owner called Thornton. Gaskell writes class, labour, and the politics of industrial England through the slow, combative understanding between two very proud people. The Victorian novel that most rewards rereading.",
+    search: "North and South Elizabeth Gaskell",
+    match: { feeling:['hopeful','moved'], pace:['slow','medium'], world:['historical'], theme:['love','identity'], avoid:['none','violence','sad'], character:['hero','observer'], length:['long'], mood:['company','understand'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Woman in White",
+    author: "Wilkie Collins",
+    tags: ["Victorian","Mystery","Gothic","Suspense"],
+    why: "A woman in white on a moonlit road, a mysterious identity, a conspiracy involving a baronet and a man called Count Fosco. Collins invented many of the conventions of the mystery novel here — the multiple unreliable narrators, the slow revelation of a plot — and he did it better than most who followed.",
+    search: "The Woman in White Wilkie Collins",
+    match: { feeling:['exhilarated','unsettled'], pace:['medium','fast'], world:['historical'], theme:['survival','identity'], avoid:['none','romance'], character:['observer','unreliable'], length:['long'], mood:['escape','challenge'], time:['night','transit'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Great Expectations",
+    author: "Charles Dickens",
+    tags: ["Victorian","Coming of age","Class","Classic"],
+    why: "Pip is a poor boy who receives a mysterious fortune and goes to London to become a gentleman. Dickens fills every chapter with unforgettable people — Miss Havisham, Estella, Magwitch — and uses them to dismantle every English assumption about money, class, and what makes a person good.",
+    search: "Great Expectations Charles Dickens",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['historical'], theme:['identity','love'], avoid:['none','violence','sad'], character:['hero','observer'], length:['long'], mood:['understand','company'], time:['morning','weekend'], secret:['empathy','line'] }
+  },
+  {
+    title: "Tess of the d'Urbervilles",
+    author: "Thomas Hardy",
+    tags: ["Victorian","Tragic","Rural","Devastating"],
+    why: "Tess Durbeyfield is a milkmaid whose family's discovery of noble ancestry sets in motion a catastrophe Hardy subtitles 'a pure woman.' The most devastating argument in Victorian fiction against the moral standards of Victorian fiction — for Tess, the injustice is structural, and Hardy knows it.",
+    search: "Tess of the d'Urbervilles Thomas Hardy",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['survival','identity'], avoid:['none','violence','romance'], character:['hero','observer'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['cry','empathy'] }
+  },
+  {
+    title: "The Old Man and the Sea",
+    author: "Ernest Hemingway",
+    tags: ["Classic","Short","Sea","Endurance"],
+    why: "An old Cuban fisherman hooks the largest marlin he has ever seen and fights it alone for three days in the Gulf Stream. Hemingway at his most stripped back — every sentence is load-bearing. A meditation on failure, dignity, and what it means to do a thing completely.",
+    search: "The Old Man and the Sea Ernest Hemingway",
+    match: { feeling:['moved'], pace:['slow','medium'], world:['cold'], theme:['survival'], avoid:['none','romance','violence'], character:['hero','observer'], length:['short'], mood:['challenge','understand'], time:['morning','transit'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Dispossessed",
+    author: "Ursula K. Le Guin",
+    tags: ["Science fiction","Anarchism","Dual worlds","Philosophical"],
+    why: "Two worlds orbit the same sun: a capitalist planet and its anarchist moon. Shevek, a physicist from the moon, travels to the mother planet and finds a freedom he didn't expect — and a new kind of imprisonment. Le Guin builds ideologies the way most writers build characters.",
+    search: "The Dispossessed Ursula K. Le Guin",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['invented'], theme:['identity','survival'], avoid:['none','romance'], character:['hero','observer'], length:['medium'], mood:['challenge','understand'], time:['night','morning'], secret:['line','empathy'] }
+  },
+  {
+    title: "A Wizard of Earthsea",
+    author: "Ursula K. Le Guin",
+    tags: ["Fantasy","Coming of age","Classic","Brief"],
+    why: "Ged is a goatherd boy who discovers he has immense magical talent and, through pride, releases a shadow into the world that hunts him. Le Guin wrote the definitive short fantasy novel — a coming-of-age story that is really about learning to know yourself completely, including the parts you'd rather not.",
+    search: "A Wizard of Earthsea Ursula K. Le Guin",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium','fast'], world:['invented'], theme:['identity','survival'], avoid:['none','romance','sad'], character:['hero'], length:['short'], mood:['escape','challenge'], time:['transit','morning'], secret:['line','surprise'] }
+  },
+  {
+    title: "Red, White & Royal Blue",
+    author: "Casey McQuiston",
+    tags: ["Romance","Political","Funny","American"],
+    why: "The First Son of the United States and the Prince of England start as enemies and become something considerably more complicated. McQuiston writes with the energy of someone who wants you to be happy — this is political romance that is genuinely funny and refuses to be cynical about love.",
+    search: "Red White and Royal Blue Casey McQuiston",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['domestic'], theme:['love','identity'], avoid:['none','sad','violence'], character:['hero','observer'], length:['medium'], mood:['company','escape'], time:['transit','morning'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "The Flatshare",
+    author: "Beth O'Leary",
+    tags: ["Romance","British","Cozy","Funny"],
+    why: "Tiffy and Leon share a flat but never meet — she uses it by day, he by night, and they communicate by Post-it notes. A warm, funny, quietly observant love story that builds through small domestic details. The kind of novel that makes you want to leave nice notes for strangers.",
+    search: "The Flatshare Beth O'Leary",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast','medium'], world:['domestic'], theme:['love'], avoid:['none','sad','violence'], character:['observer','complex'], length:['medium'], mood:['company','escape'], time:['transit','morning'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Book Lovers",
+    author: "Emily Henry",
+    tags: ["Romance","Books","Small town","Witty"],
+    why: "Nora Stephens is a cutthroat literary agent who keeps ending up in the same small North Carolina town as her nemesis, editor Charlie Lastra. Henry is the most reliably witty writer in the romance genre — the banter here is genuinely literary, and the love story is earned.",
+    search: "Book Lovers Emily Henry",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['domestic'], theme:['love','identity'], avoid:['none','sad','violence'], character:['hero','observer'], length:['medium'], mood:['company','escape'], time:['transit','stolen'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Foundation",
+    author: "Isaac Asimov",
+    tags: ["Science fiction","Empire","History","Epic"],
+    why: "Hari Seldon has predicted the fall of the Galactic Empire and built a Foundation to shorten the subsequent dark age from thirty thousand years to one. Asimov's scope is civilisational — this is science fiction about the long sweep of history, not the adventures of individuals. There is nothing else quite like it.",
+    search: "Foundation Isaac Asimov",
+    match: { feeling:['exhilarated','hopeful'], pace:['medium'], world:['invented'], theme:['survival','identity'], avoid:['none','romance','sad'], character:['observer','complex'], length:['medium'], mood:['challenge','escape'], time:['night','transit'], secret:['surprise','line'] }
+  },
+  {
+    title: "All Systems Red",
+    author: "Martha Wells",
+    tags: ["Science fiction","Anxiety","Short","Funny"],
+    why: "A security robot that has hacked its own governor module and now just wants to watch television sends very relatable internal dispatches about the hell of having to interact with humans. Murderbot is the most beloved introvert in recent science fiction — anxious, competent, deeply reluctant to care about people, and completely unable to stop.",
+    search: "All Systems Red Martha Wells Murderbot Diaries",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['invented'], theme:['identity'], avoid:['none','romance','sad'], character:['observer','unreliable'], length:['short'], mood:['company','escape'], time:['transit','morning'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Old Man's War",
+    author: "John Scalzi",
+    tags: ["Military science fiction","Funny","Fast","Action"],
+    why: "On Earth, you can join the Colonial Defense Forces at seventy-five — they'll give you a new body and you'll fight alien civilisations for ten years. John Perry signs up. A propulsive, funny military science fiction novel that takes its ethical questions seriously without slowing down.",
+    search: "Old Man's War John Scalzi",
+    match: { feeling:['exhilarated'], pace:['fast'], world:['invented'], theme:['survival'], avoid:['none','romance','sad'], character:['hero'], length:['medium'], mood:['escape','challenge'], time:['transit','night'], secret:['surprise','line'] }
+  },
+  {
+    title: "Tigana",
+    author: "Guy Gavriel Kay",
+    tags: ["Fantasy","Memory","Tragedy","Beautiful"],
+    why: "A conquered land has been magically erased — its people can still hear its name but strangers cannot. A group of survivors work to restore what was taken. Kay writes secondary-world fantasy with the weight of real history and real grief; Tigana is the one that will make you cry on public transport.",
+    search: "Tigana Guy Gavriel Kay",
+    match: { feeling:['moved','exhilarated'], pace:['slow','medium'], world:['invented'], theme:['memory','survival'], avoid:['none','romance'], character:['hero','complex'], length:['long'], mood:['challenge','understand'], time:['night','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "An Artist of the Floating World",
+    author: "Kazuo Ishiguro",
+    tags: ["Japan","Memory","Post-war","Quiet"],
+    why: "An ageing painter in post-war Japan slowly realises that the art he made in the 1930s — celebrating the militarism he now deplores — has consequences he cannot outrun. Ishiguro's second novel is as quiet and devastating as a door being gently closed.",
+    search: "An Artist of the Floating World Kazuo Ishiguro",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['memory','identity'], avoid:['none','romance','violence'], character:['unreliable','observer'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Poisonwood Bible",
+    author: "Barbara Kingsolver",
+    tags: ["Africa","Colonialism","Family","Epic"],
+    why: "A Baptist preacher takes his wife and four daughters to the Congo in 1959. Each of the five women narrates in her own voice; the disaster that unfolds is as much internal as political. Kingsolver's masterpiece — a novel about America's relationship to Africa told from the inside.",
+    search: "The Poisonwood Bible Barbara Kingsolver",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['survival','identity'], avoid:['none','violence'], character:['observer','complex'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Bel Canto",
+    author: "Ann Patchett",
+    tags: ["Literary fiction","Hostage","Music","Beautiful"],
+    why: "An opera singer performs at a birthday party in a South American mansion. Guerrillas take everyone hostage. What develops over the following months — unlikely friendships, a love story, the strange suspended world of confinement — is as beautiful as the arias that fill it.",
+    search: "Bel Canto Ann Patchett",
+    match: { feeling:['moved','hopeful'], pace:['slow','medium'], world:['cold'], theme:['love','survival'], avoid:['none','violence','romance'], character:['observer','complex'], length:['medium'], mood:['company','understand'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Commonwealth",
+    author: "Ann Patchett",
+    tags: ["Family","Time","American","Literary fiction"],
+    why: "Two families collide at a christening party in 1964 California. Their children grow up together across different households and different decades. Patchett moves through fifty years of family life as lightly as a hand skimming water — and the grief of one long-ago summer accumulates until it floods everything.",
+    search: "Commonwealth Ann Patchett",
+    match: { feeling:['moved'], pace:['slow'], world:['domestic'], theme:['memory','love'], avoid:['none','romance','violence'], character:['observer','complex'], length:['long'], mood:['understand','company'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Likeness",
+    author: "Tana French",
+    tags: ["Mystery","Identity","Ireland","Atmospheric"],
+    why: "A murdered woman looks exactly like Detective Cassie Maddox — down to the false name Cassie once used as an undercover officer. So Cassie steps back into the identity and into the dead woman's home and friends. French's second novel is richer than the first: a locked-room mystery that is really about the seductiveness of belonging somewhere completely.",
+    search: "The Likeness Tana French",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast','medium'], world:['domestic'], theme:['identity','memory'], avoid:['none','romance'], character:['observer','complex'], length:['long'], mood:['escape','understand'], time:['night','transit'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Essex Serpent",
+    author: "Sarah Perry",
+    tags: ["Victorian","Gothic","Friendship","Atmospheric"],
+    why: "A recently widowed woman goes to an Essex village in 1893 investigating reports of a sea serpent and meets a vicar who is sceptical of everything she believes and believes everything she is sceptical of. A love story that is also a debate about faith and science, told through letters and long walks in marsh light.",
+    search: "The Essex Serpent Sarah Perry",
+    match: { feeling:['unsettled','moved'], pace:['slow','medium'], world:['historical'], theme:['love','identity'], avoid:['none','romance'], character:['observer','complex'], length:['medium'], mood:['challenge','understand'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Bear and the Nightingale",
+    author: "Katherine Arden",
+    tags: ["Russian folklore","Fantasy","Winter","Atmospheric"],
+    why: "In medieval Russia, the daughter of a provincial lord can see the spirits that live in the forest and the yard and the bathhouse — spirits the new Christian priest is determined to drive out. Arden writes Russian winter as a physical presence, and her heroine is one of fantasy's most compelling protagonists.",
+    search: "The Bear and the Nightingale Katherine Arden",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium'], world:['historical','invented'], theme:['identity','survival'], avoid:['none','romance'], character:['hero','observer'], length:['medium'], mood:['escape','challenge'], time:['night','weekend'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "This Is How You Lose the Time War",
+    author: "Amal El-Mohtar & Max Gladstone",
+    tags: ["Science fiction","Love letters","Lyrical","Short"],
+    why: "Two agents from opposing time-travelling civilisations leave taunting letters for each other across the braided threads of history. The letters become something else. Unbearably romantic and written with a precision that makes sentences feel like they were carved rather than typed.",
+    search: "This Is How You Lose the Time War Amal El-Mohtar Max Gladstone",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['invented'], theme:['love','identity'], avoid:['none','sad','violence'], character:['observer','unreliable'], length:['short'], mood:['challenge','escape'], time:['stolen','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Poppy War",
+    author: "R.F. Kuang",
+    tags: ["Fantasy","China","War","Brutal"],
+    why: "Rin is a war orphan who earns her way into the elite Sinegard military academy. What she learns there — about history, about power, about herself — will make her capable of ending a war and committing an atrocity. Based on the Second Sino-Japanese War. Brilliant, remorseless, and entirely its own thing.",
+    search: "The Poppy War R.F. Kuang",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast','medium'], world:['historical','invented'], theme:['survival','identity'], avoid:['none','violence'], character:['hero','complex'], length:['long'], mood:['challenge','escape'], time:['night','weekend'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "A Prayer for Owen Meany",
+    author: "John Irving",
+    tags: ["American","Faith","Friendship","Tragic"],
+    why: "Owen Meany is the smallest boy in his New Hampshire town, with a voice like a raisin and the absolute conviction that he is God's instrument. Irving writes about faith and friendship as the same thing — and the ending, which you will see coming and be unable to stop, will devastate you anyway.",
+    search: "A Prayer for Owen Meany John Irving",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['historical'], theme:['identity','memory'], avoid:['none','romance'], character:['hero','observer'], length:['long'], mood:['understand','company'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Historian",
+    author: "Elizabeth Kostova",
+    tags: ["Historical","Dracula","Mystery","Atmospheric"],
+    why: "A young woman finds a mysterious book in her father's library and begins pursuing the letters inside through the archives of Eastern Europe. Kostova spent ten years writing this — a novel about scholars hunting Vlad the Impaler across five centuries. The atmosphere is thick and the archives are real.",
+    search: "The Historian Elizabeth Kostova",
+    match: { feeling:['unsettled','exhilarated'], pace:['slow','medium'], world:['historical'], theme:['memory','identity'], avoid:['none','romance'], character:['observer'], length:['long'], mood:['escape','challenge'], time:['night','weekend'], secret:['surprise','line'] }
+  },
+  {
+    title: "People of the Book",
+    author: "Geraldine Brooks",
+    tags: ["Historical","Art","Survival","Multi-period"],
+    why: "A rare books conservator examines the Sarajevo Haggadah — a medieval Jewish manuscript that survived the Inquisition, the Nazis, and the Bosnian War — and Brooks follows each of its owners backwards through history. About the objects that survive us, and what it costs to carry beautiful things through terrible times.",
+    search: "People of the Book Geraldine Brooks",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['historical'], theme:['survival','memory'], avoid:['none','romance'], character:['observer','complex'], length:['medium'], mood:['understand','escape'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Year of Wonders",
+    author: "Geraldine Brooks",
+    tags: ["Historical","Plague","Village","Survival"],
+    why: "In 1666, the village of Eyam quarantines itself to stop the plague spreading. Anna Frith watches her village die and keeps faith with the decision she helped make. Brooks based this on a real village and a real vicar — the moral argument at the centre is genuinely difficult.",
+    search: "Year of Wonders Geraldine Brooks",
+    match: { feeling:['moved','hopeful'], pace:['medium','fast'], world:['historical'], theme:['survival','identity'], avoid:['none','violence','romance'], character:['hero','observer'], length:['medium'], mood:['escape','understand'], time:['transit','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Binding",
+    author: "Bridget Collins",
+    tags: ["Fantasy","Memory","Victorian atmosphere","Romance"],
+    why: "In a world where a binder can take your worst memories and seal them into a book, a young man is apprenticed to a bookbinder against his will. What he finds in her workshop will rewrite his understanding of his own past. A novel about books that is also about shame, desire, and the stories we cannot live with.",
+    search: "The Binding Bridget Collins",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['invented','historical'], theme:['memory','love'], avoid:['none','romance'], character:['observer','hero'], length:['medium'], mood:['escape','understand'], time:['night','stolen'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Freedom",
+    author: "Jonathan Franzen",
+    tags: ["American","Family","Contemporary","Epic"],
+    why: "The Berglunds of Minnesota — Walter, Patty, their son Joey — across the first decade of the century. Franzen writes the interior of American middle-class life with a remorselessness that has made some people furious and made others feel precisely understood. The longest sustained argument about what freedom costs that American fiction has produced.",
+    search: "Freedom Jonathan Franzen",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['domestic'], theme:['love','identity'], avoid:['none','violence'], character:['complex','observer'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['line','empathy'] }
+  },
+  {
+    title: "My Name Is Lucy Barton",
+    author: "Elizabeth Strout",
+    tags: ["Literary fiction","Spare","Mother","Beautiful"],
+    why: "Lucy Barton is hospitalised in New York in the 1980s and her mother — from whom she has been estranged — comes to sit with her. They talk for five days and almost nothing is said directly. Strout writes around grief the way a river writes around a stone: the shape tells you everything.",
+    search: "My Name Is Lucy Barton Elizabeth Strout",
+    match: { feeling:['moved'], pace:['slow'], world:['domestic'], theme:['memory','love'], avoid:['none','romance','violence'], character:['observer','unreliable'], length:['short'], mood:['understand','company'], time:['morning','stolen'], secret:['line','cry'] }
+  },
+  {
+    title: "In the Dream House",
+    author: "Carmen Maria Machado",
+    tags: ["Memoir","Abuse","Experimental","Queer"],
+    why: "Machado writes about an abusive relationship using the tropes of genre fiction — the haunted house, the choose-your-own-adventure, the fairy tale. About the specific difficulty of naming abuse when the relationship doesn't look like the ones in the stories. Formally brilliant and genuinely disturbing.",
+    search: "In the Dream House Carmen Maria Machado",
+    match: { feeling:['unsettled','moved'], pace:['medium','fast'], world:['domestic'], theme:['identity','memory'], avoid:['none','romance','violence'], character:['unreliable','observer'], length:['short'], mood:['challenge','understand'], time:['night','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "The Scorpio Races",
+    author: "Maggie Stiefvater",
+    tags: ["Fantasy","Horses","Island","Atmospheric"],
+    why: "Every November, the water horses come out of the sea on a small Atlantic island, and the men race them along the beach. Some riders are killed. Puck Connolly is the first girl to enter, on a land horse she cannot afford to lose. Stiefvater writes atmosphere the way other writers write plot — you can smell the salt and the blood.",
+    search: "The Scorpio Races Maggie Stiefvater",
+    match: { feeling:['exhilarated','moved'], pace:['fast','medium'], world:['cold','invented'], theme:['survival','identity'], avoid:['none','romance'], character:['hero','observer'], length:['medium'], mood:['challenge','escape'], time:['morning','transit'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "The Mayor of Casterbridge",
+    author: "Thomas Hardy",
+    tags: ["Victorian","Tragedy","Ambition","Enduring"],
+    why: "Michael Henchard sells his wife at a fair while drunk and spends twenty years becoming the most respected man in Casterbridge — until the past arrives to collect. Hardy's most morally serious novel: a study in how one act of violence echoes forward forever, and what it means to accept the consequences.",
+    search: "The Mayor of Casterbridge Thomas Hardy",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical'], theme:['identity','memory'], avoid:['none','romance','sad'], character:['hero','complex'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['line','cry'] }
+  },
+  {
+    title: "The Power",
+    author: "Naomi Alderman",
+    tags: ["Science fiction","Feminist","Dystopian","Provocative"],
+    why: "One day teenage girls discover they can deliver electric shocks from their hands. Within a generation, the balance of power between men and women has completely inverted. Alderman's thought experiment is ruthlessly followed to its logical end — including the conclusion you don't want to reach.",
+    search: "The Power Naomi Alderman",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium','fast'], world:['invented','domestic'], theme:['survival','identity'], avoid:['none','romance'], character:['observer','complex'], length:['medium'], mood:['challenge','understand'], time:['transit','night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Secret Place",
+    author: "Tana French",
+    tags: ["Mystery","School","Teenagers","Dublin"],
+    why: "A year after a boy was murdered on the grounds of a girls' boarding school, a card appears on the school's secret board: 'I know who killed him.' French writes female friendship at sixteen with the acuity of someone who remembers it precisely — the loyalty and the cruelty are equally convincing.",
+    search: "The Secret Place Tana French",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast'], world:['domestic'], theme:['identity','memory'], avoid:['none','romance'], character:['observer','complex'], length:['long'], mood:['escape','challenge'], time:['night','transit'], secret:['surprise','cry'] }
+  },
+  {
+    title: "Melmoth",
+    author: "Sarah Perry",
+    tags: ["Gothic","Guilt","Prague","Unsettling"],
+    why: "A woman in Prague receives a manuscript about Melmoth — a figure who witnesses every act of cruelty and shame and walks beside those who carry unbearable guilt. Perry's second novel is stranger and darker than The Essex Serpent. It will follow you for days.",
+    search: "Melmoth Sarah Perry",
+    match: { feeling:['unsettled'], pace:['slow','medium'], world:['historical','cold'], theme:['memory','identity'], avoid:['none','romance'], character:['observer','unreliable'], length:['medium'], mood:['challenge','understand'], time:['night','morning'], secret:['surprise','line'] }
+  },
+  {
+    title: "Rules of Civility",
+    author: "Amor Towles",
+    tags: ["New York","1930s","Class","Elegant"],
+    why: "Katey Kontent starts 1938 as a secretary sharing a Greenwich Village apartment and ends it moving through the upper echelons of New York society — because of a man called Tinker Grey and a car accident in January. Towles writes the glamour and the ruthlessness of class aspiration with equal precision.",
+    search: "Rules of Civility Amor Towles",
+    match: { feeling:['hopeful','moved'], pace:['medium','fast'], world:['historical'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','hero'], length:['medium'], mood:['escape','understand'], time:['weekend','morning'], secret:['line','surprise'] }
+  },
+  {
+    title: "The Bone Clocks",
+    author: "David Mitchell",
+    tags: ["Literary fiction","Spans decades","Supernatural","Ambitious"],
+    why: "Holly Sykes runs away from home in 1984 and her life intersects with a secret war between factions of immortals across six decades. Mitchell writes each section in a completely different style. About the long arc of a single life, and what it means to watch the world you knew become history.",
+    search: "The Bone Clocks David Mitchell",
+    match: { feeling:['moved','exhilarated'], pace:['medium'], world:['domestic','invented'], theme:['memory','survival'], avoid:['none','romance'], character:['observer','complex'], length:['long'], mood:['escape','understand'], time:['weekend','night'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Vegetarian",
+    author: "Han Kang",
+    tags: ["Korean","Surreal","Disturbing","Short"],
+    why: "A woman in Seoul decides to stop eating meat after a dream. What follows is not a story about diet. Kang uses the body as the only territory a woman can control, and the horror accumulates without announcement. Three novellas, each told by a different narrator who doesn't quite understand what they're watching.",
+    search: "The Vegetarian Han Kang",
+    match: { feeling:['unsettled'], pace:['medium','fast'], world:['domestic'], theme:['identity','survival'], avoid:['none','romance'], character:['observer','unreliable'], length:['short'], mood:['challenge','understand'], time:['morning','night'], secret:['surprise','line'] }
+  },
+  {
+    title: "The Memory Police",
+    author: "Ogawa Yōko",
+    tags: ["Japanese","Surreal","Loss","Quiet"],
+    why: "On an island, things disappear: first roses, then birds, then calendars. The inhabitants simply forget what is gone and move on. A novelist tries to hide a man who still remembers what has been lost. A meditation on forgetting so gentle and so total that you may not notice how much has vanished.",
+    search: "The Memory Police Ogawa Yoko",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold','invented'], theme:['memory','identity'], avoid:['none','romance','violence'], character:['observer','unreliable'], length:['short'], mood:['understand','challenge'], time:['morning','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "Fever Dream",
+    author: "Samanta Schweblin",
+    tags: ["South American","Horror","Short","Ecological"],
+    why: "Two voices in what might be a hospital — a woman and a child she doesn't know — reconstruct the events that brought them there. Schweblin writes like she's running: the urgency never lets up, and the horror is environmental in the most literal sense. 150 pages. You will not sleep.",
+    search: "Fever Dream Samanta Schweblin",
+    match: { feeling:['unsettled'], pace:['fast'], world:['cold','domestic'], theme:['survival','memory'], avoid:['none','romance'], character:['unreliable','observer'], length:['short'], mood:['challenge','escape'], time:['night','transit'], secret:['surprise','cry'] }
+  },
+  {
+    title: "The Plague",
+    author: "Albert Camus",
+    tags: ["French","Philosophy","Epidemic","Classic"],
+    why: "Bubonic plague arrives in Oran, Algeria. The town is sealed. Dr Rieux stays to treat the dying. Camus uses the plague as a laboratory for every philosophical argument about how human beings respond to collective catastrophe — with courage, denial, profiteering, solidarity. Not a cheerful book. An essential one.",
+    search: "The Plague Albert Camus",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical'], theme:['survival','identity'], avoid:['none','romance','violence'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['line','empathy'] }
+  },
+  {
+    title: "Human Acts",
+    author: "Han Kang",
+    tags: ["Korean","Political","Devastating","Historical"],
+    why: "The Gwangju Uprising of May 1980, told across six different voices: a boy looking for his friend's body, a factory girl, a prisoner, an editor, a mother. Kang writes historical atrocity as a series of bodies — literally — and the tenderness she brings to each one makes the violence unbearable in exactly the right way.",
+    search: "Human Acts Han Kang",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['survival','memory'], avoid:['none','violence','sad'], character:['observer','complex'], length:['short'], mood:['understand','challenge'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Lacuna",
+    author: "Barbara Kingsolver",
+    tags: ["Historical","Mexico","Politics","Art"],
+    why: "Harrison Shepherd grows up between Washington and Mexico and becomes the cook for Diego Rivera and Frida Kahlo — and then the secretary of Leon Trotsky. Kingsolver weaves real and invented history around the question of how politics destroys the people it cannot use. Slow, rich, and worth every page.",
+    search: "The Lacuna Barbara Kingsolver",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['historical'], theme:['identity','memory'], avoid:['none','romance'], character:['observer','complex'], length:['long'], mood:['understand','challenge'], time:['weekend','morning'], secret:['empathy','line'] }
+  },
+  {
+    title: "Run",
+    author: "Ann Patchett",
+    tags: ["Boston","Family","Race","Short"],
+    why: "On an icy Boston night, a car accident connects a former mayor and his adopted sons to a woman who has been watching them for years. About the different shapes of parental love, and the things we can make ourselves responsible for. Patchett at her most compressed — the whole thing fits in twenty-four hours.",
+    search: "Run Ann Patchett",
+    match: { feeling:['moved','hopeful'], pace:['medium','fast'], world:['domestic'], theme:['love','survival'], avoid:['none','romance','violence'], character:['observer','complex'], length:['short'], mood:['company','understand'], time:['morning','transit'], secret:['empathy','line'] }
+  },
+  {
+    title: "The Raven Boys",
+    author: "Maggie Stiefvater",
+    tags: ["Fantasy","Virginia","Searching","Atmospheric"],
+    why: "Blue Sargent has been told her whole life that she will kill her true love with a kiss. Gansey and his friends from the nearby prep school are searching for a sleeping Welsh king on the ley lines of rural Virginia. Stiefvater writes the particular electricity of teenagers who are living at the limit of what they understand.",
+    search: "The Raven Boys Maggie Stiefvater",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium'], world:['domestic','invented'], theme:['identity','memory'], avoid:['none','sad'], character:['observer','complex'], length:['medium'], mood:['escape','company'], time:['night','stolen'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "The Mothers",
+    author: "Brit Bennett",
+    tags: ["American","Black","Community","Loss"],
+    why: "Nadia Turner has an abortion at seventeen and the secret shapes the next decade of her life and those of the boy and the girl she loves. Bennett's debut is told partly by the chorus of church mothers — the women who see everything and say nothing — and is about the communities that both sustain and constrain us.",
+    search: "The Mothers Brit Bennett",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['domestic'], theme:['memory','love'], avoid:['none','romance','violence'], character:['observer','complex'], length:['medium'], mood:['understand','company'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "An American Marriage",
+    author: "Tayari Jones",
+    tags: ["American","Race","Marriage","Devastating"],
+    why: "Celestial and Roy have been married one year when Roy is wrongfully convicted and sent to prison. What happens to a marriage across five years of separation — to the people inside it, to the promises they made — is the question Jones refuses to answer simply. A novel about love and justice as forms of the same problem.",
+    search: "An American Marriage Tayari Jones",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['domestic'], theme:['love','identity'], avoid:['none','romance','violence','sad'], character:['observer','complex'], length:['medium'], mood:['understand','company'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Underground Railroad",
+    author: "Colson Whitehead",
+    tags: ["American","Slavery","Prize-winning","Alternate history"],
+    why: "Cora escapes a Georgia plantation on a literal underground railroad — a secret network of actual trains. Whitehead takes the metaphor and makes it real, and uses it to visit different versions of what America chose to be. Won the Pulitzer for the simplest reason: it is the definitive novel about this history.",
+    search: "The Underground Railroad Colson Whitehead",
+    match: { feeling:['moved','hopeful'], pace:['medium','fast'], world:['historical'], theme:['survival','identity'], avoid:['none','violence','sad'], character:['hero','complex'], length:['medium'], mood:['escape','understand'], time:['transit','night'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Sing, Unburied, Sing",
+    author: "Jesmyn Ward",
+    tags: ["American South","Ghosts","Family","Lyrical"],
+    why: "Jojo and his baby sister drive across Mississippi with their drug-addicted mother to collect their father from prison. The dead travel with them. Ward writes Mississippi like it is a living thing with teeth — the landscape, the history, and the grief are inseparable here.",
+    search: "Sing Unburied Sing Jesmyn Ward",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['domestic','cold'], theme:['memory','survival'], avoid:['none','violence','sad'], character:['observer','complex'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Exit West",
+    author: "Mohsin Hamid",
+    tags: ["Migration","Love","Fable","Short"],
+    why: "Saeed and Nadia fall in love in a city on the verge of collapse, then escape through doors that open anywhere in the world. Hamid writes the refugee crisis as a love story and a fable — the magical realism strips the political down to the human without simplifying either. Brief, strange, and surprisingly hopeful.",
+    search: "Exit West Mohsin Hamid",
+    match: { feeling:['moved','hopeful'], pace:['fast','medium'], world:['cold','domestic'], theme:['love','survival'], avoid:['none','violence'], character:['observer','hero'], length:['short'], mood:['understand','escape'], time:['transit','night'], secret:['empathy','line'] }
+  },
+  {
+    title: "Interior Chinatown",
+    author: "Charles Yu",
+    tags: ["American","Identity","Funny","Meta"],
+    why: "Willis Wu is a Generic Asian Man — a background character in the cop show that seems to be his life. Told as a TV screenplay with stage directions he can read but not change. About what it means to be a minor character in someone else's story, and whether you can write yourself a different part.",
+    search: "Interior Chinatown Charles Yu",
+    match: { feeling:['moved','hopeful'], pace:['medium','fast'], world:['domestic'], theme:['identity'], avoid:['none','romance','sad'], character:['observer','unreliable'], length:['short'], mood:['understand','challenge'], time:['transit','morning'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "Trust",
+    author: "Hernan Diaz",
+    tags: ["New York","Gilded Age","Layers","Brilliant"],
+    why: "Four versions of the same story about a Wall Street fortune built in the 1920s — each one written by a different person with different reasons to lie. A novel about who gets to narrate history, who owns the story of their own life, and how completely a powerful man can erase a woman. Structurally the most satisfying book of the last decade.",
+    search: "Trust Hernan Diaz",
+    match: { feeling:['unsettled','exhilarated'], pace:['slow','medium'], world:['historical'], theme:['memory','identity'], avoid:['none','romance'], character:['unreliable','complex'], length:['medium'], mood:['challenge','understand'], time:['weekend','night'], secret:['surprise','line'] }
+  },
+  {
+    title: "I'm Glad My Mom Died",
+    author: "Jennette McCurdy",
+    tags: ["Memoir","Funny","Dark","Recovery"],
+    why: "The iCarly star writes about her mother, her eating disorders, and her years as a child actress with a precision that is both funny and deeply uncomfortable. The title is exactly what she means. One of the most honest memoirs written about the specific damage a particular kind of mother can do.",
+    search: "I'm Glad My Mom Died Jennette McCurdy",
+    match: { feeling:['moved','hopeful'], pace:['fast','medium'], world:['domestic'], theme:['identity','survival'], avoid:['none','romance','violence'], character:['hero','unreliable'], length:['short'], mood:['company','understand'], time:['transit','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Like Water for Chocolate",
+    author: "Laura Esquivel",
+    tags: ["Mexican","Magical realism","Romance","Food"],
+    why: "Tita, the youngest daughter, is forbidden from marrying because she must care for her mother — so she pours her longing into the family cooking, and the food begins to carry her emotions into everyone who eats it. A recipe novel in which the recipes are real and the magic is the most natural thing in the world.",
+    search: "Like Water for Chocolate Laura Esquivel",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['historical'], theme:['love','identity'], avoid:['none','sad','violence'], character:['observer','hero'], length:['short'], mood:['company','escape'], time:['morning','stolen'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Captain Corelli's Mandolin",
+    author: "Louis de Bernières",
+    tags: ["WWII","Greece","Love","Epic"],
+    why: "An Italian officer occupies a Greek island in WWII and falls in love with the daughter of the local doctor. De Bernières writes war as comedy and tragedy in the same breath. The island of Cephallonia is its own character — and the ending has been argued about for thirty years.",
+    search: "Captain Corelli's Mandolin Louis de Bernieres",
+    match: { feeling:['moved','hopeful'], pace:['slow','medium'], world:['historical'], theme:['love','survival'], avoid:['none','violence','sad'], character:['observer','hero'], length:['long'], mood:['company','understand'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Light Between Oceans",
+    author: "M.L. Stedman",
+    tags: ["Australian","Moral dilemma","Devastating","Lighthouse"],
+    why: "Tom and Isabel live alone on a lighthouse island off the Australian coast and find a baby in a drifting boat. The decision they make in that moment will define their lives. Stedman builds the moral trap slowly and then shows you there is no good exit — only choices and their cost.",
+    search: "The Light Between Oceans M.L. Stedman",
+    match: { feeling:['moved','unsettled'], pace:['slow','medium'], world:['historical','cold'], theme:['love','survival'], avoid:['none','romance','violence'], character:['observer','hero'], length:['medium'], mood:['understand','company'], time:['weekend','morning'], secret:['empathy','cry'] }
+  },
+  {
+    title: "Where'd You Go, Bernadette",
+    author: "Maria Semple",
+    tags: ["Funny","Seattle","Mystery","Warm"],
+    why: "Bernadette Fox, impossible genius architect and reluctant mother, disappears before a family trip to Antarctica — and her daughter Bee assembles the emails, faxes, and documents to find out what happened. Smart, warm, and hilarious. The best novel about a difficult woman loving her daughter correctly.",
+    search: "Where'd You Go Bernadette Maria Semple",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast','medium'], world:['domestic'], theme:['identity','love'], avoid:['none','sad','violence'], character:['observer','unreliable'], length:['medium'], mood:['company','escape'], time:['transit','morning'], secret:['surprise','empathy'] }
+  },
+  {
+    title: "The Water Dancer",
+    author: "Ta-Nehisi Coates",
+    tags: ["American","Slavery","Magical realism","Epic"],
+    why: "Hiram Walker is born enslaved, with a photographic memory and a supernatural gift he doesn't understand. Coates writes antebellum America as a land of ghosts — the enslaved are kept in place partly through the destruction of their memories — and makes the fantasy feel like history.",
+    search: "The Water Dancer Ta-Nehisi Coates",
+    match: { feeling:['moved','hopeful'], pace:['medium','slow'], world:['historical'], theme:['memory','survival'], avoid:['none','violence','sad'], character:['hero','complex'], length:['long'], mood:['escape','understand'], time:['night','weekend'], secret:['empathy','surprise'] }
+  },
+  {
+    title: "Harlem Shuffle",
+    author: "Colson Whitehead",
+    tags: ["New York","Crime","1960s","Stylish"],
+    why: "Ray Carney runs a legitimate furniture store in Harlem in the 1960s and occasionally fences stolen goods. Whitehead writes crime as a form of social history — every heist is also a map of who gets to move through the city and who doesn't. Funnier than you'd expect, and immaculately constructed.",
+    search: "Harlem Shuffle Colson Whitehead",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast','medium'], world:['historical'], theme:['survival','identity'], avoid:['none','sad'], character:['hero','complex'], length:['medium'], mood:['escape','company'], time:['transit','night'], secret:['surprise','line'] }
+  },
+  {
+    title: "Salvage the Bones",
+    author: "Jesmyn Ward",
+    tags: ["Hurricane Katrina","Family","Poverty","Lyrical"],
+    why: "Twelve days leading to Hurricane Katrina, in a Black family in rural Mississippi. Ward writes in a voice so precise and physical that you feel the heat and the damp on every page. About the specific dignity and love available in poverty, and the things that still come for you anyway.",
+    search: "Salvage the Bones Jesmyn Ward",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['domestic','cold'], theme:['survival','love'], avoid:['none','romance','violence'], character:['hero','observer'], length:['medium'], mood:['understand','challenge'], time:['morning','weekend'], secret:['empathy','cry'] }
+  },
+  {
+    title: "The Reluctant Fundamentalist",
+    author: "Mohsin Hamid",
+    tags: ["Pakistan","America","9/11","Tense"],
+    why: "Changez, a Pakistani man, sits across a café table in Lahore and tells his story to an American stranger — his time at Princeton, his job in New York, and what September 11th slowly did to his sense of self. Told entirely in one voice, in a single evening, with the tension of a thriller and the weight of a fable.",
+    search: "The Reluctant Fundamentalist Mohsin Hamid",
+    match: { feeling:['unsettled','moved'], pace:['fast','medium'], world:['historical','domestic'], theme:['identity','memory'], avoid:['none','romance','violence'], character:['unreliable','observer'], length:['short'], mood:['understand','challenge'], time:['transit','night'], secret:['line','empathy'] }
+  },
+  {
+    title: "Pedro Páramo",
+    author: "Juan Rulfo",
+    tags: ["Mexican","Ghosts","Classic","Brief"],
+    why: "Juan Preciado travels to his dead father's village — and the village is full of murmuring dead who don't know they're dead. Rulfo's only novel, written in 1955, invented magic realism before the term existed. García Márquez said he knew it by heart. One hundred pages that remake what a novel can do.",
+    search: "Pedro Páramo Juan Rulfo",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold','domestic'], theme:['memory','identity'], avoid:['none','romance','violence'], character:['observer','unreliable'], length:['short'], mood:['challenge','understand'], time:['night','morning'], secret:['line','surprise'] }
+  },
+  {
+    title: "Ficciones",
+    author: "Jorge Luis Borges",
+    tags: ["Argentine","Short stories","Philosophical","Classic"],
+    why: "A library that contains every possible book. A map the same size as the territory. A man whose memory is perfect and therefore infinite. Borges invented entire genres in seventeen stories. The most efficient writer who ever lived — every sentence opens a door onto a room you didn't expect.",
+    search: "Ficciones Jorge Luis Borges",
+    match: { feeling:['unsettled','exhilarated'], pace:['slow'], world:['invented','cold'], theme:['identity','memory'], avoid:['none','romance','violence','sad'], character:['observer','unreliable'], length:['short'], mood:['challenge','understand'], time:['night','morning'], secret:['line','surprise'] }
+  },
+  {
+    title: "The Covenant of Water",
+    author: "Abraham Verghese",
+    tags: ["India","Multi-generational","Medicine","Epic"],
+    why: "Three generations of a family in Kerala across the twentieth century — all of them touched by a mysterious condition that causes one member of each generation to drown. Verghese spent years on this novel and every page shows it. A vast, warm, luminous book about a part of the world rarely rendered at this scale.",
+    search: "The Covenant of Water Abraham Verghese",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['historical'], theme:['identity','love'], avoid:['none','violence','sad'], character:['observer','hero'], length:['long'], mood:['company','understand'], time:['weekend','morning'], secret:['empathy','line'] }
   }
 ];
 
@@ -4576,8 +5304,10 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
   const W = cardRect.width;
   const fixedTop  = qNumRect.top;                         // viewport-relative top
   const fixedLeft = cardRect.left;                        // viewport-relative left
-  // Extend to bottom of viewport — guarantees full coverage no matter how tall the question is
-  let H = window.innerHeight - fixedTop;
+  // From chapter label to 55px below the bottom of the options grid
+  const opts = card && card.querySelector('.options-grid');
+  const optsBottom = opts ? opts.getBoundingClientRect().bottom : cardRect.bottom;
+  let H = optsBottom - fixedTop + 55;
 
   canvas.style.position = 'fixed';
   canvas.style.top      = fixedTop  + 'px';
@@ -4601,11 +5331,11 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
     if (!midpointFired && raw >= 0.48) {
       midpointFired = true;
       onMidpoint();
-      // Re-measure from chapter label to viewport bottom for new content.
+      // Resize canvas if new question's options extend lower than current canvas.
+      const newOpts = card.querySelector('.options-grid');
       const newQNum = card.querySelector('.q-number');
-      if (newQNum) {
-        const newTop = newQNum.getBoundingClientRect().top;
-        const newH   = window.innerHeight - newTop;
+      if (newOpts && newQNum) {
+        const newH = newOpts.getBoundingClientRect().bottom - newQNum.getBoundingClientRect().top + 55;
         if (newH > H) {
           H = newH;
           canvas.height = H;
@@ -4710,11 +5440,14 @@ function renderQuestion(animate, direction) {
   // One rAF so the browser commits before the canvas measures, then flip.
   requestAnimationFrame(() => {
     playCanvasFlip(direction, () => {
-      card.innerHTML    = buildQuestionHTML(qId);
-      card.style.height = card.scrollHeight + 'px';
-    }, () => {
+      // Inject new content and immediately free the height lock —
+      // the canvas covers the card during the second half so the natural
+      // resize happens invisibly underneath, with no pop on reveal.
+      card.innerHTML     = buildQuestionHTML(qId);
       card.style.height  = '';
       card.style.overflow = '';
+    }, () => {
+      // Nothing to unlock — already cleared at midpoint.
     });
   });
 }
@@ -4912,38 +5645,214 @@ function loadMoreSuggestions() {
 }
 function matchBooks(count, exclude) {
   const weights = { feeling:4, theme:4, world:4, secret:3, mood:3, character:3, avoid:2, pace:2, length:2, time:1 };
-  const branchToMatch = { darkness:'feeling', thrill_type:'feeling', magic_style:'world', love_depth:'theme', escape_detail:'mood' };
+
+  // Maps ANY branch answer value → "matchKey:bookValue"
+  // This translates branch answers into signals the book.match data actually contains,
+  // so the 60+ branch question paths contribute real scoring differentiation.
+  const branchAliases = {
+    // darkness branch (feeling=unsettled → replaces pace)
+    dark_pitch:'pace:slow', dark_eerie:'pace:slow', dark_psych:'pace:medium', dark_edge:'pace:medium',
+    // thrill_type branch (feeling=exhilarated → replaces pace)
+    thrill_danger:'pace:fast', thrill_epic:'pace:slow', thrill_twist:'pace:fast', thrill_prose:'pace:medium',
+    // warm_type branch (feeling=hopeful → replaces pace)
+    wt_earned:'mood:understand', wt_joyful:'mood:company', wt_fragile:'feeling:hopeful', wt_resist:'theme:survival',
+    // moved_by branch (feeling=moved → replaces pace)
+    mb_effort:'theme:survival', mb_love:'theme:love', mb_life:'mood:understand', mb_sentence:'secret:line',
+    // slow_world branch (pace=slow → replaces world)
+    sw_language:'pace:slow', sw_world:'world:historical', sw_interior:'character:observer', sw_tension:'feeling:unsettled',
+    // fast_stakes branch (pace=fast → replaces world)
+    fs_danger:'theme:survival', fs_mystery:'character:unreliable', fs_relationship:'theme:love', fs_prose:'pace:fast',
+    // medium_texture branch (pace=medium → replaces world)
+    mt_lyrical:'pace:slow', mt_momentum:'pace:fast', mt_balanced:'pace:medium', mt_flexible:'pace:medium',
+    // magic_style branch (world=invented → replaces theme)
+    magic_full:'world:invented', magic_quiet:'world:invented', magic_scifi:'world:invented', magic_fairy:'world:invented',
+    // era_pick branch (world=historical → replaces theme)
+    era_ancient:'world:historical', era_victorian:'world:historical', era_wartime:'world:historical', era_midcentury:'world:historical',
+    // cold_feel branch (world=cold → replaces theme)
+    cold_noir:'feeling:unsettled', cold_wild:'world:cold', cold_village:'world:domestic', cold_atmos:'feeling:unsettled',
+    // domestic_angle branch (world=domestic → replaces theme)
+    dom_family:'theme:memory', dom_marriage:'theme:love', dom_solo:'character:observer', dom_community:'world:domestic',
+    // identity_angle branch (theme=identity → replaces avoid)
+    id_belong:'theme:identity', id_reinvent:'theme:identity', id_perception:'theme:identity', id_inherit:'theme:memory',
+    // love_depth branch (theme=love → replaces character)
+    love_slow:'pace:slow', love_doomed:'feeling:moved', love_quiet:'world:domestic', love_obsess:'character:unreliable',
+    // survival_stakes branch (theme=survival → replaces avoid)
+    surv_physical:'theme:survival', surv_emotional:'mood:understand', surv_moral:'character:complex', surv_social:'theme:survival',
+    // memory_treatment branch (theme=memory → replaces avoid)
+    mem_nonlinear:'theme:memory', mem_retrospect:'theme:memory', mem_documents:'character:unreliable', mem_compressed:'pace:slow',
+    // open_tone branch (avoid=none → replaces character)
+    tone_wry:'mood:company', tone_earnest:'feeling:moved', tone_cold:'pace:slow', tone_warm:'mood:company',
+    // gentle_end branch (avoid=sad → replaces character)
+    end_happy:'feeling:hopeful', end_hopeful:'feeling:hopeful', end_ambiguous:'feeling:unsettled', end_bittersweet:'feeling:moved',
+    // violence_level branch (avoid=violence → replaces character)
+    viol_gentle:'feeling:hopeful', viol_implied:'feeling:unsettled', viol_psych:'character:unreliable', viol_moral:'character:complex',
+    // romance_depth branch (avoid=romance → replaces character)
+    rom_friend:'theme:survival', rom_plot:'pace:fast', rom_ideas:'theme:identity', rom_char:'character:complex',
+    // hero_type branch (character=hero → replaces length)
+    hero_ideal:'feeling:hopeful', hero_reluctant:'mood:escape', hero_weathered:'mood:understand', hero_ordinary:'character:hero',
+    // liar_style branch (character=unreliable → replaces length)
+    liar_deliberate:'character:unreliable', liar_self:'character:unreliable', liar_limited:'character:observer', liar_innocent:'character:observer',
+    // observer_lens branch (character=observer → replaces length)
+    obs_family:'world:domestic', obs_society:'theme:identity', obs_person:'character:observer', obs_self:'mood:understand',
+    // grey_shade branch (character=complex → replaces length)
+    grey_means:'theme:survival', grey_shaped:'theme:identity', grey_charm:'feeling:unsettled', grey_alien:'mood:challenge',
+    // short_impact branch (length=short → replaces mood)
+    si_punch:'feeling:unsettled', si_meditate:'pace:slow', si_world:'world:invented', si_fable:'mood:challenge',
+    // epic_type branch (length=long → replaces mood)
+    epic_family:'theme:memory', epic_fantasy:'world:invented', epic_literary:'mood:challenge', epic_inter:'theme:identity',
+    // medium_feel branch (length=medium → replaces mood)
+    med_world:'world:historical', med_tight:'pace:fast', med_character:'character:complex', med_ideas:'mood:challenge',
+    // escape_detail branch (mood=escape → replaces time)
+    esc_head:'mood:escape', esc_world:'mood:escape', esc_routine:'feeling:exhilarated', esc_general:'mood:escape',
+    // understand_lens branch (mood=understand → replaces time)
+    und_people:'secret:empathy', und_history:'world:historical', und_grief:'secret:cry', und_self:'mood:understand',
+    // challenge_mode branch (mood=challenge → replaces time)
+    chal_form:'mood:challenge', chal_moral:'character:complex', chal_emotion:'secret:cry', chal_intellect:'theme:identity',
+    // company_voice branch (mood=company → replaces time)
+    comp_funny:'mood:company', comp_quiet:'mood:company', comp_wry:'mood:company', comp_fellow:'secret:empathy',
+    // level-2 sub-branches
+    bw_rural:'world:cold', bw_urban:'world:domestic', bw_psych:'character:unreliable', bw_future:'world:invented',
+    ec_uncanny:'feeling:unsettled', ec_folk:'feeling:unsettled', ec_cosmic:'feeling:unsettled', ec_social:'feeling:unsettled',
+    lp_modernist:'pace:slow', lp_classical:'pace:slow', lp_contemp:'pace:medium', lp_gothic:'world:cold',
+    iv_obsess:'character:unreliable', iv_grief:'secret:cry', iv_anxiety:'feeling:unsettled', iv_quiet:'world:domestic',
+    myst_classic:'character:unreliable', myst_literary:'character:complex', myst_cold:'theme:memory', myst_atmos:'world:cold',
+    re_secret:'character:unreliable', re_differ:'theme:love', re_circum:'theme:survival', re_ending:'feeling:moved',
+    vf_class:'world:historical', vf_women:'world:historical', vf_crime:'world:historical', vf_empire:'world:historical',
+    wa_front:'theme:survival', wa_home:'theme:survival', wa_resist:'theme:survival', wa_after:'theme:memory',
+    nf_land:'world:cold', nf_society:'theme:survival', nf_detect:'character:complex', nf_moral:'character:complex',
+    ws_survive:'theme:survival', ws_solitude:'mood:understand', ws_nature:'world:cold', ws_spirit:'mood:understand',
+    sf_social:'world:invented', sf_space:'world:invented', sf_near:'world:invented', sf_lit:'world:invented',
+    fs_quest:'character:hero', fs_politics:'character:complex', fs_coming:'character:hero', fs_myth:'world:invented',
+    fw_secret:'theme:memory', fw_silence:'theme:memory', fw_parent:'theme:identity', fw_siblings:'theme:identity',
+    ct_small:'world:domestic', ct_urban:'world:domestic', ct_instit:'theme:survival', ct_diaspora:'theme:identity',
+    bc_culture:'theme:identity', bc_family:'theme:identity', bc_place:'theme:identity', bc_self:'mood:understand',
+    pw_society:'theme:identity', pw_family:'theme:identity', pw_romantic:'theme:love', pw_self:'mood:understand',
+    is_justice:'theme:survival', is_people:'feeling:hopeful', is_cause:'theme:survival', is_love:'theme:love',
+    oc_war:'theme:survival', oc_crisis:'theme:survival', oc_witness:'theme:survival', oc_place:'theme:survival',
+    ds_survive:'character:unreliable', ds_protect:'feeling:moved', ds_identity:'character:unreliable', ds_power:'character:complex',
+    it_child:'character:observer', it_foreign:'character:observer', it_neuro:'character:observer', it_trust:'feeling:unsettled',
+    mc_justice:'character:complex', mc_protect:'feeling:moved', mc_cause:'theme:survival', mc_survival:'theme:survival',
+    cs_wit:'mood:company', cs_belief:'character:complex', cs_attention:'character:unreliable', cs_danger:'feeling:unsettled',
+    pg_lit:'pace:slow', pg_crime:'pace:fast', pg_novella:'length:short', pg_stories:'length:short',
+    fk_power:'theme:survival', fk_ambition:'theme:survival', fk_conform:'theme:identity', fk_love:'theme:love',
+    fss_place:'world:historical', fss_secret:'theme:memory', fss_wound:'theme:memory', fss_ambition:'theme:survival',
+    lm_modernist:'pace:slow', lm_realist:'pace:slow', lm_postmod:'mood:challenge', lm_interior:'pace:slow',
+    tg_thriller:'pace:fast', tg_literary:'pace:slow', tg_crime:'pace:fast', tg_character:'character:complex',
+    // level-3 sub-branches (new questions added this session)
+    rt_land:'world:cold', rt_community:'world:domestic', rt_history:'theme:memory', rt_isolation:'world:cold',
+    ut_bureau:'theme:survival', ut_poverty:'theme:survival', ut_indiff:'world:domestic', ut_decay:'world:domestic',
+    ps_unravel:'feeling:unsettled', ps_paranoia:'feeling:unsettled', ps_dissoc:'character:unreliable', ps_depress:'feeling:unsettled',
+    ul_person:'feeling:unsettled', ul_place:'world:cold', ul_body:'feeling:unsettled', ul_relation:'theme:love',
+    fv_british:'world:cold', fv_eastern:'world:cold', fv_american:'world:domestic', fv_global:'theme:identity',
+    sm_day:'pace:slow', sm_multi:'character:unreliable', sm_mono:'character:unreliable', sm_frag:'pace:slow',
+    gt_southern:'world:domestic', gt_british:'world:cold', gt_horror:'feeling:unsettled', gt_magical:'world:invented',
+    ot_person:'theme:love', ot_idea:'mood:challenge', ot_event:'theme:memory', ot_create:'theme:identity',
+    gs_acute:'feeling:unsettled', gs_long:'mood:understand', gs_complex:'character:complex', gs_door:'mood:understand',
+    de_golden:'character:unreliable', de_hardboiled:'world:cold', de_cozy:'mood:company', de_inverted:'character:unreliable',
+    cd_living:'theme:memory', cd_historical:'world:historical', cd_mythic:'theme:memory', cd_family:'theme:memory',
+    sn_who:'character:unreliable', sn_what:'theme:survival', sn_know:'character:unreliable', sn_feel:'theme:love',
+    ik_class:'world:historical', ik_values:'theme:identity', ik_timing:'theme:love', ik_ambition:'theme:survival',
+    cs_rising:'world:historical', cs_falling:'world:historical', cs_observing:'character:observer', cs_trapped:'theme:survival',
+    ea_colonizer:'theme:identity', ea_colonized:'theme:survival', ea_returnee:'theme:identity', ea_witness:'theme:memory',
+    ft_wwi:'theme:survival', ft_wwii:'theme:survival', ft_eastern:'theme:survival', ft_other:'theme:survival',
+    rk_active:'theme:survival', rk_hidden:'theme:survival', rk_moral:'character:complex', rk_rescue:'feeling:hopeful',
+    df_loner:'character:complex', df_system:'character:observer', df_amateur:'character:hero', df_self:'mood:understand',
+    am_chosen:'mood:understand', am_imposed:'theme:survival', am_notfit:'theme:identity', am_create:'theme:identity',
+    qs_recovery:'mood:understand', qs_clarity:'mood:understand', qs_identity:'theme:identity', qs_transcend:'feeling:exhilarated',
+    ssf_gender:'theme:identity', ssf_surv:'theme:survival', ssf_class:'theme:survival', ssf_race:'theme:identity',
+    lss_leguin:'world:invented', lss_dystopia:'feeling:unsettled', lss_hidden:'world:invented', lss_poem:'pace:slow',
+    qp_object:'character:hero', qp_under:'mood:understand', qp_justice:'theme:survival', qp_self:'theme:identity',
+    pk_court:'character:complex', pk_revolt:'theme:survival', pk_resist:'theme:survival', pk_magic:'world:invented',
+    sg_gen:'theme:memory', sg_orig:'theme:memory', sg_fresh:'theme:memory', sg_ongoing:'world:domestic',
+    ss_left:'theme:identity', ss_favor:'theme:identity', ss_rival:'theme:survival', ss_reunion:'theme:memory',
+    st_crime:'theme:survival', st_power:'character:complex', st_known:'theme:identity', st_change:'feeling:exhilarated',
+    iw_school:'theme:survival', iw_hosp:'mood:understand', iw_work:'world:domestic', iw_prison:'theme:survival',
+    cf_second:'theme:identity', cf_mixed:'theme:identity', cf_exile:'mood:understand', cf_return:'theme:memory',
+    dw_econ:'theme:survival', dw_polit:'theme:survival', dw_chosen:'mood:escape', dw_disaster:'theme:survival',
+    gk_race:'theme:identity', gk_gender:'theme:identity', gk_class:'world:historical', gk_disability:'theme:identity',
+    jf_instit:'theme:survival', jf_moral:'character:complex', jf_restore:'feeling:hopeful', jf_revolut:'theme:survival',
+    cn_polit:'theme:survival', cn_art:'theme:identity', cn_environ:'world:cold', cn_commun:'world:domestic',
+    cs2_person:'theme:survival', cs2_local:'world:domestic', cs2_system:'theme:survival', cs2_hist:'theme:memory',
+    sv_lit:'theme:survival', sv_social:'theme:survival', sv_prof:'theme:identity', sv_psych:'character:unreliable',
+    ic_orig:'character:unreliable', ic_persona:'theme:identity', ic_escape:'mood:escape', ic_role:'character:complex',
+    cw_adult:'character:observer', cw_violence:'theme:survival', cw_history:'theme:memory', cw_family:'theme:identity',
+    fe_new:'theme:identity', fe_time:'theme:memory', fe_alien:'world:invented', fe_class:'world:historical',
+    jo_courts:'theme:survival', jo_society:'world:domestic', jo_instit:'theme:survival', jo_law:'theme:survival',
+    cc_certain:'character:complex', cc_suppress:'character:complex', cc_uncertain:'feeling:unsettled', cc_losing:'feeling:moved',
+    wd_seduce:'mood:company', wd_protect:'feeling:unsettled', wd_dominate:'character:complex', wd_joy:'mood:company',
+    bc2_polit:'theme:survival', bc2_relig:'theme:identity', bc2_self:'character:complex', bc2_love:'theme:love',
+    qd_loss:'secret:cry', qd_recog:'secret:line', qd_truth:'mood:challenge', qd_beauty:'secret:line',
+    ck_linked:'theme:identity', ck_thematic:'theme:identity', ck_pure:'mood:escape', ck_single:'character:complex',
+    ps2_polit:'theme:survival', ps2_inter:'theme:love', ps2_econ:'theme:survival', ps2_ideo:'theme:identity',
+    lt_obsess:'character:unreliable', lt_salvat:'feeling:hopeful', lt_hard:'theme:survival', lt_loss:'secret:cry',
+    wt2_war:'theme:survival', wt2_abuse:'theme:survival', wt2_shame:'theme:memory', wt2_loss:'secret:cry',
+    rs_country:'world:historical', rs_society:'theme:survival', rs_life:'character:observer', rs_inter:'theme:identity',
+    im_pivot:'pace:slow', im_crisis:'feeling:unsettled', im_aging:'theme:memory', im_grief:'secret:cry',
+    cw2_woman:'character:observer', cw2_man:'character:complex', cw2_end:'feeling:moved', cw2_become:'feeling:hopeful'
+  };
 
   const scores = books
     .filter(b => !exclude.includes(b.title))
     .map(book => {
       let score = 0;
+
+      // Score main question answers
       for (const [key, wt] of Object.entries(weights)) {
         const userVal = answers[key];
         if (!userVal || userVal === 'any') continue;
-        const matchKey = branchToMatch[key] || key;
-        const bookVals = book.match[matchKey] || [];
+        const bookVals = book.match[key] || [];
         if (bookVals[0] === userVal) score += wt * 2;
         else if (bookVals.includes(userVal)) score += wt;
       }
-      // also score any branch answers the user hit
-      for (const [branchId, matchKey] of Object.entries(branchToMatch)) {
-        const userVal = answers[branchId];
-        if (!userVal) continue;
-        const bookVals = book.match[matchKey] || [];
-        if (bookVals[0] === userVal) score += 2;
-        else if (bookVals.includes(userVal)) score += 1;
+
+      // Score ALL branch answers using the alias map
+      // Previously this loop did nothing because branch values never matched book data.
+      // Now every branch answer translates to a real signal in book.match.
+      for (const [answerId, answerVal] of Object.entries(answers)) {
+        if (weights[answerId] !== undefined) continue; // main question already scored above
+        if (!answerVal) continue;
+        const alias = branchAliases[answerVal];
+        if (!alias) continue;
+        const colon = alias.indexOf(':');
+        const mKey = alias.slice(0, colon);
+        const mVal = alias.slice(colon + 1);
+        const bookVals = book.match[mKey] || [];
+        if (bookVals[0] === mVal) score += 3;
+        else if (bookVals.includes(mVal)) score += 2;
       }
+
+      // Avoid penalty
       const userAvoid = answers['avoid'];
       if (userAvoid && userAvoid !== 'none') {
         const bookAvoid = book.match['avoid'] || [];
         if (!bookAvoid.includes(userAvoid) && !bookAvoid.includes('none')) score -= 4;
       }
+
+      // Small random tiebreaker — prevents always showing the same books
+      // when several have nearly identical scores
+      score += Math.random() * 2.5;
+
       return { book, score };
     });
 
   scores.sort((a, b) => b.score - a.score);
-  return scores.slice(0, count).map(s => s.book);
+
+  // Prefer books not shown recently (tracked in localStorage, last 21 titles)
+  const RECENT_KEY = 'bb_recent_v1';
+  let recent = [];
+  try { recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch(e) {}
+
+  const topPool = scores.slice(0, Math.min(count * 5, scores.length));
+  const fresh   = topPool.filter(s => !recent.includes(s.book.title));
+  const seen    = topPool.filter(s =>  recent.includes(s.book.title));
+  const ordered = [...fresh, ...seen];
+  const picks   = ordered.slice(0, count).map(s => s.book);
+
+  // Update recency log
+  const newRecent = [...picks.map(b => b.title), ...recent.filter(t => !picks.some(b => b.title === t))].slice(0, 21);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(newRecent)); } catch(e) {}
+
+  return picks;
 }
 
 const rankLabels   = ['Perfect match', 'Strong match', 'Good match'];
