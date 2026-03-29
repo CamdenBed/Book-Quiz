@@ -122,7 +122,7 @@
   /* PAGE FLIP STAGE */
   .quiz-body {
     flex: 1; display: flex; align-items: center; justify-content: center;
-    padding: 3rem; overflow: hidden;
+    padding: 3rem;
   }
 
   .page-flip-stage {
@@ -984,7 +984,7 @@
     <div class="reveal-books-list" id="reveal-books-list"></div>
 
     <div class="reveal-bottom">
-      <button class="btn-restart" onclick="restart()">Read it from the start</button>
+      <button class="btn-restart" onclick="showScreen('screen-landing')">Retake the quiz</button>
       <button class="btn-shelf-link" onclick="openShelf()">My Library →</button>
     </div>
   </div>
@@ -1047,6 +1047,9 @@
         </a>
         <p class="buy-box-note">Opens Amazon in a new tab</p>
       </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button class="btn-restart" onclick="showScreen('screen-landing')">Retake the quiz</button>
     </div>
   </div>
 </section>
@@ -4423,6 +4426,7 @@ let answers = {};
 let selectedValue = null;
 let isAnimating = false;
 let flipRAF = null;
+let quizBodyPadTop = null;  // pinned once on first render, never changes again
 
 function currentQId()    { return path[path.length - 1]; }
 function isLastQuestion(){ return path.length === TOTAL; }
@@ -4562,18 +4566,27 @@ function drawFlipFrame(ctx, W, H, t, direction) {
 function playCanvasFlip(direction, onMidpoint, onComplete) {
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
+  const card   = stage.querySelector('.question-card');
 
-  // Size canvas to match the stage element exactly.
-  // Pin CSS pixel dimensions too so the bitmap never stretches if the
-  // stage height changes mid-animation.
-  const rect = stage.getBoundingClientRect();
-  const W = rect.width;
-  const H = rect.height;
-  canvas.width        = W;
-  canvas.height       = H;
-  canvas.style.width  = W + 'px';
-  canvas.style.height = H + 'px';
-  canvas.style.display = 'block';
+  // Use position:fixed so the canvas is placed against the viewport and
+  // cannot be clipped by any parent overflow constraint.
+  const cardRect  = card.getBoundingClientRect();
+  const qNum      = card && card.querySelector('.q-number');
+  const qNumRect  = qNum ? qNum.getBoundingClientRect() : cardRect;
+  const W = cardRect.width;
+  const fixedTop  = qNumRect.top;                         // viewport-relative top
+  const fixedLeft = cardRect.left;                        // viewport-relative left
+  // Extend to bottom of viewport — guarantees full coverage no matter how tall the question is
+  let H = window.innerHeight - fixedTop;
+
+  canvas.style.position = 'fixed';
+  canvas.style.top      = fixedTop  + 'px';
+  canvas.style.left     = fixedLeft + 'px';
+  canvas.width          = W;
+  canvas.height         = H;
+  canvas.style.width    = W + 'px';
+  canvas.style.height   = H + 'px';
+  canvas.style.display  = 'block';
 
   const ctx = canvas.getContext('2d');
   const DURATION = 1050; // ms — satisfyingly slow
@@ -4588,6 +4601,17 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
     if (!midpointFired && raw >= 0.48) {
       midpointFired = true;
       onMidpoint();
+      // Re-measure from chapter label to viewport bottom for new content.
+      const newQNum = card.querySelector('.q-number');
+      if (newQNum) {
+        const newTop = newQNum.getBoundingClientRect().top;
+        const newH   = window.innerHeight - newTop;
+        if (newH > H) {
+          H = newH;
+          canvas.height = H;
+          canvas.style.height = H + 'px';
+        }
+      }
     }
 
     drawFlipFrame(ctx, W, H, t, direction);
@@ -4595,9 +4619,12 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
     if (raw < 1) {
       flipRAF = requestAnimationFrame(frame);
     } else {
-      // Clean up
+      // Clean up — restore canvas to in-flow absolute positioning
       ctx.clearRect(0, 0, W, H);
-      canvas.style.display = 'none';
+      canvas.style.display   = 'none';
+      canvas.style.position  = '';
+      canvas.style.top       = '0';
+      canvas.style.left      = '0';
       if (onComplete) onComplete();
       isAnimating = false;
       // Show continue button if answer already selected
@@ -4645,6 +4672,18 @@ function renderQuestion(animate, direction) {
 
   if (!animate) {
     card.innerHTML = buildQuestionHTML(qId);
+    // ── Pin quiz-body position once on first render so the card never moves.
+    if (quizBodyPadTop === null) {
+      const quizBody = card.parentElement.parentElement;
+      const cardH    = card.offsetHeight;
+      const bodyH    = quizBody.clientHeight;
+      quizBodyPadTop = Math.max(
+        parseFloat(getComputedStyle(quizBody).paddingTop),
+        (bodyH - cardH) / 2
+      );
+      quizBody.style.alignItems = 'flex-start';
+      quizBody.style.paddingTop = quizBodyPadTop + 'px';
+    }
     if (selectedValue) {
       const btn = document.getElementById('btn-next');
       btn.classList.add('visible');
@@ -4657,42 +4696,25 @@ function renderQuestion(animate, direction) {
   const stage    = card.parentElement;   // .page-flip-stage
   const quizBody = stage.parentElement;  // .quiz-body
 
-  // ── Step 1: Measure the reaction box height so we can lock at the card's
-  // natural height WITHOUT the reaction.  That way the locked anchor position
-  // matches the restore position (flex-center, no reaction) exactly → no shift.
+  // ── Quiz-body is permanently pinned — only lock/unlock the card height.
   const reactionArea = document.getElementById('reaction-area');
   const reactionH    = reactionArea ? reactionArea.offsetHeight : 0;
   const startH       = card.offsetHeight - reactionH;  // height without reaction
 
-  const bodyH     = quizBody.clientHeight;
-  const anchorPad = Math.max(
-    parseFloat(getComputedStyle(quizBody).paddingTop),
-    (bodyH - startH) / 2
-  );
-  quizBody.style.alignItems = 'flex-start';
-  quizBody.style.paddingTop = anchorPad + 'px';
-  card.style.height         = startH + 'px';  // clips reaction via overflow
-  card.style.overflow       = 'hidden';
+  card.style.height  = startH + 'px';
+  card.style.overflow = 'hidden';
 
-  // ── Step 2: Clear the reaction note — already clipped, nothing visible changes.
+  // Clear the reaction note — already clipped, nothing visible changes.
   if (reactionArea) reactionArea.innerHTML = '';
 
-  // ── Step 3: One rAF so the browser commits the locked state before the
-  // canvas measures the stage, then play the flip.
+  // One rAF so the browser commits before the canvas measures, then flip.
   requestAnimationFrame(() => {
     playCanvasFlip(direction, () => {
-      // Midpoint: canvas covers everything, stage is anchored — inject new
-      // content and resize the card.  Nothing visible can move.
       card.innerHTML    = buildQuestionHTML(qId);
       card.style.height = card.scrollHeight + 'px';
     }, () => {
-      // Animation complete: restore normal flex-centering.
-      // Because we locked at the no-reaction height, the restore position
-      // is the same as the locked position — card stays put.
-      quizBody.style.alignItems = '';
-      quizBody.style.paddingTop = '';
-      card.style.height         = '';
-      card.style.overflow       = '';
+      card.style.height  = '';
+      card.style.overflow = '';
     });
   });
 }
