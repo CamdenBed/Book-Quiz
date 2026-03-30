@@ -728,8 +728,8 @@
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }
 
-  /* ── Laptop (≤ 1280px) — hide reaction note so footer stays on screen ── */
-  @media (max-width: 1280px) {
+  /* ── Laptop/tablet (≤ 1600px) — hide reaction note ── */
+  @media (max-width: 1600px) {
     .reaction-box { display: none; }
     #reaction-area { margin-top: 0; }
   }
@@ -7079,31 +7079,37 @@ function detailAddToList(listId) {
 let prevScreen = 'screen-landing';
 
 function shareResult() {
-  // Find the top recommended book from the current results
-  const topCard = document.querySelector('.reveal-book-title');
-  const bookTitle = topCard ? topCard.textContent.trim() : null;
-
-  // If we're on the detail screen, use that book's title instead
-  const detailTitle = document.getElementById('detail-title');
+  const baseURL = window.location.href.split('?')[0];
   const activeDetail = document.getElementById('screen-detail')?.classList.contains('active');
-  const title = (activeDetail && detailTitle) ? detailTitle.textContent.trim() : bookTitle;
 
-  const siteURL = window.location.href.split('?')[0];
-  const shareText = title
-    ? `The quiz matched me with "${title}" — what book will you get?`
-    : `Find your next book with this quiz — it actually works.`;
+  let shareText, shareURL;
 
-  const shareData = {
-    title: 'Book Match Quiz',
-    text: shareText,
-    url: siteURL
-  };
+  if (activeDetail) {
+    // Sharing a specific book from the detail screen
+    const title = document.getElementById('detail-title')?.textContent.trim();
+    shareText = title
+      ? `Someone thinks you'd love "${title}" — take the quiz and see what you get.`
+      : `Find your next book with this quiz — it actually works.`;
+    shareURL = title
+      ? baseURL + '?book=' + encodeURIComponent(title)
+      : baseURL;
+  } else {
+    // Sharing the shortlist from the results screen
+    const titles = currentSuggestions.map(b => b.title);
+    shareText = titles.length
+      ? `The quiz matched me with "${titles[0]}" — take it yourself and see what you get.`
+      : `Find your next book with this quiz — it actually works.`;
+    shareURL = titles.length
+      ? baseURL + '?list=' + encodeURIComponent(titles.join('|'))
+      : baseURL;
+  }
+
+  const shareData = { title: 'Book Match Quiz', text: shareText, url: shareURL };
 
   if (navigator.share) {
     navigator.share(shareData).catch(() => {});
   } else {
-    // Fallback: copy to clipboard
-    const copyText = shareText + ' ' + siteURL;
+    const copyText = shareText + ' ' + shareURL;
     navigator.clipboard.writeText(copyText).then(() => {
       const btns = document.querySelectorAll('#share-btn-reveal, #share-btn-detail');
       btns.forEach(btn => {
@@ -7113,6 +7119,39 @@ function shareResult() {
       });
     }).catch(() => {});
   }
+}
+
+function handleSharedURL() {
+  const params = new URLSearchParams(window.location.search);
+
+  // ?book=Title — open a specific book's detail page
+  if (params.has('book')) {
+    const title = decodeURIComponent(params.get('book'));
+    const book = books.find(b => b.title === title);
+    if (book) {
+      currentSuggestions = [book];
+      openDetailScreen(book);
+      showScreen('screen-detail');
+      // Hide the "back to shortlist" button since there's no shortlist
+      const backBtn = document.querySelector('.detail-back');
+      if (backBtn) backBtn.style.display = 'none';
+      return true;
+    }
+  }
+
+  // ?list=Title1|Title2|Title3 — show a shared shortlist
+  if (params.has('list')) {
+    const titles = decodeURIComponent(params.get('list')).split('|');
+    const sharedBooks = titles.map(t => books.find(b => b.title === t)).filter(Boolean);
+    if (sharedBooks.length) {
+      currentSuggestions = sharedBooks;
+      renderReveal(sharedBooks);
+      showScreen('screen-reveal');
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function openShelf() {
@@ -7204,6 +7243,7 @@ function esc(s) { return s.replace(/'/g,"\\'"); }
 /* ── Init ── */
 let currentSuggestions = [];
 updateShelfBadges();
+handleSharedURL();
 
 function restart() { startQuiz(); }
 </script>
