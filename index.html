@@ -510,13 +510,19 @@
     padding: 0.5rem 1.25rem; cursor: pointer; transition: color 0.2s, border-color 0.2s;
   }
   .btn-reroll:hover { color: var(--ink); border-color: var(--ink-mid); }
-  .reveal-bottom { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeIn 0.6s ease 1s both; }
-  .btn-restart {
-    padding: 1rem 2.5rem; border: 1px solid var(--ink-faint); background: transparent;
-    font-family: var(--body); font-size: 19px; color: var(--ink-mid); cursor: pointer;
+  .btn-share {
+    padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
+    font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
     letter-spacing: 0.04em; transition: all 0.2s;
   }
-  .btn-restart:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-share:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .reveal-bottom { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeIn 0.6s ease 1s both; }
+  .btn-restart {
+    padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
+    font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .btn-restart:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .btn-shelf-link {
     padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
@@ -778,7 +784,7 @@
     /* Quiz layout — stack content naturally so footer sits right below answers */
     #screen-quiz { justify-content: flex-start; }
     .quiz-body { padding: 0.5rem 1.25rem 0; align-items: flex-start; flex: 0 0 auto; }
-    .quiz-footer { margin-top: 3rem; }
+    .quiz-footer { margin-top: calc(3rem + 100px); }
     .q-number { margin-bottom: 0.5rem; font-size: 11px; }
     .q-text { font-size: clamp(18px, 5vw, 24px); margin-bottom: 0.35rem; }
     .q-sub { font-size: 14px; margin-bottom: 0.5rem; }
@@ -985,6 +991,7 @@
 
     <div class="reveal-bottom">
       <button class="btn-restart" onclick="showScreen('screen-landing')">Retake the quiz</button>
+      <button class="btn-share" id="share-btn-reveal" onclick="shareResult()">Share my result</button>
       <button class="btn-shelf-link" onclick="openShelf()">My Library →</button>
     </div>
   </div>
@@ -1048,7 +1055,8 @@
         <p class="buy-box-note">Opens Amazon in a new tab</p>
       </div>
     </div>
-    <div style="text-align:center; margin-top:2rem;">
+    <div style="text-align:center; margin-top:2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <button class="btn-share" id="share-btn-detail" onclick="shareResult()">Share this pick</button>
       <button class="btn-restart" onclick="showScreen('screen-landing')">Retake the quiz</button>
     </div>
   </div>
@@ -2611,7 +2619,7 @@ const allQuestions = [
       { label: 'Modernist stream of consciousness',   hint: 'Woolf, Faulkner — the mind in motion, unfiltered',             value: 'lp_modernist', next: 'stream_mode' },
       { label: 'Classical and controlled',            hint: 'Sentences with architecture — every clause earning its place',   value: 'lp_classical', next: 'avoid' },
       { label: 'Contemporary and precise',            hint: 'Modern prose at its most stripped and intentional',             value: 'lp_contemp',   next: 'avoid' },
-      { label: 'Lyrical and Southern — Gothic richness', hint: 'Dense, atmospheric, decay and beauty together',             value: 'lp_gothic',    next: 'avoid' }
+      { label: 'Lyrical and Southern — Gothic richness', hint: 'Dense, atmospheric, decay and beauty together',             value: 'lp_gothic',    next: 'gothic_type' }
     ],
     reactions: {
       lp_modernist: "Stream of consciousness — the interior monologue, the mind's actual motion. Beautiful and demanding and completely worth it.",
@@ -2625,8 +2633,8 @@ const allQuestions = [
     text: "One consciousness — what's inside it?",
     sub: 'Interior fiction is defined by what the mind contains.',
     options: [
-      { label: 'Obsession — fixed on one thing, returning and returning', hint: 'The loop of an obsessive mind, mapped in full',     value: 'iv_obsess',   next: 'avoid' },
-      { label: 'Grief — learning to carry something',                     hint: 'The interior landscape of loss, patiently rendered', value: 'iv_grief',    next: 'avoid' },
+      { label: 'Obsession — fixed on one thing, returning and returning', hint: 'The loop of an obsessive mind, mapped in full',     value: 'iv_obsess',   next: 'obsession_target' },
+      { label: 'Grief — learning to carry something',                     hint: 'The interior landscape of loss, patiently rendered', value: 'iv_grief',    next: 'grief_shape' },
       { label: 'Anxiety and hyperawareness',                              hint: 'Noticing everything, exhausted, unable to stop',     value: 'iv_anxiety',  next: 'avoid' },
       { label: 'A quiet life, richly observed',                           hint: 'Ordinary days made luminous by exact attention',     value: 'iv_quiet',    next: 'avoid' }
     ],
@@ -2642,9 +2650,9 @@ const allQuestions = [
     text: 'What kind of mystery?',
     sub: "The pleasure of puzzles has many forms.",
     options: [
-      { label: 'A closed-room puzzle — pure deduction', hint: 'Classic detective fiction, a problem to be solved',           value: 'myst_classic',   next: 'avoid' },
+      { label: 'A closed-room puzzle — pure deduction', hint: 'Classic detective fiction, a problem to be solved',           value: 'myst_classic',   next: 'detective_era' },
       { label: 'A literary mystery — the answers are uncomfortable', hint: 'The truth, when it comes, costs something',      value: 'myst_literary',  next: 'avoid' },
-      { label: 'A cold case — digging up the past',                  hint: 'History as mystery — what really happened here', value: 'myst_cold',      next: 'avoid' },
+      { label: 'A cold case — digging up the past',                  hint: 'History as mystery — what really happened here', value: 'myst_cold',      next: 'cold_depth' },
       { label: 'Atmospheric crime — the city is the character',      hint: 'Mood, location, society, a crime at the centre', value: 'myst_atmos',     next: 'avoid' }
     ],
     reactions: {
@@ -2659,8 +2667,8 @@ const allQuestions = [
     text: 'What puts the relationship on the edge?',
     sub: 'The tension comes from somewhere. Where?',
     options: [
-      { label: 'A secret one of them is keeping',    hint: 'Lies, omissions, the gap between what\'s said and known', value: 're_secret',   next: 'avoid' },
-      { label: 'They want completely different things', hint: 'The incompatibility is real — the love is too',         value: 're_differ',   next: 'avoid' },
+      { label: 'A secret one of them is keeping',    hint: 'Lies, omissions, the gap between what\'s said and known', value: 're_secret',   next: 'secret_nature' },
+      { label: 'They want completely different things', hint: 'The incompatibility is real — the love is too',         value: 're_differ',   next: 'incompat_root' },
       { label: 'Circumstances keep forcing them apart', hint: 'External pressure — the world doesn\'t want this',      value: 're_circum',   next: 'avoid' },
       { label: 'They both know it\'s ending',         hint: 'The countdown — every scene weighted by what comes next', value: 're_ending',   next: 'avoid' }
     ],
@@ -2676,10 +2684,10 @@ const allQuestions = [
     text: 'Victorian fiction has many rooms. Which do you enter?',
     sub: 'The era had obsessions. Which one interests you?',
     options: [
-      { label: 'Class and its machinery',    hint: 'Money, status, the rules that governed everything',          value: 'vf_class',    next: 'character' },
+      { label: 'Class and its machinery',    hint: 'Money, status, the rules that governed everything',          value: 'vf_class',    next: 'class_side' },
       { label: 'Women and their constraints', hint: 'Agency within severe limits — and what it cost',           value: 'vf_women',    next: 'character' },
       { label: 'Crime and its detectives',   hint: 'The Victorian underworld and those who navigated it',        value: 'vf_crime',    next: 'character' },
-      { label: 'Empire and its shadows',     hint: 'The world the Victorians built and what it required of them', value: 'vf_empire',  next: 'character' }
+      { label: 'Empire and its shadows',     hint: 'The world the Victorians built and what it required of them', value: 'vf_empire',  next: 'empire_angle' }
     ],
     reactions: {
       vf_class:   "Class and its machinery! The Victorian engine. The precise gradations, the marriages of convenience, the catastrophic falls. Perfect.",
@@ -2693,9 +2701,9 @@ const allQuestions = [
     text: 'War literature — from which angle?',
     sub: "The twentieth century's wars produced different kinds of books.",
     options: [
-      { label: 'From the front — the soldier\'s experience',         hint: 'Combat, camaraderie, the unbearable reality',              value: 'wa_front',    next: 'character' },
+      { label: 'From the front — the soldier\'s experience',         hint: 'Combat, camaraderie, the unbearable reality',              value: 'wa_front',    next: 'front_theater' },
       { label: 'From the home front — those left behind',            hint: 'Waiting, working, the domestic war',                       value: 'wa_home',     next: 'character' },
-      { label: 'Resistance and survival — ordinary heroism',         hint: 'People who found courage in impossible circumstances',     value: 'wa_resist',   next: 'character' },
+      { label: 'Resistance and survival — ordinary heroism',         hint: 'People who found courage in impossible circumstances',     value: 'wa_resist',   next: 'resist_kind' },
       { label: 'The aftermath — how people lived with what happened', hint: 'Memory, guilt, the long shadow of survival',              value: 'wa_after',    next: 'character' }
     ],
     reactions: {
@@ -2712,7 +2720,7 @@ const allQuestions = [
     options: [
       { label: 'The landscape as menace',       hint: 'Light, cold, the geography as active force',                  value: 'nf_land',    next: 'character' },
       { label: 'Society\'s polished surface and dark underside', hint: 'The welfare state and what it hides',        value: 'nf_society', next: 'character' },
-      { label: 'A detective worth following',   hint: 'The investigator as the point — flawed, specific, compelling', value: 'nf_detect',  next: 'character' },
+      { label: 'A detective worth following',   hint: 'The investigator as the point — flawed, specific, compelling', value: 'nf_detect',  next: 'detect_flavor' },
       { label: 'The moral complexity of the crime itself', hint: 'Not whodunit but why — and what it reveals',       value: 'nf_moral',   next: 'character' }
     ],
     reactions: {
@@ -2728,9 +2736,9 @@ const allQuestions = [
     sub: "Nature as a setting has different purposes.",
     options: [
       { label: 'A survival story — physical and psychological', hint: 'The body and mind pushed to their limits',              value: 'ws_survive',  next: 'character' },
-      { label: 'A meditation on solitude',                      hint: 'Alone by choice or chance — what it reveals',          value: 'ws_solitude', next: 'character' },
+      { label: 'A meditation on solitude',                      hint: 'Alone by choice or chance — what it reveals',          value: 'ws_solitude', next: 'alone_mode' },
       { label: 'Nature writing with a human story inside it',   hint: 'The land and a life — both fully rendered',            value: 'ws_nature',   next: 'character' },
-      { label: 'Wilderness as spiritual reckoning',             hint: 'Something sought in landscape that can\'t be found elsewhere', value: 'ws_spirit', next: 'character' }
+      { label: 'Wilderness as spiritual reckoning',             hint: 'Something sought in landscape that can\'t be found elsewhere', value: 'ws_spirit', next: 'quest_spirit' }
     ],
     reactions: {
       ws_survive:  "Survival — the body against the wild, the mind against itself. Physical and psychological at once. A complete and excellent test.",
@@ -2744,10 +2752,10 @@ const allQuestions = [
     text: 'What kind of science fiction?',
     sub: "The genre is enormous. Let's find your corner of it.",
     options: [
-      { label: 'Social and political — ideas about how we organise ourselves', hint: 'The future as a lens on the present',   value: 'sf_social',  next: 'character' },
+      { label: 'Social and political — ideas about how we organise ourselves', hint: 'The future as a lens on the present',   value: 'sf_social',  next: 'scifi_question' },
       { label: 'Space opera — vast, adventurous, cosmically scaled',           hint: 'Worlds, civilisations, stakes',         value: 'sf_space',   next: 'character' },
       { label: 'Near-future realism — extrapolation from now',                hint: 'Close enough to feel real and frightening', value: 'sf_near', next: 'character' },
-      { label: 'Literary science fiction — ideas in beautiful prose',         hint: 'Where the genre and serious fiction meet', value: 'sf_lit',    next: 'character' }
+      { label: 'Literary science fiction — ideas in beautiful prose',         hint: 'Where the genre and serious fiction meet', value: 'sf_lit',    next: 'lit_scifi_mode' }
     ],
     reactions: {
       sf_social:  "Social science fiction — the future as a way of examining how we live now. The best of it is urgent and precise.",
@@ -2761,8 +2769,8 @@ const allQuestions = [
     text: 'Full fantasy — what kind of world?',
     sub: "Maps and lore, yes. But what kind of story lives there?",
     options: [
-      { label: 'A quest — journey, obstacles, transformation',       hint: 'The classic shape — earned and complete',              value: 'fs_quest',   next: 'character' },
-      { label: 'Political intrigue in a complex world',              hint: 'Courts, factions, competing powers — no simple good', value: 'fs_politics', next: 'character' },
+      { label: 'A quest — journey, obstacles, transformation',       hint: 'The classic shape — earned and complete',              value: 'fs_quest',   next: 'quest_purpose' },
+      { label: 'Political intrigue in a complex world',              hint: 'Courts, factions, competing powers — no simple good', value: 'fs_politics', next: 'politics_kind' },
       { label: 'A coming-of-age within something larger',            hint: 'One person growing up while the world changes',       value: 'fs_coming',  next: 'character' },
       { label: 'Mythology and ancient forces — the deep lore',       hint: 'Gods, creation myths, the world\'s history alive',   value: 'fs_myth',    next: 'character' }
     ],
@@ -2778,10 +2786,10 @@ const allQuestions = [
     text: 'What kind of family wound?',
     sub: 'Every unhappy family is unhappy differently.',
     options: [
-      { label: 'A secret kept for generations',     hint: 'Something buried that is still, quietly, doing damage',      value: 'fw_secret',   next: 'character' },
+      { label: 'A secret kept for generations',     hint: 'Something buried that is still, quietly, doing damage',      value: 'fw_secret',   next: 'secret_generation' },
       { label: 'A silence that was never broken',   hint: 'What wasn\'t said — and what that cost',                     value: 'fw_silence',  next: 'character' },
       { label: 'A reckoning between parent and child', hint: 'The accounting — love, expectation, disappointment',      value: 'fw_parent',   next: 'character' },
-      { label: 'Siblings and what they became',     hint: 'The people who grew up in the same house and diverged',      value: 'fw_siblings', next: 'character' }
+      { label: 'Siblings and what they became',     hint: 'The people who grew up in the same house and diverged',      value: 'fw_siblings', next: 'sibling_shape' }
     ],
     reactions: {
       fw_secret:   "A generational secret. It's been doing damage this whole time and no one has named it. We know the books that do this perfectly.",
@@ -2795,9 +2803,9 @@ const allQuestions = [
     text: 'What kind of community?',
     sub: "Every place has its own kind of gravity.",
     options: [
-      { label: 'A small town with a long memory',  hint: 'History, grudges, the weight of being known',                  value: 'ct_small',    next: 'character' },
+      { label: 'A small town with a long memory',  hint: 'History, grudges, the weight of being known',                  value: 'ct_small',    next: 'small_gravity' },
       { label: 'A neighbourhood in a city',        hint: 'Multiple lives in proximity — the accidental community',       value: 'ct_urban',    next: 'character' },
-      { label: 'An institution — school, hospital, prison', hint: 'A closed world with its own brutal logic',            value: 'ct_instit',   next: 'character' },
+      { label: 'An institution — school, hospital, prison', hint: 'A closed world with its own brutal logic',            value: 'ct_instit',   next: 'institution_type' },
       { label: 'A diaspora community — roots and distance', hint: 'A culture preserved, adapted, argued over',           value: 'ct_diaspora', next: 'character' }
     ],
     reactions: {
@@ -2812,9 +2820,9 @@ const allQuestions = [
     text: 'Belonging — or the absence of it — where?',
     sub: "The question of where you fit has many arenas.",
     options: [
-      { label: 'Between two cultures',          hint: 'Neither fully claimed — the space between',                    value: 'bc_culture',  next: 'length' },
+      { label: 'Between two cultures',          hint: 'Neither fully claimed — the space between',                    value: 'bc_culture',  next: 'culture_form' },
       { label: 'Outside the family you came from', hint: 'The one place you should fit and somehow don\'t',          value: 'bc_family',   next: 'length' },
-      { label: 'In a new place — immigration, displacement', hint: 'Starting over, belonging nowhere yet',            value: 'bc_place',    next: 'length' },
+      { label: 'In a new place — immigration, displacement', hint: 'Starting over, belonging nowhere yet',            value: 'bc_place',    next: 'displacement_why' },
       { label: 'Within your own body or self',   hint: 'The interior version — not at home in yourself',             value: 'bc_self',     next: 'length' }
     ],
     reactions: {
@@ -2829,7 +2837,7 @@ const allQuestions = [
     text: "Whose gaze is constructing the self?",
     sub: "Who does the defining — and what does it cost?",
     options: [
-      { label: 'Society and its categories',    hint: 'Race, class, gender — the larger forces that define',          value: 'pw_society',  next: 'length' },
+      { label: 'Society and its categories',    hint: 'Race, class, gender — the larger forces that define',          value: 'pw_society',  next: 'gaze_kind' },
       { label: 'A parent or family',            hint: 'The identity imposed in childhood and carried forward',        value: 'pw_family',   next: 'length' },
       { label: 'A romantic partner',            hint: 'Who you become in the mirror of someone who loves you',       value: 'pw_romantic', next: 'length' },
       { label: 'The protagonist\'s own gaze',   hint: 'Self-construction, self-destruction, the internal audience', value: 'pw_self',     next: 'length' }
@@ -2846,9 +2854,9 @@ const allQuestions = [
     text: "What are they still believing in?",
     sub: "Idealism has an object. What's theirs?",
     options: [
-      { label: 'Justice — that wrongs can be righted',     hint: 'The institutional or moral kind, or both',           value: 'is_justice',  next: 'time' },
+      { label: 'Justice — that wrongs can be righted',     hint: 'The institutional or moral kind, or both',           value: 'is_justice',  next: 'justice_form' },
       { label: 'People — a fundamental faith in humanity', hint: 'It will be tested. It survives anyway.',             value: 'is_people',   next: 'time' },
-      { label: 'A cause or an idea',                        hint: 'Something larger than themselves worth sacrificing for', value: 'is_cause', next: 'time' },
+      { label: 'A cause or an idea',                        hint: 'Something larger than themselves worth sacrificing for', value: 'is_cause', next: 'cause_nature' },
       { label: 'Love — that it is possible and worth it',  hint: 'Romantic or otherwise — the belief holds',           value: 'is_love',     next: 'time' }
     ],
     reactions: {
@@ -2864,7 +2872,7 @@ const allQuestions = [
     sub: "History has a habit of arriving uninvited.",
     options: [
       { label: 'War — they didn\'t choose it but it chose them', hint: 'The civilian caught in the machinery of conflict',    value: 'oc_war',      next: 'time' },
-      { label: 'A crisis with no playbook',                       hint: 'Nothing prepared them for this — improvised heroism', value: 'oc_crisis',   next: 'time' },
+      { label: 'A crisis with no playbook',                       hint: 'Nothing prepared them for this — improvised heroism', value: 'oc_crisis',   next: 'crisis_size' },
       { label: 'Witnessing something that can\'t be ignored',     hint: 'The bystander who can\'t stay a bystander',          value: 'oc_witness',  next: 'time' },
       { label: 'Being in the wrong place at the right moment',    hint: 'Accidental importance — history needed someone here', value: 'oc_place',    next: 'time' }
     ],
@@ -2880,9 +2888,9 @@ const allQuestions = [
     text: "What is the deliberate lie protecting?",
     sub: "Every calculated deception has a logic. What's the engine here?",
     options: [
-      { label: 'Their own survival — literal or social',   hint: 'The lie keeps them alive, or keeps them in the room',     value: 'ds_survive',  next: 'time' },
+      { label: 'Their own survival — literal or social',   hint: 'The lie keeps them alive, or keeps them in the room',     value: 'ds_survive',  next: 'survival_stake' },
       { label: 'Someone else — protecting a person',       hint: 'The lie is a shield for someone vulnerable',              value: 'ds_protect',  next: 'time' },
-      { label: 'A version of themselves they prefer',      hint: 'Identity maintenance — the lie is the self they\'ve built', value: 'ds_identity', next: 'time' },
+      { label: 'A version of themselves they prefer',      hint: 'Identity maintenance — the lie is the self they\'ve built', value: 'ds_identity', next: 'identity_construct' },
       { label: 'Power — the lie gives them an advantage',  hint: 'Strategic deception — manipulation in service of control', value: 'ds_power',    next: 'time' }
     ],
     reactions: {
@@ -2897,8 +2905,8 @@ const allQuestions = [
     text: "Innocent narrator — what kind of innocence?",
     sub: "The distorting lens has different prescriptions.",
     options: [
-      { label: 'A child who doesn\'t understand what they\'re witnessing', hint: 'Innocence as the most devastating perspective', value: 'it_child',    next: 'time' },
-      { label: 'A foreigner or outsider — the fresh eye',                  hint: 'Not naive, just new — seeing what locals can\'t', value: 'it_foreign', next: 'time' },
+      { label: 'A child who doesn\'t understand what they\'re witnessing', hint: 'Innocence as the most devastating perspective', value: 'it_child',    next: 'child_witness' },
+      { label: 'A foreigner or outsider — the fresh eye',                  hint: 'Not naive, just new — seeing what locals can\'t', value: 'it_foreign', next: 'foreign_eye' },
       { label: 'Someone neurodivergent — different pattern recognition',   hint: 'Seeing everything, missing certain codes',       value: 'it_neuro',   next: 'time' },
       { label: 'Someone who simply trusts too much',                        hint: 'The good-faith reader of a bad-faith world',     value: 'it_trust',   next: 'time' }
     ],
@@ -2914,9 +2922,9 @@ const allQuestions = [
     text: "Bad things for good reasons — what are the ends?",
     sub: "The justification matters. What are they trying to achieve?",
     options: [
-      { label: 'Justice — they believe the system failed',         hint: 'Outside-the-law justice, morally complicated',         value: 'mc_justice',  next: 'time' },
+      { label: 'Justice — they believe the system failed',         hint: 'Outside-the-law justice, morally complicated',         value: 'mc_justice',  next: 'justice_outside' },
       { label: 'Protecting someone they love',                     hint: 'The lengths people go to for the people they love',    value: 'mc_protect',  next: 'time' },
-      { label: 'A cause — something larger than themselves',       hint: 'Political, ideological — they believe in the mission', value: 'mc_cause',    next: 'time' },
+      { label: 'A cause — something larger than themselves',       hint: 'Political, ideological — they believe in the mission', value: 'mc_cause',    next: 'cause_certainty' },
       { label: 'Their own survival at a moral cost',               hint: 'Not noble — just necessary. And you understand it.',  value: 'mc_survival', next: 'time' }
     ],
     reactions: {
@@ -2931,8 +2939,8 @@ const allQuestions = [
     text: "What is the charm built from?",
     sub: "Dangerous charisma has a particular chemistry.",
     options: [
-      { label: 'Wit — they are genuinely funnier than everyone else', hint: 'Intelligence deployed as attraction',               value: 'cs_wit',      next: 'time' },
-      { label: 'Conviction — they believe in something completely',    hint: 'Certainty as seduction. The true believer.',        value: 'cs_belief',   next: 'time' },
+      { label: 'Wit — they are genuinely funnier than everyone else', hint: 'Intelligence deployed as attraction',               value: 'cs_wit',      next: 'wit_deploy' },
+      { label: 'Conviction — they believe in something completely',    hint: 'Certainty as seduction. The true believer.',        value: 'cs_belief',   next: 'belief_content' },
       { label: 'Attention — they make you feel fully seen',            hint: 'The narcissist\'s gift, weaponised',               value: 'cs_attention', next: 'time' },
       { label: 'Danger itself — something that should be a warning',   hint: 'The transgressive appeal of someone who doesn\'t follow rules', value: 'cs_danger', next: 'time' }
     ],
@@ -2948,10 +2956,10 @@ const allQuestions = [
     text: "The gut punch — delivered in what genre?",
     sub: "Brutal efficiency across different forms.",
     options: [
-      { label: 'Literary fiction — the quiet devastation', hint: 'No melodrama — just the exact right thing said',          value: 'pg_lit',       next: 'secret' },
+      { label: 'Literary fiction — the quiet devastation', hint: 'No melodrama — just the exact right thing said',          value: 'pg_lit',       next: 'quiet_devastation' },
       { label: 'Crime or thriller — the punch is plot',    hint: 'The revelation lands like a physical blow',                value: 'pg_crime',     next: 'secret' },
       { label: 'A novella-length study of one thing',      hint: 'Short, focused, relentless — one subject, total honesty', value: 'pg_novella',   next: 'secret' },
-      { label: 'Short story collection — many punches',    hint: 'Each story a complete impact. Accumulated bruising.',      value: 'pg_stories',   next: 'secret' }
+      { label: 'Short story collection — many punches',    hint: 'Each story a complete impact. Accumulated bruising.',      value: 'pg_stories',   next: 'collection_kind' }
     ],
     reactions: {
       pg_lit:     "Literary fiction gut punch — no melodrama, just the exact true thing said at exactly the right moment. The best kind of impact.",
@@ -2965,10 +2973,10 @@ const allQuestions = [
     text: "Dark fable — what at the centre of it?",
     sub: "Parable logic can carry many different moral weights.",
     options: [
-      { label: 'Power and what it does to people',    hint: 'The corrupting logic of authority and dominance',            value: 'fk_power',    next: 'secret' },
+      { label: 'Power and what it does to people',    hint: 'The corrupting logic of authority and dominance',            value: 'fk_power',    next: 'power_shape' },
       { label: 'The cost of ambition',                hint: 'What we sacrifice for what we want',                          value: 'fk_ambition', next: 'secret' },
       { label: 'Conformity and what happens when you resist', hint: 'The machinery of social pressure in fable form',     value: 'fk_conform',  next: 'secret' },
-      { label: 'Love and its transformations',        hint: 'What love makes of people — not always good things',         value: 'fk_love',     next: 'secret' }
+      { label: 'Love and its transformations',        hint: 'What love makes of people — not always good things',         value: 'fk_love',     next: 'love_transform' }
     ],
     reactions: {
       fk_power:    "Power and its logic — what it does to the people who hold it, and to those who don't. The fable form is perfect for this.",
@@ -2984,7 +2992,7 @@ const allQuestions = [
     options: [
       { label: 'A place — the house, the land, the city',        hint: 'Geography as destiny — the setting as inheritance',   value: 'fss_place',   next: 'secret' },
       { label: 'A secret — buried, inherited, eventually exposed', hint: 'What each generation received without knowing it', value: 'fss_secret',  next: 'secret' },
-      { label: 'A wound — trauma passed down quietly',           hint: 'The damage that travels through bloodlines',           value: 'fss_wound',   next: 'secret' },
+      { label: 'A wound — trauma passed down quietly',           hint: 'The damage that travels through bloodlines',           value: 'fss_wound',   next: 'wound_travel' },
       { label: 'An ambition — the dream each generation carries', hint: 'What each one chases and what it costs them',        value: 'fss_ambition', next: 'secret' }
     ],
     reactions: {
@@ -3000,9 +3008,9 @@ const allQuestions = [
     sub: "The ambitious novel has different peaks. Which one calls to you?",
     options: [
       { label: 'Dense modernist prose — the language is the challenge', hint: 'Sentences that require work. Worth every bit of it.', value: 'lm_modernist', next: 'secret' },
-      { label: 'A sweeping realist novel — vast but accessible',       hint: 'Tolstoy-scale — enormous, readable, unforgettable', value: 'lm_realist',   next: 'secret' },
+      { label: 'A sweeping realist novel — vast but accessible',       hint: 'Tolstoy-scale — enormous, readable, unforgettable', value: 'lm_realist',   next: 'realist_scale' },
       { label: 'Postmodern — form itself is constantly challenged',    hint: 'The book questioning what a book is allowed to do',  value: 'lm_postmod',   next: 'secret' },
-      { label: 'A work of quiet, profound interiority',                hint: 'Slow, interior, bottomless — the kind that changes you slowly', value: 'lm_interior', next: 'secret' }
+      { label: 'A work of quiet, profound interiority',                hint: 'Slow, interior, bottomless — the kind that changes you slowly', value: 'lm_interior', next: 'interior_monument' }
     ],
     reactions: {
       lm_modernist: "Modernist difficulty. Sentences that require slowing down, reading twice, earning their meaning. The most rewarding kind of hard.",
@@ -3019,13 +3027,870 @@ const allQuestions = [
       { label: 'A psychological thriller — precision at pace',       hint: 'Every chapter pulling tighter, nowhere to breathe', value: 'tg_thriller', next: 'secret' },
       { label: 'A literary novel, not a word wasted',               hint: 'Spare and exact — the literary equivalent of tight', value: 'tg_literary', next: 'secret' },
       { label: 'A crime novel with perfect architecture',            hint: 'The plot fitting together with no loose ends',       value: 'tg_crime',    next: 'secret' },
-      { label: 'A character study — compressed and total',           hint: 'One person, completely known, nothing extraneous',   value: 'tg_character', next: 'secret' }
+      { label: 'A character study — compressed and total',           hint: 'One person, completely known, nothing extraneous',   value: 'tg_character', next: 'char_study_who' }
     ],
     reactions: {
       tg_thriller: "Psychological thriller with precision — every chapter tightening, stakes rising, no wasted motion. A complete pleasure.",
       tg_literary: "Literary fiction at its most exact. Not sparse — precise. Every word doing something. Spare as a tool, not an aesthetic.",
       tg_crime:    "Crime with architectural precision — the plot fitted perfectly. The satisfaction of a mechanism that works. We know these books.",
       tg_character: "A character study — compressed, total, nothing extraneous. Three hundred pages and you know this person completely. The best kind."
+    }
+  },
+
+  /* ══ BRANCH QUESTIONS — ROUND 3 ═══════════════════════════════════════
+     50 new level-3 branches. Each intercepts a specific option from an
+     existing level-2 branch and routes to the same downstream question.
+     Total quiz length stays exactly 10 per path.
+  ═══════════════════════════════════════════════════════════════════════ */
+
+  {
+    id: 'rural_texture',     /* triggered by bleak_world=bw_rural — replaces theme */
+    text: 'Rural bleakness — what makes it inescapable?',
+    sub: 'The countryside is dark in specific ways.',
+    options: [
+      { label: 'The land itself — barren, indifferent, relentless',  hint: 'Nature not as beauty but as adversary',             value: 'rt_land',      next: 'theme' },
+      { label: 'The community — watchful, long-memoried, unforgiving', hint: 'Everyone knows everything. That\'s the trap.',  value: 'rt_community', next: 'theme' },
+      { label: 'A history — something terrible happened here',        hint: 'The past in the landscape, still doing damage',   value: 'rt_history',   next: 'theme' },
+      { label: 'The isolation — nowhere to go and no way out',        hint: 'Distance as prison, silence as sentence',         value: 'rt_isolation', next: 'theme' }
+    ],
+    reactions: {
+      rt_land:      "The land as adversary. Moor, marsh, the cold that's always there. Indifferent to you specifically. A very particular bleakness.",
+      rt_community: "The small community as trap. They've known you your whole life, which means they know exactly what to use. Sinister and correct.",
+      rt_history:   "Something happened here. The land holds it. The people won't speak of it. You're about to find out. We know these books.",
+      rt_isolation: "The isolation that is its own sentence. Too far from anywhere that might help. The distance is the whole point."
+    }
+  },
+  {
+    id: 'urban_trap',        /* triggered by bleak_world=bw_urban — replaces theme */
+    text: 'Urban bleakness — what does the city do to people?',
+    sub: "The city's cruelty takes different forms.",
+    options: [
+      { label: 'Bureaucratic machinery — systems that grind people down', hint: 'Kafka knew. So did a few others.',           value: 'ut_bureau',  next: 'theme' },
+      { label: 'Poverty inside a city that looks prosperous',             hint: 'Invisibility as a specific form of violence', value: 'ut_poverty', next: 'theme' },
+      { label: 'The swallowing city — indifferent, enormous, alone',      hint: 'Millions of people; complete isolation',      value: 'ut_indiff',  next: 'theme' },
+      { label: 'Post-industrial rot — what stays when the work leaves',   hint: 'The ghost city, the town that became a ruin', value: 'ut_decay',   next: 'theme' }
+    ],
+    reactions: {
+      ut_bureau:  "Bureaucratic machinery! The system that was supposedly built for you, grinding you to nothing. Kafka was here. So were others.",
+      ut_poverty: "Poverty inside prosperity — the invisible city, the life that exists in plain sight and is never seen. Some of the best fiction lives here.",
+      ut_indiff:  "The city as indifferent mass. Millions of people, and no one sees you. A specific kind of horror. We know which books hold it exactly.",
+      ut_decay:   "Post-industrial ghost towns — what remains when the reason for existing is gone. Haunted and true. An underwritten subject, brilliantly done sometimes."
+    }
+  },
+  {
+    id: 'psych_spiral',      /* triggered by bleak_world=bw_psych — replaces theme */
+    text: 'Psychological bleakness — what form does it take?',
+    sub: "The mind is a varied landscape of darkness.",
+    options: [
+      { label: 'Unraveling — the self coming apart under pressure',    hint: 'The slow dissolution, observed from inside',        value: 'ps_unravel', next: 'theme' },
+      { label: 'Paranoia — the world closing in, real or imagined',    hint: 'The trap that may be a trap or may be everything',  value: 'ps_paranoia', next: 'theme' },
+      { label: 'Dissociation — the self watching itself from outside', hint: 'Detachment as both refuge and horror',              value: 'ps_dissoc',  next: 'theme' },
+      { label: 'Depression as landscape — the world bleached of meaning', hint: 'Not drama — the total flatness of it',          value: 'ps_depress', next: 'theme' }
+    ],
+    reactions: {
+      ps_unravel:  "The unraveling self — the dissolution you can watch happening in the prose. Interior and devastating. We know exactly the books.",
+      ps_paranoia: "Paranoia! Is it real? Almost certainly not. But what if? The best fiction in this vein never tells you. We love it.",
+      ps_dissoc:   "Dissociation — watching yourself from outside. The strange cold clarity of it. Some of the most precise writing in literature.",
+      ps_depress:  "Depression as the whole landscape. Not the dramatic breakdown — the flatness. The total grey. The books that get this right are essential."
+    }
+  },
+  {
+    id: 'uncanny_locus',     /* triggered by eerie_corner=ec_uncanny — replaces theme */
+    text: 'The familiar made strange — what is slightly wrong?',
+    sub: "The uncanny is precise. Locate it.",
+    options: [
+      { label: 'A person: recognisable, somehow not right',    hint: 'The face you know with something behind it',             value: 'ul_person',   next: 'theme' },
+      { label: 'A house or place: the architecture is wrong',  hint: 'The rooms don\'t add up. The geometry is off.',          value: 'ul_place',    next: 'theme' },
+      { label: 'The body: something wrong in how it moves or ages', hint: 'Biology as wrongness. Subtle and extremely effective.', value: 'ul_body', next: 'theme' },
+      { label: 'A relationship: two people who fit together strangely', hint: 'The dynamic that is wrong in a way you can\'t name', value: 'ul_relation', next: 'theme' }
+    ],
+    reactions: {
+      ul_person:   "The person who is slightly wrong. You recognise them but something behind the face is different. Classic uncanny. Perfectly disturbing.",
+      ul_place:    "The house where the rooms don't add up. Where you lose your bearings in a building you know. Architecture as dread. Yes.",
+      ul_body:     "The body doing something it shouldn't. Not supernatural — biological wrongness. A specific and underused form of horror. We know the books.",
+      ul_relation: "A relationship that fits together the wrong way. Something in the dynamic that you can't name and can't stop noticing. Exactly right."
+    }
+  },
+  {
+    id: 'folk_vein',         /* triggered by eerie_corner=ec_folk — replaces theme */
+    text: 'Which folklore tradition?',
+    sub: 'The old dark things have many origins.',
+    options: [
+      { label: 'British Isles — selkies, fae, the deep moorland',       hint: 'Celtic and Anglo-Saxon — the things that predate the church', value: 'fv_british',  next: 'theme' },
+      { label: 'Eastern European and Slavic — stranger, older customs', hint: 'The deep forest, Baba Yaga, the genuinely weird',             value: 'fv_eastern',  next: 'theme' },
+      { label: 'American Gothic — Southern, mythologised dread',        hint: 'Faulkner country. The horror that grew from history.',        value: 'fv_american', next: 'theme' },
+      { label: 'Outside the Western tradition entirely',                 hint: 'Non-European mythology — equally rich, less familiar',       value: 'fv_global',   next: 'theme' }
+    ],
+    reactions: {
+      fv_british:  "The British Isles tradition — the things under the hill, the sea folk, the forest at the edge of the village. Deeply atmospheric.",
+      fv_eastern:  "Eastern European and Slavic — the deep woods, the stranger customs, Baba Yaga's chicken-legged house. The genuinely weird. Yes.",
+      fv_american: "American Gothic! The South as mythology. History as horror. The landscape haunted by what happened on it. Extraordinary territory.",
+      fv_global:   "Non-Western mythology — as rich and strange and ancient as anything, and far less familiar. Some extraordinary fiction lives here."
+    }
+  },
+  {
+    id: 'stream_mode',       /* triggered by language_period=lp_modernist — replaces avoid */
+    text: 'Stream of consciousness — which mode?',
+    sub: "The interior monologue has many forms.",
+    options: [
+      { label: 'One day, fully inhabited — Mrs Dalloway mode',      hint: 'Compressed time, rich mind, a single day as a whole life', value: 'sm_day',   next: 'avoid' },
+      { label: 'Multiple perspectives braided together',             hint: 'The Sound and the Fury mode — many minds, one event',      value: 'sm_multi', next: 'avoid' },
+      { label: 'A single obsessive monologue — one mind unspooled', hint: 'One voice, completely rendered, no interruption',           value: 'sm_mono',  next: 'avoid' },
+      { label: 'Fragmented and elliptical — meaning in the gaps',   hint: 'The white space doing the work, the gaps where the meaning lives', value: 'sm_frag', next: 'avoid' }
+    ],
+    reactions: {
+      sm_day:   "A single day completely inhabited — time compressed, consciousness expanded. Woolf at her peak. When it works, there is nothing like it.",
+      sm_multi: "Multiple minds, braided together around a single event or place. Faulkner's great invention. Complex and completely worth the effort.",
+      sm_mono:  "One voice, completely rendered, no interruption. The obsessive single monologue. Total access to one consciousness. Intense and extraordinary.",
+      sm_frag:  "Fragmentation — the meaning in the white space. Elliptical, demanding, and when you get it, startling. A particular kind of reading pleasure."
+    }
+  },
+  {
+    id: 'gothic_type',       /* triggered by language_period=lp_gothic — replaces avoid */
+    text: 'Gothic richness — which tradition?',
+    sub: "Lush darkness has different geographies.",
+    options: [
+      { label: 'American Southern Gothic — heat, decay, violence beneath the surface', hint: 'Faulkner, Morrison, O\'Connor territory',   value: 'gt_southern', next: 'avoid' },
+      { label: 'British Gothic — old houses, fog, the past with teeth',                 hint: 'The manor, the moors, what\'s behind the door', value: 'gt_british', next: 'avoid' },
+      { label: 'Literary horror — beauty and dread sharing every sentence',             hint: 'Disturbing prose that is also excellent prose', value: 'gt_horror',  next: 'avoid' },
+      { label: 'Magical realism — the dark supernatural as everyday texture',           hint: 'García Márquez mode — the miraculous as ordinary', value: 'gt_magical', next: 'avoid' }
+    ],
+    reactions: {
+      gt_southern: "American Southern Gothic! Heat, decay, violence simmering under everything. Faulkner, Morrison, O'Connor. The most mythologised landscape in American fiction.",
+      gt_british:  "British Gothic — the manor, the moors, what's behind the sealed door. The past refusing to stay there. Deeply atmospheric and immensely satisfying.",
+      gt_horror:   "Literary horror — prose where dread and beauty share the same sentence. Not pulp, not genre: disturbing fiction that is also excellent writing.",
+      gt_magical:  "Magical realism — the miraculous as unremarkable, the supernatural as texture. García Márquez knew. Several others have followed. Extraordinary territory."
+    }
+  },
+  {
+    id: 'obsession_target',  /* triggered by interior_voice=iv_obsess — replaces avoid */
+    text: 'What is the obsession?',
+    sub: "The loop is defined by what it circles.",
+    options: [
+      { label: 'A person — unreachable, beloved, impossible to stop thinking about', hint: 'The absent one who occupies everything',      value: 'ot_person', next: 'avoid' },
+      { label: 'An idea — the mind that cannot stop working on one problem',         hint: 'Intellectual obsession, the consuming question', value: 'ot_idea',   next: 'avoid' },
+      { label: 'A past event — something that happened and keeps happening',          hint: 'Memory as prison — the moment that won\'t end', value: 'ot_event',  next: 'avoid' },
+      { label: 'The work of creation — the artist\'s consuming relationship with making', hint: 'The thing being made, and what it costs', value: 'ot_create', next: 'avoid' }
+    ],
+    reactions: {
+      ot_person:  "The unreachable person. The one who lives in the mind long after they've left the room, or the world. Some of the best interior fiction is exactly this.",
+      ot_idea:    "Intellectual obsession — the mind that cannot put down one question. Often the most propulsive of all interior fiction. We know the books.",
+      ot_event:   "The past event that won't stop happening. Memory as a loop — the moment always arriving, always the same, always devastating. We know how to find this.",
+      ot_create:  "The artist's obsession with the work. What it demands, what it costs, what happens when it fails. One of literature's oldest and truest subjects."
+    }
+  },
+  {
+    id: 'grief_shape',       /* triggered by interior_voice=iv_grief — replaces avoid */
+    text: 'What shape is the grief?',
+    sub: "Loss is specific. How does it arrive?",
+    options: [
+      { label: 'Acute — the shock and first chaos of it',              hint: 'The immediate aftermath — nothing makes sense yet',       value: 'gs_acute',   next: 'avoid' },
+      { label: 'The long slow aftermath — learning to carry it',       hint: 'Time passing, the grief changing but not ending',         value: 'gs_long',    next: 'avoid' },
+      { label: 'Complicated — mixed with guilt, ambivalence, or anger', hint: 'Not clean grief — tangled, contradictory',              value: 'gs_complex', next: 'avoid' },
+      { label: 'Grief as a doorway — what it opens onto',              hint: 'Loss that transforms, that leads somewhere unexpected',   value: 'gs_door',    next: 'avoid' }
+    ],
+    reactions: {
+      gs_acute:   "The acute phase — the shock, the disbelief, the first days when nothing is real. Fiction that holds this honestly is rare and extremely necessary.",
+      gs_long:    "The long aftermath. The grief that changes but doesn't end. The books that understand grief as duration are the most true to the experience.",
+      gs_complex: "Complicated grief — the guilt, the anger, the ambivalence you're not supposed to feel. The best books go here, where the simple accounts don't.",
+      gs_door:    "Grief as transformation — loss that opens onto something unexpected. Not resolution, but change. The kind of ending that's also a beginning."
+    }
+  },
+  {
+    id: 'detective_era',     /* triggered by mystery_type=myst_classic — replaces avoid */
+    text: 'Classic detective — which tradition?',
+    sub: "The puzzle has been solved in many different rooms.",
+    options: [
+      { label: 'Golden Age — the country house, pure puzzle, no loose ends', hint: 'Christie territory. The pleasure of the mechanism.',  value: 'de_golden',    next: 'avoid' },
+      { label: 'Hard-boiled — Chandler country, rain-slicked moral greyness', hint: 'The private detective, the city, the cynicism',     value: 'de_hardboiled', next: 'avoid' },
+      { label: 'Contemporary cozy — wit, warmth, a mystery as pleasure',      hint: 'Smart, funny, solving things without the darkness',  value: 'de_cozy',      next: 'avoid' },
+      { label: 'The inverted mystery — you know who; watching them is it',    hint: 'Columbo logic. The how, not the who.',               value: 'de_inverted',  next: 'avoid' }
+    ],
+    reactions: {
+      de_golden:    "The Golden Age! The closed room, the impossible crime, the satisfaction of the mechanism. Christie knew. So did a few others. Pure pleasure.",
+      de_hardboiled: "Hard-boiled! The private detective with a code, the wet streets, the world that doesn't care. Chandler and his descendants. We know exactly.",
+      de_cozy:      "The cozy mystery — intelligent, warm, solving things without excessive violence or misery. Underrated. Often the most enjoyable reading of all.",
+      de_inverted:  "The inverted mystery — you know who did it. The pleasure is in the how and the watching. Columbo in book form. A very specific delight."
+    }
+  },
+  {
+    id: 'cold_depth',        /* triggered by mystery_type=myst_cold — replaces avoid */
+    text: 'The cold case — how far back?',
+    sub: "Distance in time changes everything about the investigation.",
+    options: [
+      { label: 'Living memory — decades ago, people still remember', hint: 'Witnesses exist, but they\'ve been silent a long time',  value: 'cd_living',    next: 'avoid' },
+      { label: 'Historical — a century or more, working from documents', hint: 'The archive, the photograph, the letter',           value: 'cd_historical', next: 'avoid' },
+      { label: 'Mythological — something that may not have happened',    hint: 'Between fact and legend, the truth impossible to fix', value: 'cd_mythic',    next: 'avoid' },
+      { label: 'A family mystery — roots in the narrator\'s own bloodline', hint: 'The personal cold case — your own history',       value: 'cd_family',    next: 'avoid' }
+    ],
+    reactions: {
+      cd_living:    "Living memory — the silence that's been held for decades. The witnesses who chose not to speak. Now someone's asking. Perfect.",
+      cd_historical: "The historical cold case — working from documents, photographs, gaps in the archive. Elegiac and investigative at once. Excellent territory.",
+      cd_mythic:    "The mythological cold case — the event between fact and legend. You can't be certain what happened. The uncertainty is the whole point.",
+      cd_family:    "The personal cold case — your own family history, the secret your grandmother kept. The most intimate investigation there is."
+    }
+  },
+  {
+    id: 'secret_nature',     /* triggered by relationship_edge=re_secret — replaces avoid */
+    text: 'What kind of secret is being kept?',
+    sub: "The lie is specific. What is it about?",
+    options: [
+      { label: 'Who they really are — identity, past, reinvention',  hint: 'The self that was constructed and now has to hold',         value: 'sn_who',   next: 'avoid' },
+      { label: 'What they did — an action with consequences',         hint: 'Something happened. It must not be discovered.',           value: 'sn_what',  next: 'avoid' },
+      { label: 'What they know — information that changes everything', hint: 'They have a piece of the picture the other doesn\'t',    value: 'sn_know',  next: 'avoid' },
+      { label: 'What they feel — love or grief, unexpressed',         hint: 'The interior secret — kept from the other and themselves', value: 'sn_feel',  next: 'avoid' }
+    ],
+    reactions: {
+      sn_who:   "The identity secret — the self that was constructed, the past that was shed. When it's found, everything built on it falls. Gripping.",
+      sn_what:  "The action secret — something was done and can't be undone, only hidden. The weight of it is the whole book's engine.",
+      sn_know:  "The information asymmetry — one person knows something the other doesn't. That gap shapes every scene. Beautifully tense.",
+      sn_feel:  "The interior secret — what they feel but won't say. Love not declared, grief not shared, resentment swallowed. The most tender kind."
+    }
+  },
+  {
+    id: 'incompat_root',     /* triggered by relationship_edge=re_differ — replaces avoid */
+    text: 'The incompatibility — where does it actually live?',
+    sub: "Not all love-that-can't-work is the same.",
+    options: [
+      { label: 'Class or culture — worlds that simply don\'t fit',     hint: 'Different rules about everything, baked in from childhood', value: 'ik_class',   next: 'avoid' },
+      { label: 'Values — a real collision, not just disagreement',     hint: 'They want fundamentally different things from existence',    value: 'ik_values',  next: 'avoid' },
+      { label: 'Timing — the right people at the wrong moment',        hint: 'If only it had been five years later. Or five years earlier.', value: 'ik_timing', next: 'avoid' },
+      { label: 'Ambition — what one needs requiring what the other can\'t give', hint: 'The cost of one person\'s path is the other person', value: 'ik_ambition', next: 'avoid' }
+    ],
+    reactions: {
+      ik_class:    "Class and culture — two people shaped by worlds with different rules. The gap is structural. It's not about wanting to close it. It's about whether you can.",
+      ik_values:   "A genuine values collision — not just different preferences, but different ideas about what a life is for. Honest and devastating.",
+      ik_timing:   "Timing. The right people, wrong moment. If only the world had arranged itself differently. The most heartbreaking incompatibility.",
+      ik_ambition: "Ambition as incompatibility — one person's path costing the other their self. Not villainous. Just impossible. Some of the truest love stories."
+    }
+  },
+  {
+    id: 'class_side',        /* triggered by victorian_focus=vf_class — replaces character */
+    text: 'Victorian class — which position in the hierarchy?',
+    sub: "The machinery had many gears. Which one are you in?",
+    options: [
+      { label: 'Rising — the ambitious outsider clawing toward respectability', hint: 'Pip, Becky Sharp — the upward climb and its costs', value: 'cs_rising',    next: 'character' },
+      { label: 'Falling — the slow terrible slide from position',               hint: 'What is lost, and how it is lost, and what remains', value: 'cs_falling',   next: 'character' },
+      { label: 'Observing — seeing both worlds with terrible clarity',          hint: 'The person who doesn\'t fully belong to either',     value: 'cs_observing', next: 'character' },
+      { label: 'Trapped — fixed in place, unable to move',                      hint: 'Not rising, not falling — just fixed',               value: 'cs_trapped',   next: 'character' }
+    ],
+    reactions: {
+      cs_rising:    "The rising outsider! Pip, Becky Sharp, Jude Fawley — the upward climb and what it costs. Victorian fiction's great engine. We know exactly.",
+      cs_falling:   "The fall from position. The slow terrible slide — the house sold, the servants gone, the pretence maintained past sense. So well rendered.",
+      cs_observing: "The observer between worlds — neither fully in nor out, watching both with terrible clarity. Often the novel's most interesting consciousness.",
+      cs_trapped:   "Trapped in place. The person who can't rise and can't fall — just fixed, pressing against the limits. The most quietly suffocating of positions."
+    }
+  },
+  {
+    id: 'empire_angle',      /* triggered by victorian_focus=vf_empire — replaces character */
+    text: "Empire — whose perspective on it?",
+    sub: "The same story looks entirely different depending on who's telling it.",
+    options: [
+      { label: 'The coloniser, beginning to understand what they are part of', hint: 'Complicity, recognition, the cost of seeing clearly', value: 'ea_colonizer', next: 'character' },
+      { label: 'The colonised — resistance, adaptation, dignity, survival',    hint: 'The other side of the story, told by those who lived it', value: 'ea_colonized', next: 'character' },
+      { label: 'The returnee — someone who came back entirely changed',        hint: 'Empire\'s effect on the individual brought home',         value: 'ea_returnee',  next: 'character' },
+      { label: 'The witness — writing down what was actually happening',        hint: 'The documenter, the journalist, the truth-teller',       value: 'ea_witness',   next: 'character' }
+    ],
+    reactions: {
+      ea_colonizer: "The coloniser who sees clearly. The recognition of what you're part of. Fiction that handles complicity honestly — rare and necessary.",
+      ea_colonized: "The colonised perspective. The story as told by those who actually lived it. Essential literature. We know which books do this with full force.",
+      ea_returnee:  "The person who went out and came back changed. Carrying what they saw, unable to fit back in. A specific and fertile subject.",
+      ea_witness:   "The witness — the one who wrote it down. The journalists, the documentarians, the people who knew they had to record it. Vital fiction."
+    }
+  },
+  {
+    id: 'front_theater',     /* triggered by wartime_angle=wa_front — replaces character */
+    text: 'The front — which war and which experience?',
+    sub: "Combat literature has many theaters.",
+    options: [
+      { label: 'WWI — the Western Front, mud, futility, impossible courage', hint: 'Sassoon, Remarque, Barker territory. Still the defining war.',       value: 'ft_wwi',     next: 'character' },
+      { label: 'WWII — the Second World War in one of its many theaters',    hint: 'Normandy to the Pacific, resistance to liberation',                  value: 'ft_wwii',    next: 'character' },
+      { label: 'The Eastern Front — the war the West often forgot',          hint: 'Stalingrad, the siege, the scale that dwarfs everything',            value: 'ft_eastern', next: 'character' },
+      { label: 'A different war — Korea, Vietnam, more recent conflicts',    hint: 'The wars after 1945 that produced their own literature',             value: 'ft_other',   next: 'character' }
+    ],
+    reactions: {
+      ft_wwi:    "WWI — the defining war for literature. The mud, the futility, the extraordinary courage inside the catastrophe. Still the most written-about.",
+      ft_wwii:   "WWII — the war with more theaters and more perspectives than any other. We can find you something from any of them. Enormous territory.",
+      ft_eastern: "The Eastern Front — the war the West tends to forget, and the one where the scale was almost incomprehensible. Extraordinary and underread.",
+      ft_other:  "The later wars — Vietnam, Korea, Iraq, Afghanistan. Each produced its own literature and its own way of seeing. We know the best of them."
+    }
+  },
+  {
+    id: 'resist_kind',       /* triggered by wartime_angle=wa_resist — replaces character */
+    text: 'Resistance — what form did the courage take?',
+    sub: "Ordinary heroism has many shapes.",
+    options: [
+      { label: 'Active resistance — dangerous, organised, everything at stake',      hint: 'Underground networks, sabotage, the real risk',             value: 'rk_active',  next: 'character' },
+      { label: 'Hidden survival — concealment, endurance, staying unseen',           hint: 'Staying alive by staying invisible',                         value: 'rk_hidden',  next: 'character' },
+      { label: 'Moral refusal — the person who simply would not collaborate',        hint: 'Not dramatic action, just the line they wouldn\'t cross',   value: 'rk_moral',   next: 'character' },
+      { label: 'Rescue — people who risked everything for strangers',                hint: 'The extraordinary people who chose others over themselves',  value: 'rk_rescue',  next: 'character' }
+    ],
+    reactions: {
+      rk_active:  "Active resistance — dangerous, organised, with everything at stake. The real underground. Both fiction and memoir in this territory are extraordinary.",
+      rk_hidden:  "Hidden survival — the long endurance of invisibility. The courage of staying alive when the world is trying to prevent it. Quiet and devastating.",
+      rk_moral:   "Moral refusal — not heroic action, just the line they wouldn't cross. Sometimes the bravest thing is simply not doing the thing everyone else did.",
+      rk_rescue:  "The rescuers — the people who chose strangers over their own safety. The most inexplicable courage. Some extraordinary books have tried to understand it."
+    }
+  },
+  {
+    id: 'detect_flavor',     /* triggered by noir_focus=nf_detect — replaces character */
+    text: 'The detective — what kind of investigator?',
+    sub: "The investigator is the whole point. Be specific.",
+    options: [
+      { label: 'The damaged loner with a private code',           hint: 'Broken, functional, operating by rules only they understand', value: 'df_loner',   next: 'character' },
+      { label: 'A professional inside a flawed system',           hint: 'Working within it, quietly frustrated, doing it anyway',     value: 'df_system',  next: 'character' },
+      { label: 'An amateur pulled in by something too important', hint: 'Ordinary person, extraordinary circumstance, no training',   value: 'df_amateur', next: 'character' },
+      { label: 'Someone investigating their own life',            hint: 'The investigation is personal — you are both detective and case', value: 'df_self', next: 'character' }
+    ],
+    reactions: {
+      df_loner:   "The damaged loner with a code. Broken but functional. Operating by rules only they understand. The archetype, done well, is irresistible.",
+      df_system:  "The professional inside a flawed system — doing the job with integrity while the institution resists. Institutional friction as dramatic engine.",
+      df_amateur: "The amateur! No training, no authority, just the knowledge that someone has to do this. Often the most compelling investigator of all.",
+      df_self:    "Investigating your own life. The detective and the case are the same person. The most unsettling kind of investigation — can you trust your findings?"
+    }
+  },
+  {
+    id: 'alone_mode',        /* triggered by wild_scale=ws_solitude — replaces character */
+    text: 'The solitude — how did it come about?',
+    sub: "Being alone has very different valences depending on how you arrived.",
+    options: [
+      { label: 'Chosen deliberately — a decision to be alone',              hint: 'The retreat, the sabbatical, the deliberate withdrawal',    value: 'am_chosen',  next: 'character' },
+      { label: 'Imposed — stranded, exiled, or simply left',                hint: 'Solitude that wasn\'t chosen, and what that does',          value: 'am_imposed', next: 'character' },
+      { label: 'The solitude of never fitting — not chosen, not fought',    hint: 'The person who is simply apart, and has always been',       value: 'am_notfit',  next: 'character' },
+      { label: 'Creative solitude — isolation to make something',           hint: 'Chosen for the work, and what that cost',                   value: 'am_create',  next: 'character' }
+    ],
+    reactions: {
+      am_chosen:  "Deliberate solitude. The withdrawal that was a decision. What you find when you take it. Some of the most honest self-reckoning in literature.",
+      am_imposed: "Imposed solitude — the aloneness that wasn't wanted, and what it does to a person. The difference between chosen and forced is enormous.",
+      am_notfit:  "The person who has never quite fitted — not dramatic, not a crisis, just the permanent slight distance. Quiet and devastatingly familiar.",
+      am_create:  "Creative solitude — the isolation required to make something. What it costs the self. What it produces. Literature loves this subject and rightly."
+    }
+  },
+  {
+    id: 'quest_spirit',      /* triggered by wild_scale=ws_spirit — replaces character */
+    text: 'What are they seeking in the wilderness?',
+    sub: "The interior journey disguised as an exterior one.",
+    options: [
+      { label: 'Recovery — from grief, illness, addiction, or damage',  hint: 'The landscape as the place where healing might be possible', value: 'qs_recovery', next: 'character' },
+      { label: 'Clarity — a decision that can only be made in emptiness', hint: 'Noise removed; what remains',                              value: 'qs_clarity',  next: 'character' },
+      { label: 'Identity — who you are when no one is watching',         hint: 'The self stripped of performance',                          value: 'qs_identity', next: 'character' },
+      { label: 'The transcendent — an experience the rational can\'t provide', hint: 'Something beyond what language usually reaches',     value: 'qs_transcend', next: 'character' }
+    ],
+    reactions: {
+      qs_recovery:  "Recovery in the wilderness. The landscape as the only place where it might be possible. Nature as therapy, honestly rendered. We know these books.",
+      qs_clarity:   "Clarity in emptiness. The noise stripped away, the decision finally visible. The journey as the only way to reach the answer. Yes.",
+      qs_identity:  "Identity without the performance. Who you are when no one is watching and there's nothing to be for. Some of the truest self-knowledge fiction.",
+      qs_transcend: "The transcendent — the experience that the rational mind can't contain. Literature that goes here is rare and when it works, extraordinary."
+    }
+  },
+  {
+    id: 'scifi_question',    /* triggered by scifi_flavor=sf_social — replaces character */
+    text: 'Social science fiction — which question?',
+    sub: "The future as a lens on the present. Which aspect?",
+    options: [
+      { label: 'Gender and power — who is allowed to exist, on what terms', hint: 'Le Guin, Atwood — the fundamental questions',             value: 'ssf_gender', next: 'character' },
+      { label: 'Surveillance and freedom — what we surrender to feel safe', hint: 'The watched life, the bargain we make',                    value: 'ssf_surv',   next: 'character' },
+      { label: 'Class and inequality projected into the future',             hint: 'The economics of the next century',                       value: 'ssf_class',  next: 'character' },
+      { label: 'Race and identity — who the future imagines',               hint: 'The politics of who gets to be in the story',              value: 'ssf_race',   next: 'character' }
+    ],
+    reactions: {
+      ssf_gender: "Gender and power — the fundamental question, still unanswered. Le Guin, Atwood, and dozens after them. Some of the most urgent fiction ever written.",
+      ssf_surv:   "Surveillance and freedom — the bargain the modern world keeps offering. The best science fiction saw it coming decades ago. Still relevant.",
+      ssf_class:  "Class and inequality in the future — the economics of the next century, extrapolated carefully. Often the most prescient and the most political.",
+      ssf_race:   "Who the future imagines — the politics of representation in science fiction. A generation of writers has transformed this territory. We know them."
+    }
+  },
+  {
+    id: 'lit_scifi_mode',    /* triggered by scifi_flavor=sf_lit — replaces character */
+    text: 'Literary sci-fi — which tradition?',
+    sub: "Where the genre and serious fiction meet, there are different schools.",
+    options: [
+      { label: 'Le Guin-adjacent — anthropological, humane, wise',           hint: 'The science of people, not machines',                      value: 'lss_leguin',  next: 'character' },
+      { label: 'Speculative dystopia with genuine beauty in the prose',       hint: 'Atwood mode — ideas and sentences equally',                value: 'lss_dystopia', next: 'character' },
+      { label: 'Science fiction that doesn\'t advertise what it is',          hint: 'Literary fiction with a speculative premise, worn quietly', value: 'lss_hidden',  next: 'character' },
+      { label: 'The idea as a poem — metaphor that is also a world',          hint: 'Fiction where the conceit and the writing are inseparable', value: 'lss_poem',    next: 'character' }
+    ],
+    reactions: {
+      lss_leguin:  "Le Guin territory — the science of people, the anthropology of invented worlds. Humane, wise, and still unmatched in its particular kind of insight.",
+      lss_dystopia: "Speculative dystopia with beautiful prose. Atwood's great achievement — the idea and the sentences are equally good. We know which books do this.",
+      lss_hidden:  "Science fiction that doesn't announce itself. Literary fiction with a speculative premise, worn quietly. Some of the most interesting recent fiction.",
+      lss_poem:    "The idea as poem — the conceit and the writing inseparable. When science fiction becomes the most accurate description of something true. Perfect."
+    }
+  },
+  {
+    id: 'quest_purpose',     /* triggered by fantasy_style=fs_quest — replaces character */
+    text: 'The quest — for what?',
+    sub: "The goal shapes everything about the journey.",
+    options: [
+      { label: 'An object, a place, a clear destination',          hint: 'The ring, the city, the thing that must be reached',       value: 'qp_object',  next: 'character' },
+      { label: 'Understanding — the journey as education',         hint: 'Not the destination but what was learned on the way',      value: 'qp_under',   next: 'character' },
+      { label: 'Justice or revenge — someone wronged, answering',  hint: 'The injury and the reckoning',                             value: 'qp_justice', next: 'character' },
+      { label: 'The self — the interior quest in outward disguise', hint: 'The external journey is a metaphor for the internal one', value: 'qp_self',    next: 'character' }
+    ],
+    reactions: {
+      qp_object:  "The object quest — the ring, the grail, the thing that must be reached. The oldest story. The best of them make the destination matter completely.",
+      qp_under:   "The quest for understanding — what was learned on the way. The destination matters less than who you became. Bildungsroman in fantasy form.",
+      qp_justice: "Justice or revenge — the injury that drives everything. The quest as a form of reckoning. Morally complex in the best hands. We know those hands.",
+      qp_self:    "The interior quest wearing external clothes. The journey outward that is really a journey inward. The oldest disguise in fantasy. And the truest."
+    }
+  },
+  {
+    id: 'politics_kind',     /* triggered by fantasy_style=fs_politics — replaces character */
+    text: 'Political fantasy — what kind of power struggle?',
+    sub: "Courts, factions, revolts — which kind of politics?",
+    options: [
+      { label: 'Court intrigue — succession, alliances, betrayal from within', hint: 'The Game of Thrones mode — power and its machinations', value: 'pk_court',   next: 'character' },
+      { label: 'Revolution — the world being unmade and remade',                hint: 'The old order falling, the new uncertain',               value: 'pk_revolt',  next: 'character' },
+      { label: 'Occupation and resistance — a people under domination',        hint: 'The fantasy of colonialism, clearly named',               value: 'pk_resist',  next: 'character' },
+      { label: 'Magic and political power — who controls it, who doesn\'t',   hint: 'The magic system as a political economy',                 value: 'pk_magic',   next: 'character' }
+    ],
+    reactions: {
+      pk_court:  "Court intrigue — succession, betrayal, alliances made and broken. The political machinations of a confined world. Absolutely gripping in expert hands.",
+      pk_revolt: "Revolution — the old order falling. The terror and the hope simultaneously. Fantasy that takes seriously what revolution actually costs.",
+      pk_resist: "Occupation and resistance — the fantasy of colonialism examined. Some of the most political fantasy goes here. Important and compelling.",
+      pk_magic:  "Magic as a political economy — who has it, who controls access, what it does to power. The magic system as the most interesting political question."
+    }
+  },
+  {
+    id: 'secret_generation', /* triggered by family_wound=fw_secret — replaces character */
+    text: 'The buried secret — how far back does it go?',
+    sub: "Age changes the texture of what was hidden.",
+    options: [
+      { label: 'A generation ago — parents or grandparents kept this', hint: 'Living memory, still possible to find the truth',           value: 'sg_gen',     next: 'character' },
+      { label: 'Much further back — the original wound of the family', hint: 'Ancient enough to be myth, still doing damage',             value: 'sg_orig',    next: 'character' },
+      { label: 'Recent, buried quickly — the wound is fresh but hidden', hint: 'The cover-up happened in living memory',                  value: 'sg_fresh',   next: 'character' },
+      { label: 'Ongoing — always known, never spoken, in plain sight', hint: 'Not buried so much as collectively refused',               value: 'sg_ongoing', next: 'character' }
+    ],
+    reactions: {
+      sg_gen:     "A generation's secret. Parents or grandparents kept it. Living memory, still possible to reconstruct — and still fully dangerous. We know the books.",
+      sg_orig:    "The founding wound. Old enough to be almost myth, still actively shaping everyone. The original damage, passed forward without naming.",
+      sg_fresh:   "A recent burial — the cover-up happened quickly, the wound is still fresh under the bandaging. The tension of the recent past refusing to settle.",
+      sg_ongoing: "Collectively refused, never spoken, in plain sight. Everyone knows and no one says it. The most suffocating kind of family dynamic."
+    }
+  },
+  {
+    id: 'sibling_shape',     /* triggered by family_wound=fw_siblings — replaces character */
+    text: 'The sibling dynamic — what shape did it take?',
+    sub: "Every sibling pair is unhappy in its own way.",
+    options: [
+      { label: 'One who left and one who stayed — the split',          hint: 'And what each chose to believe about the other',           value: 'ss_left',    next: 'character' },
+      { label: 'The favoured and the overlooked',                       hint: 'The old unfairness, carried forward into adult life',      value: 'ss_favor',   next: 'character' },
+      { label: 'Rivals who became strangers over something small',      hint: 'The thing that should have been nothing, that became everything', value: 'ss_rival', next: 'character' },
+      { label: 'A reunion after years — taking stock',                  hint: 'What changed. What didn\'t. What was lost.',               value: 'ss_reunion', next: 'character' }
+    ],
+    reactions: {
+      ss_left:    "One left and one stayed. The choices they made and what each believes about the other's choice. The sibling drama with the most moral weight.",
+      ss_favor:   "The favoured and the overlooked. The original unfairness and what it made of both of them. Incredibly fertile fictional territory.",
+      ss_rival:   "Rivals estranged over something that should have been nothing. The small thing that became everything. Often the truest sibling story.",
+      ss_reunion: "The reunion — two people taking stock of what changed and what didn't. Measuring the distance, the damage, the unexpected survivals."
+    }
+  },
+  {
+    id: 'small_gravity',     /* triggered by community_type=ct_small — replaces character */
+    text: "The small town's source of gravity?",
+    sub: "Every insular community is defined by something.",
+    options: [
+      { label: 'A crime or disaster — something unresolved from years ago', hint: 'The event that is never not present',                      value: 'st_crime',  next: 'character' },
+      { label: 'A powerful family or institution that defines the town',    hint: 'The mill, the church, the family — the centre of gravity', value: 'st_power',  next: 'character' },
+      { label: 'The weight of being known — no escaping who you were',      hint: 'Your whole history, present in every interaction',         value: 'st_known',  next: 'character' },
+      { label: 'Something coming — a change that will alter everything',    hint: 'The before-and-after, and the people inside it',           value: 'st_change', next: 'character' }
+    ],
+    reactions: {
+      st_crime:  "The unresolved event — it is never not in the room. Everyone knows it and no one talks about it. The pressure of that silence is the whole book.",
+      st_power:  "The powerful centre of gravity — the family, the factory, the church. Everything orbits it. Understanding the centre is understanding the town.",
+      st_known:  "The weight of being known. Your whole history present in every encounter. The impossibility of being anything other than who you were at twelve.",
+      st_change: "Something coming. The before-and-after. Small-town fiction that knows a change is arriving and watches what it does to the people inside. Yes."
+    }
+  },
+  {
+    id: 'institution_type',  /* triggered by community_type=ct_instit — replaces character */
+    text: 'Which institution?',
+    sub: "Closed worlds with their own logic.",
+    options: [
+      { label: 'A school — its hierarchies, damage, and strange loyalties', hint: 'The years that form you, and what they cost',              value: 'iw_school', next: 'character' },
+      { label: 'A hospital — illness, care, the intimacy of suffering',     hint: 'Where the body and the system meet',                      value: 'iw_hosp',   next: 'character' },
+      { label: 'A workplace — trapped together, the person it makes you',   hint: 'Eight hours a day, colleagues, what that does over time',  value: 'iw_work',   next: 'character' },
+      { label: 'A prison or very closed community — power stripped bare',   hint: 'The institution that removes all pretence',                value: 'iw_prison', next: 'character' }
+    ],
+    reactions: {
+      iw_school:  "The school — the institution that forms the self during formation. Its hierarchies, the damage it does quietly, the loyalties that don't make sense later.",
+      iw_hosp:    "The hospital — where the body meets the system, where suffering becomes bureaucratic. Intimate and institutional simultaneously. Powerful territory.",
+      iw_work:    "The workplace — people trapped together eight hours a day, and what that does to them over years. Underwritten, when done well, devastatingly good.",
+      iw_prison:  "The prison — or any total institution. Power stripped of its disguises. The self reduced to its most fundamental questions. Extreme and revealing."
+    }
+  },
+  {
+    id: 'culture_form',      /* triggered by belong_context=bc_culture — replaces length */
+    text: 'Between cultures — which specific experience?',
+    sub: "The space between is not all the same space.",
+    options: [
+      { label: 'Second generation — parents\' world vs. the one you grew up in', hint: 'Translating between two sets of expectations',       value: 'cf_second', next: 'length' },
+      { label: 'Mixed heritage — belonging to both, fully at home in neither',   hint: 'The both/and that is also a neither/nor',            value: 'cf_mixed',  next: 'length' },
+      { label: 'The voluntary exile — deliberately unrooted, watching from outside', hint: 'Chosen displacement and what it reveals',       value: 'cf_exile',  next: 'length' },
+      { label: 'The returnee — going back to a place that has moved on',          hint: 'The gap between the place you left and the place you return to', value: 'cf_return', next: 'length' }
+    ],
+    reactions: {
+      cf_second:  "Second generation — the translation work between two sets of expectations. One of the richest subjects in contemporary fiction. We know exactly.",
+      cf_mixed:   "Mixed heritage — the both/and that is also the neither/nor. Belonging fully to both means, in practice, something very complicated. We know these books.",
+      cf_exile:   "The voluntary exile — choosing displacement, watching your origin from outside. Distance as a tool. What it costs and what it gives.",
+      cf_return:  "Coming back. The place has moved; you have moved. The gap between the place you left and the place you return to. Often devastating and illuminating."
+    }
+  },
+  {
+    id: 'displacement_why',  /* triggered by belong_context=bc_place — replaces length */
+    text: 'What kind of displacement?',
+    sub: "Belonging nowhere has many origins.",
+    options: [
+      { label: 'Economic — forced to leave for work or survival',        hint: 'The migration that wasn\'t a choice',                       value: 'dw_econ',    next: 'length' },
+      { label: 'Political — exile, refugee, the person who had to flee', hint: 'The most extreme displacement — safety as the only goal',  value: 'dw_polit',   next: 'length' },
+      { label: 'Chosen — leaving to escape or find something',          hint: 'Voluntary departure, but the belonging is still lost',      value: 'dw_chosen',  next: 'length' },
+      { label: 'Disaster — the place is gone, not just left behind',    hint: 'The home that no longer exists to return to',               value: 'dw_disaster', next: 'length' }
+    ],
+    reactions: {
+      dw_econ:    "Economic displacement — the migration that wasn't really a choice. The family story of most of the world. Powerful and underwritten.",
+      dw_polit:   "Political exile — the most extreme displacement. Safety as the only consideration. The literature of forced departure is some of the most urgent we have.",
+      dw_chosen:  "Chosen displacement — leaving voluntarily, but the belonging is still lost. The complicated grief of the departure you decided on.",
+      dw_disaster: "The place is gone. Not left but erased — by war, by flood, by violence. The home that cannot be returned to. A specific and profound grief."
+    }
+  },
+  {
+    id: 'gaze_kind',         /* triggered by perception_whose=pw_society — replaces length */
+    text: "Society's categories — which one?",
+    sub: "The larger forces that define the self before you can object.",
+    options: [
+      { label: 'Race — how a society reads and acts on it',            hint: 'The self constructed by racial categories and their consequences', value: 'gk_race',       next: 'length' },
+      { label: 'Gender — the identity constructed before you consented', hint: 'The expectations baked in from birth',                          value: 'gk_gender',     next: 'length' },
+      { label: 'Class — the permanent shaping force of economic origin', hint: 'Where you come from, and how it follows you',                  value: 'gk_class',      next: 'length' },
+      { label: 'Disability — the self constructed by an ableist gaze', hint: 'Being defined by what the body does or doesn\'t do',            value: 'gk_disability', next: 'length' }
+    ],
+    reactions: {
+      gk_race:      "Race as identity-former — the self as constructed by a racialised society. Some of the most important contemporary fiction lives exactly here.",
+      gk_gender:    "Gender — the expectations baked in before you could form a preference. The self you were handed. What you do with it, and what it costs.",
+      gk_class:     "Class — where you come from, and the way it follows you into every room, in ways you can't always name. Deeply explored in fiction. We know the best.",
+      gk_disability: "Disability and the ableist gaze — being defined by what the body does or doesn't do. A subject fiction is finally beginning to explore honestly."
+    }
+  },
+  {
+    id: 'justice_form',      /* triggered by ideal_stakes=is_justice — replaces time */
+    text: 'Belief in justice — what kind?',
+    sub: "Justice takes many forms. Which one are they fighting for?",
+    options: [
+      { label: 'Institutional — faith that the system can work if held to account', hint: 'The reformer\'s hope',                        value: 'jf_instit',  next: 'time' },
+      { label: 'Moral — a personal sense of right without institutional backing',   hint: 'Acting on conscience when the law fails',     value: 'jf_moral',   next: 'time' },
+      { label: 'Restorative — healing damage rather than punishing',                hint: 'What the aftermath looks like, not the verdict', value: 'jf_restore', next: 'time' },
+      { label: 'Revolutionary — justice that requires changing everything',          hint: 'Not reform — transformation',                 value: 'jf_revolut', next: 'time' }
+    ],
+    reactions: {
+      jf_instit:  "Institutional faith — the belief that the system, pressured and held to account, can be made to work. The reformer's hope. Often tested severely.",
+      jf_moral:   "Moral justice — acting on conscience when the law fails or looks the other way. The personal reckoning. Some of the bravest fiction goes here.",
+      jf_restore: "Restorative justice — what healing looks like, not just what punishment looks like. The aftermath, not the verdict. Humane and increasingly important.",
+      jf_revolut: "Revolutionary justice — not reform but transformation. The system can't be fixed; it must be replaced. Fiction that takes this seriously is essential."
+    }
+  },
+  {
+    id: 'cause_nature',      /* triggered by ideal_stakes=is_cause — replaces time */
+    text: 'The cause — what kind?',
+    sub: "Something larger than themselves, worth sacrificing for. What is it?",
+    options: [
+      { label: 'Political — a vision of how society should be organised', hint: 'The ideological commitment, and what it demands',    value: 'cn_polit',   next: 'time' },
+      { label: 'Artistic — the belief that making something matters',     hint: 'The work as the cause. The vocation.',               value: 'cn_art',     next: 'time' },
+      { label: 'Environmental — the world itself as the cause',           hint: 'The land, the species, the future',                  value: 'cn_environ', next: 'time' },
+      { label: 'Communal — a people, a place, a collective project',      hint: 'The community as the reason',                       value: 'cn_commun',  next: 'time' }
+    ],
+    reactions: {
+      cn_polit:  "Political commitment — the ideological cause, the vision of the world as it should be. Fiction that takes this seriously, not as propaganda but as drama.",
+      cn_art:    "The work as the cause. The vocation. The belief that making something beautiful or true is worth everything else. Deeply literary territory.",
+      cn_environ: "The world as the cause — land, species, the future. Climate fiction, nature writing, the literature of what is at stake. Urgent and expanding.",
+      cn_commun: "The community as the cause — a people, a place, the collective project. Fiction rooted in solidarity and the complexity of what it means."
+    }
+  },
+  {
+    id: 'crisis_size',       /* triggered by ordinary_context=oc_crisis — replaces time */
+    text: 'No playbook — how large is the crisis?',
+    sub: "Scale shapes what kind of improvisation is required.",
+    options: [
+      { label: 'Personal — a catastrophe that is enormous to one person', hint: 'Small in the world\'s terms; total in theirs',         value: 'cs2_person', next: 'time' },
+      { label: 'Local — a community emergency, no obvious leadership',    hint: 'The people on the street, working it out together',    value: 'cs2_local',  next: 'time' },
+      { label: 'Systemic — institutions failing, everyone improvising',   hint: 'The collapse of the structures that were supposed to handle it', value: 'cs2_system', next: 'time' },
+      { label: 'Historical — the world changing, no one has a map',       hint: 'A hinge moment in history, experienced from inside',   value: 'cs2_hist',   next: 'time' }
+    ],
+    reactions: {
+      cs2_person: "The personal catastrophe — enormous to the person inside it, invisible to the world. Some of the most intense fiction is exactly this scale.",
+      cs2_local:  "The community emergency — the people on the street, no one in charge, working it out together. Small-scale heroism and its complications.",
+      cs2_system: "The systemic collapse — institutions failing, everyone improvising. The crisis that reveals what the structures were really made of.",
+      cs2_hist:   "The historical hinge moment — experienced from the inside, before anyone knows it's a hinge. The chaos and the contingency. Vital fiction."
+    }
+  },
+  {
+    id: 'survival_stake',    /* triggered by deliberate_stakes=ds_survive — replaces time */
+    text: "Survival — literal or social?",
+    sub: "The lie keeps them alive. Which kind of alive?",
+    options: [
+      { label: 'Literal — without the lie, they are in physical danger', hint: 'Life and death. The stakes are that clear.',               value: 'sv_lit',    next: 'time' },
+      { label: 'Social — without it, they lose everything they\'ve built', hint: 'Position, community, the life constructed',             value: 'sv_social', next: 'time' },
+      { label: 'Professional — their livelihood, their reputation',       hint: 'What they have worked for, what they are known as',      value: 'sv_prof',   next: 'time' },
+      { label: 'Psychological — the lie is load-bearing for who they are', hint: 'Without it, they don\'t know what\'s underneath',       value: 'sv_psych',  next: 'time' }
+    ],
+    reactions: {
+      sv_lit:    "Literal survival — the lie keeps them physically alive. The stakes at their most primal. Fiction that operates here is intense and unambiguous.",
+      sv_social: "Social survival — the position, the community, the constructed life. The lie that keeps the whole structure standing. When it falls, everything falls.",
+      sv_prof:   "Professional survival — the livelihood, the reputation, the thing they are known as. The fragility of everything built. Very specific and very tense.",
+      sv_psych:  "Psychological survival — the lie is load-bearing for who they believe they are. Without it, they don't know what's underneath. The most unsettling kind."
+    }
+  },
+  {
+    id: 'identity_construct', /* triggered by deliberate_stakes=ds_identity — replaces time */
+    text: "The self they've built — built from what?",
+    sub: "Every constructed identity is assembled from something.",
+    options: [
+      { label: 'A lie about their origins — class, family, name, history', hint: 'The background that was changed or invented',            value: 'ic_orig',    next: 'time' },
+      { label: 'A persona built for the world they wanted access to',      hint: 'The self designed for a specific door',                  value: 'ic_persona', next: 'time' },
+      { label: 'A version of themselves free from something escaped',      hint: 'The past left behind, with great effort',                value: 'ic_escape',  next: 'time' },
+      { label: 'A role that became the self — the performance merged',     hint: 'They played a part so long they can\'t find the edge',   value: 'ic_role',    next: 'time' }
+    ],
+    reactions: {
+      ic_orig:    "The invented origin — the background changed or fabricated. What happens when someone from the real past appears. Tense and illuminating.",
+      ic_persona: "The persona built for access. The self designed for a specific door. What it costs to maintain. Whether it was worth it.",
+      ic_escape:  "Escaped from something and built a self free of it. The past left behind with enormous effort. The effort of staying free. We know these books.",
+      ic_role:    "The performance that merged with the self. They played a part so long they can no longer find the edge. One of fiction's great subjects."
+    }
+  },
+  {
+    id: 'child_witness',     /* triggered by innocent_type=it_child — replaces time */
+    text: 'The child witness — what are they misunderstanding?',
+    sub: "Innocence as a distorting lens. What is the distortion?",
+    options: [
+      { label: 'Adult relationships — love, power, the things children report but don\'t decode', hint: 'The relationship the child watches but can\'t fully read', value: 'cw_adult',    next: 'time' },
+      { label: 'Violence — something happening around them they can\'t name',                       hint: 'The horror of being present without comprehension',          value: 'cw_violence', next: 'time' },
+      { label: 'History — events enormous in retrospect, explained away at the time',              hint: 'War, political upheaval, seen through a child\'s report',    value: 'cw_history',  next: 'time' },
+      { label: 'The family — something true that no one will confirm',                             hint: 'The child who sees what the adults refuse to say aloud',     value: 'cw_family',   next: 'time' }
+    ],
+    reactions: {
+      cw_adult:    "Adult relationships, reported by a child who sees but doesn't understand. The gap between what is shown and what is grasped. Devastating.",
+      cw_violence: "Violence in a child's register — the horror of being present without comprehension. Some of the most powerful fiction uses exactly this.",
+      cw_history:  "History seen through a child's eyes — the enormous events made small, explained away. And we, reading, see their full weight. Perfect irony.",
+      cw_family:   "The child who sees what the adults refuse to acknowledge. Something true, observed clearly, that no one will confirm. Quietly excruciating."
+    }
+  },
+  {
+    id: 'foreign_eye',       /* triggered by innocent_type=it_foreign — replaces time */
+    text: 'Outsider — what makes the eye fresh?',
+    sub: "The stranger's perspective comes from different sources.",
+    options: [
+      { label: 'A newcomer to a culture — nothing taken as given',           hint: 'Everything visible because nothing is assumed',                 value: 'fe_new',   next: 'time' },
+      { label: 'A returning exile — the familiar made strange by time',      hint: 'You know this place; it no longer knows you',                   value: 'fe_time',  next: 'time' },
+      { label: 'A literal outsider — the alien eye, the non-human observer', hint: 'Science fiction mode — non-human consciousness observing us',   value: 'fe_alien', next: 'time' },
+      { label: 'A class or social outsider — seeing rituals others perform automatically', hint: 'The person who has to decode what others do without thinking', value: 'fe_class', next: 'time' }
+    ],
+    reactions: {
+      fe_new:   "The newcomer who notices everything because nothing is assumed. The sharpest social observation often comes from this angle. We know the books.",
+      fe_time:  "The returnee — you know the place, but it no longer knows you. The familiar made strange by the gap. What the return reveals about both.",
+      fe_alien: "The non-human observer — the alien or outsider consciousness looking at human behaviour without our assumptions. Science fiction's great gift to social analysis.",
+      fe_class:  "The class outsider who has to consciously decode rituals others perform automatically. Seeing the structure clearly because you had to learn it."
+    }
+  },
+  {
+    id: 'justice_outside',   /* triggered by means_context=mc_justice — replaces time */
+    text: 'Outside-the-law justice — what failed?',
+    sub: "They decided to bypass the system. Which system?",
+    options: [
+      { label: 'The courts — acquitted something that shouldn\'t have been', hint: 'The verdict was wrong and everyone knows it',          value: 'jo_courts',  next: 'time' },
+      { label: 'Society — a wrong everyone knows about that no one addresses', hint: 'The collective agreement not to see it',             value: 'jo_society', next: 'time' },
+      { label: 'Institutions protecting themselves at cost to individuals',    hint: 'The cover-up, the self-preservation, the betrayal',  value: 'jo_instit',  next: 'time' },
+      { label: 'The law simply doesn\'t reach — geography, power, or circumstance', hint: 'Beyond reach for reasons of structure, not failure', value: 'jo_law', next: 'time' }
+    ],
+    reactions: {
+      jo_courts:  "The wrong verdict. Everyone knows it. The person who decides they can't let that stand. The moral weight of taking justice into your own hands.",
+      jo_society: "The collective agreement not to see something. The social wound that is kept open by consensus. And the person who refuses to participate in that.",
+      jo_instit:  "Institutions protecting themselves. The cover-up, the hierarchy closing ranks. Some of the most important contemporary fiction navigates exactly this.",
+      jo_law:     "The law that simply doesn't reach — by geography, by power, by structure. Not failed, just not present. The vacuum that demands someone act."
+    }
+  },
+  {
+    id: 'cause_certainty',   /* triggered by means_context=mc_cause — replaces time */
+    text: 'The cause — how certain are they?',
+    sub: "The relationship to the belief shapes everything.",
+    options: [
+      { label: 'Completely certain — doubt never enters',                   hint: 'The true believer. Conviction without cracks.',          value: 'cc_certain',  next: 'time' },
+      { label: 'Mostly certain — suppressing doubt because too much is at stake', hint: 'The deliberate willed commitment',                value: 'cc_suppress', next: 'time' },
+      { label: 'Uncertain but committed — acting without the conviction wished for', hint: 'Doing it anyway, knowing the ground isn\'t solid', value: 'cc_uncertain', next: 'time' },
+      { label: 'Losing faith in the middle — the most devastating position', hint: 'The actions already taken, the certainty gone',          value: 'cc_losing',   next: 'time' }
+    ],
+    reactions: {
+      cc_certain:   "The true believer — conviction without cracks. There's a strange comfort in that, and a terror in reading it from outside. Excellent.",
+      cc_suppress:  "Suppressed doubt — the willed commitment. Choosing to keep the faith because too much is built on it. The effort of that is the tension.",
+      cc_uncertain: "Acting without the certainty wished for — doing it anyway on insufficient evidence. One of the bravest and most honest human positions.",
+      cc_losing:    "Losing faith in the middle. The actions already taken. The certainty dissolving. The most devastating position and some of the best fiction."
+    }
+  },
+  {
+    id: 'wit_deploy',        /* triggered by charm_source=cs_wit — replaces time */
+    text: 'Wit deployed — toward what end?',
+    sub: "Intelligence as charm has different purposes.",
+    options: [
+      { label: 'Seduction — intelligence as attraction, performed for an audience', hint: 'Wit as a tool of desire and dominance',         value: 'wd_seduce',   next: 'time' },
+      { label: 'Protection — humour as the distance between self and everything', hint: 'The joke as armour. The person underneath.',     value: 'wd_protect',  next: 'time' },
+      { label: 'Dominance — the wit that cuts, that establishes hierarchy',       hint: 'Being the smartest person in the room, deployed', value: 'wd_dominate', next: 'time' },
+      { label: 'Pure pleasure — joy in language, playing for its own sake',       hint: 'The wit that isn\'t for anything — just delight', value: 'wd_joy',      next: 'time' }
+    ],
+    reactions: {
+      wd_seduce:   "Wit as seduction — intelligence performed for an audience, as attraction. The reader falls for it too. Often the most complicated relationship in the book.",
+      wd_protect:  "Humour as armour — the joke that keeps everything at the right distance. The person underneath. Fiction that gets this right is extremely moving.",
+      wd_dominate: "The wit that cuts — establishing hierarchy with intelligence. Often the most morally complex character in the room. Compelling and a little frightening.",
+      wd_joy:      "Wit for pure pleasure — the delight in language for its own sake. Writers who have this are rare and should be celebrated. We know them."
+    }
+  },
+  {
+    id: 'belief_content',    /* triggered by charm_source=cs_belief — replaces time */
+    text: 'The conviction — what are they absolutely certain about?',
+    sub: "Certainty is the most dangerous kind of charisma. What is it in service of?",
+    options: [
+      { label: 'A political vision — the world as it should be',       hint: 'The ideologue, and the seduction of the clear answer',     value: 'bc2_polit', next: 'time' },
+      { label: 'A religious or spiritual certainty',                    hint: 'Faith as unshakeable, and what it does to relationships',  value: 'bc2_relig', next: 'time' },
+      { label: 'Their own exceptionalism — certainty in their capacity', hint: 'Not ideology — just the absolute belief in the self',    value: 'bc2_self',  next: 'time' },
+      { label: 'Love — complete certainty about one person',            hint: 'The love that admits no doubt. Obsessive and beautiful.', value: 'bc2_love',  next: 'time' }
+    ],
+    reactions: {
+      bc2_polit: "The political visionary — certain they know how the world should be. The seduction of the clear answer. Fiction exploring this is always timely.",
+      bc2_relig: "Religious conviction — faith as unshakeable. And what it does to relationships, to doubt, to the people around the believer. Crucial territory.",
+      bc2_self:  "Conviction in the self — not ideology, just the absolute certainty of one's own capacity. Narcissism as a force of nature. Fascinating and terrifying.",
+      bc2_love:  "Complete certainty about one person. The love that admits no doubt. It can become something beautiful. It can become something else entirely."
+    }
+  },
+  {
+    id: 'quiet_devastation', /* triggered by punch_genre=pg_lit — replaces secret */
+    text: 'The quiet literary devastation — about what?',
+    sub: "The exact right thing, said in the exact right way. What is it saying?",
+    options: [
+      { label: 'Loss — someone or something gone, held exactly in the prose', hint: 'Grief and absence rendered with precision',                value: 'qd_loss',   next: 'secret' },
+      { label: 'Recognition — the sentence that names something unnamed',     hint: 'You read it and think: yes, exactly, I didn\'t know that.',  value: 'qd_recog',  next: 'secret' },
+      { label: 'A truth about how people work — that you wished wasn\'t true', hint: 'The observation that costs something to acknowledge',      value: 'qd_truth',  next: 'secret' },
+      { label: 'Beauty — prose so exact it hurts to read',                    hint: 'The language itself as the devastation',                    value: 'qd_beauty', next: 'secret' }
+    ],
+    reactions: {
+      qd_loss:   "Loss held exactly in prose. The shape of absence. The sentence that makes grief feel seen. Some writers can do this. We know which ones.",
+      qd_recog:  "The recognition sentence — the one that names something you felt but never had words for. You read it and something in you settles. Yes.",
+      qd_truth:  "The uncomfortable truth about people — observed precisely, rendered honestly. The kind of insight that costs the writer something to put down.",
+      qd_beauty: "Prose as its own devastation — language so precise and so beautiful that it hurts to read. Some sentences are events. We know which books have them."
+    }
+  },
+  {
+    id: 'collection_kind',   /* triggered by punch_genre=pg_stories — replaces secret */
+    text: 'Story collection — what kind?',
+    sub: "Many punches, accumulated. What holds them together?",
+    options: [
+      { label: 'Linked — same place or same characters throughout',         hint: 'The short story cycle — building into something larger',     value: 'ck_linked',   next: 'secret' },
+      { label: 'Thematic — different stories, one shared subject',          hint: 'Bound by topic, not by character or geography',             value: 'ck_thematic', next: 'secret' },
+      { label: 'Pure variety — each one entirely different, no thread',     hint: 'The collection as sampler — range as the point',            value: 'ck_pure',     next: 'secret' },
+      { label: 'A single writer\'s definitive collection — their full range', hint: 'The career summation, every register present',           value: 'ck_single',   next: 'secret' }
+    ],
+    reactions: {
+      ck_linked:   "The short story cycle — same place or recurring characters, building into something larger than any individual piece. One of the best forms.",
+      ck_thematic: "Thematic unity — different writers or different characters, bound by one subject. The way many perspectives on one thing creates real understanding.",
+      ck_pure:     "Pure variety — range as the point, each story entirely different. The collection as a demonstration of what the form can contain.",
+      ck_single:   "The definitive collection — one writer, all registers, the full career in view. The best way to encounter a writer for the first time."
+    }
+  },
+  {
+    id: 'power_shape',       /* triggered by fable_kind=fk_power — replaces secret */
+    text: 'Power in the fable — what form does it take?',
+    sub: "The corrupting logic of authority has different architectures.",
+    options: [
+      { label: 'Political — the state, the institution, the hierarchy', hint: 'Organised power and what it does to those inside it',          value: 'ps2_polit', next: 'secret' },
+      { label: 'Interpersonal — one person\'s power over another',      hint: 'Intimate domination — the domestic tyranny',                  value: 'ps2_inter', next: 'secret' },
+      { label: 'Economic — money as control, the world it builds',      hint: 'Capital and its logic, rendered in fable form',               value: 'ps2_econ',  next: 'secret' },
+      { label: 'Ideological — the power of narrative, of what is true', hint: 'Who controls the story controls the world',                   value: 'ps2_ideo',  next: 'secret' }
+    ],
+    reactions: {
+      ps2_polit: "Political power — the state, the institution, what it does to those within its logic. The fable form makes it both clear and universal.",
+      ps2_inter: "Intimate power — one person over another, close and daily. The domestic tyrant. Fiction that examines this kind of power is essential.",
+      ps2_econ:  "Economic power — money as control, the world it makes. The fable of capital. Some of the most relevant fiction renders this with real clarity.",
+      ps2_ideo:  "Ideological power — the control of what is considered true. Who controls the narrative controls the world. Literature knows this subject intimately."
+    }
+  },
+  {
+    id: 'love_transform',    /* triggered by fable_kind=fk_love — replaces secret */
+    text: "Love's transformation in the fable — which transformation?",
+    sub: "Love makes people into things. What things?",
+    options: [
+      { label: 'Obsession — the love that consumes and distorts',       hint: 'The all-consuming kind that becomes something else',           value: 'lt_obsess',  next: 'secret' },
+      { label: 'Salvation — what love rescues someone from',            hint: 'Not romantic salvation — but the real kind that costs',       value: 'lt_salvat',  next: 'secret' },
+      { label: 'The thing that makes everything harder',                hint: 'Love as complication, as burden, as what makes the choice impossible', value: 'lt_hard', next: 'secret' },
+      { label: 'Loss — the grief of it, what remains after',            hint: 'Love and its ending, and what endures',                       value: 'lt_loss',    next: 'secret' }
+    ],
+    reactions: {
+      lt_obsess:  "Love as obsession — the consuming kind that distorts the self around it. Fable logic makes this both beautiful and terrifying.",
+      lt_salvat:  "Love as salvation — not the romantic cliché but the real kind, that costs something and changes everything. Fables that go here can be extraordinary.",
+      lt_hard:    "Love as the thing that makes everything harder — the complication, the burden, the reason the choice becomes impossible. The most honest kind.",
+      lt_loss:    "Love and its loss — the grief, what it does to a person, what endures. Fables about loss are among the oldest. The best ones are still devastating."
+    }
+  },
+  {
+    id: 'wound_travel',      /* triggered by family_saga_scope=fss_wound — replaces secret */
+    text: 'The wound that travels through generations — what kind?',
+    sub: "Inherited damage takes specific forms.",
+    options: [
+      { label: 'War and displacement — historical trauma passed down',    hint: 'What the survivors carried forward without naming it',        value: 'wt2_war',   next: 'secret' },
+      { label: 'Cycles of abuse — damage that perpetuates itself',        hint: 'The pattern that repeats until someone breaks it',            value: 'wt2_abuse', next: 'secret' },
+      { label: 'Shame — something buried but active in every generation', hint: 'Not spoken of, but present in every decision',               value: 'wt2_shame', next: 'secret' },
+      { label: 'Loss — a grief that reshapes what comes after',           hint: 'The absence that reorders the family around it',              value: 'wt2_loss',  next: 'secret' }
+    ],
+    reactions: {
+      wt2_war:   "War and displacement — what the survivors carried forward without being able to name it. Transgenerational trauma. One of the richest contemporary subjects.",
+      wt2_abuse: "The repeating cycle — damage that perpetuates until someone breaks the pattern. Fiction that examines this honestly does something important.",
+      wt2_shame: "Shame as inheritance. The thing not spoken, but present in every decision and every silence. The family organised around its refusal to look directly.",
+      wt2_loss:  "Grief that reorders the family around the absence. The way loss reshapes everything that comes after. Some of the most moving sagas go here."
+    }
+  },
+  {
+    id: 'realist_scale',     /* triggered by literary_monument=lm_realist — replaces secret */
+    text: 'Sweeping realism — what scale?',
+    sub: "The vast accessible novel — which vastness?",
+    options: [
+      { label: 'A country across its history — the full arc of a place',    hint: 'One society over time, rendered completely',               value: 'rs_country', next: 'secret' },
+      { label: 'A society at a moment of rupture — changing in real time',  hint: 'The world being remade, seen from inside it',              value: 'rs_society', next: 'secret' },
+      { label: 'A single life in extraordinary fullness',                   hint: 'One person, completely known, from birth to end',          value: 'rs_life',    next: 'secret' },
+      { label: 'Interconnected lives — a whole world in their intersection', hint: 'Multiple characters whose lives assemble into a picture', value: 'rs_inter',   next: 'secret' }
+    ],
+    reactions: {
+      rs_country: "A country across time — the full arc of a place, how it became what it is. Tolstoy's territory, and a few others. Enormous and completely absorbing.",
+      rs_society: "Society at a moment of rupture — the world reshaping itself, experienced from inside. Real time, multiple perspectives, the chaos of the event.",
+      rs_life:    "One life, completely rendered — from birth to death, every stage. The biographical novel at its most ambitious. When done well, almost unbearably good.",
+      rs_inter:   "Interconnected lives — the novel of multiple characters whose stories assemble into one picture. One of the most satisfying architectures in fiction."
+    }
+  },
+  {
+    id: 'interior_monument', /* triggered by literary_monument=lm_interior — replaces secret */
+    text: 'Profound interiority — whose interior, and when?',
+    sub: "The slow, deep, bottomless novel of one mind.",
+    options: [
+      { label: 'One consciousness in a pivotal period of life',              hint: 'A formative stretch — the person becoming who they become', value: 'im_pivot',  next: 'secret' },
+      { label: 'A mind in crisis — extremity rendered exactly',              hint: 'The interior of breakdown, grief, or transformation',      value: 'im_crisis', next: 'secret' },
+      { label: 'The aging mind — late life, memory, what is held or slips',  hint: 'The retrospective consciousness — time and what remains',  value: 'im_aging',  next: 'secret' },
+      { label: 'A grief-stricken interior — loss as the entire landscape',   hint: 'The mind reordered by loss, mapped completely',            value: 'im_grief',  next: 'secret' }
+    ],
+    reactions: {
+      im_pivot:  "One consciousness during the pivotal stretch — the person becoming. The novel of formation, but fully interior. Woolf knew how to do this.",
+      im_crisis: "Extremity rendered exactly — the interior of breakdown, grief, transformation. The most demanding kind of interior fiction. The most rewarding.",
+      im_aging:  "The late-life mind — memory, what is held, what slips. The retrospective consciousness, measuring. A form of profound and difficult beauty.",
+      im_grief:  "Grief as the entire interior landscape — the mind reordered by loss, mapped completely. Some of the best interior fiction has grief as its ground."
+    }
+  },
+  {
+    id: 'char_study_who',    /* triggered by tight_genre=tg_character — replaces secret */
+    text: 'The character study — who are we studying?',
+    sub: "One person, completely known. Which person?",
+    options: [
+      { label: 'A woman navigating constraints invisible to those around her', hint: 'Constraint that must be navigated rather than fought — and how', value: 'cw2_woman',  next: 'secret' },
+      { label: 'A man in moral or emotional crisis he can\'t quite name',      hint: 'The interior crisis, unacknowledged — male interiority',        value: 'cw2_man',    next: 'secret' },
+      { label: 'Someone at the end of something — a life, a relationship',     hint: 'The retrospective — what it all was, seen from the end',         value: 'cw2_end',    next: 'secret' },
+      { label: 'A person at the moment of becoming — on the edge of change',   hint: 'The transformation itself, seen from inside',                    value: 'cw2_become', next: 'secret' }
+    ],
+    reactions: {
+      cw2_woman:  "The woman navigating invisible constraint. The intelligence required. The strategies deployed. Some of the best character studies in the language go here.",
+      cw2_man:    "The male interior crisis — the thing unnamed, the emotions not yet findable in language. Fiction that does this honestly is rare and necessary.",
+      cw2_end:    "The retrospective — seen from the end of something. What it all was. The full accounting. Some of the most profound character studies use this vantage.",
+      cw2_become: "The moment of transformation — seen from inside, as it happens. The edge of becoming. Interior fiction at its most urgent and alive."
     }
   }
 ];
@@ -6214,6 +7079,43 @@ function detailAddToList(listId) {
 
 /* ── Shelf screen ── */
 let prevScreen = 'screen-landing';
+
+function shareResult() {
+  // Find the top recommended book from the current results
+  const topCard = document.querySelector('.reveal-book-title');
+  const bookTitle = topCard ? topCard.textContent.trim() : null;
+
+  // If we're on the detail screen, use that book's title instead
+  const detailTitle = document.getElementById('detail-title');
+  const activeDetail = document.getElementById('screen-detail')?.classList.contains('active');
+  const title = (activeDetail && detailTitle) ? detailTitle.textContent.trim() : bookTitle;
+
+  const siteURL = window.location.href.split('?')[0];
+  const shareText = title
+    ? `The quiz matched me with "${title}" — what book will you get?`
+    : `Find your next book with this quiz — it actually works.`;
+
+  const shareData = {
+    title: 'Book Match Quiz',
+    text: shareText,
+    url: siteURL
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData).catch(() => {});
+  } else {
+    // Fallback: copy to clipboard
+    const copyText = shareText + ' ' + siteURL;
+    navigator.clipboard.writeText(copyText).then(() => {
+      const btns = document.querySelectorAll('#share-btn-reveal, #share-btn-detail');
+      btns.forEach(btn => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
+    }).catch(() => {});
+  }
+}
 
 function openShelf() {
   prevScreen = document.querySelector('.screen.active')?.id || 'screen-landing';
