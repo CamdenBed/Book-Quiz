@@ -732,28 +732,32 @@
   @media (max-width: 1600px) {
     .reaction-box { display: none; }
     #reaction-area { margin-top: 0; }
-    /* Quiz — scales with screen height so it looks right on any laptop */
-    .quiz-header { padding-top: clamp(1rem, 2.5vh, 2.5rem); }
-    .quiz-footer { padding-bottom: clamp(0.5rem, 1.5vh, 1.5rem); }
-    .q-number, .q-text, .q-sub { margin-top: clamp(4px, 1vh, 14px); }
-    /* Landing hero — fluid so large and small laptops both look right */
+    /* Quiz — compact for laptops */
+    .quiz-header { padding: clamp(0.6rem, 1.5vh, 1.25rem) 3rem; }
+    .quiz-footer { padding: clamp(0.4rem, 1vh, 1rem) 3rem; }
+    .q-number, .q-text, .q-sub { margin-top: 0; }
+    .q-text { margin-bottom: clamp(0.25rem, 0.75vh, 0.65rem); }
+    .q-sub { margin-bottom: clamp(0.75rem, 1.5vh, 2.25rem); }
+    /* Landing hero */
     .hero-left { justify-content: flex-start; padding-top: clamp(0px, 1.5vh, 2rem); }
-    .hero-kicker { color: var(--ink); margin-top: clamp(8px, 2vh, 24px); }
-    .btn-start { margin-top: clamp(-28px, -2vh, -8px); }
+    .hero-kicker { color: var(--ink); margin-top: clamp(4px, 1vh, 16px); margin-bottom: clamp(0.75rem, 1.5vh, 2rem); }
+    .hero-headline { margin-bottom: clamp(0.75rem, 1.5vh, 2rem); }
+    .hero-body { margin-bottom: clamp(1rem, 2vh, 3rem); }
+    .btn-start { margin-top: 0; }
     .landing-promise { display: none; }
   }
 
   /* ── Tablet (≤ 860px) ── */
   @media (max-width: 860px) {
     .landing-hero { grid-template-columns: 1fr; }
-    .hero-left { border-right: none; border-bottom: 1px solid var(--ink-faint); padding: clamp(1.5rem, 4vh, 3.5rem) 2.5rem clamp(1rem, 3vh, 3rem); }
-    .hero-right { padding: 2.5rem; border-top: none; }
-    .wrapped-book { width: 150px; height: 200px; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--ink-faint); padding: clamp(1rem, 3vh, 2.5rem) 2rem clamp(0.75rem, 2vh, 2rem); }
+    .hero-right { padding: 1.5rem 2rem; border-top: none; }
+    .wrapped-book { width: 120px; height: 165px; }
     .landing-promise { grid-template-columns: 1fr 1fr; }
     .promise-item:nth-child(2) { border-right: none; }
     .promise-item:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid var(--ink-faint); }
     .options-grid { grid-template-columns: 1fr; }
-    .quiz-body { padding: clamp(0.75rem, 2vh, 2rem); }
+    .quiz-body { padding: clamp(0.5rem, 1.5vh, 1.5rem) clamp(1rem, 3vw, 2rem); }
   }
 
   /* ── Mobile (≤ 600px) ── */
@@ -761,49 +765,49 @@
     body { font-size: 17px; }
 
     /* Nav */
-    .landing-nav { padding: 1rem 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
+    .landing-nav { padding: 0.6rem 1rem; flex-wrap: wrap; gap: 0.35rem; }
     .nav-tagline { display: none; }
-    .landing-nav > div { gap: 1rem; }
+    .landing-nav > div { gap: 0.75rem; }
 
     /* Landing hero */
-    .hero-left { padding: 2.25rem 1.25rem 2rem; }
-    .hero-headline { font-size: clamp(30px, 8.5vw, 42px); margin-bottom: 1.25rem; }
-    .hero-body { font-size: 17px; margin-bottom: 2rem; }
-    .btn-start { font-size: 17px; padding: 0.9rem 2rem; width: 100%; justify-content: center; }
-    .hero-right { padding: 2rem 1.25rem; }
-    .wrapped-book { width: 110px; height: 150px; }
-    .wrap-q { font-size: 65px; }
+    .hero-left { padding: 1.5rem 1.1rem 1.25rem; }
+    .hero-headline { font-size: clamp(28px, 8vw, 40px); margin-bottom: 0.75rem; }
+    .hero-body { font-size: 16px; margin-bottom: 1.25rem; }
+    .btn-start { font-size: 16px; padding: 0.75rem 1.75rem; width: 100%; justify-content: center; }
+    .hero-right { padding: 1.25rem 1rem; }
+    .wrapped-book { width: 100px; height: 138px; }
+    .wrap-q { font-size: 58px; }
 
     /* Landing promise — show but stack */
     .landing-promise { grid-template-columns: 1fr; }
-    .promise-item { padding: 1.25rem 1.25rem; border-right: none; border-bottom: 1px solid var(--ink-faint); }
+    .promise-item { padding: 0.9rem 1rem; border-right: none; border-bottom: 1px solid var(--ink-faint); }
     .promise-item:last-child { border-bottom: none; }
     .promise-item:nth-child(3) { grid-column: auto; border-top: none; }
-    .promise-title { font-size: 18px; }
-    .promise-desc { font-size: 15px; }
+    .promise-title { font-size: 17px; }
+    .promise-desc { font-size: 14px; }
 
     /* Quiz header */
-    .quiz-header { padding: 0.75rem 1.25rem; gap: 0.5rem; flex-wrap: wrap; }
+    .quiz-header { padding: 0.5rem 1rem; gap: 0.4rem; flex-wrap: wrap; }
     .quiz-brand { display: none; }
     .progress-bar-wrap { margin: 0; min-width: 0; flex: 1; }
-    .progress-label { font-size: 12px; white-space: nowrap; }
-    .nav-shelf-btn { font-size: 12px; }
+    .progress-label { font-size: 11px; white-space: nowrap; }
+    .nav-shelf-btn { font-size: 11px; }
 
     /* Quiz layout — fixed footer, content scrolls within its space */
     #screen-quiz { justify-content: space-between; }
-    .quiz-body { padding: 0.5rem 1.25rem; align-items: flex-start; flex: 1; overflow-y: auto; }
-    .q-number { margin-bottom: 0.5rem; font-size: 11px; }
-    .q-text { font-size: clamp(18px, 5vw, 24px); margin-bottom: 0.35rem; }
-    .q-sub { font-size: 14px; margin-bottom: 0.5rem; }
-    .options-grid { gap: 0.4rem; }
-    .option-btn { padding: 0.6rem 1rem; min-height: 80px; }
-    .option-label { font-size: 16px; }
-    .option-hint { font-size: 13px; }
+    .quiz-body { padding: 0.35rem 1rem; align-items: flex-start; flex: 1; overflow-y: auto; }
+    .q-number { margin-bottom: 0.3rem; font-size: 10px; }
+    .q-text { font-size: clamp(17px, 4.8vw, 22px); margin-bottom: 0.25rem; }
+    .q-sub { font-size: 13px; margin-bottom: 0.35rem; }
+    .options-grid { gap: 0.3rem; }
+    .option-btn { padding: 0.5rem 0.85rem; min-height: 68px; }
+    .option-label { font-size: 15px; }
+    .option-hint { font-size: 12px; }
     /* Quiz footer — pinned, scales with screen height */
-    .quiz-footer { padding: 0.4rem 1.25rem; margin-bottom: clamp(30px, 7vh, 80px); }
-    .btn-back { font-size: 14px; }
-    .btn-next { font-size: 14px; padding: 0.6rem 1.25rem; }
-    .page-number { font-size: 11px; }
+    .quiz-footer { padding: 0.35rem 1rem; margin-bottom: clamp(18px, 5vh, 60px); }
+    .btn-back { font-size: 13px; }
+    .btn-next { font-size: 13px; padding: 0.5rem 1rem; }
+    .page-number { font-size: 10px; }
 
     /* Loading */
     .loading-quote { font-size: clamp(16px, 4.5vw, 21px); padding: 0 1.25rem; }
