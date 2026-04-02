@@ -732,25 +732,28 @@
   @media (max-width: 1600px) {
     .reaction-box { display: none; }
     #reaction-area { margin-top: 0; }
-    .quiz-header { padding-top: calc(1.5rem + 10px); }
-    .quiz-footer { padding-bottom: calc(1.5rem - 5px); }
-    .q-number, .q-text, .q-sub { margin-top: 10px; }
-    .hero-left { justify-content: flex-start; padding-top: 10px; }
-    .hero-kicker { color: var(--ink); margin-top: 15px; }
-    .btn-start { margin-top: -20px; }
+    /* Quiz — scales with screen height so it looks right on any laptop */
+    .quiz-header { padding-top: clamp(1rem, 2.5vh, 2.5rem); }
+    .quiz-footer { padding-bottom: clamp(0.5rem, 1.5vh, 1.5rem); }
+    .q-number, .q-text, .q-sub { margin-top: clamp(4px, 1vh, 14px); }
+    /* Landing hero — fluid so large and small laptops both look right */
+    .hero-left { justify-content: flex-start; padding-top: clamp(0px, 1.5vh, 2rem); }
+    .hero-kicker { color: var(--ink); margin-top: clamp(8px, 2vh, 24px); }
+    .btn-start { margin-top: clamp(-28px, -2vh, -8px); }
+    .landing-promise { display: none; }
   }
 
   /* ── Tablet (≤ 860px) ── */
   @media (max-width: 860px) {
     .landing-hero { grid-template-columns: 1fr; }
-    .hero-left { border-right: none; border-bottom: 1px solid var(--ink-faint); padding: 3.5rem 2.5rem 3rem; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--ink-faint); padding: clamp(1.5rem, 4vh, 3.5rem) 2.5rem clamp(1rem, 3vh, 3rem); }
     .hero-right { padding: 2.5rem; border-top: none; }
     .wrapped-book { width: 150px; height: 200px; }
     .landing-promise { grid-template-columns: 1fr 1fr; }
     .promise-item:nth-child(2) { border-right: none; }
     .promise-item:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid var(--ink-faint); }
     .options-grid { grid-template-columns: 1fr; }
-    .quiz-body { padding: 2rem; }
+    .quiz-body { padding: clamp(0.75rem, 2vh, 2rem); }
   }
 
   /* ── Mobile (≤ 600px) ── */
@@ -796,8 +799,8 @@
     .option-btn { padding: 0.6rem 1rem; min-height: 80px; }
     .option-label { font-size: 16px; }
     .option-hint { font-size: 13px; }
-    /* Quiz footer — pinned, moved up 55px from bottom */
-    .quiz-footer { padding: 0.4rem 1.25rem; margin-bottom: 55px; }
+    /* Quiz footer — pinned, scales with screen height */
+    .quiz-footer { padding: 0.4rem 1.25rem; margin-bottom: clamp(30px, 7vh, 80px); }
     .btn-back { font-size: 14px; }
     .btn-next { font-size: 14px; padding: 0.6rem 1.25rem; }
     .page-number { font-size: 11px; }
