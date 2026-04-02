@@ -762,52 +762,52 @@
 
   /* ── Mobile (≤ 600px) ── */
   @media (max-width: 600px) {
-    body { font-size: 16px; }
+    body { font-size: 17px; }
 
     /* Nav */
-    .landing-nav { padding: 0.5rem 0.9rem; flex-wrap: wrap; gap: 0.25rem; }
+    .landing-nav { padding: 1rem 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
     .nav-tagline { display: none; }
-    .landing-nav > div { gap: 0.6rem; }
+    .landing-nav > div { gap: 1rem; }
 
     /* Landing hero */
-    .hero-left { padding: 1.1rem 1rem 1rem; }
-    .hero-headline { font-size: clamp(26px, 7.5vw, 38px); margin-bottom: 0.5rem; }
-    .hero-body { font-size: 15px; margin-bottom: 0.9rem; }
-    .btn-start { font-size: 15px; padding: 0.65rem 1.5rem; width: 100%; justify-content: center; }
-    .hero-right { padding: 1rem 0.9rem; }
-    .wrapped-book { width: 90px; height: 124px; }
-    .wrap-q { font-size: 52px; }
+    .hero-left { padding: 2.25rem 1.25rem 2rem; }
+    .hero-headline { font-size: clamp(30px, 8.5vw, 42px); margin-bottom: 1.25rem; }
+    .hero-body { font-size: 17px; margin-bottom: 2rem; }
+    .btn-start { font-size: 17px; padding: 0.9rem 2rem; width: 100%; justify-content: center; }
+    .hero-right { padding: 2rem 1.25rem; }
+    .wrapped-book { width: 110px; height: 150px; }
+    .wrap-q { font-size: 65px; }
 
     /* Landing promise — show but stack */
     .landing-promise { grid-template-columns: 1fr; }
-    .promise-item { padding: 0.7rem 0.9rem; border-right: none; border-bottom: 1px solid var(--ink-faint); }
+    .promise-item { padding: 1.25rem 1.25rem; border-right: none; border-bottom: 1px solid var(--ink-faint); }
     .promise-item:last-child { border-bottom: none; }
     .promise-item:nth-child(3) { grid-column: auto; border-top: none; }
-    .promise-title { font-size: 16px; }
-    .promise-desc { font-size: 13px; }
+    .promise-title { font-size: 18px; }
+    .promise-desc { font-size: 15px; }
 
     /* Quiz header */
-    .quiz-header { padding: 0.4rem 0.9rem; gap: 0.3rem; flex-wrap: wrap; }
+    .quiz-header { padding: 0.75rem 1.25rem; gap: 0.5rem; flex-wrap: wrap; }
     .quiz-brand { display: none; }
     .progress-bar-wrap { margin: 0; min-width: 0; flex: 1; }
-    .progress-label { font-size: 10px; white-space: nowrap; }
-    .nav-shelf-btn { font-size: 10px; }
+    .progress-label { font-size: 12px; white-space: nowrap; }
+    .nav-shelf-btn { font-size: 12px; }
 
     /* Quiz layout — fixed footer, content scrolls within its space */
     #screen-quiz { justify-content: space-between; }
-    .quiz-body { padding: 0.25rem 0.9rem; align-items: flex-start; flex: 1; overflow-y: auto; }
-    .q-number { margin-bottom: 0.2rem; font-size: 10px; }
-    .q-text { font-size: clamp(16px, 4.5vw, 21px); margin-bottom: 0.2rem; }
-    .q-sub { font-size: 12px; margin-bottom: 0.25rem; }
-    .options-grid { gap: 0.25rem; }
-    .option-btn { padding: 0.45rem 0.75rem; min-height: 60px; }
-    .option-label { font-size: 14px; }
-    .option-hint { font-size: 11px; }
+    .quiz-body { padding: 0.5rem 1.25rem; align-items: flex-start; flex: 1; overflow-y: auto; }
+    .q-number { margin-bottom: 0.5rem; font-size: 11px; }
+    .q-text { font-size: clamp(18px, 5vw, 24px); margin-bottom: 0.35rem; }
+    .q-sub { font-size: 14px; margin-bottom: 0.5rem; }
+    .options-grid { gap: 0.4rem; }
+    .option-btn { padding: 0.6rem 1rem; min-height: 80px; }
+    .option-label { font-size: 16px; }
+    .option-hint { font-size: 13px; }
     /* Quiz footer — pinned, scales with screen height */
-    .quiz-footer { padding: 0.25rem 0.9rem; margin-bottom: clamp(14px, 4vh, 50px); }
-    .btn-back { font-size: 12px; }
-    .btn-next { font-size: 12px; padding: 0.4rem 0.85rem; }
-    .page-number { font-size: 10px; }
+    .quiz-footer { padding: 0.4rem 1.25rem; margin-bottom: clamp(30px, 7vh, 80px); }
+    .btn-back { font-size: 14px; }
+    .btn-next { font-size: 14px; padding: 0.6rem 1.25rem; }
+    .page-number { font-size: 11px; }
 
     /* Loading */
     .loading-quote { font-size: clamp(16px, 4.5vw, 21px); padding: 0 1.25rem; }
@@ -6937,6 +6937,32 @@ function openDetailScreen(book) {
   });
 
   showScreen('screen-detail');
+
+  // Scroll so the explanation and buy button are comfortably in view
+  requestAnimationFrame(() => {
+    const screen = document.getElementById('screen-detail');
+    const buyBox = document.getElementById('detail-buy-box');
+    const why    = document.getElementById('detail-why');
+    if (!screen || !buyBox || !why) return;
+
+    const screenRect = screen.getBoundingClientRect();
+    const buyRect    = buyBox.getBoundingClientRect();
+    const whyRect    = why.getBoundingClientRect();
+
+    // Target: scroll just enough so the why text top is near the top
+    // and the buy box bottom is fully visible
+    const whyTop      = whyRect.top  - screenRect.top  + screen.scrollTop;
+    const buyBottom   = buyRect.bottom - screenRect.top + screen.scrollTop;
+    const screenH     = screen.clientHeight;
+
+    // If both fit on screen, scroll to show why text near top with small padding
+    // If they don't fit, center between the two
+    const targetTop = buyBottom - screenH < whyTop - 24
+      ? whyTop - 24
+      : Math.round((whyTop + buyBottom - screenH) / 2);
+
+    screen.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+  });
 }
 
 // Close modal on overlay click
