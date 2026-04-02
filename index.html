@@ -6295,6 +6295,13 @@ function renderQuestion(animate, direction) {
       btn.classList.add('visible');
       btn.textContent = isLastQuestion() ? 'Open the cover →' : 'Turn the page →';
     }
+    // On phones, scroll to bottom so answer choices are always visible
+    if (window.innerWidth <= 600) {
+      requestAnimationFrame(() => {
+        const quizBody = card.parentElement.parentElement;
+        quizBody.scrollTop = quizBody.scrollHeight;
+      });
+    }
     return;
   }
 
@@ -6322,6 +6329,12 @@ function renderQuestion(animate, direction) {
       card.innerHTML     = buildQuestionHTML(qId);
       card.style.height  = '';
       card.style.overflow = '';
+      // On phones, scroll to bottom so answer choices are always visible
+      if (window.innerWidth <= 600) {
+        requestAnimationFrame(() => {
+          quizBody.scrollTop = quizBody.scrollHeight;
+        });
+      }
     }, () => {
       // Nothing to unlock — already cleared at midpoint.
     });
