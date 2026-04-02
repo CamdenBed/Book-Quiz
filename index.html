@@ -40,7 +40,7 @@
     background: radial-gradient(ellipse 90% 85% at 50% 50%, transparent 60%, rgba(90,55,10,0.08) 100%);
   }
 
-  .screen { display: none; min-height: 100vh; }
+  .screen { display: none; min-height: 100vh; min-height: 100dvh; }
   .screen.active { display: flex; flex-direction: column; }
 
   /* ═══════════ LANDING ═══════════ */
@@ -6295,11 +6295,10 @@ function renderQuestion(animate, direction) {
       btn.classList.add('visible');
       btn.textContent = isLastQuestion() ? 'Open the cover →' : 'Turn the page →';
     }
-    // On phones, scroll to bottom so answer choices are always visible
+    // On phones, scroll so answer choices are always fully visible
     if (window.innerWidth <= 600) {
       requestAnimationFrame(() => {
-        const quizBody = card.parentElement.parentElement;
-        quizBody.scrollTop = quizBody.scrollHeight;
+        scrollToOptions(card);
       });
     }
     return;
@@ -6329,16 +6328,32 @@ function renderQuestion(animate, direction) {
       card.innerHTML     = buildQuestionHTML(qId);
       card.style.height  = '';
       card.style.overflow = '';
-      // On phones, scroll to bottom so answer choices are always visible
+      // On phones, scroll so answer choices are always fully visible
       if (window.innerWidth <= 600) {
         requestAnimationFrame(() => {
-          quizBody.scrollTop = quizBody.scrollHeight;
+          scrollToOptions(card);
         });
       }
     }, () => {
       // Nothing to unlock — already cleared at midpoint.
     });
   });
+}
+
+function scrollToOptions(card) {
+  const quizBody = card?.parentElement?.parentElement;
+  if (!quizBody) return;
+  const grid = card.querySelector('.options-grid');
+  if (!grid) { quizBody.scrollTop = quizBody.scrollHeight; return; }
+  // Scroll so the last option button is fully visible, with a small gap above the footer
+  const lastOption = grid.lastElementChild;
+  if (!lastOption) return;
+  const bodyRect   = quizBody.getBoundingClientRect();
+  const optRect    = lastOption.getBoundingClientRect();
+  const overshoot  = optRect.bottom - bodyRect.bottom;
+  if (overshoot > 0) {
+    quizBody.scrollTop += overshoot + 8; // 8px breathing room
+  }
 }
 
 function selectOption(value, el) {
