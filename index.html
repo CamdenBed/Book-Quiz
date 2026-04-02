@@ -41,6 +41,9 @@
   }
 
   .screen { display: none; min-height: 100vh; min-height: 100dvh; }
+  @supports (min-height: 100dvh) {
+    #screen-quiz { min-height: 100dvh; height: 100dvh; }
+  }
   .screen.active { display: flex; flex-direction: column; }
 
   /* ═══════════ LANDING ═══════════ */
@@ -6296,7 +6299,7 @@ function renderQuestion(animate, direction) {
       btn.textContent = isLastQuestion() ? 'Open the cover →' : 'Turn the page →';
     }
     // On phones, scroll so answer choices are always fully visible
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 1024) {
       requestAnimationFrame(() => {
         scrollToOptions(card);
       });
@@ -6329,7 +6332,7 @@ function renderQuestion(animate, direction) {
       card.style.height  = '';
       card.style.overflow = '';
       // On phones, scroll so answer choices are always fully visible
-      if (window.innerWidth <= 600) {
+      if (window.innerWidth <= 1024) {
         requestAnimationFrame(() => {
           scrollToOptions(card);
         });
