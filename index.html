@@ -9071,28 +9071,44 @@ function matchBooks(count, exclude) {
         if (!bookAvoid.includes(userAvoid) && !bookAvoid.includes('none')) score -= 4;
       }
 
-      // Small random tiebreaker — prevents always showing the same books
-      // when several have nearly identical scores
-      score += Math.random() * 2.5;
+      // Random tiebreaker — large enough to rotate the whole library over time,
+      // small enough that a book that genuinely matches your answers still wins.
+      // With a 0–12 range, a book 1 tier below the leader wins ~30% of the time.
+      score += Math.random() * 12;
 
       return { book, score };
     });
 
   scores.sort((a, b) => b.score - a.score);
 
-  // Prefer books not shown recently (tracked in localStorage, last 21 titles)
-  const RECENT_KEY = 'bb_recent_v1';
+  // Prefer books not shown recently (tracked in localStorage, last 60 titles)
+  const RECENT_KEY = 'bb_recent_v2';
   let recent = [];
   try { recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch(e) {}
 
-  const topPool = scores.slice(0, Math.min(count * 5, scores.length));
+  // Wide pool: top 50% of scored books (minimum 40)
+  // This gives every thematically-relevant book a real fighting chance.
+  const poolSize = Math.max(40, Math.min(Math.floor(scores.length * 0.50), scores.length));
+  const topPool = scores.slice(0, poolSize);
   const fresh   = topPool.filter(s => !recent.includes(s.book.title));
   const seen    = topPool.filter(s =>  recent.includes(s.book.title));
   const ordered = [...fresh, ...seen];
-  const picks   = ordered.slice(0, count).map(s => s.book);
 
-  // Update recency log
-  const newRecent = [...picks.map(b => b.title), ...recent.filter(t => !picks.some(b => b.title === t))].slice(0, 21);
+  // Pick (count - 1) from the scored top pool, then add 1 serendipity pick
+  // from anywhere in the library not already picked and not recently shown.
+  // This guarantees every book eventually surfaces, no matter how niche its profile.
+  const scoredPicks = ordered.slice(0, count - 1).map(s => s.book);
+  const pickedTitles = new Set(scoredPicks.map(b => b.title));
+
+  const wildPool = scores
+    .filter(s => !pickedTitles.has(s.book.title) && !recent.includes(s.book.title));
+  const wildIndex = Math.floor(Math.random() * Math.min(wildPool.length, scores.length));
+  const wildPick  = wildPool.length ? wildPool[wildIndex].book : ordered[count - 1]?.book;
+
+  const picks = wildPick ? [...scoredPicks, wildPick] : scoredPicks;
+
+  // Update recency log — remember last 60 titles so the full library rotates
+  const newRecent = [...picks.map(b => b.title), ...recent.filter(t => !picks.some(b => b.title === t))].slice(0, 60);
   try { localStorage.setItem(RECENT_KEY, JSON.stringify(newRecent)); } catch(e) {}
 
   return picks;
