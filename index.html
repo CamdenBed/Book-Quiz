@@ -741,24 +741,60 @@
     .q-number, .q-text, .q-sub { margin-top: 0; }
     .q-text { margin-bottom: clamp(0.15rem, 0.5vh, 0.4rem); }
     .q-sub { margin-bottom: clamp(0.5rem, 1vh, 1.5rem); }
-    /* Landing hero */
-    .hero-left { justify-content: flex-start; padding-top: clamp(0px, 1vh, 1.25rem); }
-    .hero-kicker { color: var(--ink); margin-top: clamp(2px, 0.5vh, 10px); margin-bottom: clamp(0.4rem, 1vh, 1.25rem); }
-    .hero-headline { margin-bottom: clamp(0.4rem, 1vh, 1.25rem); }
-    .hero-body { margin-bottom: clamp(0.6rem, 1.25vh, 2rem); }
-    .btn-start { margin-top: 0; }
+    /* Landing — fit entire page on screen without scrolling */
+    .landing-nav { padding: clamp(0.6rem, 1.2vh, 1.2rem) 3rem; }
+    .landing-hero { flex: 1; }
+    .hero-left {
+      justify-content: center;
+      padding: clamp(1rem, 2.5vh, 2.5rem) clamp(1.5rem, 3vw, 3.5rem);
+    }
+    .hero-kicker {
+      color: var(--ink);
+      margin-top: 0;
+      margin-bottom: clamp(0.3rem, 0.8vh, 1rem);
+      font-size: 12px;
+    }
+    .hero-headline {
+      font-size: clamp(28px, 3.5vw, 48px);
+      margin-bottom: clamp(0.3rem, 0.8vh, 1rem);
+    }
+    .hero-body {
+      font-size: clamp(15px, 1.4vw, 19px);
+      margin-bottom: clamp(0.5rem, 1.2vh, 1.5rem);
+      line-height: 1.6;
+    }
+    .btn-start {
+      margin-top: 0;
+      font-size: clamp(15px, 1.3vw, 18px);
+      padding: clamp(0.6rem, 1vh, 0.9rem) clamp(1.5rem, 2vw, 2.25rem);
+    }
+    .hero-right {
+      padding: clamp(1rem, 2vh, 2.5rem);
+    }
+    .wrapped-book { width: clamp(110px, 12vw, 160px); height: clamp(148px, 16vw, 215px); }
     .landing-promise { display: none; }
   }
 
   /* ── Tablet (≤ 860px) ── */
   @media (max-width: 860px) {
-    .landing-hero { grid-template-columns: 1fr; }
-    .hero-left { border-right: none; border-bottom: 1px solid var(--ink-faint); padding: clamp(0.75rem, 2vh, 2rem) 1.75rem clamp(0.5rem, 1.5vh, 1.5rem); }
-    .hero-right { padding: 1rem 1.75rem; border-top: none; }
-    .wrapped-book { width: 110px; height: 150px; }
-    .landing-promise { grid-template-columns: 1fr 1fr; }
-    .promise-item:nth-child(2) { border-right: none; }
-    .promise-item:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid var(--ink-faint); }
+    /* Stack hero columns, shrink right panel so everything fits */
+    .landing-hero { grid-template-columns: 1fr; overflow: hidden; }
+    .hero-left {
+      border-right: none;
+      border-bottom: 1px solid var(--ink-faint);
+      padding: clamp(1rem, 2.5vh, 2rem) 1.75rem clamp(0.75rem, 1.5vh, 1.5rem);
+      justify-content: flex-start;
+    }
+    .hero-kicker { margin-bottom: clamp(0.3rem, 0.6vh, 0.75rem); }
+    .hero-headline { font-size: clamp(26px, 5.5vw, 38px); margin-bottom: clamp(0.3rem, 0.7vh, 0.9rem); }
+    .hero-body { font-size: clamp(14px, 2.5vw, 17px); margin-bottom: clamp(0.5rem, 1vh, 1.25rem); line-height: 1.55; }
+    .hero-right {
+      padding: clamp(0.75rem, 1.5vh, 1.5rem) 1.75rem;
+      border-top: none;
+      flex: 0 0 auto;
+    }
+    .wrapped-book { width: 90px; height: 122px; }
+    .landing-promise { display: none; }
     .options-grid { grid-template-columns: 1fr; }
     .quiz-body { padding: clamp(0.35rem, 1vh, 1rem) clamp(0.75rem, 2.5vw, 1.75rem); }
   }
@@ -8348,6 +8384,1222 @@ const books = [
     why: "Two years in a hidden annex in Amsterdam, written by a girl who understood she might not survive and wrote anyway. Nothing in the literature of witness is more intimate or more shattering.",
     search: "The Diary of a Young Girl Anne Frank",
     match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['identity','love','survival'], avoid:['none'], character:['observer'], length:['medium'], mood:['understand','feel'], time:['morning'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Brief Wondrous Life of Oscar Wao",
+    author: "Junot Diaz",
+    tags: ["Dominican Republic","Nerd","Dictatorship","Family"],
+    why: "A fat, nerdy Dominican kid from New Jersey obsessed with sci-fi and fantasy tries to find love while the shadow of Trujillo's dictatorship hangs over his family across generations. Diaz writes in a voice unlike anything else — comic, heartbroken, and encyclopedic all at once.",
+    search: "The Brief Wondrous Life of Oscar Wao Junot Diaz",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['warm'], theme:['identity','love','family'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['feel','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "The House on Mango Street",
+    author: "Sandra Cisneros",
+    tags: ["Chicago","Latina","Coming-of-age","Vignettes"],
+    why: "A young Latina girl in Chicago writes short prose poems about her neighborhood, her body, her neighbors, and the house she dreams of owning one day. Cisneros invented a new form — lyrical and compressed — that feels simultaneously personal and universal.",
+    search: "The House on Mango Street Sandra Cisneros",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['warm'], theme:['identity','community','love'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['feel','understand'], time:['morning'], secret:['empathy','art'] }
+  },
+  {
+    title: "Love Medicine",
+    author: "Louise Erdrich",
+    tags: ["Ojibwe","North Dakota","Family","Generations"],
+    why: "Two Ojibwe families on a North Dakota reservation across fifty years — their loves, feuds, and the ties that keep pulling them back together. Erdrich is one of the great American novelists and this is where it begins.",
+    search: "Love Medicine Louise Erdrich",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','family','community'], avoid:['none'], character:['ensemble'], length:['medium'], mood:['understand','feel'], time:['sunday'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Birchbark House",
+    author: "Louise Erdrich",
+    tags: ["Ojibwe","1847","Young Adult","Seasons"],
+    why: "A young Ojibwe girl lives through a year on an island in Lake Superior in 1847. Erdrich writes the natural world and the rhythms of Indigenous life with extraordinary care — quietly, devastatingly good.",
+    search: "The Birchbark House Louise Erdrich",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['family','community','identity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['company','feel'], time:['morning'], secret:['history','empathy'] }
+  },
+  {
+    title: "Tracks",
+    author: "Louise Erdrich",
+    tags: ["Ojibwe","Land","Survival","Two Voices"],
+    why: "Two unreliable narrators argue over what really happened to the Ojibwe people of North Dakota as white settlement closes in. Erdrich at her most mythic and formally daring.",
+    search: "Tracks Louise Erdrich",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['survival','identity','community'], avoid:['none'], character:['ensemble','observer'], length:['medium'], mood:['think','understand'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Ceremony",
+    author: "Leslie Marmon Silko",
+    tags: ["Laguna Pueblo","WWII","Healing","Myth"],
+    why: "A Native American veteran returns from WWII deeply damaged and must find his way back through a healing ceremony that draws on Laguna Pueblo oral tradition. One of the most structurally original American novels ever written.",
+    search: "Ceremony Leslie Marmon Silko",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['warm'], theme:['identity','survival','community'], avoid:['darkness'], character:['driven'], length:['medium'], mood:['understand','wonder'], time:['morning'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Absolutely True Diary of a Part-Time Indian",
+    author: "Sherman Alexie",
+    tags: ["Spokane Reservation","Humor","Coming-of-age","Identity"],
+    why: "A boy from the Spokane Indian Reservation transfers to an all-white school and must navigate two worlds that don't fully want him. Alexie writes with a dark humor that makes the sadness bearable.",
+    search: "The Absolutely True Diary of a Part-Time Indian Sherman Alexie",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['cold'], theme:['identity','community','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['company','feel'], time:['morning'], secret:['history','empathy'] }
+  },
+  {
+    title: "There There",
+    author: "Tommy Orange",
+    tags: ["Urban Native","Oakland","Gathering","Violence"],
+    why: "Twelve Native American characters converge on an Oakland powwow, each carrying different versions of the same history. Orange's debut is structurally bold and morally complex — one of the finest American novels of the decade.",
+    search: "There There Tommy Orange",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['warm'], theme:['identity','community','survival'], avoid:['darkness'], character:['ensemble'], length:['medium'], mood:['think','understand'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Braiding Sweetgrass",
+    author: "Robin Wall Kimmerer",
+    tags: ["Botany","Indigenous Wisdom","Nature","Nonfiction"],
+    why: "A botanist and member of the Potawatomi Nation weaves together indigenous plant knowledge and Western science. Not quite memoir, not quite nature writing, not quite philosophy — something entirely its own.",
+    search: "Braiding Sweetgrass Robin Wall Kimmerer",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['community','love','identity'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['wonder','understand'], time:['morning'], secret:['history','empathy'] }
+  },
+  {
+    title: "Pilgrim at Tinker Creek",
+    author: "Annie Dillard",
+    tags: ["Virginia","Nature","Attention","Pulitzer"],
+    why: "A year spent watching Tinker Creek in Virginia's Blue Ridge Mountains — and letting what she sees lead her into theology, physics, and the violence at the heart of the natural world. Dillard's attention is extraordinary and a little terrifying.",
+    search: "Pilgrim at Tinker Creek Annie Dillard",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['identity','love'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['wonder','think'], time:['morning'], secret:['empathy','art'] }
+  },
+  {
+    title: "The Living Mountain",
+    author: "Nan Shepherd",
+    tags: ["Cairngorms","Scotland","Walking","Nature Writing"],
+    why: "Written during WWII but not published until 1977, Shepherd's account of decades of walking in the Cairngorm mountains is one of the finest pieces of nature writing in English — precise, mystical, and absolutely its own.",
+    search: "The Living Mountain Nan Shepherd",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['identity','love'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['wonder','understand'], time:['morning'], secret:['empathy','art'] }
+  },
+  {
+    title: "Feral",
+    author: "George Monbiot",
+    tags: ["Rewilding","Britain","Ecology","Manifesto"],
+    why: "A journalist argues for rewilding Britain's degraded landscapes — bringing back wolves, beavers, lynx — and weaves in his own hunger for wildness. Part polemic, part memoir, entirely gripping.",
+    search: "Feral George Monbiot",
+    match: { feeling:['exhilarated','hopeful'], pace:['medium'], world:['cold'], theme:['survival','identity','community'], avoid:['none','violence'], character:['driven','observer'], length:['medium'], mood:['think','wonder'], time:['morning'], secret:['history','wonder'] }
+  },
+  {
+    title: "The Salt Path",
+    author: "Raynor Winn",
+    tags: ["Coastal Walking","Homelessness","Illness","Britain"],
+    why: "Raynor and her husband lose their home on the same week he is diagnosed with a terminal illness. They walk 630 miles around the South West Coast Path anyway. A memoir about walking into grief and finding something you didn't expect.",
+    search: "The Salt Path Raynor Winn",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['love','survival','identity'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['company','feel'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Wild",
+    author: "Cheryl Strayed",
+    tags: ["Pacific Crest Trail","Grief","Recovery","Memoir"],
+    why: "A young woman with no hiking experience walks 1,100 miles of the Pacific Crest Trail alone, carrying a pack she can barely lift, working through the loss of her mother and her own worst choices. Raw, funny, and genuinely brave.",
+    search: "Wild Cheryl Strayed",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['cold'], theme:['grief','identity','survival'], avoid:['none'], character:['driven'], length:['medium'], mood:['feel','understand'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Into the Wild",
+    author: "Jon Krakauer",
+    tags: ["Alaska","Wilderness","Idealism","True Story"],
+    why: "A young man gives away his savings, burns his cash, and disappears into the Alaskan wilderness. Krakauer is trying to understand whether Christopher McCandless was a fool or a visionary, and the book never fully decides.",
+    search: "Into the Wild Jon Krakauer",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['identity','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['wonder','think'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Into Thin Air",
+    author: "Jon Krakauer",
+    tags: ["Everest","Disaster","Survival","Nonfiction"],
+    why: "Krakauer was on Everest during the 1996 disaster that killed eight climbers. His account is agonized, precise, and impossible to put down — the finest narrative nonfiction about mountaineering ever written.",
+    search: "Into Thin Air Jon Krakauer",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['survival','identity','power'], avoid:['darkness'], character:['driven','ensemble'], length:['medium'], mood:['escape','understand'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Endurance",
+    author: "Alfred Lansing",
+    tags: ["Antarctica","Shackleton","Survival","Nonfiction"],
+    why: "Ernest Shackleton's ship is crushed by Antarctic ice in 1915 and his crew of 27 spends 634 days surviving by extraordinary leadership and luck. Lansing reconstructs it from diaries — one of the greatest survival stories ever told.",
+    search: "Endurance Alfred Lansing",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['cold'], theme:['survival','community','identity'], avoid:['none'], character:['driven','ensemble'], length:['medium'], mood:['escape','wonder'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Sapiens",
+    author: "Yuval Noah Harari",
+    tags: ["Human History","Big Ideas","Nonfiction","Provocative"],
+    why: "A brief history of humankind from the cognitive revolution to the present. Harari is willing to make large claims with confidence — some are dazzling, some are debatable, all make you see the world differently.",
+    search: "Sapiens Yuval Noah Harari",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['warm'], theme:['power','community','identity'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['think','wonder'], time:['afternoon'], secret:['history','wonder'] }
+  },
+  {
+    title: "Thinking, Fast and Slow",
+    author: "Daniel Kahneman",
+    tags: ["Psychology","Cognition","Nonfiction","Mind"],
+    why: "A Nobel laureate psychologist explains the two systems that drive the way we think — fast, intuitive System 1 and slow, deliberate System 2 — and all the ways our minds systematically deceive us.",
+    search: "Thinking Fast and Slow Daniel Kahneman",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold'], theme:['identity','power'], avoid:['none','violence'], character:['observer'], length:['long'], mood:['think','understand'], time:['afternoon'], secret:['history','wonder'] }
+  },
+  {
+    title: "The Righteous Mind",
+    author: "Jonathan Haidt",
+    tags: ["Morality","Politics","Psychology","Nonfiction"],
+    why: "A social psychologist explains why good people are divided by politics and religion — arguing that moral intuitions come first and reasoning follows, which is why arguing rarely changes anyone's mind.",
+    search: "The Righteous Mind Jonathan Haidt",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['community','power','identity'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['think','understand'], time:['afternoon'], secret:['history','wonder'] }
+  },
+  {
+    title: "The Body Keeps the Score",
+    author: "Bessel van der Kolk",
+    tags: ["Trauma","Psychology","Healing","Nonfiction"],
+    why: "A psychiatrist explains how trauma literally reshapes the brain and body, and what actually helps — not just talk therapy. Changed how clinicians and patients alike understand what trauma does and what recovery requires.",
+    search: "The Body Keeps the Score Bessel van der Kolk",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['trauma','identity','survival'], avoid:['none'], character:['observer'], length:['long'], mood:['understand','think'], time:['morning'], secret:['empathy','history'] }
+  },
+  {
+    title: "When Things Fall Apart",
+    author: "Pema Chodron",
+    tags: ["Buddhism","Grief","Practice","Wisdom"],
+    why: "A Buddhist nun writes about using difficult times — fear, loss, failure — as a path to awakening rather than an obstacle. Practical, compassionate, and radically honest about how hard it is to sit with discomfort.",
+    search: "When Things Fall Apart Pema Chodron",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['cold'], theme:['grief','identity','survival'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand','company'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "The Power of Now",
+    author: "Eckhart Tolle",
+    tags: ["Spirituality","Presence","Philosophy","Wellness"],
+    why: "A guide to escaping the prison of the thinking mind by living fully in the present moment. Whether or not you buy the metaphysics, the core argument — that most suffering is created by thoughts about the past and future — is hard to dismiss.",
+    search: "The Power of Now Eckhart Tolle",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['warm'], theme:['identity','love'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand','wonder'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Atomic Habits",
+    author: "James Clear",
+    tags: ["Habits","Self-improvement","Practical","Nonfiction"],
+    why: "A practical guide to building good habits and breaking bad ones through tiny changes that compound over time. Clear is a former athlete who writes about behavior change without the usual self-help bluster.",
+    search: "Atomic Habits James Clear",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['warm'], theme:['identity','survival'], avoid:['none','violence'], character:['driven'], length:['short'], mood:['understand','think'], time:['morning'], secret:['wonder','empathy'] }
+  },
+  {
+    title: "Daring Greatly",
+    author: "Brene Brown",
+    tags: ["Vulnerability","Courage","Research","Nonfiction"],
+    why: "A social researcher argues that vulnerability — the willingness to show up without armor — is not weakness but the birthplace of courage, creativity, and connection. Changed a lot of people's understanding of shame.",
+    search: "Daring Greatly Brene Brown",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['warm'], theme:['love','identity','community'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand','company'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "The Seat of the Soul",
+    author: "Gary Zukav",
+    tags: ["Spirituality","Evolution","Purpose","Nonfiction"],
+    why: "A physicist-turned-spiritual writer argues that humanity is evolving from five-sensory beings to multi-sensory ones who can perceive intention and meaning beyond the physical. Beloved by millions for a reason.",
+    search: "The Seat of the Soul Gary Zukav",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['warm'], theme:['identity','love'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['wonder','understand'], time:['morning'], secret:['wonder','empathy'] }
+  },
+  {
+    title: "The Bell Jar",
+    author: "Sylvia Plath",
+    tags: ["Mental Illness","1950s","Women","Autobiographical"],
+    why: "A brilliant young woman unravels during a summer internship in New York — and Plath writes the descent into depression with the same precision she brings to her poetry. Autobiographical in all the ways that matter.",
+    search: "The Bell Jar Sylvia Plath",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['identity','survival','trauma'], avoid:['darkness'], character:['observer'], length:['short'], mood:['understand','think'], time:['night'], secret:['empathy','dark'] }
+  },
+  {
+    title: "The Hours",
+    author: "Michael Cunningham",
+    tags: ["Woolf","Three Women","One Day","Parallel Lives"],
+    why: "Three women on the same day across different centuries — Virginia Woolf writing Mrs Dalloway, a 1950s housewife reading it, and a contemporary New Yorker living her own version of it. A Pulitzer winner that earns every page.",
+    search: "The Hours Michael Cunningham",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','grief'], avoid:['none'], character:['ensemble','observer'], length:['short'], mood:['feel','think'], time:['afternoon'], secret:['empathy','art'] }
+  },
+  {
+    title: "Mrs Dalloway",
+    author: "Virginia Woolf",
+    tags: ["London","One Day","Stream of Consciousness","Classic"],
+    why: "Clarissa Dalloway prepares for a party; Septimus Warren Smith, a shell-shocked veteran, moves through the same city. Woolf invented a way of writing interior thought that changed the novel forever.",
+    search: "Mrs Dalloway Virginia Woolf",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','grief'], avoid:['none'], character:['observer','ensemble'], length:['short'], mood:['think','feel'], time:['afternoon'], secret:['art','empathy'] }
+  },
+  {
+    title: "To the Lighthouse",
+    author: "Virginia Woolf",
+    tags: ["Scotland","Family","Time","Modernist"],
+    why: "A family spends summers at a Scottish lighthouse; the middle section is a single italicised passage of time passing in which people die. Woolf's formal daring and emotional depth are inseparable here.",
+    search: "To the Lighthouse Virginia Woolf",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','grief','family'], avoid:['none','violence'], character:['observer','ensemble'], length:['short'], mood:['think','feel'], time:['sunday'], secret:['art','empathy'] }
+  },
+  {
+    title: "Orlando",
+    author: "Virginia Woolf",
+    tags: ["Gender","Centuries","Fantasy","Biography"],
+    why: "A young Elizabethan nobleman who wakes up one day as a woman, and lives through four centuries of English history. Woolf's most playful novel — a love letter to Vita Sackville-West written in the form of a biography.",
+    search: "Orlando Virginia Woolf",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium'], world:['cold'], theme:['identity','love'], avoid:['none','violence'], character:['driven','observer'], length:['short'], mood:['wonder','escape'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "Ulysses",
+    author: "James Joyce",
+    tags: ["Dublin","One Day","Modernist","Classic"],
+    why: "Leopold Bloom walks through Dublin on June 16, 1904. Joyce follows his every thought, sensation, and digression across 700 pages of virtuoso prose that changed what the novel could do. The most ambitious book in English.",
+    search: "Ulysses James Joyce",
+    match: { feeling:['exhilarated','moved'], pace:['slow'], world:['cold'], theme:['love','identity','community'], avoid:['none'], character:['observer','driven'], length:['long'], mood:['challenge','think'], time:['sunday'], secret:['art','history'] }
+  },
+  {
+    title: "A Portrait of the Artist as a Young Man",
+    author: "James Joyce",
+    tags: ["Ireland","Coming-of-age","Catholic","Classic"],
+    why: "Stephen Dedalus grows up in Catholic Ireland and slowly, painfully separates himself from family, country, and church to become an artist. Joyce's first novel — cleaner and more accessible than Ulysses, and in some ways more devastating.",
+    search: "A Portrait of the Artist as a Young Man James Joyce",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['identity','power','creativity'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "Dubliners",
+    author: "James Joyce",
+    tags: ["Short Stories","Dublin","Epiphany","Classic"],
+    why: "Fifteen stories about Dublin at the turn of the century, each ending in what Joyce called an epiphany — a sudden, clarifying moment of recognition. The final story, The Dead, is the finest short story in English.",
+    search: "Dubliners James Joyce",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['identity','community','love'], avoid:['none','violence'], character:['observer','ensemble'], length:['short'], mood:['think','feel'], time:['afternoon'], secret:['art','empathy'] }
+  },
+  {
+    title: "The Sound and the Fury",
+    author: "William Faulkner",
+    tags: ["Mississippi","Decline","Voices","Classic"],
+    why: "The collapse of a Southern aristocratic family told four times from four different perspectives — including a man with a cognitive disability and a section of pure stream of consciousness. Faulkner's greatest and most demanding novel.",
+    search: "The Sound and the Fury William Faulkner",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['warm'], theme:['family','identity','grief'], avoid:['none'], character:['ensemble','observer'], length:['medium'], mood:['think','challenge'], time:['sunday'], secret:['history','dark'] }
+  },
+  {
+    title: "As I Lay Dying",
+    author: "William Faulkner",
+    tags: ["Mississippi","Death","Road Trip","Multiple Voices"],
+    why: "A Mississippi farming family transports their mother's coffin to Jefferson for burial across fifteen narrators and days of extraordinary suffering. Faulkner's most formally perfect novel — including a chapter of only five words.",
+    search: "As I Lay Dying William Faulkner",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['warm'], theme:['family','survival','grief'], avoid:['none'], character:['ensemble'], length:['short'], mood:['think','challenge'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "Light in August",
+    author: "William Faulkner",
+    tags: ["Mississippi","Race","Identity","Tragedy"],
+    why: "Joe Christmas doesn't know if he's white or Black — and in 1930s Mississippi, that uncertainty destroys him. Faulkner's most accessible novel is also his most direct about the violence at the heart of Southern identity.",
+    search: "Light in August William Faulkner",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['warm'], theme:['identity','power','survival'], avoid:['darkness'], character:['driven'], length:['long'], mood:['understand','think'], time:['sunday'], secret:['history','dark'] }
+  },
+  {
+    title: "Absalom, Absalom!",
+    author: "William Faulkner",
+    tags: ["Mississippi","Dynasty","Race","Gothic"],
+    why: "Four narrators try to piece together the story of Thomas Sutpen and the dynasty he built and destroyed. Faulkner's most ambitious novel — about how the South narrates itself into being, and the lies that narrative requires.",
+    search: "Absalom Absalom William Faulkner",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['warm'], theme:['family','power','identity'], avoid:['none'], character:['ensemble','observer'], length:['long'], mood:['challenge','think'], time:['sunday'], secret:['history','dark'] }
+  },
+  {
+    title: "Tender is the Night",
+    author: "F Scott Fitzgerald",
+    tags: ["Riviera","Decline","Glamour","Tragedy"],
+    why: "A brilliant psychiatrist marries his patient and watches his own gifts slowly drain into her recovery. Fitzgerald's most autobiographical novel — less perfect than Gatsby, more devastating.",
+    search: "Tender is the Night F Scott Fitzgerald",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['warm'], theme:['love','identity','power'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['feel','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Sun Also Rises",
+    author: "Ernest Hemingway",
+    tags: ["Paris","Lost Generation","Bullfighting","Love"],
+    why: "American and British expatriates drift from Paris to Pamplona and back. Hemingway's first novel is also his sharpest — a perfect depiction of people using activity and drink to avoid the things that have broken them.",
+    search: "The Sun Also Rises Ernest Hemingway",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['warm'], theme:['love','grief','identity'], avoid:['none'], character:['observer','ensemble'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "A Farewell to Arms",
+    author: "Ernest Hemingway",
+    tags: ["WWI","Love","War","Tragedy"],
+    why: "An American ambulance officer falls in love with a British nurse on the Italian front. Hemingway strips the romance of every illusion, and what's left is one of the most unsentimental love stories ever written.",
+    search: "A Farewell to Arms Ernest Hemingway",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['love','survival','grief'], avoid:['none'], character:['driven'], length:['medium'], mood:['feel','understand'], time:['afternoon'], secret:['history','romance'] }
+  },
+  {
+    title: "The Stranger in the Lifeboat",
+    author: "Mitch Albom",
+    tags: ["Survival","Faith","Mystery","Sea"],
+    why: "Ten survivors of a shipwreck in a lifeboat rescue a man who claims to be God. A short, propulsive novel about belief, desperation, and what people hold onto when everything else is gone.",
+    search: "The Stranger in the Lifeboat Mitch Albom",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['warm'], theme:['love','survival','identity'], avoid:['none'], character:['ensemble'], length:['short'], mood:['feel','wonder'], time:['afternoon'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Tuesdays with Morrie",
+    author: "Mitch Albom",
+    tags: ["Memoir","Death","Wisdom","Friendship"],
+    why: "A journalist visits his dying former professor every Tuesday and records the lessons he imparts about how to live. Simple, warm, and quietly radical in its insistence that a good death requires a considered life.",
+    search: "Tuesdays with Morrie Mitch Albom",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['cold'], theme:['love','grief','friendship'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['company','understand'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "The Five People You Meet in Heaven",
+    author: "Mitch Albom",
+    tags: ["Afterlife","Redemption","Fable","Short"],
+    why: "An old man dies saving a child and in heaven meets five people who explain what his life meant. A fable about interconnection — how the lives we barely touch can shape everything.",
+    search: "The Five People You Meet in Heaven Mitch Albom",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['warm'], theme:['love','community','identity'], avoid:['none','violence'], character:['driven'], length:['short'], mood:['feel','wonder'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "The Pilot's Wife",
+    author: "Anita Shreve",
+    tags: ["Grief","Secrets","Crash","Marriage"],
+    why: "A woman learns her husband's plane has gone down and then learns things about him that rewrite their entire marriage. Shreve writes domestic devastation with precision and control.",
+    search: "The Pilot's Wife Anita Shreve",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['cold'], theme:['love','secrets','grief'], avoid:['none'], character:['observer','driven'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['twist','empathy'] }
+  },
+  {
+    title: "The Last Letter from Your Lover",
+    author: "Jojo Moyes",
+    tags: ["Letters","1960s","Love Story","Dual Timeline"],
+    why: "A journalist in the present discovers a cache of love letters from the 1960s and tries to track down the people involved. Moyes at her most romantic — two love stories separated by fifty years that mirror and illuminate each other.",
+    search: "The Last Letter from Your Lover Jojo Moyes",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['love','identity','secrets'], avoid:['none','violence'], character:['driven','observer'], length:['medium'], mood:['feel','company'], time:['afternoon'], secret:['history','romance'] }
+  },
+  {
+    title: "The Time Traveler's Wife",
+    author: "Audrey Niffenegger",
+    tags: ["Time Travel","Romance","Bittersweet","Unique"],
+    why: "A man with a genetic disorder that makes him involuntarily travel through time, and the woman who loves him across every version of his life. A love story built around absence and the impossibility of holding on.",
+    search: "The Time Traveler's Wife Audrey Niffenegger",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['love','survival','identity'], avoid:['none'], character:['driven','observer'], length:['long'], mood:['feel','escape'], time:['afternoon'], secret:['wonder','romance'] }
+  },
+  {
+    title: "Outlander",
+    author: "Diana Gabaldon",
+    tags: ["Scotland","Time Travel","Romance","Historical"],
+    why: "A WWII combat nurse stumbles through standing stones and lands in 18th-century Scotland, where she falls in love with a Highland warrior. Enormously entertaining — Gabaldon combines historical research, adventure, and romance into something wholly her own.",
+    search: "Outlander Diana Gabaldon",
+    match: { feeling:['exhilarated','moved'], pace:['medium'], world:['cold'], theme:['love','survival','identity'], avoid:['darkness'], character:['driven'], length:['long'], mood:['escape','feel'], time:['night'], secret:['history','romance'] }
+  },
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins Reid",
+    tags: ["Old Hollywood","Secrets","Bisexual","Glamour"],
+    why: "An aging Hollywood icon finally tells her story — including the love she hid for fifty years. Reid writes celebrity and desire with equal attention, and the structure keeps you off-balance right to the end.",
+    search: "The Seven Husbands of Evelyn Hugo Taylor Jenkins Reid",
+    match: { feeling:['moved','exhilarated'], pace:['fast'], world:['warm'], theme:['love','identity','secrets'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['history','romance'] }
+  },
+  {
+    title: "Daisy Jones and the Six",
+    author: "Taylor Jenkins Reid",
+    tags: ["Rock and Roll","1970s","Oral History","Romance"],
+    why: "The rise and fall of a fictional 1970s rock band, told as an oral history. Reid writes music and ambition with real heat, and the format — a chorus of competing voices — perfectly captures how every great story has multiple true versions.",
+    search: "Daisy Jones and the Six Taylor Jenkins Reid",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['warm'], theme:['love','creativity','identity'], avoid:['none'], character:['ensemble'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['history','romance'] }
+  },
+  {
+    title: "Malibu Rising",
+    author: "Taylor Jenkins Reid",
+    tags: ["California","Family","One Night","Secrets"],
+    why: "Four famous siblings host their legendary annual party on one night in 1983 — and by morning everything will have burned down. Reid is exceptional at this kind of slow-motion revelation.",
+    search: "Malibu Rising Taylor Jenkins Reid",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['warm'], theme:['family','secrets','identity'], avoid:['none'], character:['ensemble'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['twist','history'] }
+  },
+  {
+    title: "One True Loves",
+    author: "Taylor Jenkins Reid",
+    tags: ["Romance","Loss","Choice","Love Triangle"],
+    why: "A woman whose husband was presumed dead after a helicopter crash has rebuilt her life and fallen in love again — and then he's found alive. Reid asks what love means when circumstances make choosing inevitable.",
+    search: "One True Loves Taylor Jenkins Reid",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['warm'], theme:['love','identity','grief'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['feel','understand'], time:['afternoon'], secret:['romance','twist'] }
+  },
+  {
+    title: "The Midnight Library",
+    author: "Matt Haig",
+    tags: ["Alternate Lives","Regret","Hopeful","Short"],
+    why: "A woman who wants to die finds herself in a library between life and death where she can try every version of her life she might have lived. A book about choosing to stay, written with real tenderness.",
+    search: "The Midnight Library Matt Haig novel",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['cold'], theme:['identity','love','survival'], avoid:['none'], character:['driven'], length:['short'], mood:['company','feel'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Reasons to Stay Alive",
+    author: "Matt Haig",
+    tags: ["Memoir","Depression","Recovery","Honest"],
+    why: "Haig's own account of collapsing into depression and anxiety at 24 and finding a way back. Honest, fast-moving, and not falsely hopeful — one of the best books written about mental illness from the inside.",
+    search: "Reasons to Stay Alive Matt Haig",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['cold'], theme:['survival','identity','love'], avoid:['none'], character:['observer'], length:['short'], mood:['company','understand'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "I Am the Messenger",
+    author: "Markus Zusak",
+    tags: ["Australia","Mystery","Young Adult","Mission"],
+    why: "An underachieving cab driver begins receiving playing cards in the mail with addresses on them — and at each address, someone needs something only he can give. A novel about what it means to do something that matters.",
+    search: "I Am the Messenger Markus Zusak",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['warm'], theme:['community','identity','love'], avoid:['none'], character:['driven'], length:['medium'], mood:['wonder','feel'], time:['afternoon'], secret:['empathy','twist'] }
+  },
+  {
+    title: "The Perks of Being a Wallflower",
+    author: "Stephen Chbosky",
+    tags: ["Coming-of-age","Letters","High School","Sensitive"],
+    why: "Charlie writes anonymous letters to a stranger about his freshman year — the friends who accept him, the music that saves him, and the memories he's not ready to look at directly. A beloved, careful novel about learning to participate.",
+    search: "The Perks of Being a Wallflower Stephen Chbosky",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['cold'], theme:['identity','friendship','trauma'], avoid:['none'], character:['observer'], length:['short'], mood:['company','feel'], time:['night'], secret:['empathy','dark'] }
+  },
+  {
+    title: "The Fault in Our Stars",
+    author: "John Green",
+    tags: ["Cancer","Young Adult","Love","Bittersweet"],
+    why: "Two teenagers with cancer fall in love at a support group. Green writes mortality with honesty and wit, refusing both false hope and false despair. The novel that made millions of readers trust YA.",
+    search: "The Fault in Our Stars John Green",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['cold'], theme:['love','survival','identity'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['feel','company'], time:['afternoon'], secret:['empathy','romance'] }
+  },
+  {
+    title: "Looking for Alaska",
+    author: "John Green",
+    tags: ["Boarding School","Grief","Mystery","Friendship"],
+    why: "A boy leaves Florida for a boarding school in Alabama and falls into the orbit of Alaska Young. Green's debut — raw, funny, and genuinely ambivalent about whether understanding can substitute for presence.",
+    search: "Looking for Alaska John Green",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['cold'], theme:['friendship','grief','identity'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['feel','company'], time:['night'], secret:['empathy','dark'] }
+  },
+  {
+    title: "Turtles All the Way Down",
+    author: "John Green",
+    tags: ["OCD","Friendship","Mystery","Teen"],
+    why: "A sixteen-year-old with OCD investigates the disappearance of a billionaire while her intrusive thoughts spiral. Green's most personal novel — a precise depiction of what it feels like when your own mind won't leave you alone.",
+    search: "Turtles All the Way Down John Green",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['cold'], theme:['identity','friendship','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['empathy','dark'] }
+  },
+  {
+    title: "The Giver",
+    author: "Lois Lowry",
+    tags: ["Dystopia","Memory","Young Adult","Classic"],
+    why: "A boy in a seemingly perfect society is selected to be the Receiver of Memory — the only person who will know what the world was before sameness was chosen over pain. A short, devastating fable about what we sacrifice for safety.",
+    search: "The Giver Lois Lowry",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['cold'], theme:['identity','power','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['think','wonder'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "The Maze Runner",
+    author: "James Dashner",
+    tags: ["Dystopia","Survival","Young Adult","Mystery"],
+    why: "A boy wakes up in a clearing surrounded by a vast maze with no memory of his past. Dashner builds tension relentlessly and the mystery of what the maze is for drives you forward.",
+    search: "The Maze Runner James Dashner",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['survival','identity','secrets'], avoid:['none'], character:['driven'], length:['medium'], mood:['escape','wonder'], time:['night'], secret:['twist','dark'] }
+  },
+  {
+    title: "Divergent",
+    author: "Veronica Roth",
+    tags: ["Dystopia","Factions","Young Adult","Action"],
+    why: "A future Chicago divided into five factions by personality type — and a girl who doesn't fit any of them. Roth writes action with real velocity and the world-building is genuinely inventive.",
+    search: "Divergent Veronica Roth",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['cold'], theme:['identity','survival','power'], avoid:['none'], character:['driven'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['dark','wonder'] }
+  },
+  {
+    title: "An Untamed State",
+    author: "Roxane Gay",
+    tags: ["Haiti","Kidnapping","Trauma","Recovery"],
+    why: "A Haitian-American woman is kidnapped outside her parents' gate and held for ransom. Gay writes her captivity and its aftermath with an unflinching directness that makes this one of the most difficult and important novels about surviving violence.",
+    search: "An Untamed State Roxane Gay",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['warm'], theme:['survival','identity','love'], avoid:['darkness'], character:['driven'], length:['medium'], mood:['understand','feel'], time:['afternoon'], secret:['dark','empathy'] }
+  },
+  {
+    title: "Hunger",
+    author: "Roxane Gay",
+    tags: ["Memoir","Body","Trauma","Honest"],
+    why: "Gay writes about her body, her appetite, and the assault at thirteen that changed her relationship to both. A memoir that refuses to resolve neatly — honest about how healing is not linear and bodies hold what minds try to forget.",
+    search: "Hunger Roxane Gay memoir",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['identity','survival','trauma'], avoid:['darkness'], character:['observer'], length:['short'], mood:['understand','think'], time:['morning'], secret:['empathy','dark'] }
+  },
+  {
+    title: "Bad Feminist",
+    author: "Roxane Gay",
+    tags: ["Essays","Feminism","Culture","Funny"],
+    why: "Roxane Gay on race, gender, and pop culture — arguing that you can love things that are imperfect, hold contradictions, and still be a feminist. Sharp, warm, and consistently more interesting than its provocative title.",
+    search: "Bad Feminist Roxane Gay",
+    match: { feeling:['exhilarated','moved'], pace:['medium'], world:['warm'], theme:['identity','community','power'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['think','company'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "We Need New Names",
+    author: "NoViolet Bulawayo",
+    tags: ["Zimbabwe","America","Immigration","Coming-of-age"],
+    why: "A girl named Darling grows up in a shantytown in Zimbabwe and then immigrates to Michigan, where she must mourn the country she left and the person she was there. Bulawayo writes Zimbabwe and America with the same unsentimental love.",
+    search: "We Need New Names NoViolet Bulawayo",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['warm'], theme:['identity','community','survival'], avoid:['none'], character:['observer'], length:['short'], mood:['understand','feel'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Nervous Conditions",
+    author: "Tsitsi Dangarembga",
+    tags: ["Zimbabwe","Education","Women","Colonialism"],
+    why: "A girl in colonial Rhodesia fights for an education in the 1960s — watching the women around her pay different prices for different versions of assimilation. The first novel published in English by a Black Zimbabwean woman.",
+    search: "Nervous Conditions Tsitsi Dangarembga",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['warm'], theme:['identity','power','family'], avoid:['none'], character:['observer'], length:['medium'], mood:['understand','think'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Season of Migration to the North",
+    author: "Tayeb Salih",
+    tags: ["Sudan","Europe","Identity","Postcolonial"],
+    why: "A man returns to his village in Sudan after studying in England and hears the story of Mustafa Sa'eed — who went in the other direction and left destruction in his wake. A postcolonial mirror image of Heart of Darkness.",
+    search: "Season of Migration to the North Tayeb Salih",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['warm'], theme:['identity','power','love'], avoid:['none'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Midnight in Chernobyl",
+    author: "Adam Higginbotham",
+    tags: ["Chernobyl","Soviet Union","Disaster","Nonfiction"],
+    why: "The definitive account of the Chernobyl disaster — the institutional failures, the heroism, the cover-up, and the long aftermath. Higginbotham spent a decade on this and it reads like a thriller that happens to be entirely true.",
+    search: "Midnight in Chernobyl Adam Higginbotham",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['power','survival','community'], avoid:['none'], character:['ensemble'], length:['long'], mood:['think','escape'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "The Hare with Amber Eyes",
+    author: "Edmund de Waal",
+    tags: ["Family History","Art","Diaspora","Objects"],
+    why: "A potter traces his family's history through a collection of 264 Japanese netsuke — tiny carved objects that survived the Nazis, the Japanese internment of foreign property, and the dissolution of the great Ephrussi banking dynasty.",
+    search: "The Hare with Amber Eyes Edmund de Waal",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['family','identity','love'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['understand','wonder'], time:['sunday'], secret:['history','art'] }
+  },
+  {
+    title: "The Warmth of Other Suns",
+    author: "Isabel Wilkerson",
+    tags: ["Great Migration","Civil Rights","Nonfiction","Epic"],
+    why: "The story of the Great Migration — six million Black Americans who left the South between 1915 and 1970 — told through three people's lives. Wilkerson writes narrative nonfiction that feels as intimate as a novel.",
+    search: "The Warmth of Other Suns Isabel Wilkerson",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['warm'], theme:['survival','community','identity'], avoid:['none'], character:['ensemble'], length:['long'], mood:['understand','feel'], time:['sunday'], secret:['history','empathy'] }
+  },
+  {
+    title: "Caste",
+    author: "Isabel Wilkerson",
+    tags: ["Race","America","India","Nonfiction"],
+    why: "Wilkerson argues that America's racial hierarchy is not merely about race but about caste — a fixed ranking as rigid as India's — and draws connections across three systems: America, India, and Nazi Germany. Essential and brilliantly argued.",
+    search: "Caste Isabel Wilkerson",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['warm'], theme:['power','community','identity'], avoid:['none'], character:['observer'], length:['medium'], mood:['think','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Between the World and Me",
+    author: "Ta-Nehisi Coates",
+    tags: ["Race","America","Letter","Memoir"],
+    why: "Written as a letter to his teenage son, Coates describes what it means to inhabit a Black body in America — the fear, the history, and the struggle against the Dream. One of the essential books about race in America.",
+    search: "Between the World and Me Ta-Nehisi Coates",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['warm'], theme:['identity','power','community'], avoid:['none'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Fire Next Time",
+    author: "James Baldwin",
+    tags: ["Race","America","Letter","Classic"],
+    why: "Two essays — one a letter to his nephew, one a meditation on the Nation of Islam and American Christianity — that together make the most powerful argument ever written about race and love in America. Baldwin at his most urgent.",
+    search: "The Fire Next Time James Baldwin",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['warm'], theme:['identity','power','community'], avoid:['none'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Shipping News",
+    author: "Annie Proulx",
+    tags: ["Newfoundland","Grief","Reinvention","Bleak Humor"],
+    why: "A hapless newspaper reporter moves to Newfoundland with his two daughters after his wife dies and stumbles into a life he didn't plan. Proulx writes the cold Atlantic coast with a physical specificity that makes it feel like weather you're standing in.",
+    search: "The Shipping News Annie Proulx",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['grief','identity','community'], avoid:['none'], character:['driven'], length:['medium'], mood:['understand','company'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Brokeback Mountain",
+    author: "Annie Proulx",
+    tags: ["Wyoming","Love","Silence","Short"],
+    why: "Two ranch hands spend a summer on Brokeback Mountain and fall into a love neither can name or act on for the next twenty years. Proulx's short story is one of the most devastating pieces of American fiction ever written.",
+    search: "Brokeback Mountain Annie Proulx",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['cold'], theme:['love','identity','grief'], avoid:['none'], character:['driven'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['empathy','dark'] }
+  },
+  {
+    title: "Olive Kitteridge",
+    author: "Elizabeth Strout",
+    tags: ["Maine","Short Stories","Marriage","Difficult Women"],
+    why: "Thirteen linked stories from a small Maine coastal town, orbiting the prickly, difficult, occasionally magnificent Olive Kitteridge. Strout writes ordinary grief and quiet heroism with the precision of a poet.",
+    search: "Olive Kitteridge Elizabeth Strout",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','community','identity'], avoid:['none','violence'], character:['observer','ensemble'], length:['medium'], mood:['understand','feel'], time:['afternoon'], secret:['empathy','line'] }
+  },
+  {
+    title: "My Name Is Lucy Barton",
+    author: "Elizabeth Strout",
+    tags: ["Mother and Daughter","Illness","Memory","Short"],
+    why: "A woman recovering from surgery in a New York hospital is visited by her mother, whom she hasn't seen in years. Five days of conversation that holds decades of silence. Strout's most compressed and devastating novel.",
+    search: "My Name Is Lucy Barton Elizabeth Strout",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','family','identity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['empathy','line'] }
+  },
+  {
+    title: "Oh William!",
+    author: "Elizabeth Strout",
+    tags: ["Divorce","Aging","Mystery","Quiet"],
+    why: "Lucy Barton accompanies her ex-husband on a trip to Maine to investigate the mother he never knew. Strout writes loneliness and the persistence of love after a marriage ends with her characteristic surgical gentleness.",
+    search: "Oh William Elizabeth Strout",
+    match: { feeling:['moved','hopeful'], pace:['slow'], world:['cold'], theme:['love','grief','identity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand','feel'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "A Man Called Ove",
+    author: "Fredrik Backman",
+    tags: ["Sweden","Grief","Curmudgeon","Warmth"],
+    why: "A bitter, lonely widower who has decided to die keeps being interrupted by new neighbors who need things from him. Backman writes grief disguised as irritability and finds enormous warmth in the people we dismiss.",
+    search: "A Man Called Ove Fredrik Backman",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['cold'], theme:['love','community','grief'], avoid:['none','violence'], character:['driven'], length:['medium'], mood:['company','feel'], time:['morning'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Anxious People",
+    author: "Fredrik Backman",
+    tags: ["Sweden","Hostage Situation","Comedy","Kindness"],
+    why: "A failed bank robber accidentally takes a group of apartment viewers hostage on New Year's Eve. Backman writes human failure and unexpected kindness at full comedic speed, with a tenderness that earns every tear.",
+    search: "Anxious People Fredrik Backman",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['cold'], theme:['community','love','identity'], avoid:['none','violence'], character:['ensemble'], length:['medium'], mood:['company','feel'], time:['afternoon'], secret:['empathy','twist'] }
+  },
+  {
+    title: "Beartown",
+    author: "Fredrik Backman",
+    tags: ["Sweden","Hockey","Community","Assault"],
+    why: "A hockey-obsessed Swedish town tears itself apart when a star player assaults a girl before the championship game. Backman at his most serious — a novel about how communities protect their own and who gets sacrificed.",
+    search: "Beartown Fredrik Backman",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['community','power','identity'], avoid:['darkness'], character:['ensemble'], length:['long'], mood:['understand','think'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "The Almost Moon",
+    author: "Alice Sebold",
+    tags: ["Mother","Murder","Memory","Dark"],
+    why: "A woman kills her elderly mother in the first sentence and the rest of the novel unpacks the lifetime that led to it. Sebold writes the specific claustrophobia of being someone's caretaker with unflinching honesty.",
+    search: "The Almost Moon Alice Sebold",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['cold'], theme:['family','identity','trauma'], avoid:['darkness'], character:['observer'], length:['short'], mood:['think','understand'], time:['night'], secret:['dark','empathy'] }
+  },
+  {
+    title: "The Lovely Bones",
+    author: "Alice Sebold",
+    tags: ["Heaven","Murder","Grief","Family"],
+    why: "A fourteen-year-old girl narrates her own afterlife while watching her family grieve and her killer go free. Sebold writes from a place that should be maudlin but isn't — the grief is real and the narrator is full of life.",
+    search: "The Lovely Bones Alice Sebold",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['grief','family','love'], avoid:['darkness'], character:['observer'], length:['medium'], mood:['feel','understand'], time:['afternoon'], secret:['empathy','wonder'] }
+  },
+  {
+    title: "Before I Go to Sleep",
+    author: "S J Watson",
+    tags: ["Amnesia","Thriller","Unreliable","Domestic"],
+    why: "A woman wakes up every morning unable to remember her life before a certain age — and her journal tells her that she cannot trust the man who says he's her husband. A psychological thriller of frightening compression.",
+    search: "Before I Go to Sleep SJ Watson",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['identity','secrets','survival'], avoid:['none'], character:['observer'], length:['medium'], mood:['escape','think'], time:['night'], secret:['twist','dark'] }
+  },
+  {
+    title: "The Silent Patient",
+    author: "Alex Michaelides",
+    tags: ["Thriller","Art","Silence","Twist"],
+    why: "A famous painter shoots her husband five times and then never speaks again. A criminal psychotherapist becomes obsessed with making her talk. The twist is genuinely earned — Michaelides hides it in plain sight.",
+    search: "The Silent Patient Alex Michaelides",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['secrets','identity','survival'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['escape','think'], time:['night'], secret:['twist','dark'] }
+  },
+  {
+    title: "The Couple Next Door",
+    author: "Shari Lapena",
+    tags: ["Domestic Thriller","Baby","Secrets","Neighbors"],
+    why: "A couple leaves their infant at home to attend a party next door and comes back to find her gone. Everyone in this novel is hiding something. Lapena writes the specific dread of domestic life with real efficiency.",
+    search: "The Couple Next Door Shari Lapena",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['secrets','family','survival'], avoid:['none'], character:['ensemble'], length:['short'], mood:['escape','think'], time:['night'], secret:['twist','dark'] }
+  },
+  {
+    title: "Big Little Lies",
+    author: "Liane Moriarty",
+    tags: ["Australia","Mothers","Murder","Dark Humor"],
+    why: "Three women at a school trivia night — and a death that occurs at it — told backward from the inquest. Moriarty writes suburban female friendship with both comedy and genuine darkness.",
+    search: "Big Little Lies Liane Moriarty",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['warm'], theme:['secrets','community','power'], avoid:['none'], character:['ensemble'], length:['medium'], mood:['escape','think'], time:['afternoon'], secret:['twist','dark'] }
+  },
+  {
+    title: "Nine Perfect Strangers",
+    author: "Liane Moriarty",
+    tags: ["Wellness Retreat","Secrets","Dark Humor","Australia"],
+    why: "Nine guests arrive at a luxury health retreat run by a director who has plans for them that go well beyond smoothies and meditation. Moriarty's most propulsive novel — funny and then genuinely alarming.",
+    search: "Nine Perfect Strangers Liane Moriarty",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['warm'], theme:['identity','secrets','survival'], avoid:['none'], character:['ensemble'], length:['medium'], mood:['escape','think'], time:['afternoon'], secret:['twist','dark'] }
+  },
+  {
+    title: "The Husband's Secret",
+    author: "Liane Moriarty",
+    tags: ["Australia","Secrets","Marriage","Three Women"],
+    why: "A woman finds a letter from her husband marked 'to be opened in the event of my death' — and opens it while he's alive. Three women's stories converge on one buried secret. Moriarty at her most structurally satisfying.",
+    search: "The Husband's Secret Liane Moriarty",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['warm'], theme:['secrets','love','family'], avoid:['none'], character:['ensemble'], length:['medium'], mood:['escape','feel'], time:['afternoon'], secret:['twist','dark'] }
+  },
+  {
+    title: "The Miniaturist",
+    author: "Jessie Burton",
+    tags: ["Amsterdam","17th Century","Mystery","Marriage"],
+    why: "A young woman marries a wealthy Amsterdam merchant in 1686 and receives a cabinet of her new home — along with a miniaturist who seems to know things that haven't happened yet. Atmospheric and deeply unsettling.",
+    search: "The Miniaturist Jessie Burton",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['identity','secrets','love'], avoid:['none'], character:['observer','driven'], length:['medium'], mood:['escape','think'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "The Essex Serpent",
+    author: "Sarah Perry",
+    tags: ["Victorian","Fossils","Marsh","Ideas"],
+    why: "A recently widowed woman travels to an Essex village to investigate rumors of a sea serpent and forms an extraordinary friendship — maybe more — with the local vicar. Perry writes Victorian England with genuine warmth and intellectual density.",
+    search: "The Essex Serpent Sarah Perry",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['love','identity','community'], avoid:['none','violence'], character:['driven','observer'], length:['medium'], mood:['feel','wonder'], time:['afternoon'], secret:['history','romance'] }
+  },
+  {
+    title: "Bellman and Black",
+    author: "Penelope Fitzgerald",
+    tags: ["Rooks","Victorian","Bargain","Atmospheric"],
+    why: "A Victorian businessman who kills a rook as a boy seems to thrive — until a mysterious stranger appears at funerals and offers him a deal. Fitzgerald writes English melancholy with absolute precision.",
+    search: "Bellman and Black Penelope Fitzgerald",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['secrets','identity','grief'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['think','feel'], time:['afternoon'], secret:['dark','history'] }
+  },
+  {
+    title: "The Blue Flower",
+    author: "Penelope Fitzgerald",
+    tags: ["Germany","18th Century","Love","Philosophy"],
+    why: "The poet Novalis falls in love with a twelve-year-old girl and calls her his philosophy. Fitzgerald's final novel is strange, beautiful, and about a kind of idealism that the world cannot sustain.",
+    search: "The Blue Flower Penelope Fitzgerald",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','creativity'], avoid:['none','violence'], character:['driven','observer'], length:['short'], mood:['think','wonder'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "The Gate at the Stairs",
+    author: "Lorrie Moore",
+    tags: ["Midwest","9/11","Coming-of-age","Babysitting"],
+    why: "A college student babysits for a family that is more complicated than it appears, in a Midwestern university town just after 9/11. Moore writes with devastating wit and an ear for dialogue that is almost uncomfortably exact.",
+    search: "The Gate at the Stairs Lorrie Moore",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['identity','community','grief'], avoid:['none'], character:['observer'], length:['medium'], mood:['think','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Birds of America",
+    author: "Lorrie Moore",
+    tags: ["Short Stories","Dark Humor","Loss","America"],
+    why: "Twelve stories about Americans at the edges of their lives — divorces, deaths, cancers, failed relationships — written in a voice that is both coldly funny and genuinely heartbroken. Moore is one of the finest short story writers alive.",
+    search: "Birds of America Lorrie Moore",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['love','grief','identity'], avoid:['none'], character:['observer'], length:['short'], mood:['think','feel'], time:['afternoon'], secret:['empathy','dark'] }
+  },
+  {
+    title: "The Buried Giant",
+    author: "Kazuo Ishiguro",
+    tags: ["Post-Arthurian","Memory","Fable","Journey"],
+    why: "An elderly couple set out across a Britain wrapped in collective forgetting. Ishiguro asks whether a long marriage built on forgotten pain is still love — and whether there are mercies in not remembering.",
+    search: "The Buried Giant Ishiguro",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','grief','identity'], avoid:['none','violence'], character:['ensemble'], length:['medium'], mood:['think','understand'], time:['sunday'], secret:['history','empathy'] }
+  },
+  {
+    title: "Stoner",
+    author: "John Williams",
+    tags: ["Academia","Quiet Life","Failure","Rediscovered"],
+    why: "A Missouri farm boy becomes an English professor and lives an unremarkable life of quiet disappointments and private joys. Published in 1965 and largely ignored — then rediscovered as one of the greatest American novels ever written.",
+    search: "Stoner John Williams",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','creativity'], avoid:['none','violence'], character:['driven','observer'], length:['medium'], mood:['understand','think'], time:['sunday'], secret:['empathy','line'] }
+  },
+  {
+    title: "Augustus",
+    author: "John Williams",
+    tags: ["Rome","Letters","Power","Biography"],
+    why: "The life of Rome's first emperor told entirely through letters and documents by those who knew him. Williams won the National Book Award for this — a formally perfect historical novel about power, loneliness, and the cost of greatness.",
+    search: "Augustus John Williams",
+    match: { feeling:['moved','exhilarated'], pace:['slow'], world:['warm'], theme:['power','identity','love'], avoid:['none'], character:['ensemble','observer'], length:['medium'], mood:['understand','think'], time:['sunday'], secret:['history','art'] }
+  },
+  {
+    title: "The Magus",
+    author: "John Fowles",
+    tags: ["Greece","Games","Identity","Mind-bending"],
+    why: "A young English teacher on a Greek island is drawn into an elaborate psychological game by a mysterious millionaire. Fowles keeps the reader as disoriented as his protagonist — a labyrinthine novel about the construction of self.",
+    search: "The Magus John Fowles",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['warm'], theme:['identity','secrets','power'], avoid:['none'], character:['driven','observer'], length:['long'], mood:['think','wonder'], time:['night'], secret:['twist','dark'] }
+  },
+  {
+    title: "The French Lieutenant's Woman",
+    author: "John Fowles",
+    tags: ["Victorian","Metafiction","Love","Choices"],
+    why: "A Victorian gentleman falls for a mysterious, fallen woman — and the novel offers multiple endings, pausing to acknowledge the author's own presence. A postmodern love story that works as both a Victorian novel and its own critique.",
+    search: "The French Lieutenant's Woman John Fowles",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['love','identity','power'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['think','feel'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "The Alexandria Quartet",
+    author: "Lawrence Durrell",
+    tags: ["Egypt","Four Perspectives","Love","Modernist"],
+    why: "The same love affairs in Alexandria told four times, each time from a different narrator who changes everything. Durrell's prose is the most sensuous in English — rich, hot, and full of the city's decay and splendor.",
+    search: "The Alexandria Quartet Lawrence Durrell",
+    match: { feeling:['moved','exhilarated'], pace:['slow'], world:['warm'], theme:['love','identity','secrets'], avoid:['none'], character:['ensemble','observer'], length:['long'], mood:['feel','wonder'], time:['sunday'], secret:['history','art'] }
+  },
+  {
+    title: "The Passion",
+    author: "Jeanette Winterson",
+    tags: ["Napoleon","Venice","Fantasy","Love"],
+    why: "Henri cooks for Napoleon and Villanelle deals cards in Venice — and their story weaves together history, magic, and an obsessive love that neither can escape. Winterson at her most intoxicating.",
+    search: "The Passion Jeanette Winterson",
+    match: { feeling:['moved','exhilarated'], pace:['medium'], world:['warm'], theme:['love','identity','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['feel','wonder'], time:['night'], secret:['history','romance'] }
+  },
+  {
+    title: "Oranges Are Not the Only Fruit",
+    author: "Jeanette Winterson",
+    tags: ["Lancashire","Religion","Sexuality","Autobiographical"],
+    why: "A girl raised in an evangelical household in Lancashire discovers she is attracted to women and is cast out by the people who were supposed to love her. Winterson writes with fury, humor, and an absolute refusal to be ashamed.",
+    search: "Oranges Are Not the Only Fruit Jeanette Winterson",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['identity','love','family'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Written on the Body",
+    author: "Jeanette Winterson",
+    tags: ["Love","Illness","Genderless","Body"],
+    why: "A nameless, genderless narrator describes a love affair with a married woman who is diagnosed with cancer. Winterson never reveals the narrator's gender — an experiment in whether love can be read as pure experience.",
+    search: "Written on the Body Jeanette Winterson",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','grief','identity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['feel','think'], time:['night'], secret:['art','romance'] }
+  },
+  {
+    title: "The Remains of the Day",
+    author: "Kazuo Ishiguro",
+    tags: ["England","Regret","Service","Classic"],
+    why: "A butler drives across England and slowly reveals the decades he spent serving the wrong master and denying the love of the wrong woman. Ishiguro's most perfectly constructed novel — devastating in its quietness.",
+    search: "Remains of the Day Ishiguro",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','grief'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['understand','think'], time:['afternoon'], secret:['empathy','history'] }
+  },
+  {
+    title: "Moon Tiger",
+    author: "Penelope Lively",
+    tags: ["WWII","Egypt","Memory","Non-linear"],
+    why: "A dying historian reviews her life — her brother, her lover killed in Egypt, the child she gave away. Lively's Booker winner tells the same events from multiple perspectives as memory shifts and loses focus.",
+    search: "Moon Tiger Penelope Lively",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['warm'], theme:['love','grief','identity'], avoid:['none'], character:['observer'], length:['medium'], mood:['think','feel'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Possession",
+    author: "A S Byatt",
+    tags: ["Victorian Poets","Parallel Romance","Academia","Mystery"],
+    why: "Two scholars discover letters between two Victorian poets who had a secret love affair — and the modern story mirrors the historical one. Byatt's Booker winner is a literary mystery and a novel of ideas that also manages to be genuinely romantic.",
+    search: "Possession AS Byatt",
+    match: { feeling:['moved','exhilarated'], pace:['medium'], world:['cold'], theme:['love','secrets','creativity'], avoid:['none'], character:['driven','observer'], length:['long'], mood:['think','wonder'], time:['sunday'], secret:['history','romance'] }
+  },
+  {
+    title: "The Children's Book",
+    author: "A S Byatt",
+    tags: ["Edwardian","Arts and Crafts","Fabian","Epic"],
+    why: "A vast novel about the children of English Fabian intellectuals growing up in the shadow of WWI, full of fairy tales, pottery, and the catastrophic failure of progressive idealism. Byatt's most ambitious work.",
+    search: "The Children's Book AS Byatt",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['family','creativity','identity'], avoid:['none'], character:['ensemble'], length:['long'], mood:['think','wonder'], time:['sunday'], secret:['history','art'] }
+  },
+  {
+    title: "The Lacuna",
+    author: "Barbara Kingsolver",
+    tags: ["Mexico","Trotsky","Art","Exile"],
+    why: "A man who cooked for Diego Rivera and Frida Kahlo, served as Trotsky's secretary in Mexico City, and then fled to America to become a famous novelist. Kingsolver weaves 20th-century history into one of her most formally inventive works.",
+    search: "The Lacuna Barbara Kingsolver",
+    match: { feeling:['moved','exhilarated'], pace:['medium'], world:['warm'], theme:['identity','power','creativity'], avoid:['none'], character:['driven','observer'], length:['long'], mood:['wonder','think'], time:['sunday'], secret:['history','art'] }
+  },
+  {
+    title: "A Pale View of Hills",
+    author: "Kazuo Ishiguro",
+    tags: ["Japan","Memory","Grief","Unsettling"],
+    why: "A Japanese woman living in England remembers a summer in postwar Nagasaki. Ishiguro's debut is deliberately quiet and deliberately ambiguous — a novel that reveals its horror only when you look back at it.",
+    search: "A Pale View of Hills Kazuo Ishiguro",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold'], theme:['grief','identity','love'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['dark','empathy'] }
+  },
+  {
+    title: "When We Were Orphans",
+    author: "Kazuo Ishiguro",
+    tags: ["Shanghai","Detective","Memory","Unreliable"],
+    why: "A celebrated English detective travels to 1937 Shanghai to find his parents, who disappeared when he was a child. Ishiguro slowly makes the reader realize the narrator's grip on reality is not what we assumed.",
+    search: "When We Were Orphans Kazuo Ishiguro",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['identity','grief','secrets'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['think','wonder'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "The Unconsoled",
+    author: "Kazuo Ishiguro",
+    tags: ["Dreamlike","European City","Pianist","Surreal"],
+    why: "A famous pianist arrives in a European city to give a concert he cannot quite remember agreeing to, in a city that keeps reshaping itself around his obligations. Ishiguro's most divisive novel is also his strangest and most visionary.",
+    search: "The Unconsoled Kazuo Ishiguro",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold'], theme:['identity','grief','creativity'], avoid:['none'], character:['observer','driven'], length:['long'], mood:['wonder','think'], time:['night'], secret:['dark','art'] }
+  },
+  {
+    title: "The White Album",
+    author: "Joan Didion",
+    tags: ["California","1960s","Fragments","Essays"],
+    why: "Didion's second collection of essays, structured around the thesis that 'we tell ourselves stories in order to live' — and that in 1968 California, the stories stopped working. The title essay is the greatest piece of American journalism.",
+    search: "The White Album Joan Didion",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['warm'], theme:['identity','power','community'], avoid:['none'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "Play It as It Lays",
+    author: "Joan Didion",
+    tags: ["Hollywood","Breakdown","Nihilism","Short"],
+    why: "Maria drives the freeways of Los Angeles while trying not to feel anything. Didion's novel is 214 pages of short chapters and devastating white space — a portrait of a woman being erased by a world that doesn't see her.",
+    search: "Play It as It Lays Joan Didion",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['warm'], theme:['identity','grief','survival'], avoid:['darkness'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['dark','history'] }
+  },
+  {
+    title: "Outline",
+    author: "Rachel Cusk",
+    tags: ["Greece","Conversations","Identity","Autofiction"],
+    why: "A writer teaches a creative writing course in Athens and conducts a series of conversations with people on the plane, at dinner, in workshops. Cusk describes herself hardly at all — her identity emerges only in her attention to others.",
+    search: "Outline Rachel Cusk",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['warm'], theme:['identity','love','creativity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['think','wonder'], time:['afternoon'], secret:['art','empathy'] }
+  },
+  {
+    title: "Transit",
+    author: "Rachel Cusk",
+    tags: ["London","Renovation","Identity","Autofiction"],
+    why: "The second in Cusk's Outline trilogy — a writer renovating a London flat while navigating conversations about marriage, writing, and how we narrate our own lives. Formally radical, and quietly addictive.",
+    search: "Transit Rachel Cusk",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold'], theme:['identity','love','creativity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['art','empathy'] }
+  },
+  {
+    title: "Kudos",
+    author: "Rachel Cusk",
+    tags: ["Literary Festival","Identity","Fame","Autofiction"],
+    why: "The final Outline novel — a writer attends literary festivals and interviews, speaking and listening, while the world she's narrated closes its shape around her. The trilogy's quietest and most complete conclusion.",
+    search: "Kudos Rachel Cusk",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold'], theme:['identity','creativity','love'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['think','wonder'], time:['afternoon'], secret:['art','empathy'] }
+  },
+  {
+    title: "Open Water",
+    author: "Caleb Azumah Nelson",
+    tags: ["London","Black British","Love","Photography"],
+    why: "Two young Black British artists fall in love in South London. Nelson writes in the second person — you do this, you feel that — and the effect is both intimate and politically precise about the vulnerability of Black bodies in British public space.",
+    search: "Open Water Caleb Azumah Nelson",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','community'], avoid:['none'], character:['driven'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['empathy','art'] }
+  },
+  {
+    title: "Small Pleasures",
+    author: "Clare Chambers",
+    tags: ["1950s","England","Immaculate Conception","Quiet"],
+    why: "A journalist for a suburban newspaper in 1957 investigates a woman who claims her daughter was conceived without a man — and becomes entangled in the story in ways she didn't foresee. A small, perfect novel about lives narrowed by convention.",
+    search: "Small Pleasures Clare Chambers",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','identity','secrets'], avoid:['none','violence'], character:['observer','driven'], length:['short'], mood:['understand','feel'], time:['afternoon'], secret:['history','twist'] }
+  },
+  {
+    title: "The Corrections",
+    author: "Jonathan Franzen",
+    tags: ["Midwestern Family","Holiday","Decline","Ambitious"],
+    why: "Three adult children try to organize one last Christmas gathering before their father's Parkinson's makes it impossible. Franzen writes the American family in the 1990s with the ambition of a Victorian novelist and the specificity of a social anthropologist.",
+    search: "The Corrections Jonathan Franzen",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['family','identity','love'], avoid:['none'], character:['ensemble'], length:['long'], mood:['understand','think'], time:['sunday'], secret:['history','empathy'] }
+  },
+  {
+    title: "Freedom",
+    author: "Jonathan Franzen",
+    tags: ["Marriage","Politics","America","Epic"],
+    why: "A marriage and its discontents — Walter's bird conservation obsession, Patty's frustrated ambitions, their son's rebellion — laid bare across four decades. Franzen's most complete novel and his most sympathetic.",
+    search: "Freedom Jonathan Franzen",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','family','identity'], avoid:['none'], character:['ensemble'], length:['long'], mood:['understand','think'], time:['sunday'], secret:['history','empathy'] }
+  },
+  {
+    title: "White Noise",
+    author: "Don DeLillo",
+    tags: ["Suburbs","Death","Consumer Culture","Dark Comedy"],
+    why: "A professor of Hitler Studies at a small Ohio college navigates a toxic cloud disaster, his wife's secret pill addiction, and his own terror of death. DeLillo's funniest and most prescient novel about American anxiety.",
+    search: "White Noise Don DeLillo",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['cold'], theme:['identity','power','community'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['think','wonder'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Underworld",
+    author: "Don DeLillo",
+    tags: ["Cold War","America","Baseball","Epic"],
+    why: "A baseball hit in the 1951 Giants-Dodgers playoff game connects a vast cast of Americans across fifty years of Cold War history. DeLillo's masterpiece — sprawling, brilliant, and obsessed with the hidden connections beneath American life.",
+    search: "Underworld Don DeLillo",
+    match: { feeling:['moved','exhilarated'], pace:['slow'], world:['cold'], theme:['community','power','identity'], avoid:['none'], character:['ensemble'], length:['long'], mood:['think','wonder'], time:['sunday'], secret:['history','art'] }
+  },
+  {
+    title: "Libra",
+    author: "Don DeLillo",
+    tags: ["JFK","Conspiracy","Lee Harvey Oswald","History"],
+    why: "A fictional account of Lee Harvey Oswald's life and the conspiracy that ends with Kennedy's assassination. DeLillo takes the great American paranoid event and imagines it from the inside — unsettling in exactly the right way.",
+    search: "Libra Don DeLillo",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['cold'], theme:['power','identity','secrets'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['think','escape'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "The Virgin Suicides",
+    author: "Jeffrey Eugenides",
+    tags: ["Suburbs","Memory","Obsession","Michigan"],
+    why: "Five teenage sisters in 1970s suburban Michigan, observed from across the street by the neighborhood boys who will never stop trying to understand them. A haunting first novel about the limits of perspective and the violence of being seen.",
+    search: "The Virgin Suicides Jeffrey Eugenides",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['identity','community','grief'], avoid:['darkness'], character:['observer'], length:['short'], mood:['think','wonder'], time:['afternoon'], secret:['dark','history'] }
+  },
+  {
+    title: "Middlesex",
+    author: "Jeffrey Eugenides",
+    tags: ["Intersex","Greek-American","Detroit","Epic"],
+    why: "Cal narrates the genetic mutation that makes him intersex and the three generations of his Greek family in Detroit that led to his existence. Eugenides writes with Homeric ambition and real warmth — a Pulitzer winner.",
+    search: "Middlesex Jeffrey Eugenides",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['warm'], theme:['identity','family','community'], avoid:['none'], character:['observer','driven'], length:['long'], mood:['wonder','understand'], time:['sunday'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Marriage Plot",
+    author: "Jeffrey Eugenides",
+    tags: ["1980s","Love Triangle","Academia","Manic Depression"],
+    why: "A Brown graduate in love with two very different men — one brilliant and mentally ill, one kind and conventional. Eugenides' most intimate novel, about whether love can be separated from the narrative shapes we impose on it.",
+    search: "The Marriage Plot Jeffrey Eugenides",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['love','identity','friendship'], avoid:['none'], character:['driven','observer'], length:['medium'], mood:['feel','think'], time:['afternoon'], secret:['history','romance'] }
+  },
+  {
+    title: "Interpreter of Maladies",
+    author: "Jhumpa Lahiri",
+    tags: ["Short Stories","India","Diaspora","Quiet"],
+    why: "Nine stories about the distances between people — between cultures, between husbands and wives, between who we were and who we became. Lahiri won the Pulitzer for this debut, and it's fully deserved.",
+    search: "Interpreter of Maladies Jhumpa Lahiri short stories",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['warm'], theme:['love','identity','family'], avoid:['none','violence'], character:['observer','ensemble'], length:['short'], mood:['understand','feel'], time:['morning'], secret:['empathy','history'] }
+  },
+  {
+    title: "The Namesake",
+    author: "Jhumpa Lahiri",
+    tags: ["Bengali-American","Naming","Two Generations","Identity"],
+    why: "A Bengali couple immigrate to Boston and raise a son who rejects the name they gave him — and the culture it carries. Lahiri's novel is about what parents can't transmit and children can't quite shed.",
+    search: "The Namesake Jhumpa Lahiri",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['identity','family','love'], avoid:['none','violence'], character:['driven','ensemble'], length:['medium'], mood:['understand','feel'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "Half of a Yellow Sun",
+    author: "Chimamanda Ngozi Adichie",
+    tags: ["Nigeria","Biafra","War","Love"],
+    why: "Two sisters and the people who love them during the Nigerian-Biafran War of the late 1960s. Adichie writes politics and intimacy with equal precision — her most ambitious and heartbreaking novel.",
+    search: "Half of a Yellow Sun Chimamanda Ngozi Adichie",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['warm'], theme:['love','survival','identity'], avoid:['darkness'], character:['ensemble'], length:['long'], mood:['feel','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "An African in Greenland",
+    author: "Tete-Michel Kpomassie",
+    tags: ["Togo","Greenland","Travel","Adventure"],
+    why: "A young man from Togo reads a book about Greenland as a teenager and spends ten years making his way there. When he arrives, he lives with Inuit communities for a year. A wholly original travel memoir about the pull of an impossible dream.",
+    search: "An African in Greenland Tete-Michel Kpomassie",
+    match: { feeling:['exhilarated','hopeful'], pace:['medium'], world:['cold'], theme:['identity','community','survival'], avoid:['none','violence'], character:['driven','observer'], length:['medium'], mood:['wonder','escape'], time:['afternoon'], secret:['history','wonder'] }
+  },
+  {
+    title: "The Motorcycle Diaries",
+    author: "Ernesto Che Guevara",
+    tags: ["South America","Road Trip","Young","Discovery"],
+    why: "A twenty-three-year-old medical student and his friend ride a motorbike across South America and see the poverty and injustice that will radicalize him. Not political propaganda — a travel memoir full of humor and genuine wonder.",
+    search: "The Motorcycle Diaries Ernesto Che Guevara",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['warm'], theme:['identity','community','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['wonder','escape'], time:['afternoon'], secret:['history','wonder'] }
+  },
+  {
+    title: "In Patagonia",
+    author: "Bruce Chatwin",
+    tags: ["Argentina","Travel","Eccentric","Classic"],
+    why: "Chatwin travels to the far south of Argentina ostensibly to find a piece of giant sloth skin — and accumulates a collection of strange, vivid portraits of the people marooned at the edge of the world. The book that invented literary travel writing.",
+    search: "In Patagonia Bruce Chatwin",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['cold'], theme:['identity','community'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['wonder','escape'], time:['afternoon'], secret:['history','wonder'] }
+  },
+  {
+    title: "The Songlines",
+    author: "Bruce Chatwin",
+    tags: ["Australia","Aboriginal","Walking","Philosophy"],
+    why: "Chatwin travels with Aboriginal Australians and explores the songlines — the invisible paths across the continent that map a spiritual geography. Part travel writing, part philosophical meditation on why humans need to move.",
+    search: "The Songlines Bruce Chatwin",
+    match: { feeling:['moved','exhilarated'], pace:['medium'], world:['warm'], theme:['identity','community','survival'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['wonder','think'], time:['morning'], secret:['history','wonder'] }
+  },
+  {
+    title: "Under the Tuscan Sun",
+    author: "Frances Mayes",
+    tags: ["Italy","Renovation","Food","Memoir"],
+    why: "A poet buys a dilapidated house in Tuscany and spends years restoring it — and herself. The book that launched a thousand relocation fantasies, written with real attention to place, food, and the pleasure of making something beautiful.",
+    search: "Under the Tuscan Sun Frances Mayes",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['warm'], theme:['love','identity','community'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['escape','company'], time:['morning'], secret:['wonder','empathy'] }
+  },
+  {
+    title: "A Year in Provence",
+    author: "Peter Mayle",
+    tags: ["France","Renovation","Food","Humor"],
+    why: "An English advertising executive moves to Provence and spends a year navigating plumbers, truffle hunters, and the full calendar of French rural life. Warm, funny, and the original expatriate memoir.",
+    search: "A Year in Provence Peter Mayle",
+    match: { feeling:['hopeful','exhilarated'], pace:['medium'], world:['warm'], theme:['community','identity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['company','escape'], time:['morning'], secret:['wonder','empathy'] }
+  },
+  {
+    title: "Eat Pray Love",
+    author: "Elizabeth Gilbert",
+    tags: ["Italy","India","Bali","Memoir"],
+    why: "After a devastating divorce, Gilbert spends a year eating in Italy, praying in India, and loving in Bali. Beloved by millions, argued about by critics — a book about the difficulty and necessity of choosing yourself.",
+    search: "Eat Pray Love Elizabeth Gilbert",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['warm'], theme:['identity','love','survival'], avoid:['none','violence'], character:['driven'], length:['medium'], mood:['escape','understand'], time:['morning'], secret:['wonder','empathy'] }
+  },
+  {
+    title: "Big Magic",
+    author: "Elizabeth Gilbert",
+    tags: ["Creativity","Fear","Ideas","Nonfiction"],
+    why: "Gilbert's argument that creativity is available to everyone and fear should be invited along for the ride, not defeated. Practical, warm, and full of the kind of permission many creative people need to hear.",
+    search: "Big Magic Elizabeth Gilbert",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['warm'], theme:['identity','creativity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['wonder','understand'], time:['morning'], secret:['wonder','art'] }
+  },
+  {
+    title: "The Artist's Way",
+    author: "Julia Cameron",
+    tags: ["Creativity","Recovery","Exercises","Nonfiction"],
+    why: "A twelve-week program for recovering creative confidence through morning pages and artist dates. Cameron frames creative blocks as spiritual wounds — an unconventional argument that has helped millions of people make things.",
+    search: "The Artist's Way Julia Cameron",
+    match: { feeling:['hopeful','exhilarated'], pace:['slow'], world:['warm'], theme:['identity','creativity'], avoid:['none','violence'], character:['observer'], length:['medium'], mood:['understand','wonder'], time:['morning'], secret:['wonder','art'] }
+  },
+  {
+    title: "On Writing",
+    author: "Stephen King",
+    tags: ["Memoir","Craft","Advice","Honest"],
+    why: "Half memoir, half writing manual — King describes his childhood reading, his early career, the accident that nearly killed him, and the practical tools he uses to write. The most useful and honest book about writing in print.",
+    search: "On Writing Stephen King",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['cold'], theme:['creativity','identity','survival'], avoid:['none'], character:['observer'], length:['short'], mood:['understand','company'], time:['morning'], secret:['empathy','art'] }
+  },
+  {
+    title: "Bird by Bird",
+    author: "Anne Lamott",
+    tags: ["Writing","Advice","Humor","Memoir"],
+    why: "Anne Lamott's classic guide to writing and life — including the concept of 'shitty first drafts' and the instruction to work on things one small piece at a time, bird by bird. Funny, encouraging, and permanently useful.",
+    search: "Bird by Bird Anne Lamott",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['cold'], theme:['creativity','identity'], avoid:['none','violence'], character:['observer'], length:['short'], mood:['company','understand'], time:['morning'], secret:['empathy','art'] }
+  },
+  {
+    title: "The Hitchhiker",
+    author: "Flann O'Brien",
+    tags: ["Ireland","Absurdist","Metafiction","Comedy"],
+    why: "Actually, this is At Swim-Two-Birds — a student writes a novel whose characters revolt against their author and write their own story. O'Brien's masterpiece is one of the funniest and strangest novels in English.",
+    search: "At Swim-Two-Birds Flann O'Brien",
+    match: { feeling:['exhilarated','unsettled'], pace:['medium'], world:['cold'], theme:['creativity','identity'], avoid:['none','violence'], character:['observer','driven'], length:['medium'], mood:['wonder','escape'], time:['night'], secret:['art','twist'] }
+  },
+  {
+    title: "The Third Policeman",
+    author: "Flann O'Brien",
+    tags: ["Ireland","Afterlife","Bicycles","Surreal"],
+    why: "A man murders for money, and the novel that follows may be hell. O'Brien creates a logic for his world — involving bicycles, atoms, and policemen — that is internally perfect and utterly insane. One of the strangest masterpieces in Irish literature.",
+    search: "The Third Policeman Flann O'Brien",
+    match: { feeling:['unsettled','exhilarated'], pace:['medium'], world:['cold'], theme:['identity','survival','secrets'], avoid:['none'], character:['observer'], length:['short'], mood:['wonder','think'], time:['night'], secret:['dark','art'] }
+  },
+  {
+    title: "Murphy",
+    author: "Samuel Beckett",
+    tags: ["London","Absurdism","Mental Hospital","Dark Comedy"],
+    why: "Murphy wants to sit naked in his rocking chair and achieve a perfect mental detachment from the physical world — and ends up working in a psychiatric ward. Beckett's first novel is dark, funny, and more accessible than his later work.",
+    search: "Murphy Samuel Beckett",
+    match: { feeling:['unsettled','exhilarated'], pace:['slow'], world:['cold'], theme:['identity'], avoid:['none'], character:['observer'], length:['short'], mood:['think','wonder'], time:['afternoon'], secret:['art','dark'] }
+  },
+  {
+    title: "The Trial",
+    author: "Franz Kafka",
+    tags: ["Absurdism","Bureaucracy","Guilt","Classic"],
+    why: "Josef K is arrested one morning without being told what he's accused of, and spends the novel trying to navigate a legal system that makes less and less sense. Kafka wrote the defining metaphor for modern bureaucratic power.",
+    search: "The Trial Franz Kafka",
+    match: { feeling:['unsettled'], pace:['medium'], world:['cold'], theme:['power','identity','survival'], avoid:['none'], character:['driven','observer'], length:['short'], mood:['think'], time:['afternoon'], secret:['dark','history'] }
+  },
+  {
+    title: "The Metamorphosis",
+    author: "Franz Kafka",
+    tags: ["Absurdism","Family","Alienation","Classic"],
+    why: "Gregor Samsa wakes up as a giant insect and his family slowly stops being able to see him as a person. Kafka's most famous story is about the precise mechanisms by which families erase their most inconvenient members.",
+    search: "The Metamorphosis Franz Kafka",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['cold'], theme:['family','identity','power'], avoid:['none'], character:['observer'], length:['short'], mood:['think','feel'], time:['afternoon'], secret:['dark','history'] }
+  },
+  {
+    title: "The Castle",
+    author: "Franz Kafka",
+    tags: ["Absurdism","Bureaucracy","Village","Unfinished"],
+    why: "A land surveyor arrives at a village to work for the Castle and can never quite establish his position there — the authorities are always one step removed, the village never fully accepts him. Kafka's unfinished masterpiece.",
+    search: "The Castle Franz Kafka",
+    match: { feeling:['unsettled'], pace:['slow'], world:['cold'], theme:['power','identity','survival'], avoid:['none'], character:['driven'], length:['medium'], mood:['think'], time:['afternoon'], secret:['dark','history'] }
+  },
+  {
+    title: "The Periodic Table",
+    author: "Primo Levi",
+    tags: ["Chemistry","Holocaust","Memoir","Elements"],
+    why: "Twenty-one chapters named after chemical elements, each one a story from Levi's life — including Auschwitz. The finest and strangest Holocaust memoir, written by a chemist who thought in molecules and metaphors simultaneously.",
+    search: "The Periodic Table Primo Levi",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['identity','survival','creativity'], avoid:['none'], character:['observer'], length:['medium'], mood:['understand','wonder'], time:['afternoon'], secret:['history','art'] }
+  },
+  {
+    title: "If This Is a Man",
+    author: "Primo Levi",
+    tags: ["Holocaust","Auschwitz","Memoir","Essential"],
+    why: "Levi's account of the eleven months he spent in Auschwitz, told with the precision of a scientist and the moral seriousness of a philosopher. One of the essential books — a work that insists on understanding exactly what happened and why.",
+    search: "If This Is a Man Primo Levi",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['survival','identity','community'], avoid:['darkness'], character:['observer'], length:['short'], mood:['understand','think'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Drowned and the Saved",
+    author: "Primo Levi",
+    tags: ["Holocaust","Ethics","Memory","Essay"],
+    why: "Levi's final book — essays written forty years after Auschwitz about memory, shame, communication, and what the Holocaust requires us to understand. More philosophical than If This Is a Man, and written in the shadow of its author's death.",
+    search: "The Drowned and the Saved Primo Levi",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['identity','power','survival'], avoid:['none'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','empathy'] }
+  },
+  {
+    title: "The Reader",
+    author: "Bernhard Schlink",
+    tags: ["Germany","War Crime","Love","Shame"],
+    why: "A fifteen-year-old boy has an affair with an older woman who is later revealed as a Nazi guard. Schlink's novel about how the postwar generation relates to the perpetrators of the Holocaust is morally complex and impossible to put down.",
+    search: "The Reader Bernhard Schlink",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['cold'], theme:['love','guilt','identity'], avoid:['darkness'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','dark'] }
   }
 ];
 
