@@ -9600,6 +9600,558 @@ const books = [
     why: "A fifteen-year-old boy has an affair with an older woman who is later revealed as a Nazi guard. Schlink's novel about how the postwar generation relates to the perpetrators of the Holocaust is morally complex and impossible to put down.",
     search: "The Reader Bernhard Schlink",
     match: { feeling:['unsettled','moved'], pace:['fast'], world:['cold'], theme:['love','guilt','identity'], avoid:['darkness'], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['history','dark'] }
+  },
+  {
+    title: "Giovanni's Room",
+    author: "James Baldwin",
+    tags: ["Paris","Identity","Desire","1950s"],
+    why: "An American man in Paris falls in love with an Italian bartender while engaged to a woman. Baldwin's devastating, beautiful short novel about desire, shame, and self-deception remains one of the most honest books ever written about the cost of not being yourself.",
+    search: "Giovanni's Room James Baldwin",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['glamorous'], theme:['identity','love','guilt'], avoid:['darkness'], character:['observer'], length:['short'], mood:['understand','feel'], time:['evening'], secret:['dark','identity'] }
+  },
+  {
+    title: "A Gentleman in Moscow",
+    author: "Amor Towles",
+    tags: ["Russia","Hotel","History","Elegance"],
+    why: "A count sentenced to house arrest in a luxury Moscow hotel for decades finds that a life of depth can be lived within narrow walls. Civilized, witty, and deeply warming — Towles makes confinement feel like a privilege.",
+    search: "A Gentleman in Moscow Amor Towles",
+    match: { feeling:['cozy','hopeful'], pace:['slow'], world:['glamorous'], theme:['resilience','history','identity'], avoid:['darkness'], character:['witty'], length:['long'], mood:['escape','enjoy'], time:['evening'], secret:['history','comfort'] }
+  },
+  {
+    title: "The Midnight Library",
+    author: "Matt Haig",
+    tags: ["Fantasy","Regret","Second Chances","Hopeful"],
+    why: "Between life and death lies a library of every life you could have lived. Nora gets to explore them all. Haig's novel is a warm, clever thought experiment about how we measure a life — and why the one we have might be the right one after all.",
+    search: "The Midnight Library Matt Haig",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['magical'], theme:['regret','identity','resilience'], avoid:['darkness'], character:['relatable'], length:['medium'], mood:['feel','escape'], time:['night'], secret:['comfort','second-chances'] }
+  },
+  {
+    title: "Piranesi",
+    author: "Susanna Clarke",
+    tags: ["Fantasy","Mystery","Labyrinth","Strange"],
+    why: "A man lives in a House with infinite halls, statues, and tides — and writes meticulous journals about it. Clarke's slim, singular novel is a puzzle box that opens into something vast and unexpectedly tender. You will not see the ending coming.",
+    search: "Piranesi Susanna Clarke",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['magical'], theme:['identity','mystery'], avoid:[], character:['observer'], length:['short'], mood:['escape','think'], time:['night'], secret:['strange','puzzle'] }
+  },
+  {
+    title: "The Dutch House",
+    author: "Ann Patchett",
+    tags: ["Family","Wealth","Siblings","Memory"],
+    why: "A brother and sister are exiled from their grand family home and spend decades orbiting it. Patchett writes about inheritance — of houses, wounds, and love — with extraordinary precision.",
+    search: "The Dutch House Ann Patchett",
+    match: { feeling:['moved','nostalgic'], pace:['medium'], world:['cold'], theme:['family','resilience','identity'], avoid:['darkness'], character:['relatable'], length:['medium'], mood:['understand','feel'], time:['afternoon'], secret:['family','wealth'] }
+  },
+  {
+    title: "Americanah",
+    author: "Chimamanda Ngozi Adichie",
+    tags: ["Nigeria","Race","Immigration","Love"],
+    why: "Ifemelu leaves Nigeria for America and discovers she has become Black. Adichie's sharp, funny, tender novel follows two lovers separated by continents and years, and delivers some of the most incisive writing about race in America you will ever read.",
+    search: "Americanah Chimamanda Ngozi Adichie",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['identity','love','race'], avoid:[], character:['strong'], length:['long'], mood:['understand','think'], time:['weekend'], secret:['race','immigration'] }
+  },
+  {
+    title: "The House in the Cerulean Sea",
+    author: "TJ Klune",
+    tags: ["Fantasy","Cozy","Found Family","Magical Creatures"],
+    why: "A caseworker for magical children is sent to investigate a mysterious orphanage and falls in love — with the place, the people, and the headmaster. Warm, funny, and deeply kind, this is the comfort fantasy novel the world needed.",
+    search: "The House in the Cerulean Sea TJ Klune",
+    match: { feeling:['cozy','hopeful'], pace:['medium'], world:['magical'], theme:['found-family','love','belonging'], avoid:['darkness'], character:['relatable'], length:['medium'], mood:['escape','enjoy'], time:['weekend'], secret:['comfort','queer'] }
+  },
+  {
+    title: "Tomorrow, and Tomorrow, and Tomorrow",
+    author: "Gabrielle Zevin",
+    tags: ["Video Games","Friendship","Love","Creativity"],
+    why: "Two friends make video games together for thirty years. This is a love story that refuses to be a romance — about creation, collaboration, success, grief, and what we owe the people we can't live without.",
+    search: "Tomorrow and Tomorrow and Tomorrow Gabrielle Zevin",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['vivid'], theme:['friendship','creativity','love'], avoid:[], character:['relatable'], length:['long'], mood:['feel','think'], time:['weekend'], secret:['art','nostalgia'] }
+  },
+  {
+    title: "Stoner",
+    author: "John Williams",
+    tags: ["Quiet Life","Academia","Resilience","Underrated"],
+    why: "A Missouri farm boy becomes a literature professor and lives a quiet, largely unlucky life. That is the entire plot. And yet this is one of the most quietly devastating books ever written — proof that an ordinary life, fully witnessed, is extraordinary.",
+    search: "Stoner John Williams",
+    match: { feeling:['moved','melancholy'], pace:['slow'], world:['cold'], theme:['resilience','identity','love'], avoid:['darkness'], character:['observer'], length:['medium'], mood:['understand','think'], time:['evening'], secret:['quiet','underrated'] }
+  },
+  {
+    title: "Mexican Gothic",
+    author: "Silvia Moreno-Garcia",
+    tags: ["Horror","Gothic","Mexico","1950s"],
+    why: "A glamorous socialite goes to rescue her cousin from a creepy mansion in the Mexican highlands. Gothic horror with lush atmosphere, a menacing house full of secrets, and a razor-sharp heroine who does not take nonsense from anyone — alive or dead.",
+    search: "Mexican Gothic Silvia Moreno-Garcia",
+    match: { feeling:['unsettled','curious'], pace:['fast'], world:['vivid'], theme:['mystery','survival'], avoid:[], character:['strong'], length:['medium'], mood:['escape','scared'], time:['night'], secret:['dark','gothic'] }
+  },
+  {
+    title: "Daisy Jones and The Six",
+    author: "Taylor Jenkins Reid",
+    tags: ["Music","1970s","Oral History","Rock and Roll"],
+    why: "A fictional oral history of a 1970s rock band's rise and implosion, told entirely in interviews. Reid makes you completely forget this band never existed — the music feels real, the drama is addictive, and Daisy Jones herself is unforgettable.",
+    search: "Daisy Jones and The Six Taylor Jenkins Reid",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['glamorous'], theme:['creativity','love','friendship'], avoid:[], character:['witty'], length:['medium'], mood:['escape','enjoy'], time:['weekend'], secret:['music','nostalgia'] }
+  },
+  {
+    title: "Olive Kitteridge",
+    author: "Elizabeth Strout",
+    tags: ["Maine","Short Stories","Difficult People","Small Town"],
+    why: "A linked short story collection orbiting prickly, unforgettable Olive — a retired teacher in a small Maine town. Strout's prose is deceptively plain and devastatingly precise. You will finish thinking about the people in your own life differently.",
+    search: "Olive Kitteridge Elizabeth Strout",
+    match: { feeling:['moved','melancholy'], pace:['slow'], world:['cold'], theme:['loneliness','family','identity'], avoid:[], character:['difficult'], length:['medium'], mood:['understand','think'], time:['afternoon'], secret:['quiet','small-town'] }
+  },
+  {
+    title: "Circe",
+    author: "Madeline Miller",
+    tags: ["Greek Mythology","Magic","Feminist","Ancient World"],
+    why: "The minor goddess Circe tells her own story, from powerless daughter of the sun to self-made woman who refuses to be erased. Miller makes mythology breathe, and Circe's journey from shame to power is completely exhilarating.",
+    search: "Circe Madeline Miller",
+    match: { feeling:['exhilarated','hopeful'], pace:['medium'], world:['magical'], theme:['identity','resilience','power'], avoid:[], character:['strong'], length:['medium'], mood:['escape','feel'], time:['weekend'], secret:['mythology','feminist'] }
+  },
+  {
+    title: "The Vanishing Half",
+    author: "Brit Bennett",
+    tags: ["Race","Identity","Twins","Family"],
+    why: "Twin sisters who grow up in a light-skinned Black community in the South take opposite paths — one passes as white, one does not. Bennett traces their families across decades with novelistic grace and moral seriousness.",
+    search: "The Vanishing Half Brit Bennett",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['vivid'], theme:['race','identity','family'], avoid:[], character:['relatable'], length:['medium'], mood:['understand','think'], time:['weekend'], secret:['race','identity'] }
+  },
+  {
+    title: "Never Let Me Go",
+    author: "Kazuo Ishiguro",
+    tags: ["Dystopia","Memory","Loss","Quiet Sci-Fi"],
+    why: "Three friends grow up in a strange English boarding school and slowly realize what their lives are for. Ishiguro withholds and reveals with devastating control. The horror is quiet, the love is real, and the ending will sit with you for years.",
+    search: "Never Let Me Go Kazuo Ishiguro",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['identity','love','loss'], avoid:['darkness'], character:['observer'], length:['medium'], mood:['think','feel'], time:['evening'], secret:['dark','quiet'] }
+  },
+  {
+    title: "Educated",
+    author: "Tara Westover",
+    tags: ["Memoir","Family","Education","Survival"],
+    why: "Tara Westover grew up in the Idaho mountains with survivalist parents, never attended school, and eventually earned a PhD from Cambridge. Her memoir is about the education that frees us — and the family ties that complicate everything.",
+    search: "Educated Tara Westover",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['cold'], theme:['resilience','family','identity'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['understand','think'], time:['weekend'], secret:['memoir','survival'] }
+  },
+  {
+    title: "Anxious People",
+    author: "Fredrik Backman",
+    tags: ["Sweden","Humor","Hostage","Kindness"],
+    why: "A failed bank robbery leads to a hostage situation in an apartment showing, and all of the hostages are complete disasters. Backman's novel is absurdly funny and quietly devastating — a meditation on how hard it is to be a person, and how much we need each other.",
+    search: "Anxious People Fredrik Backman",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['cold'], theme:['connection','resilience','kindness'], avoid:[], character:['relatable'], length:['medium'], mood:['enjoy','feel'], time:['weekend'], secret:['humor','kindness'] }
+  },
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins Reid",
+    tags: ["Hollywood","Glamour","Secrets","LGBTQ"],
+    why: "Reclusive movie icon Evelyn Hugo finally tells her story — all seven husbands worth. Reid's old Hollywood novel is addictive, romantic, and gutting, with a twist that reframes everything. Evelyn Hugo is one of the great fictional characters of the last decade.",
+    search: "The Seven Husbands of Evelyn Hugo Taylor Jenkins Reid",
+    match: { feeling:['moved','exhilarated'], pace:['fast'], world:['glamorous'], theme:['love','identity','secrets'], avoid:[], character:['complex'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['queer','glamour'] }
+  },
+  {
+    title: "The Overstory",
+    author: "Richard Powers",
+    tags: ["Trees","Environment","Interconnected","Ambitious"],
+    why: "Nine Americans whose lives are changed by trees find their paths converging around a single cause. Powers writes about the natural world with scientific wonder and moral urgency. Long, demanding, and one of the most important American novels of this century.",
+    search: "The Overstory Richard Powers",
+    match: { feeling:['moved','curious'], pace:['slow'], world:['vivid'], theme:['nature','connection','resilience'], avoid:[], character:['observer'], length:['long'], mood:['think','understand'], time:['weekend'], secret:['nature','ambitious'] }
+  },
+  {
+    title: "Shuggie Bain",
+    author: "Douglas Stuart",
+    tags: ["Scotland","Poverty","Addiction","Mother and Son"],
+    why: "A young boy in 1980s Glasgow loves his mother fiercely as she destroys herself with alcohol. Stuart's Booker-winning debut is heartbreaking and specific, suffused with a tenderness that makes the darkness bearable.",
+    search: "Shuggie Bain Douglas Stuart",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['cold'], theme:['love','resilience','loss'], avoid:['darkness'], character:['young'], length:['long'], mood:['feel','understand'], time:['weekend'], secret:['dark','poverty'] }
+  },
+  {
+    title: "Pachinko",
+    author: "Min Jin Lee",
+    tags: ["Korea","Japan","Generations","Sacrifice"],
+    why: "Four generations of a Korean family in Japan face discrimination, sacrifice, and survival across the twentieth century. Lee's sweeping family saga is deeply researched and emotionally immense — the kind of novel that expands your understanding of the world.",
+    search: "Pachinko Min Jin Lee",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['family','resilience','identity'], avoid:[], character:['relatable'], length:['long'], mood:['understand','think'], time:['weekend'], secret:['history','immigration'] }
+  },
+  {
+    title: "The Hitchhiker's Guide to the Galaxy",
+    author: "Douglas Adams",
+    tags: ["Sci-Fi","Humor","Space","Absurdist"],
+    why: "Moments before Earth is demolished to make way for a hyperspace bypass, Arthur Dent is whisked into the cosmos by his alien friend Ford Prefect. Adams' comic masterpiece invented a genre: profound nonsense delivered with total conviction.",
+    search: "The Hitchhiker's Guide to the Galaxy Douglas Adams",
+    match: { feeling:['curious','exhilarated'], pace:['fast'], world:['space'], theme:['absurdism','friendship'], avoid:['darkness'], character:['witty'], length:['short'], mood:['laugh','escape'], time:['anytime'], secret:['humor','sci-fi'] }
+  },
+  {
+    title: "Convenience Store Woman",
+    author: "Sayaka Murata",
+    tags: ["Japan","Outsider","Routine","Quirky"],
+    why: "Keiko has worked in the same convenience store for eighteen years and finds it the only place she makes sense. Murata's short, sharp novella asks who gets to define a normal life — and cheerfully refuses to answer the way you expect.",
+    search: "Convenience Store Woman Sayaka Murata",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['vivid'], theme:['identity','belonging','outsider'], avoid:[], character:['unusual'], length:['short'], mood:['think','enjoy'], time:['afternoon'], secret:['japan','quirky'] }
+  },
+  {
+    title: "My Brilliant Friend",
+    author: "Elena Ferrante",
+    tags: ["Naples","Friendship","Women","Decades"],
+    why: "Elena and Lila grow up poor in 1950s Naples and their friendship defines both their lives across decades. Ferrante writes female friendship with ferocious honesty — the envy, the love, the competition, the loyalty. The first of four essential volumes.",
+    search: "My Brilliant Friend Elena Ferrante",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['friendship','identity','ambition'], avoid:[], character:['complex'], length:['long'], mood:['understand','think'], time:['weekend'], secret:['italy','women'] }
+  },
+  {
+    title: "Flowers for Algernon",
+    author: "Daniel Keyes",
+    tags: ["Sci-Fi","Intelligence","Ethics","Heartbreaking"],
+    why: "Charlie Gordon, intellectually disabled, undergoes an experimental procedure that makes him a genius — told in his own journal entries. Keyes' novel is one of the most emotionally devastating explorations of what it means to be seen, valued, and lost.",
+    search: "Flowers for Algernon Daniel Keyes",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['cold'], theme:['identity','loss','ethics'], avoid:['darkness'], character:['relatable'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['sci-fi','quiet'] }
+  },
+  {
+    title: "The Sellout",
+    author: "Paul Beatty",
+    tags: ["Race","Satire","America","Provocative"],
+    why: "A Black man in suburban Los Angeles ends up before the Supreme Court accused of reinstituting slavery and segregation. Beatty's Booker-winning satire is the funniest and most uncomfortable novel about race in America in decades.",
+    search: "The Sellout Paul Beatty",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['vivid'], theme:['race','identity','absurdism'], avoid:[], character:['witty'], length:['medium'], mood:['think','laugh'], time:['weekend'], secret:['race','satire'] }
+  },
+  {
+    title: "A Man Called Ove",
+    author: "Fredrik Backman",
+    tags: ["Sweden","Grief","Grumpy","Heartwarming"],
+    why: "Ove is the most annoying neighbor imaginable — until you understand why. Backman's beloved novel about a grouchy widower rescued from himself by a new family next door is funny, earned, and genuinely moving.",
+    search: "A Man Called Ove Fredrik Backman",
+    match: { feeling:['hopeful','moved'], pace:['fast'], world:['cold'], theme:['grief','connection','resilience'], avoid:['darkness'], character:['difficult'], length:['medium'], mood:['feel','enjoy'], time:['weekend'], secret:['comfort','grief'] }
+  },
+  {
+    title: "The Alchemist",
+    author: "Paulo Coelho",
+    tags: ["Quest","Philosophy","Destiny","Fable"],
+    why: "A young Andalusian shepherd travels toward his Personal Legend. Coelho's fable about following your dreams has sold over 150 million copies — its ideas are simple, its execution is elegant, and its hold on readers is inexplicably powerful.",
+    search: "The Alchemist Paulo Coelho",
+    match: { feeling:['hopeful','curious'], pace:['fast'], world:['vivid'], theme:['destiny','resilience','self-discovery'], avoid:['darkness'], character:['relatable'], length:['short'], mood:['feel','escape'], time:['afternoon'], secret:['philosophy','journey'] }
+  },
+  {
+    title: "Cloud Atlas",
+    author: "David Mitchell",
+    tags: ["Interconnected","Time","Ambitious","Nested Stories"],
+    why: "Six stories nested inside each other, spanning centuries and genres — from a Pacific voyage in 1850 to a post-apocalyptic Hawaii. Mitchell's audacious structural novel asks whether the same souls reincarnate through history, drawn to each other again and again.",
+    search: "Cloud Atlas David Mitchell",
+    match: { feeling:['curious','moved'], pace:['medium'], world:['vivid'], theme:['connection','resilience','fate'], avoid:[], character:['observer'], length:['long'], mood:['think','escape'], time:['weekend'], secret:['ambitious','time'] }
+  },
+  {
+    title: "The Secret History",
+    author: "Donna Tartt",
+    tags: ["Dark Academia","Murder","Greek","Obsession"],
+    why: "A scholarship student at a Vermont college falls in with a clique of classics students who have committed murder — we know this from page one. Tartt's compulsive debut is about beauty, guilt, complicity, and the seduction of certain kinds of brilliance.",
+    search: "The Secret History Donna Tartt",
+    match: { feeling:['unsettled','curious'], pace:['medium'], world:['cold'], theme:['guilt','obsession','identity'], avoid:['darkness'], character:['observer'], length:['long'], mood:['think','escape'], time:['night'], secret:['dark','academia'] }
+  },
+  {
+    title: "Where the Crawdads Sing",
+    author: "Delia Owens",
+    tags: ["Marsh","Mystery","Nature","Coming of Age"],
+    why: "A girl raised alone in the North Carolina marsh becomes a naturalist and a murder suspect. Owens' debut is half nature writing, half courtroom thriller, and entirely a story about how survival shapes a person. Enormously readable.",
+    search: "Where the Crawdads Sing Delia Owens",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['vivid'], theme:['survival','nature','identity'], avoid:[], character:['strong'], length:['medium'], mood:['escape','feel'], time:['weekend'], secret:['nature','mystery'] }
+  },
+  {
+    title: "All Quiet on the Western Front",
+    author: "Erich Maria Remarque",
+    tags: ["WWI","War","Germany","Anti-War"],
+    why: "A young German soldier describes the reality of trench warfare in WWI. Remarque's anti-war novel is as urgent as the day it was published — the gap between what young men are promised war will be and what it actually is has never been written better.",
+    search: "All Quiet on the Western Front Erich Maria Remarque",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['cold'], theme:['war','loss','survival'], avoid:['darkness'], character:['young'], length:['short'], mood:['understand','think'], time:['afternoon'], secret:['history','war'] }
+  },
+  {
+    title: "Kindred",
+    author: "Octavia Butler",
+    tags: ["Slavery","Time Travel","America","Race"],
+    why: "A Black woman in 1970s Los Angeles is repeatedly pulled back to an antebellum Maryland plantation to save the life of her white ancestor. Butler uses time travel to make history viscerally immediate. Devastating, necessary, impossible to forget.",
+    search: "Kindred Octavia Butler",
+    match: { feeling:['unsettled','moved'], pace:['fast'], world:['vivid'], theme:['race','survival','identity'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['understand','think'], time:['weekend'], secret:['race','history'] }
+  },
+  {
+    title: "The God of Small Things",
+    author: "Arundhati Roy",
+    tags: ["India","Family","Caste","Tragedy"],
+    why: "Twins in Kerala, India, circle around a catastrophe in their childhood that destroyed their family. Roy's Booker-winning debut is lush, nonlinear, and heartbreaking — a story about the small things that determine the course of whole lives.",
+    search: "The God of Small Things Arundhati Roy",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['vivid'], theme:['family','love','tragedy'], avoid:['darkness'], character:['young'], length:['medium'], mood:['feel','understand'], time:['evening'], secret:['india','caste'] }
+  },
+  {
+    title: "Normal People",
+    author: "Sally Rooney",
+    tags: ["Ireland","Love","Class","Young Adults"],
+    why: "Connell and Marianne meet in secondary school and continue to orbit each other through university — drawn together, pulling apart, misunderstanding everything important. Rooney writes desire and miscommunication with excruciating precision.",
+    search: "Normal People Sally Rooney",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['cold'], theme:['love','identity','class'], avoid:[], character:['relatable'], length:['short'], mood:['feel','understand'], time:['evening'], secret:['ireland','young'] }
+  },
+  {
+    title: "The Book Thief",
+    author: "Markus Zusak",
+    tags: ["WWII","Death","Germany","Young Adult"],
+    why: "Narrated by Death, this is the story of Liesel Meminger, a girl growing up in Nazi Germany who steals books and reads them to her neighbors during air raids. Formally inventive and emotionally immense — one of the best war novels of any era.",
+    search: "The Book Thief Markus Zusak",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['survival','love','books'], avoid:['darkness'], character:['young'], length:['long'], mood:['feel','escape'], time:['weekend'], secret:['history','war'] }
+  },
+  {
+    title: "The Color Purple",
+    author: "Alice Walker",
+    tags: ["Race","Women","Letters","American South"],
+    why: "Celie writes letters to God, documenting abuse, survival, and the slow discovery of her own worth. Walker's Pulitzer winner is devastating and ultimately triumphant — a story about what women owe each other and what they can build from almost nothing.",
+    search: "The Color Purple Alice Walker",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['vivid'], theme:['resilience','identity','love'], avoid:['darkness'], character:['strong'], length:['short'], mood:['feel','understand'], time:['weekend'], secret:['race','women'] }
+  },
+  {
+    title: "Fingersmith",
+    author: "Sarah Waters",
+    tags: ["Victorian","Twist","Deception","LGBTQ"],
+    why: "A Victorian pickpocket is hired to help con a sheltered heiress — and everything turns out to be more complicated than it seems. Waters' plot twists genuinely shocked readers in 2002 and will shock you too. Don't read the back cover.",
+    search: "Fingersmith Sarah Waters",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['deception','love','identity'], avoid:[], character:['complex'], length:['long'], mood:['escape','think'], time:['night'], secret:['twist','queer'] }
+  },
+  {
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    tags: ["Fantasy","Quest","Adventure","Classic"],
+    why: "Bilbo Baggins is pulled from his comfortable hobbit hole on an adventure he didn't ask for and wouldn't trade. Tolkien wrote this for children and it contains all of the things adults need: courage, friendship, the value of home, and dragons.",
+    search: "The Hobbit J.R.R. Tolkien",
+    match: { feeling:['cozy','exhilarated'], pace:['medium'], world:['magical'], theme:['adventure','courage','friendship'], avoid:['darkness'], character:['relatable'], length:['short'], mood:['escape','enjoy'], time:['anytime'], secret:['fantasy','classic'] }
+  },
+  {
+    title: "The Handmaid's Tale",
+    author: "Margaret Atwood",
+    tags: ["Dystopia","Women","Power","Classic"],
+    why: "In the theocratic republic of Gilead, Offred narrates her life as a Handmaid — a woman reduced to reproductive function. Atwood's 1985 novel has never stopped being relevant. It is a masterpiece of controlled, mounting horror.",
+    search: "The Handmaid's Tale Margaret Atwood",
+    match: { feeling:['unsettled','moved'], pace:['medium'], world:['cold'], theme:['power','survival','identity'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['think','understand'], time:['evening'], secret:['feminist','dystopia'] }
+  },
+  {
+    title: "The Old Man and the Sea",
+    author: "Ernest Hemingway",
+    tags: ["Cuba","Fishing","Endurance","Short"],
+    why: "An old Cuban fisherman goes far out to sea and battles a great marlin for days. Hemingway's Nobel-winning novella is about struggle, grace under pressure, and what it means to fight hard for something even when you can't win. Spare and mythic.",
+    search: "The Old Man and the Sea Ernest Hemingway",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['vivid'], theme:['resilience','solitude','endurance'], avoid:[], character:['observer'], length:['short'], mood:['think','escape'], time:['afternoon'], secret:['classic','nature'] }
+  },
+  {
+    title: "Demon Copperhead",
+    author: "Barbara Kingsolver",
+    tags: ["Appalachia","Opioid Crisis","Dickens","Contemporary"],
+    why: "A retelling of David Copperfield set among the opioid epidemic in rural Virginia, told by a red-haired boy called Demon. Kingsolver won the Pulitzer with this fierce, compassionate novel that makes you understand how addiction takes hold of entire communities.",
+    search: "Demon Copperhead Barbara Kingsolver",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['vivid'], theme:['survival','resilience','identity'], avoid:['darkness'], character:['young'], length:['long'], mood:['understand','feel'], time:['weekend'], secret:['appalachia','opioids'] }
+  },
+  {
+    title: "Catch-22",
+    author: "Joseph Heller",
+    tags: ["WWII","Satire","Military","Dark Comedy"],
+    why: "Bombardier Yossarian wants to be grounded from flying missions — the only way to do it is to be crazy, but asking to be grounded proves you're sane. Heller's anti-war satire is one of the funniest and most devastating things American literature produced.",
+    search: "Catch-22 Joseph Heller",
+    match: { feeling:['curious','unsettled'], pace:['slow'], world:['cold'], theme:['war','absurdism','survival'], avoid:[], character:['witty'], length:['long'], mood:['laugh','think'], time:['weekend'], secret:['war','satire'] }
+  },
+  {
+    title: "The Sympathizer",
+    author: "Viet Thanh Nguyen",
+    tags: ["Vietnam War","Espionage","Duality","Identity"],
+    why: "A communist spy embedded in the South Vietnamese army flees to America after the fall of Saigon. Nguyen's Pulitzer winner is brilliant on duality, colonialism, and what it means to belong to two worlds and neither.",
+    search: "The Sympathizer Viet Thanh Nguyen",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['vivid'], theme:['identity','war','duality'], avoid:[], character:['observer'], length:['long'], mood:['think','understand'], time:['weekend'], secret:['war','espionage'] }
+  },
+  {
+    title: "Homegoing",
+    author: "Yaa Gyasi",
+    tags: ["Ghana","Slavery","Generations","Africa"],
+    why: "Two half-sisters in 18th-century Ghana take divergent paths — one into a British fort, one onto a slave ship — and Gyasi follows their descendants across three centuries. Each chapter is a self-contained story and a step in an epic about how history travels in blood.",
+    search: "Homegoing Yaa Gyasi",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['vivid'], theme:['family','history','identity'], avoid:[], character:['relatable'], length:['medium'], mood:['understand','feel'], time:['weekend'], secret:['history','race'] }
+  },
+  {
+    title: "Fourth Wing",
+    author: "Rebecca Yarros",
+    tags: ["Fantasy","Dragons","Romance","Action"],
+    why: "Violet Sorrengail is forced to attend war college and bond with a dragon. Fast, propulsive, steamy, and genuinely exciting — Yarros writes action and romance with equal skill, and the dragon bond is one of the best fictional relationships in recent fantasy.",
+    search: "Fourth Wing Rebecca Yarros",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['magical'], theme:['love','adventure','courage'], avoid:[], character:['strong'], length:['long'], mood:['escape','enjoy'], time:['weekend'], secret:['romance','fantasy'] }
+  },
+  {
+    title: "Lessons in Chemistry",
+    author: "Bonnie Garmus",
+    tags: ["1960s","Feminism","Science","Funny"],
+    why: "Chemist Elizabeth Zott becomes an accidental cooking show host in the 1960s and uses it to teach women to think for themselves. Garmus' debut is funny, sharp, and indignant in the best possible way — a crowd-pleaser with genuine teeth.",
+    search: "Lessons in Chemistry Bonnie Garmus",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['vivid'], theme:['identity','resilience','science'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['enjoy','feel'], time:['weekend'], secret:['feminist','humor'] }
+  },
+  {
+    title: "The Night Circus",
+    author: "Erin Morgenstern",
+    tags: ["Magic","Competition","Mystery","Atmospheric"],
+    why: "A circus that only appears at night is the arena for a competition between two young magicians who have been trained since childhood to destroy each other — and fall in love instead. Atmospheric, sensory, and almost impossibly beautiful.",
+    search: "The Night Circus Erin Morgenstern",
+    match: { feeling:['cozy','moved'], pace:['slow'], world:['magical'], theme:['love','fate','creativity'], avoid:[], character:['observer'], length:['medium'], mood:['escape','enjoy'], time:['night'], secret:['magic','atmosphere'] }
+  },
+  {
+    title: "Station Eleven",
+    author: "Emily St. John Mandel",
+    tags: ["Pandemic","Art","Memory","Post-Apocalyptic"],
+    why: "A flu kills most of humanity; twenty years later, a traveling Shakespeare company performs for the survivors. Mandel's novel is about what we love enough to preserve — art, memory, other people — and why civilization is worth rebuilding.",
+    search: "Station Eleven Emily St. John Mandel",
+    match: { feeling:['hopeful','moved'], pace:['medium'], world:['vivid'], theme:['survival','art','connection'], avoid:[], character:['observer'], length:['medium'], mood:['think','feel'], time:['weekend'], secret:['pandemic','art'] }
+  },
+  {
+    title: "White Noise",
+    author: "Don DeLillo",
+    tags: ["Death","Consumer Culture","Satire","American"],
+    why: "Jack Gladney, professor of Hitler Studies, is afraid to die. DeLillo's postmodern classic about fear, consumerism, and the numbing noise of modern life is hilarious and terrifying — a novel that sees the absurdity of how we live in perfect, clinical focus.",
+    search: "White Noise Don DeLillo",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['vivid'], theme:['death','absurdism','identity'], avoid:[], character:['observer'], length:['medium'], mood:['think','laugh'], time:['evening'], secret:['satire','death'] }
+  },
+  {
+    title: "Remarkably Bright Creatures",
+    author: "Shelby Van Pelt",
+    tags: ["Octopus","Pacific Northwest","Cozy Mystery","Grief"],
+    why: "A grieving woman works nights at an aquarium, and the resident giant Pacific octopus narrates chapters from his tank as he helps solve the mystery of her missing son. Charming, warm, and surprisingly moving — a book that earns its unlikely premise completely.",
+    search: "Remarkably Bright Creatures Shelby Van Pelt",
+    match: { feeling:['hopeful','cozy'], pace:['medium'], world:['vivid'], theme:['grief','connection','mystery'], avoid:['darkness'], character:['unusual'], length:['medium'], mood:['enjoy','feel'], time:['afternoon'], secret:['nature','comfort'] }
+  },
+  {
+    title: "The Count of Monte Cristo",
+    author: "Alexandre Dumas",
+    tags: ["Revenge","Escape","Adventure","Classic"],
+    why: "Falsely imprisoned Edmond Dantès escapes, finds treasure, and spends the rest of his life methodically destroying those who wronged him. Dumas' great adventure novel asks whether revenge can satisfy — and answers with both sides simultaneously.",
+    search: "The Count of Monte Cristo Alexandre Dumas",
+    match: { feeling:['exhilarated','unsettled'], pace:['medium'], world:['vivid'], theme:['revenge','identity','justice'], avoid:[], character:['complex'], length:['long'], mood:['escape','think'], time:['weekend'], secret:['classic','adventure'] }
+  },
+  {
+    title: "The Brief Wondrous Life of Oscar Wao",
+    author: "Junot Diaz",
+    tags: ["Dominican Republic","Diaspora","Fate","Geek Culture"],
+    why: "Oscar, a fat Dominican-American nerd obsessed with sci-fi and fantasy, is looking for love under the family curse known as the fukú. Díaz's Pulitzer winner is wildly funny and quietly devastating — written in a voice unlike anything else.",
+    search: "The Brief Wondrous Life of Oscar Wao Junot Diaz",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['vivid'], theme:['identity','fate','love'], avoid:[], character:['relatable'], length:['medium'], mood:['enjoy','understand'], time:['weekend'], secret:['diaspora','humor'] }
+  },
+  {
+    title: "Beloved",
+    author: "Toni Morrison",
+    tags: ["Slavery","Haunting","America","Memory"],
+    why: "A formerly enslaved woman is haunted by the ghost of the daughter she killed rather than let be taken back into slavery. Morrison's Pulitzer-winning masterpiece is about what trauma does to memory and the price of survival. One of the most important American novels ever written.",
+    search: "Beloved Toni Morrison",
+    match: { feeling:['unsettled','moved'], pace:['slow'], world:['cold'], theme:['trauma','love','survival'], avoid:['darkness'], character:['complex'], length:['medium'], mood:['think','understand'], time:['weekend'], secret:['history','race'] }
+  },
+  {
+    title: "The Kite Runner",
+    author: "Khaled Hosseini",
+    tags: ["Afghanistan","Guilt","Redemption","Friendship"],
+    why: "Amir watches his friend Hassan be assaulted and does nothing — and spends the next twenty years trying to atone. One of the most widely read novels about guilt, cowardice, and the long work of making things right.",
+    search: "The Kite Runner Khaled Hosseini",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['vivid'], theme:['guilt','friendship','redemption'], avoid:['darkness'], character:['relatable'], length:['medium'], mood:['feel','understand'], time:['weekend'], secret:['war','guilt'] }
+  },
+  {
+    title: "Lincoln in the Bardo",
+    author: "George Saunders",
+    tags: ["Lincoln","Ghosts","Grief","Experimental"],
+    why: "On the night Abraham Lincoln visits his dead son's crypt, hundreds of ghosts populate the bardo around them. Saunders' first novel is formally unlike anything else — assembled from fictional historical sources and ghost narrators — and profoundly moving about grief.",
+    search: "Lincoln in the Bardo George Saunders",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['magical'], theme:['grief','love','history'], avoid:[], character:['observer'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['history','experimental'] }
+  },
+  {
+    title: "My Year of Rest and Relaxation",
+    author: "Ottessa Moshfegh",
+    tags: ["New York","Nihilism","Pharmaceuticals","Dark Humor"],
+    why: "A young beautiful woman in 2000 New York decides to sleep for a year with the help of a deranged psychiatrist. Moshfegh's provocative novel is funny, uncomfortable, and weirdly sympathetic — a portrait of a specific kind of emptiness dressed in luxury.",
+    search: "My Year of Rest and Relaxation Ottessa Moshfegh",
+    match: { feeling:['unsettled','curious'], pace:['medium'], world:['glamorous'], theme:['identity','solitude','nihilism'], avoid:[], character:['difficult'], length:['short'], mood:['think','laugh'], time:['evening'], secret:['dark','nihilism'] }
+  },
+  {
+    title: "The Dispossessed",
+    author: "Ursula K Le Guin",
+    tags: ["Sci-Fi","Anarchism","Physics","Utopia"],
+    why: "A physicist from an anarchist moon colony travels to the capitalist planet his people left generations ago. Le Guin's novel alternates timelines to examine two societies — one of the most rigorous political novels ever disguised as science fiction.",
+    search: "The Dispossessed Ursula K Le Guin",
+    match: { feeling:['curious','moved'], pace:['slow'], world:['space'], theme:['justice','identity','freedom'], avoid:[], character:['observer'], length:['long'], mood:['think','understand'], time:['weekend'], secret:['sci-fi','politics'] }
+  },
+  {
+    title: "All the Light We Cannot See",
+    author: "Anthony Doerr",
+    tags: ["WWII","France","Radio","Fate"],
+    why: "A blind French girl and a German boy with a gift for radio circling toward each other through the chaos of the Second World War. Doerr's Pulitzer winner is luminously written — each chapter a small jewel — and the ending earns every page.",
+    search: "All the Light We Cannot See Anthony Doerr",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['cold'], theme:['war','fate','love'], avoid:['darkness'], character:['young'], length:['long'], mood:['feel','escape'], time:['weekend'], secret:['history','war'] }
+  },
+  {
+    title: "The Merry Spinster",
+    author: "Daniel Mallory Ortberg",
+    tags: ["Fairy Tales","Dark","Queer","Retellings"],
+    why: "Retellings of classic fairy tales — Beauty and the Beast, The Velveteen Rabbit — twisted into something unsettling and strangely honest about violence, compliance, and power. Ortberg writes with wit and genuine menace.",
+    search: "The Merry Spinster Daniel Mallory Ortberg",
+    match: { feeling:['unsettled','curious'], pace:['fast'], world:['magical'], theme:['power','identity','fairy-tales'], avoid:[], character:['unusual'], length:['short'], mood:['think','unsettled'], time:['night'], secret:['dark','queer'] }
+  },
+  {
+    title: "The Long Goodbye",
+    author: "Raymond Chandler",
+    tags: ["Noir","Los Angeles","Mystery","Atmosphere"],
+    why: "Philip Marlowe meets a drunk named Terry Lennox and gets pulled into a case of murder, money, and Los Angeles glamour. Chandler's finest novel is more about friendship and disillusion than detection — his prose is like jazz made of cigarette smoke.",
+    search: "The Long Goodbye Raymond Chandler",
+    match: { feeling:['melancholy','curious'], pace:['medium'], world:['glamorous'], theme:['friendship','betrayal','identity'], avoid:[], character:['observer'], length:['medium'], mood:['escape','think'], time:['night'], secret:['noir','atmosphere'] }
+  },
+  {
+    title: "The Tiger's Wife",
+    author: "Tea Obreht",
+    tags: ["Balkans","War","Folklore","Family"],
+    why: "A doctor investigates the mysterious life of her grandfather in the aftermath of the Balkan wars through two interwoven legends. Obreht's debut is rich with folklore, magic realism, and the complicated ways war passes between generations.",
+    search: "The Tiger's Wife Tea Obreht",
+    match: { feeling:['curious','moved'], pace:['slow'], world:['vivid'], theme:['family','war','myth'], avoid:[], character:['observer'], length:['medium'], mood:['escape','think'], time:['evening'], secret:['folklore','balkan'] }
+  },
+  {
+    title: "The Shadow of the Wind",
+    author: "Carlos Ruiz Zafon",
+    tags: ["Barcelona","Books","Mystery","Gothic"],
+    why: "A boy in post-war Barcelona finds a novel by an author who has been erased from history. Zafón's love letter to books and gothic mystery is atmospheric, romantic, and completely absorbing — the kind of novel that makes you want to read forever.",
+    search: "The Shadow of the Wind Carlos Ruiz Zafon",
+    match: { feeling:['curious','cozy'], pace:['medium'], world:['vivid'], theme:['books','mystery','love'], avoid:[], character:['young'], length:['long'], mood:['escape','enjoy'], time:['night'], secret:['gothic','books'] }
+  },
+  {
+    title: "Half of a Yellow Sun",
+    author: "Chimamanda Ngozi Adichie",
+    tags: ["Nigeria","Biafra","War","Love"],
+    why: "Twin sisters and the men they love navigate the Nigerian Civil War and the Biafran secession. Adichie's second novel is ambitious, lush, and heartbreaking — one of the best accounts of how war obliterates ordinary life and the people living it.",
+    search: "Half of a Yellow Sun Chimamanda Ngozi Adichie",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['vivid'], theme:['war','love','identity'], avoid:['darkness'], character:['complex'], length:['long'], mood:['understand','feel'], time:['weekend'], secret:['history','africa'] }
+  },
+  {
+    title: "The Penelopiad",
+    author: "Margaret Atwood",
+    tags: ["Mythology","Feminist","Greece","Retelling"],
+    why: "Penelope tells her side of the Odyssey from the underworld. Short, sharp, and savage — Atwood gives voice to the women erased by the epic tradition, and the twelve maids hanged by Odysseus narrate in a Greek chorus that will haunt you.",
+    search: "The Penelopiad Margaret Atwood",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['magical'], theme:['power','identity','myth'], avoid:[], character:['strong'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['feminist','mythology'] }
+  },
+  {
+    title: "Crying in H Mart",
+    author: "Michelle Zauner",
+    tags: ["Memoir","Grief","Korean-American","Food"],
+    why: "Michelle Zauner grieves her Korean mother through food — the Korean grocery store, the meals her mother made, the identity she carries. One of the most beautiful memoirs about grief, inheritance, and what we cook to remember the people we lose.",
+    search: "Crying in H Mart Michelle Zauner",
+    match: { feeling:['moved','melancholy'], pace:['fast'], world:['vivid'], theme:['grief','identity','food'], avoid:['darkness'], character:['relatable'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['memoir','grief'] }
+  },
+  {
+    title: "In the Woods",
+    author: "Tana French",
+    tags: ["Dublin","Mystery","Memory","Police"],
+    why: "A detective investigates a child's murder near the woods where he himself disappeared as a boy. French's debut is propulsive and psychologically complex — and it does something brave with its mystery that most thrillers would never dare.",
+    search: "In the Woods Tana French",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['cold'], theme:['memory','mystery','identity'], avoid:[], character:['observer'], length:['long'], mood:['escape','think'], time:['night'], secret:['mystery','dark'] }
+  },
+  {
+    title: "Exhalation",
+    author: "Ted Chiang",
+    tags: ["Sci-Fi","Short Stories","Ideas","Philosophy"],
+    why: "Nine stories about consciousness, memory, free will, and time — including one about a robot who discovers the universe is running out of air. Chiang is the most purely idea-driven short fiction writer alive, and his ideas are beautiful and devastating in equal measure.",
+    search: "Exhalation Ted Chiang",
+    match: { feeling:['curious','moved'], pace:['medium'], world:['space'], theme:['fate','identity','technology'], avoid:[], character:['observer'], length:['medium'], mood:['think','understand'], time:['evening'], secret:['sci-fi','philosophy'] }
+  },
+  {
+    title: "Empire of Pain",
+    author: "Patrick Radden Keefe",
+    tags: ["Nonfiction","Sackler Family","Opioids","Crime"],
+    why: "The Sackler family built a dynastic fortune manufacturing and marketing OxyContin while an opioid crisis killed hundreds of thousands. Keefe's meticulously reported account of how wealth insulates wrongdoing is one of the most important pieces of American nonfiction in years.",
+    search: "Empire of Pain Patrick Radden Keefe",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['vivid'], theme:['power','money','ethics'], avoid:[], character:['observer'], length:['long'], mood:['understand','think'], time:['weekend'], secret:['nonfiction','crime'] }
   }
 ];
 
