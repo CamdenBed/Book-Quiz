@@ -775,6 +775,33 @@
     .landing-promise { display: none; }
   }
 
+  /* ── Small laptop (≤ 1280px) — aggressively compact quiz ── */
+  @media (max-width: 1280px) {
+    /* Header & footer tighter */
+    .quiz-header { padding: clamp(0.25rem, 0.7vh, 0.6rem) 2rem; }
+    .quiz-footer { padding: clamp(0.2rem, 0.6vh, 0.55rem) 2rem; }
+
+    /* Less breathing room around the card */
+    .quiz-body { padding: clamp(0.5rem, 1.5vh, 1.25rem) 2rem; }
+
+    /* Question text — smaller and closer together */
+    .q-number { font-size: 11px; margin-bottom: clamp(0.3rem, 0.7vh, 0.75rem); }
+    .q-text { font-size: clamp(20px, 2.4vw, 28px); margin-bottom: clamp(0.15rem, 0.4vh, 0.4rem); }
+    .q-sub { font-size: 15px; margin-bottom: clamp(0.5rem, 1.2vh, 1.25rem); }
+
+    /* Option buttons — squished vertically */
+    .options-grid { gap: clamp(0.35rem, 0.7vh, 0.65rem); }
+    .option-btn { padding: clamp(0.55rem, 1.1vh, 0.9rem) 1.25rem; min-height: 72px; font-size: 15px; }
+    .option-label { font-size: 16px; }
+    .option-hint { font-size: 13px; margin-top: 2px; }
+
+    /* Nav buttons slightly smaller */
+    .btn-back { font-size: 15px; }
+    .btn-next { font-size: 15px; padding: 0.45rem 1.1rem; }
+    .progress-label { font-size: 12px; }
+    .quiz-brand { font-size: 14px; }
+  }
+
   /* ── Tablet (≤ 860px) ── */
   @media (max-width: 860px) {
     /* Stack hero columns, shrink right panel so everything fits */
