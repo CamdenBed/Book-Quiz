@@ -2263,10 +2263,10 @@ const allQuestions = [
     text: 'Which era?',
     sub: 'History is enormous. Let\'s narrow the door.',
     options: [
-      { label: 'Ancient or classical',       hint: 'Greece, Rome, Persia — the original everything',            value: 'era_ancient',    next: 'avoid' },
+      { label: 'Ancient or classical',       hint: 'Greece, Rome, Persia — the original everything',            value: 'era_ancient',    next: 'ancient_focus' },
       { label: 'Victorian or Edwardian',     hint: 'Corsets, class, candlelight, and simmering resentment',    value: 'era_victorian',  next: 'victorian_focus' },
       { label: 'The twentieth-century wars', hint: '1914–1945 — history at its most undeniably itself',        value: 'era_wartime',    next: 'wartime_angle' },
-      { label: 'Mid-century onwards',        hint: '1950s–70s — society reshaping itself in real time',        value: 'era_midcentury', next: 'avoid' }
+      { label: 'Mid-century onwards',        hint: '1950s–70s — society reshaping itself in real time',        value: 'era_midcentury', next: 'midcentury_setting' }
     ],
     reactions: {
       era_ancient:    "Ancient worlds! Where everything we are was invented. The original characters still haven't been topped.",
@@ -2315,9 +2315,9 @@ const allQuestions = [
     sub: "It's a big question. Let's find your corner of it.",
     options: [
       { label: 'Belonging — where and whether you fit', hint: 'Family, culture, home — and the cost of leaving',      value: 'id_belong',    next: 'belong_context' },
-      { label: 'Reinvention — becoming someone new',    hint: 'Who you choose to be, versus who you were',            value: 'id_reinvent',  next: 'character' },
+      { label: 'Reinvention — becoming someone new',    hint: 'Who you choose to be, versus who you were',            value: 'id_reinvent',  next: 'reinvent_how' },
       { label: 'Perception — how others define you',    hint: "The self as constructed by someone else's gaze",       value: 'id_perception', next: 'perception_whose' },
-      { label: "Inheritance — what you didn't choose",  hint: 'History, trauma, expectation, passed quietly down',   value: 'id_inherit',   next: 'character' }
+      { label: "Inheritance — what you didn't choose",  hint: 'History, trauma, expectation, passed quietly down',   value: 'id_inherit',   next: 'inherit_what' }
     ],
     reactions: {
       id_belong:     "Belonging. The universal question — still unanswered. It means the books about it are infinite and we can find your one.",
@@ -2332,9 +2332,9 @@ const allQuestions = [
     sub: 'Not all survival stories are the same kind.',
     options: [
       { label: 'Physical — getting out alive',      hint: 'Environment, danger, the body at its limits',               value: 'surv_physical', next: 'character' },
-      { label: 'Emotional — getting through intact', hint: 'Grief, trauma, the long aftermath',                        value: 'surv_emotional', next: 'character' },
+      { label: 'Emotional — getting through intact', hint: 'Grief, trauma, the long aftermath',                        value: 'surv_emotional', next: 'emotional_aftermath' },
       { label: 'Moral — getting through with your soul', hint: "What you'll do, what you won't, where the line is",   value: 'surv_moral',    next: 'character' },
-      { label: 'Social — surviving a system',       hint: 'Institutions, power, the world working against you',        value: 'surv_social',   next: 'character' }
+      { label: 'Social — surviving a system',       hint: 'Institutions, power, the world working against you',        value: 'surv_social',   next: 'social_system' }
     ],
     reactions: {
       surv_physical:  "Physical survival. The body at its limits. Terrain, cold, danger, the arithmetic of staying alive. Gripping every time.",
@@ -2348,9 +2348,9 @@ const allQuestions = [
     text: 'How do you want time to work in the novel?',
     sub: 'Memory-driven books handle time very differently.',
     options: [
-      { label: 'Non-linear — past and present woven', hint: 'Scenes from different eras, assembled into meaning',    value: 'mem_nonlinear',   next: 'character' },
-      { label: 'A narrator looking back',             hint: 'Time has passed. They are telling us what happened.',  value: 'mem_retrospect',  next: 'character' },
-      { label: 'Letters, diaries, fragments',         hint: 'Documents from the past, assembling a picture',        value: 'mem_documents',   next: 'character' },
+      { label: 'Non-linear — past and present woven', hint: 'Scenes from different eras, assembled into meaning',    value: 'mem_nonlinear',   next: 'nonlinear_mode' },
+      { label: 'A narrator looking back',             hint: 'Time has passed. They are telling us what happened.',  value: 'mem_retrospect',  next: 'retrospect_tone' },
+      { label: 'Letters, diaries, fragments',         hint: 'Documents from the past, assembling a picture',        value: 'mem_documents',   next: 'documents_form' },
       { label: 'A single long day or week',           hint: 'Compressed time — everything in close-up',             value: 'mem_compressed',  next: 'character' }
     ],
     reactions: {
@@ -2553,8 +2553,8 @@ const allQuestions = [
     sub: "The question is serious. Your answer will sharpen our aim.",
     options: [
       { label: 'Other people — why they do what they do', hint: 'Empathy as understanding, not just sympathy',              value: 'und_people',  next: 'secret' },
-      { label: 'A historical moment',                     hint: 'How did the world come to look like this',                 value: 'und_history', next: 'secret' },
-      { label: 'How grief or loss works',                 hint: 'Someone has been through it and written it clearly',       value: 'und_grief',   next: 'secret' },
+      { label: 'A historical moment',                     hint: 'How did the world come to look like this',                 value: 'und_history', next: 'history_lens' },
+      { label: 'How grief or loss works',                 hint: 'Someone has been through it and written it clearly',       value: 'und_grief',   next: 'grief_form' },
       { label: 'Your own life — obliquely',               hint: 'A book that reads you while you read it',                  value: 'und_self',    next: 'secret' }
     ],
     reactions: {
@@ -2728,9 +2728,9 @@ const allQuestions = [
     sub: "The pleasure of puzzles has many forms.",
     options: [
       { label: 'A closed-room puzzle — pure deduction', hint: 'Classic detective fiction, a problem to be solved',           value: 'myst_classic',   next: 'detective_era' },
-      { label: 'A literary mystery — the answers are uncomfortable', hint: 'The truth, when it comes, costs something',      value: 'myst_literary',  next: 'avoid' },
+      { label: 'A literary mystery — the answers are uncomfortable', hint: 'The truth, when it comes, costs something',      value: 'myst_literary',  next: 'lit_myst_cost' },
       { label: 'A cold case — digging up the past',                  hint: 'History as mystery — what really happened here', value: 'myst_cold',      next: 'cold_depth' },
-      { label: 'Atmospheric crime — the city is the character',      hint: 'Mood, location, society, a crime at the centre', value: 'myst_atmos',     next: 'avoid' }
+      { label: 'Atmospheric crime — the city is the character',      hint: 'Mood, location, society, a crime at the centre', value: 'myst_atmos',     next: 'atmos_setting' }
     ],
     reactions: {
       myst_classic:  "The classic puzzle! The closed room, the impossible crime, the detective who is better at this than everyone. Pure pleasure.",
@@ -2762,8 +2762,8 @@ const allQuestions = [
     sub: 'The era had obsessions. Which one interests you?',
     options: [
       { label: 'Class and its machinery',    hint: 'Money, status, the rules that governed everything',          value: 'vf_class',    next: 'class_side' },
-      { label: 'Women and their constraints', hint: 'Agency within severe limits — and what it cost',           value: 'vf_women',    next: 'character' },
-      { label: 'Crime and its detectives',   hint: 'The Victorian underworld and those who navigated it',        value: 'vf_crime',    next: 'character' },
+      { label: 'Women and their constraints', hint: 'Agency within severe limits — and what it cost',           value: 'vf_women',    next: 'victorian_women' },
+      { label: 'Crime and its detectives',   hint: 'The Victorian underworld and those who navigated it',        value: 'vf_crime',    next: 'victorian_crime' },
       { label: 'Empire and its shadows',     hint: 'The world the Victorians built and what it required of them', value: 'vf_empire',  next: 'empire_angle' }
     ],
     reactions: {
@@ -2779,9 +2779,9 @@ const allQuestions = [
     sub: "The twentieth century's wars produced different kinds of books.",
     options: [
       { label: 'From the front — the soldier\'s experience',         hint: 'Combat, camaraderie, the unbearable reality',              value: 'wa_front',    next: 'front_theater' },
-      { label: 'From the home front — those left behind',            hint: 'Waiting, working, the domestic war',                       value: 'wa_home',     next: 'character' },
+      { label: 'From the home front — those left behind',            hint: 'Waiting, working, the domestic war',                       value: 'wa_home',     next: 'home_front_world' },
       { label: 'Resistance and survival — ordinary heroism',         hint: 'People who found courage in impossible circumstances',     value: 'wa_resist',   next: 'resist_kind' },
-      { label: 'The aftermath — how people lived with what happened', hint: 'Memory, guilt, the long shadow of survival',              value: 'wa_after',    next: 'character' }
+      { label: 'The aftermath — how people lived with what happened', hint: 'Memory, guilt, the long shadow of survival',              value: 'wa_after',    next: 'aftermath_kind' }
     ],
     reactions: {
       wa_front:   "The front line — immersive, devastating, honest about what war actually is. The books that don't look away. We respect this.",
@@ -2795,10 +2795,10 @@ const allQuestions = [
     text: 'Nordic noir — what draws you there?',
     sub: 'Dark Scandinavian fiction has specific pleasures.',
     options: [
-      { label: 'The landscape as menace',       hint: 'Light, cold, the geography as active force',                  value: 'nf_land',    next: 'character' },
-      { label: 'Society\'s polished surface and dark underside', hint: 'The welfare state and what it hides',        value: 'nf_society', next: 'character' },
+      { label: 'The landscape as menace',       hint: 'Light, cold, the geography as active force',                  value: 'nf_land',    next: 'landscape_menace' },
+      { label: 'Society\'s polished surface and dark underside', hint: 'The welfare state and what it hides',        value: 'nf_society', next: 'society_layer' },
       { label: 'A detective worth following',   hint: 'The investigator as the point — flawed, specific, compelling', value: 'nf_detect',  next: 'detect_flavor' },
-      { label: 'The moral complexity of the crime itself', hint: 'Not whodunit but why — and what it reveals',       value: 'nf_moral',   next: 'character' }
+      { label: 'The moral complexity of the crime itself', hint: 'Not whodunit but why — and what it reveals',       value: 'nf_moral',   next: 'moral_crime' }
     ],
     reactions: {
       nf_land:    "The landscape as hostile — the endless dark, the cold, the geography that makes isolation possible. A specific and excellent pleasure.",
@@ -2812,9 +2812,9 @@ const allQuestions = [
     text: 'Wilderness — survival story or something else?',
     sub: "Nature as a setting has different purposes.",
     options: [
-      { label: 'A survival story — physical and psychological', hint: 'The body and mind pushed to their limits',              value: 'ws_survive',  next: 'character' },
+      { label: 'A survival story — physical and psychological', hint: 'The body and mind pushed to their limits',              value: 'ws_survive',  next: 'survival_terrain' },
       { label: 'A meditation on solitude',                      hint: 'Alone by choice or chance — what it reveals',          value: 'ws_solitude', next: 'alone_mode' },
-      { label: 'Nature writing with a human story inside it',   hint: 'The land and a life — both fully rendered',            value: 'ws_nature',   next: 'character' },
+      { label: 'Nature writing with a human story inside it',   hint: 'The land and a life — both fully rendered',            value: 'ws_nature',   next: 'nature_narrative' },
       { label: 'Wilderness as spiritual reckoning',             hint: 'Something sought in landscape that can\'t be found elsewhere', value: 'ws_spirit', next: 'quest_spirit' }
     ],
     reactions: {
@@ -2830,8 +2830,8 @@ const allQuestions = [
     sub: "The genre is enormous. Let's find your corner of it.",
     options: [
       { label: 'Social and political — ideas about how we organise ourselves', hint: 'The future as a lens on the present',   value: 'sf_social',  next: 'scifi_question' },
-      { label: 'Space opera — vast, adventurous, cosmically scaled',           hint: 'Worlds, civilisations, stakes',         value: 'sf_space',   next: 'character' },
-      { label: 'Near-future realism — extrapolation from now',                hint: 'Close enough to feel real and frightening', value: 'sf_near', next: 'character' },
+      { label: 'Space opera — vast, adventurous, cosmically scaled',           hint: 'Worlds, civilisations, stakes',         value: 'sf_space',   next: 'space_scale' },
+      { label: 'Near-future realism — extrapolation from now',                hint: 'Close enough to feel real and frightening', value: 'sf_near', next: 'near_future_angle' },
       { label: 'Literary science fiction — ideas in beautiful prose',         hint: 'Where the genre and serious fiction meet', value: 'sf_lit',    next: 'lit_scifi_mode' }
     ],
     reactions: {
@@ -2848,8 +2848,8 @@ const allQuestions = [
     options: [
       { label: 'A quest — journey, obstacles, transformation',       hint: 'The classic shape — earned and complete',              value: 'fs_quest',   next: 'quest_purpose' },
       { label: 'Political intrigue in a complex world',              hint: 'Courts, factions, competing powers — no simple good', value: 'fs_politics', next: 'politics_kind' },
-      { label: 'A coming-of-age within something larger',            hint: 'One person growing up while the world changes',       value: 'fs_coming',  next: 'character' },
-      { label: 'Mythology and ancient forces — the deep lore',       hint: 'Gods, creation myths, the world\'s history alive',   value: 'fs_myth',    next: 'character' }
+      { label: 'A coming-of-age within something larger',            hint: 'One person growing up while the world changes',       value: 'fs_coming',  next: 'coming_age_stakes' },
+      { label: 'Mythology and ancient forces — the deep lore',       hint: 'Gods, creation myths, the world\'s history alive',   value: 'fs_myth',    next: 'myth_depth' }
     ],
     reactions: {
       fs_quest:    "The quest! The oldest shape. Still the best when it's done with conviction and earned at every stage. We know which ones.",
@@ -2864,8 +2864,8 @@ const allQuestions = [
     sub: 'Every unhappy family is unhappy differently.',
     options: [
       { label: 'A secret kept for generations',     hint: 'Something buried that is still, quietly, doing damage',      value: 'fw_secret',   next: 'secret_generation' },
-      { label: 'A silence that was never broken',   hint: 'What wasn\'t said — and what that cost',                     value: 'fw_silence',  next: 'character' },
-      { label: 'A reckoning between parent and child', hint: 'The accounting — love, expectation, disappointment',      value: 'fw_parent',   next: 'character' },
+      { label: 'A silence that was never broken',   hint: 'What wasn\'t said — and what that cost',                     value: 'fw_silence',  next: 'silence_form' },
+      { label: 'A reckoning between parent and child', hint: 'The accounting — love, expectation, disappointment',      value: 'fw_parent',   next: 'parent_reckoning' },
       { label: 'Siblings and what they became',     hint: 'The people who grew up in the same house and diverged',      value: 'fw_siblings', next: 'sibling_shape' }
     ],
     reactions: {
@@ -2881,9 +2881,9 @@ const allQuestions = [
     sub: "Every place has its own kind of gravity.",
     options: [
       { label: 'A small town with a long memory',  hint: 'History, grudges, the weight of being known',                  value: 'ct_small',    next: 'small_gravity' },
-      { label: 'A neighbourhood in a city',        hint: 'Multiple lives in proximity — the accidental community',       value: 'ct_urban',    next: 'character' },
+      { label: 'A neighbourhood in a city',        hint: 'Multiple lives in proximity — the accidental community',       value: 'ct_urban',    next: 'urban_fabric' },
       { label: 'An institution — school, hospital, prison', hint: 'A closed world with its own brutal logic',            value: 'ct_instit',   next: 'institution_type' },
-      { label: 'A diaspora community — roots and distance', hint: 'A culture preserved, adapted, argued over',           value: 'ct_diaspora', next: 'character' }
+      { label: 'A diaspora community — roots and distance', hint: 'A culture preserved, adapted, argued over',           value: 'ct_diaspora', next: 'diaspora_tension' }
     ],
     reactions: {
       ct_small:    "The small town with a long memory. Everyone knows everything and has always known. The weight of being a known quantity.",
@@ -3968,6 +3968,516 @@ const allQuestions = [
       cw2_man:    "The male interior crisis — the thing unnamed, the emotions not yet findable in language. Fiction that does this honestly is rare and necessary.",
       cw2_end:    "The retrospective — seen from the end of something. What it all was. The full accounting. Some of the most profound character studies use this vantage.",
       cw2_become: "The moment of transformation — seen from inside, as it happens. The edge of becoming. Interior fiction at its most urgent and alive."
+    }
+  },
+  {
+    id: 'space_scale',       /* triggered by scifi_flavor=sf_space — replaces character */
+    text: 'Space opera — what draws you to the vast?',
+    sub: "Cosmos-sized stories have different hearts.",
+    options: [
+      { label: 'The politics of empire across worlds',              hint: 'Annexation, resistance, civilisations in conflict',         value: 'ss_empire',  next: 'character' },
+      { label: 'A crew on a ship — the relationships inside it',   hint: 'Intimacy at scale; the people matter as much as the stars', value: 'ss_crew',    next: 'character' },
+      { label: 'First contact — encountering something truly alien', hint: 'Meeting the incomprehensible, and what it costs',          value: 'ss_contact', next: 'character' },
+      { label: 'Civilisational rise and fall — the long sweep',    hint: 'Centuries-scale arcs, the pattern of history writ large',  value: 'ss_sweep',   next: 'character' }
+    ],
+    reactions: {
+      ss_empire:  "Interstellar empire and resistance. The politics of power at cosmic scale. The best space opera has always been about this.",
+      ss_crew:    "The crew. Relationships in the void — loyalty, friction, the family you choose when home is light-years away. Yes.",
+      ss_contact: "First contact! The incomprehensible other. What happens to human categories when something truly alien is encountered. Thrilling.",
+      ss_sweep:   "The long view — civilisations rising, plateauing, falling. History as pattern, the universe as witness. Grand and necessary."
+    }
+  },
+  {
+    id: 'near_future_angle', /* triggered by scifi_flavor=sf_near — replaces character */
+    text: 'Near-future realism — what has changed?',
+    sub: "One step from now. Which step?",
+    options: [
+      { label: 'The climate — living in the changed world',          hint: 'Adaptation, grief, and the ingenuity of the desperate',   value: 'nfa_climate',  next: 'character' },
+      { label: 'Technology and what it has done to intimacy',        hint: 'Connection, isolation, what the digital body costs',      value: 'nfa_tech',     next: 'character' },
+      { label: 'Politics — the systems cracking under pressure',     hint: 'Authoritarianism, collapse, the people who resist',       value: 'nfa_politics', next: 'character' },
+      { label: 'Surveillance — the watched life',                    hint: 'What it means to be known entirely and always',           value: 'nfa_watched',  next: 'character' }
+    ],
+    reactions: {
+      nfa_climate:  "Climate fiction done with real precision. The changed world and the people navigating it — grief and ingenuity in equal measure.",
+      nfa_tech:     "Technology and intimacy — what it has cost and given. The most urgent question in contemporary fiction. Some writers are nailing it.",
+      nfa_politics: "Political near-future — the cracks visible now, extrapolated. Fiction as warning. At its best, impossible to put down.",
+      nfa_watched:  "The surveillance state — known entirely, all the time. Privacy as luxury. Identity as performance for an audience. Yes."
+    }
+  },
+  {
+    id: 'coming_age_stakes', /* triggered by fantasy_style=fs_coming — replaces character */
+    text: 'Coming of age in a fantasy world — what is the personal stake?',
+    sub: "The internal journey and the external one are different things.",
+    options: [
+      { label: 'Discovering what they actually are — identity as revelation', hint: 'Chosen, cursed, different — and the weight of that knowledge', value: 'cas_identity', next: 'character' },
+      { label: 'Learning who they can trust — and who will betray them',      hint: 'Friendship, loyalty, the cost of knowing',                    value: 'cas_trust',    next: 'character' },
+      { label: 'The loss of innocence — what the world is really like',       hint: 'Knowledge as grief; the world is worse than they thought',     value: 'cas_innocent', next: 'character' },
+      { label: 'Becoming powerful — and what power requires',                 hint: 'The moral weight of capability; the cost of strength',         value: 'cas_power',    next: 'character' }
+    ],
+    reactions: {
+      cas_identity: "Discovery of self — what they actually are, and the weight of that knowledge. Coming-of-age at its most mythic and exact.",
+      cas_trust:    "Learning who to trust. The betrayals, the loyalties that hold. The education of the heart in a world where the stakes are real.",
+      cas_innocent: "The loss of innocence — the world is darker than it seemed. Fiction that handles this without sentimentality is extraordinary.",
+      cas_power:    "What power requires. The moral cost of capability. The character who must decide what kind of person to become. Brilliant."
+    }
+  },
+  {
+    id: 'myth_depth',        /* triggered by fantasy_style=fs_myth — replaces character */
+    text: 'Mythology in fantasy — what kind of deep lore?',
+    sub: "Ancient forces live in different ways.",
+    options: [
+      { label: 'Gods who are present and actively interfering',             hint: 'The divine with agendas — capricious, terrible, real',          value: 'md_gods',   next: 'character' },
+      { label: 'The myth as history — what happened at the beginning',      hint: 'Origin stories as literal truth; the world\'s first chapters', value: 'md_origin', next: 'character' },
+      { label: 'A character who embodies or carries the myth forward',      hint: 'The mythic individual — the vessel, the vessel\'s burden',      value: 'md_vessel', next: 'character' },
+      { label: 'Mythology as a system the characters must navigate',        hint: 'The story already written; living inside the pattern',          value: 'md_system', next: 'character' }
+    ],
+    reactions: {
+      md_gods:   "Gods with agendas — capricious, interfering, deeply political. The divine as protagonist. Ancient Greek energy in new territory.",
+      md_origin: "The myth as history — what actually happened at the beginning. The world's true founding. A form of profound, dense storytelling.",
+      md_vessel: "The person who carries the myth forward — the chosen, the burdened. The tension between the individual and the pattern. Yes.",
+      md_system: "Living inside the story already written — navigating a mythology as a system of rules and fates. Intricate and compelling."
+    }
+  },
+  {
+    id: 'lit_myst_cost',     /* triggered by mystery_type=myst_literary — replaces avoid */
+    text: 'Literary mystery — what uncomfortable truth do you want?',
+    sub: "The revelation changes more than the plot.",
+    options: [
+      { label: 'A truth about family — what was concealed and why',       hint: 'Secrets that reshape every earlier understanding',            value: 'lmc_family',   next: 'avoid' },
+      { label: 'A truth about place — what the community was built on',   hint: 'History, violence, complicity — the ground beneath the town', value: 'lmc_place',    next: 'avoid' },
+      { label: 'A truth about a person — who they really were',           hint: 'The unreliable portrait; the figure re-examined',             value: 'lmc_person',   next: 'avoid' },
+      { label: 'A truth about the narrator — what they couldn\'t see',    hint: 'The investigation turns inward; the detective is also guilty', value: 'lmc_narrator', next: 'avoid' }
+    ],
+    reactions: {
+      lmc_family:   "The family secret. Every earlier scene re-read in new light. Literary mysteries that do this properly are among the best things in fiction.",
+      lmc_place:    "The place's true history — the violence it was built on, the silence that covered it. Local crime as historical reckoning.",
+      lmc_person:   "The unreliable portrait — who they actually were, versus who everyone believed. The re-examined figure. One of the great pleasures.",
+      lmc_narrator: "The narrator's own blind spot. The detective who is also implicated. The investigation that circles back. Demanding and brilliant."
+    }
+  },
+  {
+    id: 'atmos_setting',     /* triggered by mystery_type=myst_atmos — replaces avoid */
+    text: 'Atmospheric crime — which world?',
+    sub: "Location does enormous work in this kind of book.",
+    options: [
+      { label: 'A European city — old, layered, steeped in history',       hint: 'Vienna, Prague, Rome, Paris — the weight of centuries',        value: 'as_europe',  next: 'avoid' },
+      { label: 'An American city — noir-inflected and socially complicated', hint: 'Los Angeles, Chicago, New Orleans — the distinctive American dark', value: 'as_america', next: 'avoid' },
+      { label: 'A city in the Global South — a world rarely rendered',     hint: 'Lagos, Mumbai, Mexico City, Nairobi — alive and underrepresented', value: 'as_global',  next: 'avoid' },
+      { label: 'A small, specific place — dense with its own meaning',     hint: 'A village, a town, a single building — enclosed and knowing', value: 'as_small',   next: 'avoid' }
+    ],
+    reactions: {
+      as_europe:  "Old European cities — the history soaked into the stone, the crime ancient in its patterns. Atmospheric crime at its most layered.",
+      as_america: "American urban noir — the specifically American dark. Social, racial, economically precise. The great tradition of the genre.",
+      as_global:  "Crime fiction set in the Global South — the world we don't see often enough in the genre. Some extraordinary books are doing this.",
+      as_small:   "The small place as the whole world. Enclosed, knowing, dense with meaning. The crime that can't be anonymous. Perfect territory."
+    }
+  },
+  {
+    id: 'landscape_menace',  /* triggered by noir_focus=nf_land — replaces character */
+    text: 'The Nordic landscape as menace — what kind of geography?',
+    sub: "The terrain shapes the darkness.",
+    options: [
+      { label: 'Endless winter — darkness as a psychological state',  hint: 'The long night; cold that never fully lifts; interior and exterior merged', value: 'lm_winter', next: 'character' },
+      { label: 'The fjord — isolation where everyone knows everyone', hint: 'Water, enclosure, the impossibility of leaving quietly',                    value: 'lm_fjord',  next: 'character' },
+      { label: 'The open plain — nowhere to hide, watched from all sides', hint: 'Flatness as exposure; the visibility that is its own kind of trap',   value: 'lm_plain',  next: 'character' },
+      { label: 'Northern cities in winter — urban and dark',          hint: 'Concrete, snow, the institutional cold, silence that is policy',            value: 'lm_city',   next: 'character' }
+    ],
+    reactions: {
+      lm_winter: "Endless winter — the darkness internalised. Landscape and psychology become indistinguishable. The specific genius of Nordic noir.",
+      lm_fjord:  "The fjord — enclosed, watchful, impossible to leave discreetly. Community as trap. The geography as the social contract.",
+      lm_plain:  "The flat plain where nothing is hidden — exposure as the condition of life. A different kind of menace from the dark. Equally effective.",
+      lm_city:   "The northern city in deep winter — urban, institutional, cold as policy. The welfare state's architecture as crime scene. Yes."
+    }
+  },
+  {
+    id: 'society_layer',     /* triggered by noir_focus=nf_society — replaces character */
+    text: 'The welfare state\'s surface and its underside — what lies beneath?',
+    sub: "Scandinavian crime fiction is also social criticism.",
+    options: [
+      { label: 'Domestic violence — private crime behind respectable facades', hint: 'What happens behind the closed door of the ideal home',          value: 'sl_domestic',    next: 'character' },
+      { label: 'Institutional corruption — the officials who make it work',    hint: 'Police, government, the trusted class and its betrayals',         value: 'sl_institution', next: 'character' },
+      { label: 'Economic crime — money moving silently beneath the surface',   hint: 'Financial violence, the invisible harm, the clean hands',         value: 'sl_economic',    next: 'character' },
+      { label: 'The immigrant experience inside the ideal state',              hint: 'Inclusion and its limits; the unwelcome truth about the utopia',   value: 'sl_immigrant',   next: 'character' }
+    ],
+    reactions: {
+      sl_domestic:    "Domestic crime — the private face of public order. Violence behind the respectable facade. Some of the best Nordic noir starts here.",
+      sl_institution: "Institutional corruption — the officials, the police, the trusted. When the system betrays from the inside. Essential.",
+      sl_economic:    "Financial crime — invisible, quiet, enormous. The money that moves cleanly through good hands. The real violence of the genre.",
+      sl_immigrant:   "The immigration story inside the ideal state. The limits of inclusion. Urgently relevant. Some extraordinary fiction is doing this."
+    }
+  },
+  {
+    id: 'moral_crime',       /* triggered by noir_focus=nf_moral — replaces character */
+    text: 'The moral weight of the crime — which angle?',
+    sub: "Not whodunit but why, and at what cost.",
+    options: [
+      { label: 'The criminal who is also understandable',          hint: 'The sympathetic perpetrator; you almost agree with them',         value: 'mc_sympath',    next: 'character' },
+      { label: 'The detective who becomes compromised in pursuit', hint: 'Obsession, the ethics of justice, the cost of seeing clearly',    value: 'mc_detective',  next: 'character' },
+      { label: 'A community\'s collective guilt',                  hint: 'No one is innocent; complicity, silence, what everyone enabled',  value: 'mc_collective', next: 'character' },
+      { label: 'The victim, fully foregrounded',                   hint: 'Their life before it ended — the full humanity of loss',          value: 'mc_victim',     next: 'character' }
+    ],
+    reactions: {
+      mc_sympath:    "The sympathetic criminal — you understand why, maybe almost agree. The morally complicated position. The best crime fiction lives here.",
+      mc_detective:  "The detective compromised by the pursuit. The cost of obsession. Justice and its ethical cost. Psychologically demanding and great.",
+      mc_collective: "Collective guilt — the crime the community enabled. No single villain; everyone complicit in some degree. The hardest accusation.",
+      mc_victim:     "The victim, foregrounded — their full humanity. Crime fiction that insists on this is doing something important. We know those books."
+    }
+  },
+  {
+    id: 'ancient_focus',     /* triggered by era_pick=era_ancient — replaces avoid */
+    text: 'Ancient worlds — which civilisation?',
+    sub: "The classical past is vast. Let's narrow it.",
+    options: [
+      { label: 'Ancient Greece — philosophy, myth, and the polis',  hint: 'Democracy\'s birth, the myths that still run underneath everything', value: 'af_greece', next: 'avoid' },
+      { label: 'Ancient Rome — empire, power, the long machinery',  hint: 'Republic to empire to fall; the whole arc of domination',           value: 'af_rome',   next: 'avoid' },
+      { label: 'Egypt or Mesopotamia — the first great cities',     hint: 'Before Greece and Rome; the origins of everything',                  value: 'af_orient', next: 'avoid' },
+      { label: 'A culture on the margins — the conquered view',     hint: 'Carthage, Persia, the tribes — empire seen from outside',            value: 'af_margin', next: 'avoid' }
+    ],
+    reactions: {
+      af_greece: "Ancient Greece — philosophy, drama, myth, the polis. The original characters. Still a source of everything. Some brilliant novels live here.",
+      af_rome:   "Rome! Republic to empire to fall. Power, spectacle, the machinery of domination. The arc of history made visible. Excellent territory.",
+      af_orient: "Before Greece and Rome — Egypt, Mesopotamia, the first cities. Rich, underexplored, and the source of everything that followed.",
+      af_margin: "The view from outside empire — Carthage, Persia, the conquered. History from the other side. Some of the most important recent fiction does this."
+    }
+  },
+  {
+    id: 'midcentury_setting', /* triggered by era_pick=era_midcentury — replaces avoid */
+    text: 'Mid-century — which world reshaping itself?',
+    sub: "1950s–70s: enormous social transformation in real time.",
+    options: [
+      { label: 'America — civil rights, counterculture, the fractures in the dream', hint: 'Race, possibility, disillusionment; the American century cracking', value: 'ms_america', next: 'avoid' },
+      { label: 'Post-war Europe — rebuilding and reckoning',                          hint: 'The impossible recovery; the silence over what happened',          value: 'ms_europe',  next: 'avoid' },
+      { label: 'The end of empire — decolonisation and what it left',                 hint: 'The former colonies, the new nations, the aftermath of extraction', value: 'ms_empire',  next: 'avoid' },
+      { label: 'Private lives in public convulsion',                                  hint: 'Large events through a small aperture — one family, one decade',   value: 'ms_private', next: 'avoid' }
+    ],
+    reactions: {
+      ms_america: "Mid-century America — civil rights, the counterculture, the dream and its cracks. Some of the greatest American novels live here.",
+      ms_europe:  "Post-war Europe — the rebuilding, the silence, the impossible reckoning with what happened. Extraordinary moral territory.",
+      ms_empire:  "Decolonisation — the end of empire and the long aftermath. Some of the most important fiction of the century was written from here.",
+      ms_private: "Private lives in public convulsion. The small aperture through which the large world is seen. One family, one decade. Perfect."
+    }
+  },
+  {
+    id: 'victorian_women',   /* triggered by victorian_focus=vf_women — replaces character */
+    text: 'Victorian women — what kind of constraint?',
+    sub: "Agency within severe limits took many forms.",
+    options: [
+      { label: 'The marriage question — navigating the economics of love',    hint: 'Property, reputation, the system she must work within or around', value: 'vw_marriage', next: 'character' },
+      { label: 'The new woman — working, independent, transgressive',         hint: 'The governess, the professional, the one who refused the script', value: 'vw_work',     next: 'character' },
+      { label: 'The body and what it meant — the medical and moral gaze',     hint: 'Hysteria, pregnancy, the female body as site of control',         value: 'vw_body',     next: 'character' },
+      { label: 'The artist or intellectual — making something in adversity',  hint: 'Creativity against constraint; the woman who insisted on making', value: 'vw_artist',   next: 'character' }
+    ],
+    reactions: {
+      vw_marriage: "The marriage question — property, reputation, the economics of love. The intelligence required to navigate it. Brilliant, brilliant novels.",
+      vw_work:     "The new woman — working, independent, the one who wouldn't follow the script. Victorian fiction at its most quietly radical.",
+      vw_body:     "The female body as site of control. Hysteria, pregnancy, the medical gaze. Some recent fiction is doing extraordinary things with this.",
+      vw_artist:   "The woman insisting on making something. Creativity against constraint. Some of the best Victorian fiction is precisely about this."
+    }
+  },
+  {
+    id: 'victorian_crime',   /* triggered by victorian_focus=vf_crime — replaces character */
+    text: 'Victorian crime — which entrance to the gaslit underworld?',
+    sub: "The era had many kinds of darkness.",
+    options: [
+      { label: 'A brilliant detective — the puzzle and the method',   hint: 'The mind as the story; the detective\'s intelligence as pleasure',  value: 'vc_detective',  next: 'character' },
+      { label: 'The criminal underworld — seen from inside',          hint: 'Thieves, forgers, the invisible city; the view from below',         value: 'vc_underworld', next: 'character' },
+      { label: 'True crime of the era — real cases, recreated',       hint: 'The Victorian murders that made modernity; the cases we still remember', value: 'vc_truecrime', next: 'character' },
+      { label: 'A woman in crime — detective or criminal',            hint: 'Agency through transgression; the female detective or the female villain', value: 'vc_woman',   next: 'character' }
+    ],
+    reactions: {
+      vc_detective:  "The brilliant Victorian detective — the puzzle, the method, the singular personality. Holmes-adjacent but also its own tradition. Yes.",
+      vc_underworld: "The criminal underworld from the inside — thieves, forgers, the elaborate hidden economy. Dickens knew this territory. So do we.",
+      vc_truecrime:  "The real cases — the Victorian crimes that made modernity. Some of the best recent fiction reconstructs these with precision.",
+      vc_woman:      "The female detective or villain — agency through transgression. The Victorian woman operating in crime. An underrated tradition."
+    }
+  },
+  {
+    id: 'home_front_world',  /* triggered by wartime_angle=wa_home — replaces character */
+    text: 'The home front — which war, which world?',
+    sub: "The domestic war has specific geographies.",
+    options: [
+      { label: 'Britain in the Blitz — endurance, community, what holds', hint: 'The specific texture of British civilian war; what people became', value: 'hf_britain',  next: 'character' },
+      { label: 'Occupied Europe — collaboration, resistance, impossible choices', hint: 'Living under occupation; the daily negotiations of survival', value: 'hf_occupied', next: 'character' },
+      { label: 'America adjusting — social transformation on the home front', hint: 'Women working, race, the economy of sacrifice and change',      value: 'hf_america',  next: 'character' },
+      { label: 'The Global South — where the war arrived uninvited',        hint: 'India, North Africa, the colonies conscripted into someone else\'s war', value: 'hf_global', next: 'character' }
+    ],
+    reactions: {
+      hf_britain:  "Britain in the Blitz — endurance, community, the specific texture of civilian war. What people became when tested. Excellent territory.",
+      hf_occupied: "Occupied Europe — the impossible daily negotiations. Collaboration, resistance, survival. The moral complexity is total. Great fiction lives here.",
+      hf_america:  "The American home front — women working, racial tensions, the economy of sacrifice. Social transformation glimpsed from the inside.",
+      hf_global:   "The war as it arrived in the Global South — unwanted, colonial, someone else's conflict. A perspective that changes everything."
+    }
+  },
+  {
+    id: 'aftermath_kind',    /* triggered by wartime_angle=wa_after — replaces character */
+    text: 'The war\'s aftermath — what does the survivor carry?',
+    sub: "Survival is not the end of the story.",
+    options: [
+      { label: 'Guilt — for being alive when others weren\'t',       hint: 'Survivor\'s guilt as a kind of haunting; the debt to the dead',       value: 'ak_guilt',    next: 'character' },
+      { label: 'Silence — the things they cannot speak',             hint: 'How the unspeakable shapes ordinary life; what is never said',        value: 'ak_silence',  next: 'character' },
+      { label: 'The lost self — who they were before',               hint: 'The identity war erases; what tries to grow back in its place',       value: 'ak_identity', next: 'character' },
+      { label: 'The need to tell — to bear witness',                 hint: 'Testimony, memory, the obligation to make what happened known',       value: 'ak_witness',  next: 'character' }
+    ],
+    reactions: {
+      ak_guilt:    "Survivor's guilt — the debt to the dead that never settles. The haunt. Some of the most powerful war aftermath fiction starts here.",
+      ak_silence:  "The silence — the things that cannot be said, and how they shape everything around them. The unspeakable as the centre of a life.",
+      ak_identity: "The lost self. Who they were before, and what tries to grow in its place. Identity and war; the before-and-after. Profound.",
+      ak_witness:  "The need to tell — to bear witness, to ensure it is known. Memory as obligation. Some of the greatest books in any language go here."
+    }
+  },
+  {
+    id: 'survival_terrain',  /* triggered by wild_scale=ws_survive — replaces character */
+    text: 'Survival — what terrain?',
+    sub: "The physical environment shapes everything.",
+    options: [
+      { label: 'Extreme cold — Arctic, Antarctic, the mountain',    hint: 'Cold as the ultimate adversary; the body at its thermal limit',     value: 'st_cold',   next: 'character' },
+      { label: 'The sea — shipwreck, isolation, open water',        hint: 'The maritime test; the specific cruelty of the ocean',              value: 'st_sea',    next: 'character' },
+      { label: 'The desert — heat, thirst, featureless vastness',   hint: 'The stripped-down landscape; the mind stripped down with it',       value: 'st_desert', next: 'character' },
+      { label: 'Dense wilderness — jungle, forest, the pathless',   hint: 'Where direction is lost; where the forest is the opponent',         value: 'st_jungle', next: 'character' }
+    ],
+    reactions: {
+      st_cold:   "Extreme cold — the body at its thermal limit. The Arctic or the mountain as adversary. A specific and brutal form of the survival story.",
+      st_sea:    "The sea — shipwreck, open water, the maritime test. Isolation at its most total. Some extraordinary survival literature happens here.",
+      st_desert: "The desert — heat, thirst, featureless and vast. The landscape strips the mind down with it. Stark and elemental fiction.",
+      st_jungle: "The pathless wilderness — where direction is lost, where the forest is alive and indifferent. The densest kind of survival story."
+    }
+  },
+  {
+    id: 'nature_narrative',  /* triggered by wild_scale=ws_nature — replaces character */
+    text: 'Nature writing with a human story — what landscape?',
+    sub: "The land that shapes the book shapes the people too.",
+    options: [
+      { label: 'The sea coast — tidal, liminal, in-between',         hint: 'The marginal zone; always changing, never resolved',                value: 'nn_coast',    next: 'character' },
+      { label: 'Mountains and high country — scale and exposure',    hint: 'The vertiginous perspective; humanity in proportion',               value: 'nn_mountain', next: 'character' },
+      { label: 'The American West — myth, space, loaded history',    hint: 'Settler and indigenous histories, the landscape as contested ground', value: 'nn_west',   next: 'character' },
+      { label: 'British countryside — pastoral, ancient, strange',   hint: 'The familiar made uncanny; deep history in ordinary fields',        value: 'nn_british',  next: 'character' }
+    ],
+    reactions: {
+      nn_coast:    "The coast — tidal, in-between, never still. The liminal landscape as the place where things happen and cannot be held. Perfect.",
+      nn_mountain: "Mountains and the high country — the vertiginous perspective, humanity in proportion. Some of the most clarifying nature writing goes here.",
+      nn_west:     "The American West — the loaded landscape, settler and indigenous histories, the myth of space. Contested and profound territory.",
+      nn_british:  "British countryside — the pastoral that is also ancient and strange. Deep history in ordinary fields. A very particular tradition."
+    }
+  },
+  {
+    id: 'silence_form',      /* triggered by family_wound=fw_silence — replaces character */
+    text: 'The family silence — what was never said?',
+    sub: "Silence is many things.",
+    options: [
+      { label: 'A death that was never properly grieved',     hint: 'The loss not acknowledged; the body in the room everyone walks around', value: 'silf_death',    next: 'character' },
+      { label: 'A shame — something the family agreed not to name', hint: 'Class, illness, failure, sexuality — the unspeakable thing',      value: 'silf_shame',    next: 'character' },
+      { label: 'An old argument that ended and was never resolved', hint: 'The estrangement with no stated cause; the silence as the wound',  value: 'silf_argument', next: 'character' },
+      { label: 'Love — the family that simply never said it',       hint: 'Warmth withheld, not from cruelty but from fear or habit',         value: 'silf_love',     next: 'character' }
+    ],
+    reactions: {
+      silf_death:    "The death that was never grieved — the loss that became a room everyone walks around. Fiction that names this is doing necessary work.",
+      silf_shame:    "The named thing — illness, failure, sexuality, the family shame. What everyone agreed not to say, and what that agreement cost.",
+      silf_argument: "The unresolved argument — the estrangement with no official cause. The silence that is itself the wound. Very rich territory.",
+      silf_love:     "The love that was never said. Not cruelty — just fear, or habit, or a family that didn't have the language. Quietly devastating."
+    }
+  },
+  {
+    id: 'parent_reckoning',  /* triggered by family_wound=fw_parent — replaces character */
+    text: 'The parent-child reckoning — from whose position?',
+    sub: "The direction of the confrontation changes everything.",
+    options: [
+      { label: 'A grown child facing a parent while there is still time', hint: 'The confrontation while both are alive and it can still matter', value: 'pr_alive',   next: 'character' },
+      { label: 'After the parent is gone — the unanswerable reckoning',   hint: 'Grief as argument; loving and accusing someone who cannot respond', value: 'pr_after', next: 'character' },
+      { label: 'A parent\'s perspective — the child they cannot understand', hint: 'The parent who loves and has somehow failed; the impossible view', value: 'pr_parent', next: 'character' },
+      { label: 'Letters or documents — the confrontation on the page',    hint: 'The written reckoning; the evidence left behind',                value: 'pr_letters', next: 'character' }
+    ],
+    reactions: {
+      pr_alive:   "The confrontation while both are alive. The risk of it. The possibility that something could still change. Tense and necessary.",
+      pr_after:   "After the parent is gone — loving and accusing someone who cannot respond. Grief as argument. Among the most common and painful experiences.",
+      pr_parent:  "The parent's perspective — the child they love and have somehow failed. The impossible view from that side. Rarely done honestly. Essential.",
+      pr_letters: "The written reckoning — letters, documents, the confrontation at a distance. The evidence of a life, reassembled into an accusation."
+    }
+  },
+  {
+    id: 'urban_fabric',      /* triggered by community_type=ct_urban — replaces character */
+    text: 'Urban community — what holds the neighbourhood together?',
+    sub: "Cities make accidental communities.",
+    options: [
+      { label: 'A single building — the vertical community',      hint: 'Each floor a different life; the apartment block as a society in miniature', value: 'uf_building',  next: 'character' },
+      { label: 'A street, over time — watching a place change',   hint: 'Gentrification, memory, who belongs and who is displaced',                    value: 'uf_street',    next: 'character' },
+      { label: 'An immigrant neighbourhood — culture in transition', hint: 'The enclave, the second generation, the culture preserved and argued over', value: 'uf_immigrant', next: 'character' },
+      { label: 'A city in crisis — community under pressure',     hint: 'Poverty, disaster, the system failing — what holds and what breaks',           value: 'uf_crisis',    next: 'character' }
+    ],
+    reactions: {
+      uf_building:  "The apartment building as a society — each floor a different world in proximity. Vertical community. A form with so much possibility.",
+      uf_street:    "A street over time — gentrification, memory, who belongs and who is pushed out. Place as character, change as the plot.",
+      uf_immigrant: "The immigrant neighbourhood — the culture maintained, adapted, argued over across generations. Some of the best novels are exactly this.",
+      uf_crisis:    "A city in crisis — community under pressure. Poverty, disaster, the system failing. What holds, what breaks. Urgent fiction."
+    }
+  },
+  {
+    id: 'diaspora_tension',  /* triggered by community_type=ct_diaspora — replaces character */
+    text: 'A diaspora community — what is the central tension?',
+    sub: "Between two worlds is not a comfortable place.",
+    options: [
+      { label: 'The first generation versus the second',             hint: 'What was brought and what was left; the argument across generations', value: 'dt_generation', next: 'character' },
+      { label: 'Preserving the culture versus assimilation',         hint: 'The impossible negotiation; keeping and letting go simultaneously',   value: 'dt_preserve',   next: 'character' },
+      { label: 'Return — going back to the place that was left',     hint: 'The failed homecoming; the country that changed while they were gone', value: 'dt_return',    next: 'character' },
+      { label: 'Belonging nowhere fully',                            hint: 'Neither here nor there; the internal homelessness of the in-between',  value: 'dt_neither',   next: 'character' }
+    ],
+    reactions: {
+      dt_generation: "The generational argument — what was brought and what was lost. First generation and second, in conversation and conflict. Rich territory.",
+      dt_preserve:   "The impossible negotiation — keeping the culture and assimilating. Both, always, imperfectly. Some of the best contemporary fiction.",
+      dt_return:     "Return — the failed homecoming. The country that changed, or the person who did. Both simultaneously. Elegiac and alive.",
+      dt_neither:    "Belonging nowhere fully — neither here nor there. The interior homelessness. One of literature's great subjects right now."
+    }
+  },
+  {
+    id: 'reinvent_how',      /* triggered by identity_angle=id_reinvent — replaces character */
+    text: 'Reinvention — how does it happen?',
+    sub: "Becoming someone new takes different forms.",
+    options: [
+      { label: 'Running away — leaving everything and starting elsewhere',  hint: 'Geographical escape as identity escape; the new city, the new name', value: 'rh_escape',     next: 'character' },
+      { label: 'A crisis that forces it — the old self cannot hold',        hint: 'Breakdown, loss, exposure as catalyst; the involuntary transformation', value: 'rh_crisis',  next: 'character' },
+      { label: 'Deliberate construction — choosing who to be, brick by brick', hint: 'Self-invention as a project; identity as a thing made, not given',  value: 'rh_deliberate', next: 'character' },
+      { label: 'Passing — inhabiting an identity not originally yours',     hint: 'Race, class, the performance of self; the act sustained over years',   value: 'rh_passing',    next: 'character' }
+    ],
+    reactions: {
+      rh_escape:     "Running away — the new city, the new name, the old self left behind. Whether it works is the story. Some of the best novels are about exactly this.",
+      rh_crisis:     "The crisis that forces change — the old self that cannot hold any longer. Involuntary transformation. Fiction at its most urgent.",
+      rh_deliberate: "Deliberate self-construction — identity as a project, chosen brick by brick. The most modern version of reinvention. We know these books.",
+      rh_passing:    "Passing — inhabiting an identity not originally yours. The performance sustained. Race, class, the gap between performed and felt self."
+    }
+  },
+  {
+    id: 'inherit_what',      /* triggered by identity_angle=id_inherit — replaces character */
+    text: 'What do they inherit without being asked?',
+    sub: "The past arrives differently.",
+    options: [
+      { label: 'Trauma — a history of violence or loss in the body and mind', hint: 'Inherited suffering; the epigenetics of grief; the past in the present', value: 'iw_trauma', next: 'character' },
+      { label: 'Class and its obligations — a place they didn\'t choose',     hint: 'The social position, the expectations, the doors closed and open',     value: 'iw_class',  next: 'character' },
+      { label: 'Debt — a choice made by someone else, now theirs to pay',     hint: 'Literal or moral; the ancestral burden; someone else\'s consequences', value: 'iw_debt',   next: 'character' },
+      { label: 'A story — the family narrative they must live or reject',     hint: 'The myth, the pride, the obligation passed down; the script to escape', value: 'iw_story',  next: 'character' }
+    ],
+    reactions: {
+      iw_trauma:  "Inherited trauma — the past in the present, the body carrying what the mind has not been told. Some of the most urgent contemporary fiction.",
+      iw_class:   "The inherited social position — the class one didn't choose and its obligations and limits. Still one of fiction's great territories.",
+      iw_debt:    "Ancestral debt — someone else's choice, now yours to live with. The moral or literal burden passed down. Profound and underexplored.",
+      iw_story:   "The family narrative — the myth, the pride, the script. Inherit it and be trapped; reject it and lose something. The dilemma is the story."
+    }
+  },
+  {
+    id: 'social_system',     /* triggered by survival_stakes=surv_social — replaces character */
+    text: 'Surviving a system — what kind of system?',
+    sub: "The institution or structure varies enormously.",
+    options: [
+      { label: 'A legal or criminal justice system',                hint: 'Wrongful conviction, the prison system, the law\'s blind spots',     value: 'ss2_legal',     next: 'character' },
+      { label: 'A class system — navigating extreme inequality',    hint: 'Poverty, access, the locked doors — the arithmetic of the excluded', value: 'ss2_class',     next: 'character' },
+      { label: 'A political system — the state as adversary',       hint: 'Authoritarian, corrupt, surveillance-heavy, or all three at once',   value: 'ss2_political', next: 'character' },
+      { label: 'A social or cultural system — the rules of a community', hint: 'Religious, tribal — the enforcement of belonging and its cost', value: 'ss2_social',    next: 'character' }
+    ],
+    reactions: {
+      ss2_legal:     "The legal system and its failures — wrongful conviction, the prison world, justice blind and not. Fiercely relevant fiction.",
+      ss2_class:     "Class and extreme inequality — the locked doors, the arithmetic of who gets access. Fiction that makes structural injustice felt.",
+      ss2_political: "The state as adversary — authoritarian, corrupt, or simply hostile. The individual navigating the machinery against them. Essential.",
+      ss2_social:    "A social or cultural system — religious, tribal, the enforcement of belonging. The community that cannot tolerate the exception."
+    }
+  },
+  {
+    id: 'retrospect_tone',   /* triggered by memory_treatment=mem_retrospect — replaces character */
+    text: 'The retrospective narrator — what tone do they look back with?',
+    sub: "How they tell it is part of what they tell.",
+    options: [
+      { label: 'With regret — the things they would undo',               hint: 'The retrospective tinged with grief and self-judgment',              value: 'rt_regret',    next: 'character' },
+      { label: 'With hard-won clarity — what they finally understand',   hint: 'Knowledge that took decades to arrive; earned perspective',          value: 'rt_clarity',   next: 'character' },
+      { label: 'With irony — the distance between who they were and are', hint: 'The rueful comedian of their own life; the past made bearable',     value: 'rt_irony',     next: 'character' },
+      { label: 'With urgency — it matters that you hear this',           hint: 'The narrator who needs to be understood; testimony as the point',    value: 'rt_urgent',    next: 'character' }
+    ],
+    reactions: {
+      rt_regret:  "The retrospective voice of regret — what they would undo, the accounting of choices. Intimate and often devastating. We know these books.",
+      rt_clarity: "Hard-won clarity — perspective that took decades. The narrator who finally understands. This is what great retrospective fiction does.",
+      rt_irony:   "Ironic distance from the self — the rueful comedian of their own story. The gap between who they were and who they became. Wonderful.",
+      rt_urgent:  "Urgency — it matters that you hear this. The narrator insisting on being understood. Testimony as art. Some extraordinary books use this."
+    }
+  },
+  {
+    id: 'documents_form',    /* triggered by memory_treatment=mem_documents — replaces character */
+    text: 'Letters, diaries, fragments — what kind of archive?',
+    sub: "How the past is assembled shapes what we find.",
+    options: [
+      { label: 'Love letters — a relationship from both sides',         hint: 'What each said, what each hid; the gap between the two accounts',    value: 'df_letters',  next: 'character' },
+      { label: 'A diary — one consciousness, relatively unguarded',    hint: 'Private, honest — or not; the gap between the written and the lived', value: 'df_diary',    next: 'character' },
+      { label: 'Official records — documents that betray what they hide', hint: 'Bureaucracy as biography; what the paperwork reveals',              value: 'df_official', next: 'character' },
+      { label: 'Mixed fragments — letters, notes, photographs, objects', hint: 'The mosaic of a life assembled slowly from its evidence',            value: 'df_mosaic',   next: 'character' }
+    ],
+    reactions: {
+      df_letters:  "Love letters — the relationship from both sides simultaneously, the gap between the two accounts. An elegant and heartbreaking form.",
+      df_diary:    "A diary — one consciousness, more or less unguarded. The private record. The gap between what they wrote and what they did. Excellent.",
+      df_official: "Official records as biography. What the bureaucracy accidentally reveals. Documents never meant to tell this story, but telling it anyway.",
+      df_mosaic:   "Mixed fragments — the mosaic form. A life assembled from its evidence: letters, notes, photographs, objects. Slow and cumulative."
+    }
+  },
+  {
+    id: 'history_lens',      /* triggered by understand_lens=und_history — replaces secret */
+    text: 'Which historical moment do you need to understand?',
+    sub: "History is vast. Where does the question press hardest?",
+    options: [
+      { label: 'The twentieth century\'s violence — how ordinary people did what they did', hint: 'The mechanisms of atrocity; complicity, ordinary cruelty',    value: 'hl_violence', next: 'secret' },
+      { label: 'A colonial history — the making and unmaking of empires',                   hint: 'The shape of the world and how it got there; the long costs',  value: 'hl_colonial', next: 'secret' },
+      { label: 'Social revolutions — how permanent-seeming things changed',                 hint: 'Civil rights, gender, the tectonic shifts; the possible',       value: 'hl_social',   next: 'secret' },
+      { label: 'A family or personal history — the past as explanation',                    hint: 'Genealogy as revelation; the ancestor who explains everything', value: 'hl_personal', next: 'secret' }
+    ],
+    reactions: {
+      hl_violence: "How ordinary people did what they did — the mechanisms of atrocity and complicity. The most important question. Some books answer it.",
+      hl_colonial: "Colonial history — the shape of the world and its costs. Literature is one of the only places this is fully reckoned with. Essential.",
+      hl_social:   "Social revolution — how the permanent changed. Civil rights, gender, the tectonic shifts. Fiction that captures this is irreplaceable.",
+      hl_personal: "Family history as revelation — the ancestor who explains everything, the past that is the present. Genealogy and fiction overlapping."
+    }
+  },
+  {
+    id: 'grief_form',        /* triggered by understand_lens=und_grief — replaces secret */
+    text: 'Grief literature — what kind of loss?',
+    sub: "There are many losses, and many ways of writing them.",
+    options: [
+      { label: 'The loss of a person — a death and its aftermath',             hint: 'Grief\'s specific weight; the texture of particular absence',      value: 'gf_death',        next: 'secret' },
+      { label: 'The loss of a marriage or relationship',                        hint: 'The long dissolution; the particular grief of something chosen',   value: 'gf_relationship', next: 'secret' },
+      { label: 'The loss of a world — displacement, exile, the end of a way of life', hint: 'Mourning what no longer exists; the grief of the collective', value: 'gf_world',       next: 'secret' },
+      { label: 'The loss of self — illness, trauma, who you used to be',       hint: 'Grief for your own earlier life; the before-and-after self',       value: 'gf_self',         next: 'secret' }
+    ],
+    reactions: {
+      gf_death:        "The death and its aftermath — grief's specific weight. The texture of a particular absence. Some books about this are among the best ever written.",
+      gf_relationship: "The grief of a relationship ending — the particular loss of something that was chosen. Quiet and real. Some fiction does this perfectly.",
+      gf_world:        "Mourning a world — displacement, exile, the end of a way of life. The collective grief. Literature is one of the few places it's held.",
+      gf_self:         "The loss of self — illness, trauma, who you used to be. Grief for your own earlier life. The most private kind, and also the most common."
+    }
+  },
+  {
+    id: 'nonlinear_mode',    /* triggered by memory_treatment=mem_nonlinear — replaces character */
+    text: 'Non-linear time — how is the past woven in?',
+    sub: "The structure is part of the meaning.",
+    options: [
+      { label: 'Sudden intrusions — the past arrives without warning',   hint: 'Ambush memory; the trigger; present life suddenly ruptured',        value: 'nm_intrude',   next: 'character' },
+      { label: 'Structural alternation — chapters that switch eras',     hint: 'Deliberate, patterned; then and now in conversation',               value: 'nm_alternate', next: 'character' },
+      { label: 'A puzzle — the reader assembles the chronology',         hint: 'The joy of construction; the meaning that emerges from assembly',   value: 'nm_puzzle',    next: 'character' },
+      { label: 'A spiral — returning to the same events, deeper each time', hint: 'Each pass adds meaning; the full picture arrives slowly',        value: 'nm_spiral',    next: 'character' }
+    ],
+    reactions: {
+      nm_intrude:   "The ambush — the past arriving without warning, rupturing the present. Memory as intrusion. Some books make this unbearable and essential.",
+      nm_alternate: "The structural alternation — then and now in formal conversation. Pattern and meaning emerging from the juxtaposition. A great form.",
+      nm_puzzle:    "The puzzle — the reader assembling the chronology from fragments. The pleasure of construction. The meaning that emerges at the end.",
+      nm_spiral:    "The spiral — returning to the same events, each time deeper. The same scene revealing more each pass. Cumulative and exact."
+    }
+  },
+  {
+    id: 'emotional_aftermath', /* triggered by survival_stakes=surv_emotional — replaces character */
+    text: 'Emotional survival — the aftermath of what?',
+    sub: "The thing endured leaves different shapes.",
+    options: [
+      { label: 'Abuse — the long recovery from someone who harmed you', hint: 'The specific aftermath of violation; the work of rebuilding a self',     value: 'ea_abuse',     next: 'character' },
+      { label: 'A devastating loss — grief as the landscape',          hint: 'A death, a loss that restructures everything around it',                  value: 'ea_loss',      next: 'character' },
+      { label: 'A collapse — breakdown and the reconstruction after',  hint: 'The before and after of the self; mental or emotional crisis survived',   value: 'ea_collapse',  next: 'character' },
+      { label: 'A long struggle — illness, poverty, injustice endured', hint: 'Chronic difficulty and the sustained endurance it requires',              value: 'ea_endurance', next: 'character' }
+    ],
+    reactions: {
+      ea_abuse:     "The long recovery from someone who harmed you. The aftermath of violation. Fiction that does this with honesty is rare and necessary.",
+      ea_loss:      "Grief as the landscape — a loss that restructures everything. Not just the loss, but the long after. The world after. Yes.",
+      ea_collapse:  "The collapse and the reconstruction. Before and after. The self that must be rebuilt from the wreckage. Some extraordinary books go here.",
+      ea_endurance: "Chronic difficulty — sustained over years, requiring a particular kind of endurance. The quiet heroism. Underwritten and essential."
     }
   }
 ];
