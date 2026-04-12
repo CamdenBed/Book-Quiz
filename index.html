@@ -16,14 +16,17 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --ink: #1a1714; --ink-mid: #4a4540; --ink-light: #8a837a;
-    --ink-faint: #c8c0b4; --paper: #f5efe4; --paper-warm: #ede4d6;
-    --paper-dark: #e0d4c0; --accent: #8b4513; --accent-light: #c47a3a;
+    --ink-faint: #ccc4b8; --paper: #f7f1e6; --paper-warm: #efe6d8;
+    --paper-dark: #e4d8c4; --accent: #7c3d1e; --accent-light: #c07835;
     --serif: 'Playfair Display', Georgia, serif;
     --body: 'EB Garamond', Georgia, serif;
+    --radius-sm: 6px; --radius-md: 10px;
+    --shadow-card: 0 2px 16px rgba(120, 75, 20, 0.09), 0 1px 4px rgba(120, 75, 20, 0.06);
+    --shadow-hover: 0 4px 24px rgba(120, 75, 20, 0.13), 0 2px 8px rgba(120, 75, 20, 0.08);
   }
   html { scroll-behavior: smooth; }
   body {
-    background-color: #faf6ef;
+    background-color: #faf7f0;
     color: var(--ink);
     font-family: var(--body); font-size: 22px; line-height: 1.7; min-height: 100vh;
   }
@@ -44,7 +47,11 @@
   @supports (min-height: 100dvh) {
     #screen-quiz { min-height: 100dvh; height: 100dvh; }
   }
-  .screen.active { display: flex; flex-direction: column; }
+  .screen.active { display: flex; flex-direction: column; animation: screenFadeIn 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+  @keyframes screenFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
   /* ═══════════ LANDING ═══════════ */
   .landing-nav {
@@ -77,6 +84,7 @@
     padding: 1.1rem 2.75rem; border: 1px solid var(--ink); background: transparent;
     font-family: var(--body); font-size: 20px; letter-spacing: 0.04em;
     color: var(--ink); cursor: pointer; position: relative; overflow: hidden;
+    border-radius: var(--radius-sm);
   }
   .btn-start::before {
     content: ''; position: absolute; inset: 0; background: var(--ink);
@@ -117,8 +125,8 @@
     padding: 1.5rem 3rem; border-bottom: 1px solid var(--ink-faint); flex-shrink: 0;
   }
   .quiz-brand { font-family: var(--serif); font-size: 17px; color: var(--ink); }
-  .progress-bar-wrap { flex: 1; max-width: 380px; margin: 0 2rem; height: 1px; background: var(--ink-faint); position: relative; }
-  .progress-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--ink); transition: width 0.55s cubic-bezier(0.4,0,0.2,1); }
+  .progress-bar-wrap { flex: 1; max-width: 380px; margin: 0 2rem; height: 3px; background: var(--ink-faint); position: relative; border-radius: 99px; }
+  .progress-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); transition: width 0.55s cubic-bezier(0.4,0,0.2,1); border-radius: 99px; }
   .progress-label { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
 
   /* PAGE FLIP STAGE */
@@ -134,6 +142,18 @@
 
   .question-card {
     width: 100%;
+    will-change: transform, opacity;
+  }
+
+  /* Canvas page-flip overlay — JS-driven, no CSS animation needed here */
+
+  /* First question entrance */
+  .question-card.q-first-enter {
+    animation: qFirstEnter 0.75s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes qFirstEnter {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
   }
 
   #flip-canvas {
@@ -159,33 +179,37 @@
   .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
 
   .option-btn {
-    padding: 1.3rem 1.75rem; border: 1px solid var(--ink-faint); background: transparent;
+    padding: 1.3rem 1.75rem; border: 1px solid var(--ink-faint); background: var(--paper);
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
-    text-align: left; transition: border-color 0.2s; position: relative; overflow: hidden; line-height: 1.4;
-    min-height: 115px;
+    text-align: left; transition: border-color 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; line-height: 1.4;
+    min-height: 115px; border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
   }
   .option-btn::before {
     content: ''; position: absolute; inset: 0; background: var(--paper-warm);
     transform: scaleX(0); transform-origin: left; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    border-radius: var(--radius-md);
   }
-  .option-btn:hover { border-color: var(--ink-mid); }
+  .option-btn:hover { border-color: var(--accent-light); box-shadow: var(--shadow-hover); }
   .option-btn:hover::before { transform: scaleX(1); }
-  .option-btn.selected { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .option-btn.selected { border-color: var(--accent); background: var(--accent); color: #faf7f0; box-shadow: 0 2px 14px rgba(124,61,30,0.22); }
   .option-btn.selected::before { display: none; }
   .option-inner { position: relative; z-index: 1; }
   .option-label { font-weight: 500; display: block; font-size: 21px; }
   .option-hint { font-size: 16px; color: var(--ink-light); display: block; margin-top: 4px; font-style: italic; }
-  .option-btn.selected .option-hint { color: var(--ink-faint); }
+  .option-btn.selected .option-hint { color: rgba(250,247,240,0.7); }
 
   /* REACTION */
   .reaction-box {
     margin-top: 2rem; padding: 1.4rem 2rem;
     border-left: 3px solid var(--accent-light); background: var(--paper-warm);
-    animation: reactionPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+    animation: reactionPop 0.65s cubic-bezier(0.22,1,0.36,1) both;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    box-shadow: var(--shadow-card);
   }
   @keyframes reactionPop {
-    0%   { opacity: 0; transform: translateY(12px) scale(0.97); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0%   { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
   .reaction-label {
     font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -212,9 +236,10 @@
     font-family: var(--body); font-size: 19px; letter-spacing: 0.04em; cursor: pointer;
     opacity: 0; pointer-events: none; transform: translateY(5px);
     transition: opacity 0.3s, transform 0.3s, background 0.2s, color 0.2s;
+    border-radius: var(--radius-sm);
   }
   .btn-next.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
-  .btn-next:hover { background: transparent; color: var(--ink); }
+  .btn-next:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
 
   /* ═══════════ LOADING ═══════════ */
   #screen-loading { align-items: center; justify-content: center; }
@@ -227,14 +252,19 @@
     font-size: 20px; color: var(--ink-mid); font-style: italic;
     margin-bottom: 3rem; animation: fadeIn 0.5s ease 0.2s both;
   }
-  .loading-dots { display: flex; gap: 14px; justify-content: center; animation: fadeIn 0.5s ease 0.4s both; }
+  .loading-dots { display: flex; gap: 12px; justify-content: center; align-items: center; animation: fadeIn 0.5s ease 0.4s both; }
   .loading-dot {
-    width: 8px; height: 8px; background: var(--ink-faint); border-radius: 50%;
-    animation: pulse 1.2s ease-in-out infinite;
+    width: 6px; height: 22px; background: var(--ink-faint);
+    border-radius: 1px; transform-origin: center;
+    animation: pageFlutter 1.6s ease-in-out infinite;
   }
-  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes pulse { 0%,100%{background:var(--ink-faint);transform:scale(1)} 50%{background:var(--ink);transform:scale(1.4)} }
+  .loading-dot:nth-child(2) { animation-delay: 0.22s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.44s; }
+  @keyframes pageFlutter {
+    0%, 100% { transform: scaleX(1);    background: var(--ink-faint); }
+    35%       { transform: scaleX(0.04); background: var(--accent-light); }
+    55%       { transform: scaleX(0.04); background: var(--accent-light); }
+  }
 
   /* ═══════════ REVEAL ═══════════ */
   #screen-reveal { align-items: center; justify-content: center; overflow-y: auto; }
@@ -256,8 +286,9 @@
   .reveal-hint {
     text-align: center; font-size: 22px; color: #2e2b28;
     background: var(--paper-warm); border: 1px solid var(--ink-faint);
-    border-radius: 6px; padding: 0.75rem 1.25rem; margin-bottom: 2rem;
+    border-radius: var(--radius-md); padding: 0.75rem 1.25rem; margin-bottom: 2rem;
     animation: fadeIn 0.6s ease 0.35s both;
+    box-shadow: var(--shadow-card);
   }
 
   .reader-portrait {
@@ -277,11 +308,13 @@
     border: 1px solid var(--ink-faint); background: var(--paper-warm);
     position: relative; will-change: transform, opacity;
     transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer;
+    border-radius: var(--radius-md); overflow: hidden;
+    box-shadow: var(--shadow-card);
   }
-  .ranked-card:hover:not(.is-read) { border-color: var(--ink-mid); }
+  .ranked-card:hover:not(.is-read) { border-color: var(--accent-light); box-shadow: var(--shadow-hover); }
   .ranked-card.selected {
-    border: 2px solid var(--ink);
-    box-shadow: 4px 4px 0 var(--ink-faint);
+    border: 2px solid var(--accent);
+    box-shadow: var(--shadow-hover);
   }
   .ranked-card.selected .rank-col { background: var(--ink); }
   .ranked-card.selected .rank-num { color: var(--paper) !important; }
@@ -357,12 +390,14 @@
   .btn-find-book {
     padding: 0.65rem 1.5rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
     font-family: var(--body); font-size: 18px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+    border-radius: var(--radius-sm);
   }
-  .btn-find-book:hover { background: transparent; color: var(--ink); }
+  .btn-find-book:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
   .btn-read {
     padding: 0.65rem 1.5rem; border: 1px solid var(--ink-faint); background: transparent;
     font-family: var(--body); font-size: 18px; color: #2e2b28; cursor: pointer;
     letter-spacing: 0.04em; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+    border-radius: var(--radius-sm);
   }
   .btn-read:hover { border-color: var(--accent-light); color: var(--accent); }
   .btn-read.marked { border-color: var(--accent-light); color: var(--accent-light); cursor: default; }
@@ -384,9 +419,11 @@
   }
   .modal-overlay.visible { display: flex; }
   .modal-box {
-    background: var(--paper); border: 1px solid var(--ink);
+    background: var(--paper); border: 1px solid var(--ink-faint);
     max-width: 480px; width: 90%; padding: 2.5rem;
     animation: revealCard 0.3s cubic-bezier(0.4,0,0.2,1) both;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 40px rgba(60, 35, 10, 0.22);
   }
   .modal-eyebrow {
     font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -408,12 +445,13 @@
   .modal-confirm {
     padding: 0.85rem 2rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
     font-family: var(--body); font-size: 18px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+    border-radius: var(--radius-sm);
   }
-  .modal-confirm:hover { background: transparent; color: var(--ink); }
+  .modal-confirm:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
   .modal-cancel {
     padding: 0.85rem 2rem; border: 1px solid var(--ink-faint); background: transparent;
     font-family: var(--body); font-size: 18px; color: var(--ink-mid); cursor: pointer;
-    letter-spacing: 0.04em; transition: all 0.2s;
+    letter-spacing: 0.04em; transition: all 0.2s; border-radius: var(--radius-sm);
   }
   .modal-cancel:hover { border-color: var(--ink); color: var(--ink); }
 
@@ -482,6 +520,7 @@
   .detail-buy-box {
     border: 1px solid var(--ink-faint); background: var(--paper-warm);
     padding: 3rem 2rem; text-align: center;
+    border-radius: var(--radius-md); box-shadow: var(--shadow-card);
   }
   .buy-box-label {
     font-family: var(--serif); font-size: 20px; color: var(--ink-mid);
@@ -510,25 +549,26 @@
     font-family: var(--body); font-size: 19px; letter-spacing: 0.04em;
     color: var(--ink-mid); background: none; border: 1px solid var(--ink-faint);
     padding: 0.5rem 1.25rem; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+    border-radius: var(--radius-sm);
   }
   .btn-reroll:hover { color: var(--ink); border-color: var(--ink-mid); }
   .btn-share {
     padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
-    letter-spacing: 0.04em; transition: all 0.2s;
+    letter-spacing: 0.04em; transition: all 0.2s; border-radius: var(--radius-sm);
   }
   .btn-share:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .reveal-bottom { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeIn 0.6s ease 1s both; }
   .btn-restart {
     padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
-    letter-spacing: 0.04em; transition: all 0.2s;
+    letter-spacing: 0.04em; transition: all 0.2s; border-radius: var(--radius-sm);
   }
   .btn-restart:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .btn-shelf-link {
     padding: 1rem 2.5rem; border: 1px solid var(--ink); background: transparent;
     font-family: var(--body); font-size: 19px; color: var(--ink); cursor: pointer;
-    letter-spacing: 0.04em; transition: all 0.2s;
+    letter-spacing: 0.04em; transition: all 0.2s; border-radius: var(--radius-sm);
   }
   .btn-shelf-link:hover { background: var(--ink); color: var(--paper); }
 
@@ -545,7 +585,7 @@
     text-align: center; padding: 5rem 2rem;
     font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-light);
   }
-  .shelf-grid { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--ink-faint); margin-bottom: 2.5rem; }
+  .shelf-grid { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--ink-faint); margin-bottom: 2.5rem; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); }
   .shelf-row {
     display: grid; grid-template-columns: 1fr auto;
     align-items: center; gap: 1.5rem;
@@ -634,7 +674,7 @@
     font-size: 17px; color: var(--ink-light); font-style: italic;
   }
 
-  .shelf-grid { display: flex; flex-direction: column; border: 1px solid var(--ink-faint); }
+  .shelf-grid { display: flex; flex-direction: column; border: 1px solid var(--ink-faint); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); }
   .shelf-row {
     display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1.5rem;
     padding: 1.2rem 1.75rem; background: var(--paper-warm);
@@ -10741,11 +10781,11 @@ function drawFlipFrame(ctx, W, H, t, direction) {
   const foldX = direction === 'forward' ? W * (1 - t) : W * t;
 
   // How much of the back-of-page is showing (arc: 0 at start/end, peak at t=0.5)
-  const backPeak = W * 0.10;
+  const backPeak = W * 0.16;
   const backW = Math.sin(t * Math.PI) * backPeak;
 
   // How much the right edge of the front page curves inward (paper bending)
-  const curveMag = Math.sin(t * Math.PI) * H * 0.045;
+  const curveMag = Math.sin(t * Math.PI) * H * 0.072;
 
   // ── FRONT OF PAGE (not yet folded) ──
   if (foldX > 0) {
@@ -10781,9 +10821,9 @@ function drawFlipFrame(ctx, W, H, t, direction) {
     const gStart = direction === 'forward' ? foldX - shadowLen : foldX;
     const gEnd   = direction === 'forward' ? foldX            : foldX + shadowLen;
     const grad = ctx.createLinearGradient(gStart, 0, gEnd, 0);
-    grad.addColorStop(0,   '#faf7f2');
-    grad.addColorStop(0.6, '#f5f0e8');
-    grad.addColorStop(1,   '#e8dfd0');
+    grad.addColorStop(0,   '#faf7f0');
+    grad.addColorStop(0.6, '#f7f1e6');
+    grad.addColorStop(1,   '#e4d8c4');
     ctx.fillStyle = grad;
     ctx.fill();
     ctx.restore();
@@ -10799,11 +10839,11 @@ function drawFlipFrame(ctx, W, H, t, direction) {
 
     const backGrad = ctx.createLinearGradient(bx, 0, bx + backW, 0);
     if (direction === 'forward') {
-      backGrad.addColorStop(0, 'rgba(160,148,130,0.96)');
-      backGrad.addColorStop(1, 'rgba(178,165,148,0.0)');
+      backGrad.addColorStop(0, 'rgba(140,118,90,0.88)');
+      backGrad.addColorStop(1, 'rgba(180,162,138,0.0)');
     } else {
-      backGrad.addColorStop(0, 'rgba(178,165,148,0.0)');
-      backGrad.addColorStop(1, 'rgba(160,148,130,0.96)');
+      backGrad.addColorStop(0, 'rgba(180,162,138,0.0)');
+      backGrad.addColorStop(1, 'rgba(140,118,90,0.88)');
     }
     ctx.fillStyle = backGrad;
     ctx.fillRect(bx, 0, backW, H);
@@ -10817,11 +10857,11 @@ function drawFlipFrame(ctx, W, H, t, direction) {
     const sx = direction === 'forward' ? foldX + backW : foldX - backW - shadowW;
     const shadowGrad = ctx.createLinearGradient(sx, 0, sx + shadowW, 0);
     if (direction === 'forward') {
-      shadowGrad.addColorStop(0, 'rgba(0,0,0,0.16)');
+      shadowGrad.addColorStop(0, 'rgba(0,0,0,0.14)');
       shadowGrad.addColorStop(1, 'rgba(0,0,0,0)');
     } else {
       shadowGrad.addColorStop(0, 'rgba(0,0,0,0)');
-      shadowGrad.addColorStop(1, 'rgba(0,0,0,0.16)');
+      shadowGrad.addColorStop(1, 'rgba(0,0,0,0.14)');
     }
     ctx.fillStyle = shadowGrad;
     ctx.fillRect(sx, 0, shadowW, H);
@@ -10875,7 +10915,7 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
   canvas.style.display  = 'block';
 
   const ctx = canvas.getContext('2d');
-  const DURATION = 1050; // ms — satisfyingly slow
+  const DURATION = 1500; // ms — slow, deliberate page turn
   let midpointFired = false;
   const startTime = performance.now();
 
@@ -10963,12 +11003,20 @@ function renderQuestion(animate, direction) {
       const quizBody = card.parentElement.parentElement;
       const cardH    = card.offsetHeight;
       const bodyH    = quizBody.clientHeight;
+      // Account for the reaction note (~110px) so the card sits lower and
+      // the note still fits — center the card+note together, with a minimum
+      // of 72px so the question is never hard against the header.
+      const reactionEstimate = 110;
       quizBodyPadTop = Math.max(
-        parseFloat(getComputedStyle(quizBody).paddingTop),
-        (bodyH - cardH) / 2
+        72,
+        (bodyH - (cardH + reactionEstimate)) / 2
       );
-      quizBody.style.alignItems = 'flex-start';
-      quizBody.style.paddingTop = quizBodyPadTop + 'px';
+      quizBody.style.alignItems  = 'flex-start';
+      quizBody.style.paddingTop  = quizBodyPadTop + 'px';
+      quizBody.style.overflowY   = 'auto'; // safety net if note overflows on small screens
+      // Gentle entrance on very first question only
+      card.classList.add('q-first-enter');
+      card.addEventListener('animationend', () => card.classList.remove('q-first-enter'), { once: true });
     }
     if (selectedValue) {
       const btn = document.getElementById('btn-next');
@@ -10991,9 +11039,9 @@ function renderQuestion(animate, direction) {
   // ── Quiz-body is permanently pinned — only lock/unlock the card height.
   const reactionArea = document.getElementById('reaction-area');
   const reactionH    = reactionArea ? reactionArea.offsetHeight : 0;
-  const startH       = card.offsetHeight - reactionH;  // height without reaction
+  const startH       = card.offsetHeight - reactionH;
 
-  card.style.height  = startH + 'px';
+  card.style.height   = startH + 'px';
   card.style.overflow = 'hidden';
 
   // Clear the reaction note — already clipped, nothing visible changes.
@@ -11002,20 +11050,14 @@ function renderQuestion(animate, direction) {
   // One rAF so the browser commits before the canvas measures, then flip.
   requestAnimationFrame(() => {
     playCanvasFlip(direction, () => {
-      // Inject new content and immediately free the height lock —
-      // the canvas covers the card during the second half so the natural
-      // resize happens invisibly underneath, with no pop on reveal.
-      card.innerHTML     = buildQuestionHTML(qId);
-      card.style.height  = '';
+      card.innerHTML      = buildQuestionHTML(qId);
+      card.style.height   = '';
       card.style.overflow = '';
-      // On phones, scroll so answer choices are always fully visible
       if (window.innerWidth <= 1024) {
-        requestAnimationFrame(() => {
-          scrollToOptions(card);
-        });
+        requestAnimationFrame(() => scrollToOptions(card));
       }
     }, () => {
-      // Nothing to unlock — already cleared at midpoint.
+      // nothing to unlock — cleared at midpoint
     });
   });
 }
