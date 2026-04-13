@@ -10978,7 +10978,6 @@ function drawFlipFrame(ctx, W, H, t, direction) {
 }
 
 function playCanvasFlip(direction, onMidpoint, onComplete) {
-  playPageTurn();
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
   const card   = stage.querySelector('.question-card');
@@ -11138,6 +11137,10 @@ function renderQuestion(animate, direction) {
 
   // Clear the reaction note — already clipped, nothing visible changes.
   if (reactionArea) reactionArea.innerHTML = '';
+
+  // Play sound synchronously here — before rAF — so iOS Safari's gesture
+  // requirement is satisfied (rAF is one frame outside the gesture window on older iOS).
+  playPageTurn();
 
   // One rAF so the browser commits before the canvas measures, then flip.
   requestAnimationFrame(() => {
@@ -12226,55 +12229,36 @@ function updateDarkBtns() {
 let soundMuted = false;
 try { soundMuted = localStorage.getItem('bdwab_mute') === '1'; } catch(e) {}
 
-// ── Web Audio API approach — works on iOS Safari and all modern mobile browsers.
-// AudioContext stays unlocked once resumed inside a user gesture, so subsequent
-// plays (even inside requestAnimationFrame) work without restriction.
-let _audioCtx    = null;
-let _audioBuffer = null;
-let _flipOffset  = 0;   // seconds into the file to start so sound ends with animation
+const _flipAudio   = new Audio('page-flip.mp3');
+_flipAudio.preload = 'auto';
+_flipAudio.volume  = 0.7;
 
-function _getAudioCtx() {
-  if (!_audioCtx) {
-    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  return _audioCtx;
-}
+// Once metadata loads, calculate how far into the file to start
+// so the sound ends exactly when the 1500 ms animation ends.
+let _flipOffset = 0;
+_flipAudio.addEventListener('loadedmetadata', () => {
+  _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
+});
 
-// Fetch and decode the MP3 into a reusable AudioBuffer.
-async function _loadAudioBuffer() {
-  try {
-    const ctx      = _getAudioCtx();
-    const response = await fetch('page-flip.mp3');
-    const raw      = await response.arrayBuffer();
-    _audioBuffer   = await ctx.decodeAudioData(raw);
-    // Start far enough in so the sound finishes right as the 1500 ms animation ends.
-    _flipOffset    = Math.max(0, _audioBuffer.duration - 1.5);
-  } catch(e) {}
+// iOS Safari suspends audio until a user gesture has occurred.
+// On the very first tap/click, call load() inside the gesture so the
+// audio element is "activated" and future plays work without restriction.
+let _audioReady = false;
+function _activateAudio() {
+  if (_audioReady) return;
+  _audioReady = true;
+  _flipAudio.load();
 }
-_loadAudioBuffer();
-
-// iOS Safari suspends AudioContext until a user gesture.
-// Resume it on the very first interaction so all future plays work instantly.
-function _resumeAudioCtx() {
-  const ctx = _getAudioCtx();
-  if (ctx.state === 'suspended') ctx.resume();
-}
-document.addEventListener('touchstart', _resumeAudioCtx, { passive: true });
-document.addEventListener('click',      _resumeAudioCtx);
+document.addEventListener('touchstart', _activateAudio, { passive: true });
+document.addEventListener('click',      _activateAudio);
 
 function playPageTurn() {
-  if (soundMuted || !_audioBuffer) return;
+  if (soundMuted) return;
   try {
-    const ctx    = _getAudioCtx();
-    if (ctx.state === 'suspended') ctx.resume();
-    const source = ctx.createBufferSource();
-    source.buffer = _audioBuffer;
-    const gain   = ctx.createGain();
-    gain.gain.value = 0.7;
-    source.connect(gain);
-    gain.connect(ctx.destination);
-    // start(when, offset, duration) — plays exactly 1.5 s of the file
-    source.start(0, _flipOffset, 1.5);
+    _flipAudio.pause();
+    _flipAudio.currentTime = _flipOffset;
+    const p = _flipAudio.play();
+    if (p && p.catch) p.catch(() => {});
   } catch(e) {}
 }
 
