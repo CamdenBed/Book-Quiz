@@ -23,10 +23,11 @@
     --radius-sm: 6px; --radius-md: 10px;
     --shadow-card: 0 2px 16px rgba(120, 75, 20, 0.09), 0 1px 4px rgba(120, 75, 20, 0.06);
     --shadow-hover: 0 4px 24px rgba(120, 75, 20, 0.13), 0 2px 8px rgba(120, 75, 20, 0.08);
+    --bg: #faf7f0;
   }
   html { scroll-behavior: smooth; }
   body {
-    background-color: #faf7f0;
+    background-color: var(--bg);
     color: var(--ink);
     font-family: var(--body); font-size: 22px; line-height: 1.7; min-height: 100vh;
   }
@@ -198,6 +199,14 @@
   .option-label { font-weight: 500; display: block; font-size: 21px; }
   .option-hint { font-size: 16px; color: var(--ink-light); display: block; margin-top: 4px; font-style: italic; }
   .option-btn.selected .option-hint { color: rgba(250,247,240,0.7); }
+  .option-key {
+    position: absolute; top: 0.65rem; right: 0.8rem;
+    font-size: 11px; letter-spacing: 0.1em; color: var(--ink-faint);
+    font-family: var(--body); z-index: 1; transition: color 0.2s;
+    border: 1px solid var(--ink-faint); border-radius: 3px;
+    padding: 0.1rem 0.35rem; line-height: 1.4;
+  }
+  .option-btn.selected .option-key { color: rgba(250,247,240,0.45); border-color: rgba(250,247,240,0.3); }
 
   /* REACTION */
   .reaction-box {
@@ -372,10 +381,19 @@
     font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--ink); line-height: 1;
   }
   .rank-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #2e2b28; }
-  .rank-col.top .rank-num { color: var(--accent); }
-  .rank-col.top .rank-label { color: var(--accent-light); }
-  .rank-col.second .rank-num { color: var(--ink-mid); }
-  .rank-col.third .rank-num { color: var(--ink-mid); }
+
+  /* Ranked card colours — gold / silver / bronze */
+  .rank-col.top    { background: #a8751c; border-right-color: #a8751c; }
+  .rank-col.top    .rank-num   { color: #fdf5dc; }
+  .rank-col.top    .rank-label { color: rgba(253,245,220,0.72); }
+
+  .rank-col.second { background: #9ba3ac; border-right-color: #9ba3ac; }
+  .rank-col.second .rank-num   { color: #f5f2ee; }
+  .rank-col.second .rank-label { color: rgba(245,242,238,0.65); }
+
+  .rank-col.third  { background: #a0693a; border-right-color: #a0693a; }
+  .rank-col.third  .rank-num   { color: #faf7f0; }
+  .rank-col.third  .rank-label { color: rgba(250,247,240,0.65); }
 
   .card-body { padding: 1.75rem 2rem; }
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
@@ -983,6 +1001,71 @@
     .modal-actions { flex-direction: column; gap: 0.5rem; }
     .modal-confirm, .modal-cancel { font-size: 16px; padding: 0.75rem 1.5rem; text-align: center; }
   }
+
+  /* ═══════════ DARK MODE ═══════════ */
+  body.dark {
+    --ink: #ede6d8; --ink-mid: #b8a990; --ink-light: #6e6358;
+    --ink-faint: #3c3630; --paper: #1c1814; --paper-warm: #231e18;
+    --paper-dark: #2a231c; --accent: #c47a3a; --accent-light: #d08840;
+    --bg: #161210;
+    --shadow-card: 0 2px 16px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+    --shadow-hover: 0 4px 28px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
+  }
+  body.dark::before { opacity: 0.05; }
+
+  /* Hardcoded colour overrides for dark mode */
+  body.dark .q-text,
+  body.dark .reveal-headline,
+  body.dark .book-title,
+  body.dark .modal-title,
+  body.dark .detail-title { color: var(--ink); }
+
+  body.dark .q-sub,
+  body.dark .reveal-sub,
+  body.dark .book-author,
+  body.dark .book-why,
+  body.dark .book-tag,
+  body.dark .rank-label,
+  body.dark .reveal-hint,
+  body.dark .reader-portrait,
+  body.dark .swap-hint,
+  body.dark .shelf-book-author,
+  body.dark .detail-author,
+  body.dark .modal-question,
+  body.dark .all-read-banner p { color: var(--ink-mid); }
+
+  /* Dark mode toggle & mute buttons */
+  .btn-dark-toggle {
+    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-light); background: none; border: none; cursor: pointer;
+    font-family: var(--body); padding: 0; transition: color 0.2s;
+  }
+  .btn-dark-toggle:hover { color: var(--ink); }
+
+  .btn-mute {
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-mid); background: none; cursor: pointer;
+    font-family: var(--body); transition: color 0.2s, border-color 0.2s, background 0.2s;
+    border: 1px solid var(--ink-faint); border-radius: 99px;
+    padding: 0.25rem 0.7rem;
+    width: 4.5rem;               /* fixed width — text change never shifts neighbours */
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .btn-mute:hover { color: var(--ink); border-color: var(--ink-mid); }
+  .btn-mute.muted { color: var(--ink-light); border-color: var(--ink-faint); }
+
+  /* Resume session button */
+  .btn-resume {
+    display: none; margin-top: 1rem;
+    background: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 17px;
+    color: var(--ink-light); letter-spacing: 0.04em;
+    text-decoration: underline; text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .btn-resume:hover { color: var(--ink); }
+  .btn-resume.visible { display: block; }
 </style>
 </head>
 <body>
@@ -993,6 +1076,8 @@
     <div class="brand">Blind Date with a Book</div>
     <div style="display:flex;align-items:center;gap:2rem;">
       <button class="nav-shelf-btn" onclick="openShelf()">My Library <span class="shelf-badge" id="shelf-badge-landing">0</span></button>
+      <button class="btn-mute" id="btn-mute-landing" onclick="toggleMute()" title="Toggle page turn sound">♪</button>
+      <button class="btn-dark-toggle" id="btn-dark-landing" onclick="toggleDark()">☽ Dark</button>
       <div class="nav-tagline">❧ &nbsp; Est. for the curious reader</div>
     </div>
   </nav>
@@ -1004,6 +1089,7 @@
       <button class="btn-start" onclick="startQuiz()">
         <span>Begin your date</span><span>→</span>
       </button>
+      <button class="btn-resume" id="btn-resume" onclick="resumeSession()">Continue where you left off →</button>
     </div>
     <div class="hero-right">
       <div class="wrapped-book">
@@ -1042,6 +1128,8 @@
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
     <div style="display:flex;align-items:center;gap:1.5rem;">
       <button class="nav-shelf-btn" onclick="openShelf()">My Library <span class="shelf-badge" id="shelf-badge-quiz">0</span></button>
+      <button class="btn-mute" id="btn-mute-quiz" onclick="toggleMute()" title="Toggle page turn sound">♪</button>
+      <button class="btn-dark-toggle" id="btn-dark-quiz" onclick="toggleDark()">☽</button>
       <div class="progress-label" id="progress-label">Chapter 1 of 10</div>
     </div>
   </div>
@@ -10820,10 +10908,11 @@ function drawFlipFrame(ctx, W, H, t, direction) {
     const shadowLen = Math.min(foldX, 120);
     const gStart = direction === 'forward' ? foldX - shadowLen : foldX;
     const gEnd   = direction === 'forward' ? foldX            : foldX + shadowLen;
+    const dark = document.body.classList.contains('dark');
     const grad = ctx.createLinearGradient(gStart, 0, gEnd, 0);
-    grad.addColorStop(0,   '#faf7f0');
-    grad.addColorStop(0.6, '#f7f1e6');
-    grad.addColorStop(1,   '#e4d8c4');
+    grad.addColorStop(0,   dark ? '#2a231c' : '#faf7f0');
+    grad.addColorStop(0.6, dark ? '#231e18' : '#f7f1e6');
+    grad.addColorStop(1,   dark ? '#1c1814' : '#e4d8c4');
     ctx.fillStyle = grad;
     ctx.fill();
     ctx.restore();
@@ -10838,12 +10927,13 @@ function drawFlipFrame(ctx, W, H, t, direction) {
     ctx.clip();
 
     const backGrad = ctx.createLinearGradient(bx, 0, bx + backW, 0);
+    const darkMode = document.body.classList.contains('dark');
     if (direction === 'forward') {
-      backGrad.addColorStop(0, 'rgba(140,118,90,0.88)');
-      backGrad.addColorStop(1, 'rgba(180,162,138,0.0)');
+      backGrad.addColorStop(0, darkMode ? 'rgba(10,8,6,0.92)'    : 'rgba(140,118,90,0.88)');
+      backGrad.addColorStop(1, darkMode ? 'rgba(30,24,18,0.0)'   : 'rgba(180,162,138,0.0)');
     } else {
-      backGrad.addColorStop(0, 'rgba(180,162,138,0.0)');
-      backGrad.addColorStop(1, 'rgba(140,118,90,0.88)');
+      backGrad.addColorStop(0, darkMode ? 'rgba(30,24,18,0.0)'   : 'rgba(180,162,138,0.0)');
+      backGrad.addColorStop(1, darkMode ? 'rgba(10,8,6,0.92)'    : 'rgba(140,118,90,0.88)');
     }
     ctx.fillStyle = backGrad;
     ctx.fillRect(bx, 0, backW, H);
@@ -10888,6 +10978,7 @@ function drawFlipFrame(ctx, W, H, t, direction) {
 }
 
 function playCanvasFlip(direction, onMidpoint, onComplete) {
+  playPageTurn();
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
   const card   = stage.querySelector('.question-card');
@@ -10969,8 +11060,9 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
 function buildQuestionHTML(qId) {
   const q = questionsMap[qId];
   const sel = answers[qId] || null;
-  const optionsHTML = q.options.map(o => `
+  const optionsHTML = q.options.map((o, i) => `
     <button class="option-btn ${sel === o.value ? 'selected' : ''}" onclick="selectOption('${o.value}', this)">
+      <span class="option-key">${i + 1}</span>
       <span class="option-inner">
         <span class="option-label">${o.label}</span>
         <span class="option-hint">${o.hint}</span>
@@ -11084,6 +11176,7 @@ function selectOption(value, el) {
   el.classList.add('selected');
   selectedValue = value;
   answers[currentQId()] = value;
+  saveSession();
 
   const q = questionsMap[currentQId()];
   const area = document.getElementById('reaction-area');
@@ -11120,6 +11213,8 @@ function goBack() {
 }
 
 function showReveal() {
+  clearSession();
+  updateResumeBtn();
   showScreen('screen-loading');
   // Cycle through literary quotes while loading
   let qi = Math.floor(Math.random() * LOADING_QUOTES.length);
@@ -12051,6 +12146,128 @@ updateShelfBadges();
 handleSharedURL();
 
 function restart() { startQuiz(); }
+
+/* ══════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+   1–4 pick answer, Enter/Space advance
+══════════════════════════════════════════ */
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('screen-quiz').classList.contains('active')) return;
+  if (isAnimating) return;
+  const num = parseInt(e.key);
+  if (num >= 1 && num <= 4) {
+    const opts = document.querySelectorAll('.option-btn');
+    if (opts[num - 1]) opts[num - 1].click();
+    return;
+  }
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    const btn = document.getElementById('btn-next');
+    if (btn && btn.classList.contains('visible')) btn.click();
+  }
+});
+
+/* ══════════════════════════════════════════
+   SESSION SAVE / RESTORE
+══════════════════════════════════════════ */
+function saveSession() {
+  try {
+    localStorage.setItem('bdwab_path', JSON.stringify(path));
+    localStorage.setItem('bdwab_answers', JSON.stringify(answers));
+  } catch(e) {}
+}
+
+function clearSession() {
+  try {
+    localStorage.removeItem('bdwab_path');
+    localStorage.removeItem('bdwab_answers');
+  } catch(e) {}
+}
+
+function hasSavedSession() {
+  try { return !!localStorage.getItem('bdwab_path'); } catch(e) { return false; }
+}
+
+function resumeSession() {
+  try {
+    path    = JSON.parse(localStorage.getItem('bdwab_path'));
+    answers = JSON.parse(localStorage.getItem('bdwab_answers'));
+    selectedValue = answers[currentQId()] || null;
+    showScreen('screen-quiz');
+    renderQuestion(false);
+  } catch(e) { startQuiz(); }
+}
+
+// Show/hide the resume button on landing
+function updateResumeBtn() {
+  const btn = document.getElementById('btn-resume');
+  if (btn) btn.classList.toggle('visible', hasSavedSession());
+}
+
+/* ══════════════════════════════════════════
+   DARK MODE
+══════════════════════════════════════════ */
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  try { localStorage.setItem('bdwab_dark', isDark ? '1' : '0'); } catch(e) {}
+  updateDarkBtns();
+}
+
+function updateDarkBtns() {
+  const isDark = document.body.classList.contains('dark');
+  document.querySelectorAll('.btn-dark-toggle').forEach(btn => {
+    btn.textContent = isDark ? '○ Light' : '☽ Dark';
+  });
+}
+
+/* ══════════════════════════════════════════
+   PAGE TURN SOUND
+══════════════════════════════════════════ */
+let soundMuted = false;
+try { soundMuted = localStorage.getItem('bdwab_mute') === '1'; } catch(e) {}
+
+const _flipAudio    = new Audio('page-flip.mp3');
+_flipAudio.preload  = 'auto';
+_flipAudio.volume   = 0.7;
+
+// Once metadata loads, calculate how far into the file to start
+// so the sound ends exactly when the 1500ms animation ends.
+let _flipOffset = 0;
+_flipAudio.addEventListener('loadedmetadata', () => {
+  _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
+});
+
+function playPageTurn() {
+  if (soundMuted) return;
+  try {
+    _flipAudio.currentTime = _flipOffset;
+    _flipAudio.play();
+  } catch(e) {}
+}
+
+function toggleMute() {
+  soundMuted = !soundMuted;
+  try { localStorage.setItem('bdwab_mute', soundMuted ? '1' : '0'); } catch(e) {}
+  updateMuteBtns();
+}
+
+function updateMuteBtns() {
+  document.querySelectorAll('.btn-mute').forEach(btn => {
+    btn.textContent = soundMuted ? '♪ off' : '♪ on';
+    btn.title = soundMuted ? 'Unmute page sound' : 'Mute page sound';
+    btn.classList.toggle('muted', soundMuted);
+  });
+}
+
+/* ── Init on load ── */
+(function init() {
+  try {
+    if (localStorage.getItem('bdwab_dark') === '1') document.body.classList.add('dark');
+  } catch(e) {}
+  updateDarkBtns();
+  updateMuteBtns();
+  updateResumeBtn();
+})();
 </script>
 </body>
 </html>
