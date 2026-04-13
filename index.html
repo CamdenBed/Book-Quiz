@@ -12226,22 +12226,55 @@ function updateDarkBtns() {
 let soundMuted = false;
 try { soundMuted = localStorage.getItem('bdwab_mute') === '1'; } catch(e) {}
 
-const _flipAudio    = new Audio('page-flip.mp3');
-_flipAudio.preload  = 'auto';
-_flipAudio.volume   = 0.7;
+// ── Web Audio API approach — works on iOS Safari and all modern mobile browsers.
+// AudioContext stays unlocked once resumed inside a user gesture, so subsequent
+// plays (even inside requestAnimationFrame) work without restriction.
+let _audioCtx    = null;
+let _audioBuffer = null;
+let _flipOffset  = 0;   // seconds into the file to start so sound ends with animation
 
-// Once metadata loads, calculate how far into the file to start
-// so the sound ends exactly when the 1500ms animation ends.
-let _flipOffset = 0;
-_flipAudio.addEventListener('loadedmetadata', () => {
-  _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
-});
+function _getAudioCtx() {
+  if (!_audioCtx) {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return _audioCtx;
+}
+
+// Fetch and decode the MP3 into a reusable AudioBuffer.
+async function _loadAudioBuffer() {
+  try {
+    const ctx      = _getAudioCtx();
+    const response = await fetch('page-flip.mp3');
+    const raw      = await response.arrayBuffer();
+    _audioBuffer   = await ctx.decodeAudioData(raw);
+    // Start far enough in so the sound finishes right as the 1500 ms animation ends.
+    _flipOffset    = Math.max(0, _audioBuffer.duration - 1.5);
+  } catch(e) {}
+}
+_loadAudioBuffer();
+
+// iOS Safari suspends AudioContext until a user gesture.
+// Resume it on the very first interaction so all future plays work instantly.
+function _resumeAudioCtx() {
+  const ctx = _getAudioCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+}
+document.addEventListener('touchstart', _resumeAudioCtx, { passive: true });
+document.addEventListener('click',      _resumeAudioCtx);
 
 function playPageTurn() {
-  if (soundMuted) return;
+  if (soundMuted || !_audioBuffer) return;
   try {
-    _flipAudio.currentTime = _flipOffset;
-    _flipAudio.play();
+    const ctx    = _getAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const source = ctx.createBufferSource();
+    source.buffer = _audioBuffer;
+    const gain   = ctx.createGain();
+    gain.gain.value = 0.7;
+    source.connect(gain);
+    gain.connect(ctx.destination);
+    // start(when, offset, duration) — plays exactly 1.5 s of the file
+    source.start(0, _flipOffset, 1.5);
   } catch(e) {}
 }
 
