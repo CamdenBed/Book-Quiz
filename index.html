@@ -12247,20 +12247,28 @@ function updateDarkBtns() {
 let soundMuted = false;
 try { soundMuted = localStorage.getItem('bdwab_mute') === '1'; } catch(e) {}
 
-const _flipAudio   = new Audio('page-flip.mp3');
-_flipAudio.preload = 'auto';
-_flipAudio.volume  = 0.7;
+// Pool of 4 pre-loaded Audio elements — each flip gets its own instance so
+// rapid page turns never interrupt each other or leave audio in a broken state.
+const _POOL_SIZE  = 4;
+const _audioPool  = [];
+let   _poolIndex  = 0;
+let   _flipOffset = 0;
 
-// Once metadata loads, calculate how far into the file to start
-// so the sound ends exactly when the 1500 ms animation ends.
-let _flipOffset = 0;
-_flipAudio.addEventListener('loadedmetadata', () => {
-  _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
+for (let i = 0; i < _POOL_SIZE; i++) {
+  const a = new Audio('page-flip.mp3');
+  a.preload = 'auto';
+  a.volume  = 0.7;
+  _audioPool.push(a);
+}
+
+// Calculate start offset once the first element has metadata.
+// All pool elements share the same file so duration is identical.
+_audioPool[0].addEventListener('loadedmetadata', () => {
+  _flipOffset = Math.max(0, _audioPool[0].duration - 1.5);
 });
 
 // iOS Safari requires audio to be "activated" inside a user gesture.
-// On first touchstart, use a *separate* throwaway element so the activation
-// never interferes with _flipAudio (which may also play on the same gesture).
+// On first touchstart use a throwaway element — never touches the pool.
 document.addEventListener('touchstart', function() {
   const act = new Audio('page-flip.mp3');
   act.volume = 0;
@@ -12270,9 +12278,15 @@ document.addEventListener('touchstart', function() {
 function playPageTurn() {
   if (soundMuted) return;
   try {
-    _flipAudio.currentTime = _flipOffset;
-    const p = _flipAudio.play();
+    // Grab the next element in the pool (round-robin).
+    const snd = _audioPool[_poolIndex % _POOL_SIZE];
+    _poolIndex++;
+    snd.pause();
+    snd.currentTime = _flipOffset;
+    const p = snd.play();
     if (p && p.catch) p.catch(() => {});
+    // Stop exactly when the 1500 ms flip animation ends.
+    setTimeout(() => { try { snd.pause(); } catch(e) {} }, 1500);
   } catch(e) {}
 }
 
