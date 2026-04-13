@@ -10832,6 +10832,782 @@ const books = [
     why: "The Sackler family built a dynastic fortune manufacturing and marketing OxyContin while an opioid crisis killed hundreds of thousands. Keefe's meticulously reported account of how wealth insulates wrongdoing is one of the most important pieces of American nonfiction in years.",
     search: "Empire of Pain Patrick Radden Keefe",
     match: { feeling:['curious','unsettled'], pace:['fast'], world:['vivid'], theme:['power','money','ethics'], avoid:[], character:['observer'], length:['long'], mood:['understand','think'], time:['weekend'], secret:['nonfiction','crime'] }
+  },
+  {
+    title: "The God of Small Things",
+    author: "Arundhati Roy",
+    tags: ["India","Family","Love","Booker Prize"],
+    why: "In Kerala in the 1960s, two twins witness the event that will shatter their family forever. Roy's debut is one of the most lush, heartbreaking, and formally inventive novels of the twentieth century — its sentences are unlike anything else in the language.",
+    search: "The God of Small Things Arundhati Roy",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['vivid'], theme:['family','love','class','memory'], avoid:['darkness'], character:['young'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['india','booker'] }
+  },
+  {
+    title: "Pachinko",
+    author: "Min Jin Lee",
+    tags: ["Korea","Japan","Family Saga","Epic"],
+    why: "Four generations of a Korean family living in Japan, from 1910 to 1989. A saga about identity, prejudice, love, and what it costs to survive in a country that will never accept you. Vast, tender, and impossible to put down.",
+    search: "Pachinko Min Jin Lee",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['family','identity','survival','belonging'], avoid:[], character:['strong'], length:['long'], mood:['feel','understand'], time:['weekend'], secret:['korea','saga'] }
+  },
+  {
+    title: "The Shadow of the Wind",
+    author: "Carlos Ruiz Zafón",
+    tags: ["Barcelona","Mystery","Gothic","Books about Books"],
+    why: "A boy in post-war Barcelona discovers a forgotten novel and becomes obsessed with its mysterious author — only to find that someone is destroying every copy of his books. A love letter to literature wrapped in a gothic thriller. Dazzling and atmospheric.",
+    search: "The Shadow of the Wind Carlos Ruiz Zafon",
+    match: { feeling:['curious','exhilarated'], pace:['fast'], world:['historical'], theme:['mystery','books','obsession'], avoid:[], character:['young'], length:['long'], mood:['escape','think'], time:['night'], secret:['barcelona','gothic'] }
+  },
+  {
+    title: "Midnight's Children",
+    author: "Salman Rushdie",
+    tags: ["India","Magic Realism","History","Booker Prize"],
+    why: "Saleem Sinai is born at the exact moment of Indian independence and discovers he is telepathically linked to every child born that midnight. Rushdie's epic is one of the most ambitious novels of the twentieth century — funny, furious, magical, and vast.",
+    search: "Midnight's Children Salman Rushdie",
+    match: { feeling:['curious','exhilarated'], pace:['slow'], world:['magical'], theme:['identity','history','politics'], avoid:[], character:['unreliable'], length:['long'], mood:['challenge','think'], time:['weekend'], secret:['india','magic-realism'] }
+  },
+  {
+    title: "The Master and Margarita",
+    author: "Mikhail Bulgakov",
+    tags: ["Russia","Satire","Devil","Magic Realism"],
+    why: "The Devil visits Soviet Moscow with his retinue and chaos ensues, while in Jerusalem Pontius Pilate sentences Jesus. Bulgakov's suppressed masterpiece is one of the funniest, strangest, most subversive novels ever written — a miracle of form and audacity.",
+    search: "The Master and Margarita Mikhail Bulgakov",
+    match: { feeling:['curious','exhilarated'], pace:['medium'], world:['magical'], theme:['freedom','absurdism','power'], avoid:[], character:['witty'], length:['medium'], mood:['laugh','think'], time:['evening'], secret:['russia','satire'] }
+  },
+  {
+    title: "Love in the Time of Cholera",
+    author: "Gabriel García Márquez",
+    tags: ["Colombia","Romance","Obsession","Magic Realism"],
+    why: "A man waits fifty-one years for the woman who rejected him. García Márquez's most romantic novel is also deeply strange — a meditation on obsession, aging, and whether love can survive the passage of an entire life. Unforgettable.",
+    search: "Love in the Time of Cholera Gabriel Garcia Marquez",
+    match: { feeling:['moved','curious'], pace:['slow'], world:['vivid'], theme:['love','obsession','time'], avoid:[], character:['observer'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['latin-america','romance'] }
+  },
+  {
+    title: "The Count of Monte Cristo",
+    author: "Alexandre Dumas",
+    tags: ["France","Revenge","Adventure","Classic"],
+    why: "A wrongly imprisoned man escapes, acquires a vast fortune, and methodically takes revenge on those who destroyed him. Dumas's monumental thriller is the original revenge fantasy — and still the best. Plot mechanics so perfect they feel like clockwork.",
+    search: "The Count of Monte Cristo Alexandre Dumas",
+    match: { feeling:['exhilarated','curious'], pace:['fast'], world:['historical'], theme:['revenge','justice','power'], avoid:[], character:['anti'], length:['long'], mood:['escape','think'], time:['weekend'], secret:['classic','adventure'] }
+  },
+  {
+    title: "Middlemarch",
+    author: "George Eliot",
+    tags: ["Victorian","Provincial Life","Marriage","Masterpiece"],
+    why: "The lives of several people in the English Midlands town of Middlemarch in the 1830s, with Dorothea Brooke at the centre. Virginia Woolf called it one of the few English novels written for grown-up people. It remains, by many measures, the greatest English novel.",
+    search: "Middlemarch George Eliot",
+    match: { feeling:['moved','curious'], pace:['slow'], world:['historical'], theme:['marriage','ambition','identity','community'], avoid:[], character:['strong'], length:['long'], mood:['think','feel'], time:['weekend'], secret:['victorian','classic'] }
+  },
+  {
+    title: "Anna Karenina",
+    author: "Leo Tolstoy",
+    tags: ["Russia","Marriage","Society","Tragedy"],
+    why: "A Russian aristocrat leaves her husband for a handsome cavalry officer and faces the consequences of a society that cannot forgive her. Tolstoy's psychological precision is still unmatched — every character feels like someone you have met.",
+    search: "Anna Karenina Leo Tolstoy",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['love','society','freedom','marriage'], avoid:['sad'], character:['strong'], length:['long'], mood:['feel','think'], time:['weekend'], secret:['russia','classic'] }
+  },
+  {
+    title: "Crime and Punishment",
+    author: "Fyodor Dostoevsky",
+    tags: ["Russia","Psychology","Guilt","Classic"],
+    why: "A destitute student murders a pawnbroker to test his theory that extraordinary men are above ordinary morality — and then spends the novel being destroyed by guilt. Dostoevsky's psychological intensity has never been equalled. Gripping like a thriller, profound like philosophy.",
+    search: "Crime and Punishment Fyodor Dostoevsky",
+    match: { feeling:['unsettled','curious'], pace:['medium'], world:['historical'], theme:['guilt','morality','psychology'], avoid:['darkness'], character:['anti'], length:['medium'], mood:['think','challenge'], time:['night'], secret:['russia','classic'] }
+  },
+  {
+    title: "Invisible Man",
+    author: "Ralph Ellison",
+    tags: ["Race","America","Identity","Classic"],
+    why: "An unnamed Black man narrates his journey from the American South to Harlem, discovering at every turn that the world refuses to truly see him. Ellison's 1952 novel is one of the great American books — furious, funny, and formally brilliant.",
+    search: "Invisible Man Ralph Ellison",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['historical'], theme:['race','identity','society'], avoid:[], character:['young'], length:['long'], mood:['think','understand'], time:['evening'], secret:['race','american-classic'] }
+  },
+  {
+    title: "Their Eyes Were Watching God",
+    author: "Zora Neale Hurston",
+    tags: ["Florida","Love","Freedom","Classic"],
+    why: "Janie Crawford tells the story of her three marriages and her search for an authentic self. Hurston's 1937 novel is one of the most beautiful ever written — its language, drawn from the Black folk culture of the American South, is extraordinary.",
+    search: "Their Eyes Were Watching God Zora Neale Hurston",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['vivid'], theme:['love','freedom','identity','self-discovery'], avoid:[], character:['strong'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['harlem-renaissance','classic'] }
+  },
+  {
+    title: "The Color Purple",
+    author: "Alice Walker",
+    tags: ["Georgia","Sisters","Racism","Survival"],
+    why: "Celie writes letters to God and her sister as she endures abuse, poverty, and racism in the American South. Walker's Pulitzer-winning novel is devastating and ultimately transcendent — a story of women saving each other when no one else will.",
+    search: "The Color Purple Alice Walker",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['historical'], theme:['survival','love','race','freedom'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['feel','understand'], time:['evening'], secret:['pulitzer','letters'] }
+  },
+  {
+    title: "The House on Mango Street",
+    author: "Sandra Cisneros",
+    tags: ["Chicago","Latino","Coming of Age","Vignettes"],
+    why: "Esperanza Cordero narrates her childhood on Mango Street in a series of lyrical vignettes. Cisneros's slim, luminous novel has introduced more readers to literary fiction than almost any other book — and it rewards every rereading.",
+    search: "The House on Mango Street Sandra Cisneros",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['vivid'], theme:['identity','belonging','growing-up'], avoid:[], character:['young'], length:['short'], mood:['feel','think'], time:['afternoon'], secret:['chicago','lyrical'] }
+  },
+  {
+    title: "Like Water for Chocolate",
+    author: "Laura Esquivel",
+    tags: ["Mexico","Food","Magic Realism","Romance"],
+    why: "Tita is forbidden from marrying because she must care for her mother, so she pours her emotions into food — which magically affects everyone who eats it. A delicious, funny, and tender magic-realist romance with recipes embedded in the chapters.",
+    search: "Like Water for Chocolate Laura Esquivel",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['magical'], theme:['love','family','freedom','food'], avoid:[], character:['strong'], length:['medium'], mood:['feel','escape'], time:['evening'], secret:['mexico','magic-realism'] }
+  },
+  {
+    title: "The English Patient",
+    author: "Michael Ondaatje",
+    tags: ["WWII","Italy","Love","Booker Prize"],
+    why: "At the end of WWII, four damaged people shelter in an Italian villa: a burned man of unknown identity, his Canadian nurse, a Sikh sapper, and a thief. Ondaatje's prose is pure poetry — this is a novel you read for the sentences as much as the story.",
+    search: "The English Patient Michael Ondaatje",
+    match: { feeling:['moved','curious'], pace:['slow'], world:['historical'], theme:['war','love','identity','memory'], avoid:[], character:['observer'], length:['medium'], mood:['feel','think'], time:['night'], secret:['wwii','lyrical'] }
+  },
+  {
+    title: "Atonement",
+    author: "Ian McEwan",
+    tags: ["England","WWII","Guilt","Literature"],
+    why: "In 1935, a thirteen-year-old girl's false accusation destroys her sister's relationship and a young man's life. McEwan's novel about guilt, memory, and the consolations of storytelling is one of the great English novels of the last fifty years.",
+    search: "Atonement Ian McEwan",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['guilt','war','love','memory'], avoid:['sad'], character:['young'], length:['medium'], mood:['think','feel'], time:['evening'], secret:['england','guilt'] }
+  },
+  {
+    title: "On Earth We're Briefly Gorgeous",
+    author: "Ocean Vuong",
+    tags: ["Vietnam","Family","Identity","Poetry"],
+    why: "A letter from a son to a mother who cannot read, telling the story of their Vietnamese-American family. Vuong is a poet and it shows on every page — this novel achieves things with language that prose rarely reaches. Devastating and beautiful.",
+    search: "On Earth We're Briefly Gorgeous Ocean Vuong",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['vivid'], theme:['family','identity','trauma','love'], avoid:['sad'], character:['young'], length:['short'], mood:['feel','think'], time:['night'], secret:['poetry','vietnam'] }
+  },
+  {
+    title: "Crying in H Mart",
+    author: "Michelle Zauner",
+    tags: ["Korea","Grief","Food","Memoir"],
+    why: "The frontwoman of Japanese Breakfast writes about her Korean mother's death from cancer and the food that connected them. A memoir about grief, identity, and the way culture is transmitted through cooking — tender and completely honest.",
+    search: "Crying in H Mart Michelle Zauner",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['grief','family','identity','food'], avoid:['sad'], character:['strong'], length:['short'], mood:['feel','understand'], time:['afternoon'], secret:['memoir','grief'] }
+  },
+  {
+    title: "Just Kids",
+    author: "Patti Smith",
+    tags: ["New York","Art","Friendship","Memoir"],
+    why: "Patti Smith's memoir about her relationship with Robert Mapplethorpe in late 1960s New York — two young artists finding themselves and each other in a city that was both dangerous and electric. Won the National Book Award and deserved it.",
+    search: "Just Kids Patti Smith",
+    match: { feeling:['curious','moved'], pace:['medium'], world:['vivid'], theme:['art','friendship','love','ambition'], avoid:[], character:['strong'], length:['medium'], mood:['feel','escape'], time:['evening'], secret:['memoir','new-york'] }
+  },
+  {
+    title: "The Year of Magical Thinking",
+    author: "Joan Didion",
+    tags: ["Grief","Memoir","Marriage","Death"],
+    why: "Joan Didion's account of the year following her husband's sudden death. Written with the clarity and precision that characterises all her work, it is the most honest book about grief in the language — and one of the bravest things ever written.",
+    search: "The Year of Magical Thinking Joan Didion",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['domestic'], theme:['grief','marriage','memory','loss'], avoid:['sad'], character:['observer'], length:['short'], mood:['understand','feel'], time:['evening'], secret:['memoir','grief'] }
+  },
+  {
+    title: "When Breath Becomes Air",
+    author: "Paul Kalanithi",
+    tags: ["Medicine","Death","Meaning","Memoir"],
+    why: "A neurosurgeon diagnosed with terminal lung cancer writes about mortality and meaning. Kalanithi was 36 when he died, and his unfinished memoir — completed by his wife — is one of the most profound meditations on how to live that exists.",
+    search: "When Breath Becomes Air Paul Kalanithi",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['death','meaning','medicine'], avoid:['sad'], character:['observer'], length:['short'], mood:['understand','feel'], time:['weekend'], secret:['memoir','medicine'] }
+  },
+  {
+    title: "The Glass Castle",
+    author: "Jeannette Walls",
+    tags: ["Memoir","Family","Poverty","Survival"],
+    why: "Jeannette Walls grew up with wildly dysfunctional, brilliant, negligent parents who moved the family constantly, living in poverty and chaos. Her memoir is startling for its honesty and remarkable for the absence of self-pity. Impossible to put down.",
+    search: "The Glass Castle Jeannette Walls",
+    match: { feeling:['curious','moved'], pace:['fast'], world:['vivid'], theme:['family','survival','resilience'], avoid:[], character:['young'], length:['medium'], mood:['understand','feel'], time:['afternoon'], secret:['memoir','childhood'] }
+  },
+  {
+    title: "Angela's Ashes",
+    author: "Frank McCourt",
+    tags: ["Ireland","Poverty","Childhood","Memoir"],
+    why: "Frank McCourt's account of growing up desperately poor in Limerick, Ireland, with an alcoholic father and a long-suffering mother. Funny and heartbreaking in equal measure — one of those memoirs that makes you understand a world entirely unlike your own.",
+    search: "Angela's Ashes Frank McCourt",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['poverty','family','survival','childhood'], avoid:['sad'], character:['young'], length:['medium'], mood:['feel','understand'], time:['evening'], secret:['ireland','memoir'] }
+  },
+  {
+    title: "Wild",
+    author: "Cheryl Strayed",
+    tags: ["Hiking","Grief","Self-Discovery","Pacific Crest Trail"],
+    why: "At 26, after her mother's death and the collapse of her marriage, Cheryl Strayed hiked over 1,000 miles of the Pacific Crest Trail alone, with no experience. A memoir about grief, recklessness, and the strange grace of walking your way back to yourself.",
+    search: "Wild Cheryl Strayed",
+    match: { feeling:['moved','hopeful'], pace:['fast'], world:['cold'], theme:['grief','self-discovery','nature','survival'], avoid:[], character:['strong'], length:['medium'], mood:['feel','escape'], time:['afternoon'], secret:['hiking','memoir'] }
+  },
+  {
+    title: "Into Thin Air",
+    author: "Jon Krakauer",
+    tags: ["Everest","Disaster","Adventure","Nonfiction"],
+    why: "Jon Krakauer was on Everest during the 1996 disaster that killed eight people. His account — written while still reeling from survivor's guilt — is the definitive book about mountaineering and about what happens when ambition collides with weather.",
+    search: "Into Thin Air Jon Krakauer",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['cold'], theme:['survival','adventure','obsession'], avoid:[], character:['observer'], length:['medium'], mood:['escape','understand'], time:['weekend'], secret:['mountaineering','disaster'] }
+  },
+  {
+    title: "Into the Wild",
+    author: "Jon Krakauer",
+    tags: ["Alaska","Solitude","Adventure","Nonfiction"],
+    why: "Christopher McCandless walked into the Alaskan wilderness alone in 1992 and died there four months later. Krakauer's account of his journey is also a meditation on the romance of solitude and the thin line between courage and self-destruction.",
+    search: "Into the Wild Jon Krakauer",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['cold'], theme:['solitude','freedom','nature','obsession'], avoid:[], character:['anti'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['alaska','nonfiction'] }
+  },
+  {
+    title: "Killers of the Flower Moon",
+    author: "David Grann",
+    tags: ["Oklahoma","Osage","Murder","History"],
+    why: "In the 1920s, members of the Osage Nation were being systematically murdered for their oil wealth while the U.S. government looked away. Grann's meticulously reported account of the crimes and the investigation that followed is horrifying and essential.",
+    search: "Killers of the Flower Moon David Grann",
+    match: { feeling:['unsettled','curious'], pace:['fast'], world:['historical'], theme:['race','justice','power','crime'], avoid:[], character:['observer'], length:['medium'], mood:['understand','think'], time:['weekend'], secret:['true-crime','native-american'] }
+  },
+  {
+    title: "Devil in the White City",
+    author: "Erik Larson",
+    tags: ["Chicago","Serial Killer","History","Architecture"],
+    why: "Two parallel stories: the architect who built the 1893 Chicago World's Fair and the serial killer who used it to lure victims. Larson's narrative nonfiction reads like a thriller — one of the most readable history books ever written.",
+    search: "Devil in the White City Erik Larson",
+    match: { feeling:['curious','exhilarated'], pace:['fast'], world:['historical'], theme:['crime','ambition','architecture'], avoid:[], character:['observer'], length:['medium'], mood:['escape','understand'], time:['weekend'], secret:['true-crime','chicago'] }
+  },
+  {
+    title: "The Immortal Life of Henrietta Lacks",
+    author: "Rebecca Skloot",
+    tags: ["Science","Race","Ethics","Nonfiction"],
+    why: "HeLa cells — taken without consent from a Black woman named Henrietta Lacks in 1951 — have been used in medical research ever since. Skloot's investigation into what happened weaves science, race, ethics, and family history into something unforgettable.",
+    search: "The Immortal Life of Henrietta Lacks Rebecca Skloot",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['vivid'], theme:['race','ethics','science','justice'], avoid:[], character:['observer'], length:['medium'], mood:['understand','think'], time:['weekend'], secret:['science','ethics'] }
+  },
+  {
+    title: "Sapiens",
+    author: "Yuval Noah Harari",
+    tags: ["History","Humanity","Ideas","Nonfiction"],
+    why: "A brief history of humankind, from the cognitive revolution 70,000 years ago to the present. Harari synthesises history, biology, and anthropology into a sweeping account of how Homo sapiens came to dominate the planet. Ideas on every page.",
+    search: "Sapiens Yuval Noah Harari",
+    match: { feeling:['curious','exhilarated'], pace:['medium'], world:['vivid'], theme:['history','power','science'], avoid:[], character:['observer'], length:['medium'], mood:['think','understand'], time:['weekend'], secret:['history','big-ideas'] }
+  },
+  {
+    title: "Man's Search for Meaning",
+    author: "Viktor Frankl",
+    tags: ["Holocaust","Psychology","Philosophy","Memoir"],
+    why: "Psychiatrist Viktor Frankl survived four Nazi concentration camps and emerged to write about what kept people alive: the belief that their suffering had meaning. One of the most influential books of the twentieth century — short, devastating, and transformative.",
+    search: "Man's Search for Meaning Viktor Frankl",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['historical'], theme:['survival','meaning','psychology'], avoid:['darkness'], character:['observer'], length:['short'], mood:['understand','think'], time:['afternoon'], secret:['holocaust','philosophy'] }
+  },
+  {
+    title: "The Martian",
+    author: "Andy Weir",
+    tags: ["Mars","Survival","Science","Funny"],
+    why: "An astronaut is stranded alone on Mars and must science his way to survival. Weir's debut is a feat of research and wit — the most fun you will ever have reading about growing potatoes in human excrement. Genuinely funny and fiendishly clever.",
+    search: "The Martian Andy Weir",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['space'], theme:['survival','science','resilience'], avoid:[], character:['witty'], length:['medium'], mood:['escape','laugh'], time:['afternoon'], secret:['space','funny'] }
+  },
+  {
+    title: "Project Hail Mary",
+    author: "Andy Weir",
+    tags: ["Space","Survival","First Contact","Science"],
+    why: "A man wakes up alone on a spaceship with no memory of how he got there, then slowly pieces together that he may be humanity's last hope. Weir's most emotionally resonant novel — the friendship at its centre is one of the most moving in recent science fiction.",
+    search: "Project Hail Mary Andy Weir",
+    match: { feeling:['exhilarated','moved'], pace:['fast'], world:['space'], theme:['survival','science','friendship'], avoid:[], character:['witty'], length:['medium'], mood:['escape','feel'], time:['afternoon'], secret:['space','friendship'] }
+  },
+  {
+    title: "Dark Matter",
+    author: "Blake Crouch",
+    tags: ["Thriller","Science Fiction","Identity","Multiverse"],
+    why: "A physicist is kidnapped and wakes in a world that isn't his — where his life went in a different direction. Crouch's propulsive thriller uses the multiverse as a mirror for regret and the choices that make us who we are. Cannot be put down.",
+    search: "Dark Matter Blake Crouch",
+    match: { feeling:['exhilarated','curious'], pace:['fast'], world:['space'], theme:['identity','fate','science'], avoid:[], character:['observer'], length:['medium'], mood:['escape','think'], time:['night'], secret:['thriller','multiverse'] }
+  },
+  {
+    title: "Recursion",
+    author: "Blake Crouch",
+    tags: ["Thriller","Memory","Science Fiction","Time"],
+    why: "A neuroscientist invents a chair that lets people relive their memories — and accidentally breaks time. Crouch's follow-up to Dark Matter is even more ambitious, a mind-bending thriller about grief, memory, and the cost of trying to undo the past.",
+    search: "Recursion Blake Crouch",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['space'], theme:['memory','time','grief','science'], avoid:[], character:['observer'], length:['medium'], mood:['escape','think'], time:['night'], secret:['thriller','time'] }
+  },
+  {
+    title: "The Long Way to a Small, Angry Planet",
+    author: "Becky Chambers",
+    tags: ["Space","Found Family","Cozy Sci-Fi","Character"],
+    why: "A crew of misfits aboard a tunnelling ship travel through space to take on a lucrative job. Chambers invented 'cozy science fiction' with this novel — less interested in plot than in the people, their relationships, and what it means to belong somewhere.",
+    search: "The Long Way to a Small Angry Planet Becky Chambers",
+    match: { feeling:['hopeful','moved'], pace:['slow'], world:['space'], theme:['found-family','belonging','identity'], avoid:[], character:['strong'], length:['medium'], mood:['company','feel'], time:['evening'], secret:['cozy-scifi','found-family'] }
+  },
+  {
+    title: "A Memory Called Empire",
+    author: "Arkady Martine",
+    tags: ["Space Opera","Empire","Politics","Hugo Award"],
+    why: "An ambassador from a tiny mining station arrives at the galactic capital and must navigate imperial politics while investigating her predecessor's death. A Hugo-winner about colonialism, cultural identity, and poetry — in space. Brilliant and beautiful.",
+    search: "A Memory Called Empire Arkady Martine",
+    match: { feeling:['curious','exhilarated'], pace:['medium'], world:['space'], theme:['politics','identity','empire','mystery'], avoid:[], character:['strong'], length:['medium'], mood:['think','escape'], time:['evening'], secret:['space-opera','colonialism'] }
+  },
+  {
+    title: "The Dispossessed",
+    author: "Ursula K. Le Guin",
+    tags: ["Utopia","Physics","Anarchism","Classic Sci-Fi"],
+    why: "A physicist from an anarchist moon travels to the capitalist planet it orbits to share a revolutionary discovery. Le Guin's masterpiece alternates between the two worlds in a rigorous, compassionate examination of freedom, property, and what utopia actually costs.",
+    search: "The Dispossessed Ursula Le Guin",
+    match: { feeling:['curious','moved'], pace:['slow'], world:['space'], theme:['freedom','politics','identity','utopia'], avoid:[], character:['observer'], length:['medium'], mood:['think','challenge'], time:['weekend'], secret:['ursula-le-guin','anarchism'] }
+  },
+  {
+    title: "The Left Hand of Darkness",
+    author: "Ursula K. Le Guin",
+    tags: ["Gender","Politics","Alien World","Classic Sci-Fi"],
+    why: "A human envoy arrives on a planet where the inhabitants are neither male nor female. Le Guin's 1969 novel changed what science fiction could do — using the alien to ask fundamental questions about gender, loyalty, and what makes us human.",
+    search: "The Left Hand of Darkness Ursula Le Guin",
+    match: { feeling:['curious','moved'], pace:['slow'], world:['space'], theme:['gender','identity','politics'], avoid:[], character:['observer'], length:['medium'], mood:['think','challenge'], time:['weekend'], secret:['ursula-le-guin','gender'] }
+  },
+  {
+    title: "Parable of the Sower",
+    author: "Octavia Butler",
+    tags: ["Dystopia","Climate","Survival","Race"],
+    why: "In 2024 California, as society collapses under climate change and corporate power, a Black teenager creates a new religion and leads a group of survivors north. Butler wrote this in 1993. Its accuracy about the present is unsettling and its vision is extraordinary.",
+    search: "Parable of the Sower Octavia Butler",
+    match: { feeling:['unsettled','curious'], pace:['fast'], world:['cold'], theme:['survival','faith','race','climate'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['think','understand'], time:['evening'], secret:['octavia-butler','cli-fi'] }
+  },
+  {
+    title: "Jonathan Strange & Mr Norrell",
+    author: "Susanna Clarke",
+    tags: ["Magic","England","Regency","Alternative History"],
+    why: "In an alternate Regency England where magic has returned, two very different magicians — a theoretical recluse and a reckless romantic — compete and collaborate. Clarke's debut is one of the most original novels of the century: erudite, funny, and genuinely strange.",
+    search: "Jonathan Strange Mr Norrell Susanna Clarke",
+    match: { feeling:['curious','exhilarated'], pace:['slow'], world:['magical'], theme:['magic','power','obsession'], avoid:[], character:['observer'], length:['long'], mood:['escape','think'], time:['weekend'], secret:['england','alternative-history'] }
+  },
+  {
+    title: "American Gods",
+    author: "Neil Gaiman",
+    tags: ["Mythology","America","Road Trip","Fantasy"],
+    why: "A man is released from prison and hired by the enigmatic Mr Wednesday to help in a war between old gods and new ones. Gaiman's novel is a meditation on belief, immigration, and what America does to the things people bring with them when they arrive.",
+    search: "American Gods Neil Gaiman",
+    match: { feeling:['curious','exhilarated'], pace:['medium'], world:['magical'], theme:['mythology','faith','identity'], avoid:[], character:['observer'], length:['long'], mood:['escape','think'], time:['evening'], secret:['mythology','road-trip'] }
+  },
+  {
+    title: "Good Omens",
+    author: "Terry Pratchett & Neil Gaiman",
+    tags: ["Comedy","Angels","Demons","Apocalypse"],
+    why: "An angel and a demon who have lived on Earth for millennia team up to prevent the apocalypse — because they've both grown quite fond of the place. Pratchett and Gaiman at their most joyful: funny, warm, and full of the most human kind of love.",
+    search: "Good Omens Terry Pratchett Neil Gaiman",
+    match: { feeling:['hopeful','exhilarated'], pace:['fast'], world:['magical'], theme:['friendship','fate','absurdism'], avoid:[], character:['witty'], length:['medium'], mood:['laugh','escape'], time:['afternoon'], secret:['comedy','angels'] }
+  },
+  {
+    title: "The Name of the Wind",
+    author: "Patrick Rothfuss",
+    tags: ["Fantasy","Magic University","Epic","Storytelling"],
+    why: "Kvothe — the most famous man in the world — sits down to tell the true story of his life to a Chronicler. Rothfuss's debut is the most accomplished first novel in modern epic fantasy: the prose is beautiful, the magic system is original, and the character is unforgettable.",
+    search: "The Name of the Wind Patrick Rothfuss",
+    match: { feeling:['exhilarated','curious'], pace:['slow'], world:['magical'], theme:['magic','ambition','storytelling'], avoid:[], character:['witty'], length:['long'], mood:['escape','think'], time:['weekend'], secret:['epic-fantasy','magic'] }
+  },
+  {
+    title: "The Lies of Locke Lamora",
+    author: "Scott Lynch",
+    tags: ["Fantasy","Heist","Thieves","Swashbuckling"],
+    why: "The Gentleman Bastards are a band of thieves operating in a fantasy Venice — and someone is threatening to destroy them. Lynch's debut is one of the most fun things in fantasy: a heist novel in a richly imagined world, crackling with wit and violence.",
+    search: "The Lies of Locke Lamora Scott Lynch",
+    match: { feeling:['exhilarated','curious'], pace:['fast'], world:['magical'], theme:['friendship','crime','loyalty'], avoid:[], character:['witty'], length:['long'], mood:['escape','laugh'], time:['weekend'], secret:['heist','fantasy'] }
+  },
+  {
+    title: "The Fifth Season",
+    author: "N.K. Jemisin",
+    tags: ["Fantasy","Apocalypse","World-Building","Hugo Award"],
+    why: "A world that ends catastrophically every few hundred years, and the people who can control seismic forces — and are enslaved for it. Jemisin won three consecutive Hugo Awards for this trilogy. The second-person narration is an audacious technical achievement.",
+    search: "The Fifth Season N.K. Jemisin",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['magical'], theme:['race','survival','power','identity'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['challenge','think'], time:['evening'], secret:['jemisin','apocalypse'] }
+  },
+  {
+    title: "Six of Crows",
+    author: "Leigh Bardugo",
+    tags: ["Fantasy","Heist","Ensemble","Young Adult"],
+    why: "Six criminals attempt to pull off an impossible heist in a fantasy world modelled on Amsterdam. Bardugo's ensemble cast is one of the best in modern fantasy — every character is distinct, fully realised, and carrying something broken.",
+    search: "Six of Crows Leigh Bardugo",
+    match: { feeling:['exhilarated','curious'], pace:['fast'], world:['magical'], theme:['friendship','crime','loyalty','survival'], avoid:[], character:['anti'], length:['medium'], mood:['escape','feel'], time:['afternoon'], secret:['heist','ensemble'] }
+  },
+  {
+    title: "The Bear and the Nightingale",
+    author: "Katherine Arden",
+    tags: ["Russia","Folklore","Winter","Magic"],
+    why: "In medieval Russia, a girl with the ability to see winter spirits fights to protect her village against a new priest who wants to drive out the old magic. Arden's debut is cold and gorgeous — Russian folklore rendered into the kind of novel you want to live inside.",
+    search: "The Bear and the Nightingale Katherine Arden",
+    match: { feeling:['curious','exhilarated'], pace:['medium'], world:['magical'], theme:['magic','faith','freedom','identity'], avoid:[], character:['strong'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['russia','folklore'] }
+  },
+  {
+    title: "The Golem and the Jinni",
+    author: "Helene Wecker",
+    tags: ["New York","Mythology","Immigration","Fantasy"],
+    why: "A golem and a jinni meet in 1899 New York, both concealing their supernatural natures among immigrant communities. Wecker's novel is a love letter to early New York and to the experience of existing between two worlds — magical and moving.",
+    search: "The Golem and the Jinni Helene Wecker",
+    match: { feeling:['curious','moved'], pace:['medium'], world:['magical'], theme:['identity','belonging','immigration','friendship'], avoid:[], character:['observer'], length:['long'], mood:['escape','feel'], time:['evening'], secret:['mythology','new-york'] }
+  },
+  {
+    title: "Babel",
+    author: "R.F. Kuang",
+    tags: ["Oxford","Magic","Colonialism","Academia"],
+    why: "In an alternate 1830s Oxford, translation is magic — and the empire's power depends on it. A Chinese student at the university's Royal Institute of Translation must choose between loyalty to Britain and revolution. Furious, brilliant, and beautifully written.",
+    search: "Babel R.F. Kuang",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['magical'], theme:['colonialism','identity','power','language'], avoid:['darkness'], character:['young'], length:['long'], mood:['think','challenge'], time:['weekend'], secret:['academia','colonialism'] }
+  },
+  {
+    title: "The Poppy War",
+    author: "R.F. Kuang",
+    tags: ["China","War","Fantasy","Shamanism"],
+    why: "A war orphan tests into the country's most elite military school — and discovers she has terrifying shamanistic powers. Kuang's debut is based on Chinese history and makes no attempt to soften it. Dark, brilliant, and unlike anything else in fantasy.",
+    search: "The Poppy War R.F. Kuang",
+    match: { feeling:['unsettled','curious'], pace:['fast'], world:['magical'], theme:['war','power','identity','survival'], avoid:['darkness'], character:['young'], length:['long'], mood:['challenge','think'], time:['weekend'], secret:['china','dark-fantasy'] }
+  },
+  {
+    title: "Trust",
+    author: "Hernan Diaz",
+    tags: ["New York","Finance","Power","Pulitzer Prize"],
+    why: "Four manuscripts, each telling a different version of the same story about a New York financier and his wife. Diaz's Pulitzer-winning novel is a puzzle box about wealth, narrative, and who gets to write history. Formally dazzling and completely gripping.",
+    search: "Trust Hernan Diaz",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['historical'], theme:['money','power','identity','truth'], avoid:[], character:['unreliable'], length:['medium'], mood:['think','challenge'], time:['weekend'], secret:['pulitzer','unreliable-narrator'] }
+  },
+  {
+    title: "The Remains of the Day",
+    author: "Kazuo Ishiguro",
+    tags: ["England","Dignity","Regret","Booker Prize"],
+    why: "An elderly English butler takes a road trip through the countryside while slowly confronting the waste of his emotional life in service to a Nazi-sympathizing employer. Ishiguro's novel about repression and regret is one of the saddest and most perfect books ever written.",
+    search: "The Remains of the Day Kazuo Ishiguro",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['regret','identity','service','memory'], avoid:['sad'], character:['unreliable'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['ishiguro','england'] }
+  },
+  {
+    title: "Klara and the Sun",
+    author: "Kazuo Ishiguro",
+    tags: ["Artificial Intelligence","Love","Observation","Dystopia"],
+    why: "An Artificial Friend — a solar-powered robot — observes the world from a shop window, waiting to be chosen by a child. Ishiguro's most recent novel is narrated with extraordinary precision and tenderness, and asks whether love requires a soul.",
+    search: "Klara and the Sun Kazuo Ishiguro",
+    match: { feeling:['moved','curious'], pace:['slow'], world:['space'], theme:['love','identity','technology','childhood'], avoid:[], character:['observer'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['ai','ishiguro'] }
+  },
+  {
+    title: "The Brothers Karamazov",
+    author: "Fyodor Dostoevsky",
+    tags: ["Russia","Philosophy","Faith","Family"],
+    why: "Three brothers — passionate, intellectual, and saintly — become entangled in their father's murder. Dostoevsky's final novel asks whether God exists and whether we can be good without him. The greatest novel ever written, by many measures. A life's reading in one book.",
+    search: "The Brothers Karamazov Fyodor Dostoevsky",
+    match: { feeling:['curious','moved'], pace:['slow'], world:['historical'], theme:['faith','family','morality','philosophy'], avoid:[], character:['observer'], length:['long'], mood:['challenge','think'], time:['weekend'], secret:['russia','philosophy'] }
+  },
+  {
+    title: "In Cold Blood",
+    author: "Truman Capote",
+    tags: ["True Crime","Kansas","Murder","Nonfiction"],
+    why: "Capote spent six years investigating the 1959 murder of the Clutter family in rural Kansas and their killers. The resulting book invented literary nonfiction — and is still the best example of it. Brilliant, cold, morally complex.",
+    search: "In Cold Blood Truman Capote",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['vivid'], theme:['crime','psychology','justice'], avoid:['darkness'], character:['observer'], length:['medium'], mood:['understand','think'], time:['evening'], secret:['true-crime','capote'] }
+  },
+  {
+    title: "The Bell Jar",
+    author: "Sylvia Plath",
+    tags: ["Mental Health","New York","1950s","Autobiography"],
+    why: "Esther Greenwood, a brilliant scholarship student, wins a magazine internship in New York and slowly falls into depression. Plath's only novel is searing, funny, and uncomfortably precise about what a breakdown feels like from the inside.",
+    search: "The Bell Jar Sylvia Plath",
+    match: { feeling:['unsettled','curious'], pace:['medium'], world:['historical'], theme:['mental-health','identity','freedom'], avoid:['sad'], character:['unreliable'], length:['short'], mood:['feel','understand'], time:['evening'], secret:['1950s','mental-health'] }
+  },
+  {
+    title: "Fahrenheit 451",
+    author: "Ray Bradbury",
+    tags: ["Dystopia","Books","Censorship","Classic Sci-Fi"],
+    why: "In a future America where books are banned and firemen burn them, a fireman begins to question everything. Bradbury's novel is one of the great warnings in literature — and it's about television as much as books, which makes it even more prescient.",
+    search: "Fahrenheit 451 Ray Bradbury",
+    match: { feeling:['unsettled','curious'], pace:['fast'], world:['space'], theme:['freedom','censorship','technology'], avoid:[], character:['observer'], length:['short'], mood:['think','understand'], time:['afternoon'], secret:['dystopia','books'] }
+  },
+  {
+    title: "Do Androids Dream of Electric Sheep?",
+    author: "Philip K. Dick",
+    tags: ["Android","Empathy","Sci-Fi","Classic"],
+    why: "In a post-nuclear future, bounty hunter Rick Deckard hunts rogue androids while questioning what separates them from humans. The novel that became Blade Runner asks the most Philip K. Dick question possible: what does it mean to be real?",
+    search: "Do Androids Dream of Electric Sheep Philip K Dick",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['space'], theme:['identity','technology','empathy'], avoid:[], character:['observer'], length:['short'], mood:['think','challenge'], time:['night'], secret:['philip-k-dick','android'] }
+  },
+  {
+    title: "The Road",
+    author: "Cormac McCarthy",
+    tags: ["Post-Apocalyptic","Father and Son","Survival","Devastating"],
+    why: "A father and son walk south through a destroyed America with nothing to protect them. The bleakest book McCarthy ever wrote is also the most tender — a love story between a parent and child at the end of everything. Unputdownable and unforgettable.",
+    search: "The Road Cormac McCarthy",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['cold'], theme:['survival','love','parenthood','apocalypse'], avoid:['darkness'], character:['observer'], length:['short'], mood:['feel','challenge'], time:['night'], secret:['mccarthy','post-apocalyptic'] }
+  },
+  {
+    title: "All the Pretty Horses",
+    author: "Cormac McCarthy",
+    tags: ["Texas","Mexico","Western","Coming of Age"],
+    why: "A sixteen-year-old Texan rides into Mexico in 1948 with his friend, looking for the life that's disappearing from the American West. McCarthy's most romantic novel is also a coming-of-age story — beautiful, violent, and full of horses.",
+    search: "All the Pretty Horses Cormac McCarthy",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['freedom','love','coming-of-age','loss'], avoid:[], character:['young'], length:['medium'], mood:['feel','escape'], time:['evening'], secret:['western','mccarthy'] }
+  },
+  {
+    title: "White Noise",
+    author: "Don DeLillo",
+    tags: ["America","Death","Consumerism","Literary"],
+    why: "A professor of Hitler Studies at a Midwestern college is terrified of death, until a chemical spill forces his family to confront the thing directly. DeLillo's 1985 novel is the great American satire of consumer culture — funny, strange, and weirdly moving.",
+    search: "White Noise Don DeLillo",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['vivid'], theme:['death','consumerism','family','anxiety'], avoid:[], character:['witty'], length:['medium'], mood:['think','laugh'], time:['evening'], secret:['delillo','american-satire'] }
+  },
+  {
+    title: "The Virgin Suicides",
+    author: "Jeffrey Eugenides",
+    tags: ["Michigan","Suburban","Mystery","Girls"],
+    why: "Five teenage sisters die by suicide in 1970s suburban Detroit, and the neighborhood boys who loved them spend the rest of their lives trying to understand why. Eugenides's debut is told collectively and is one of the most original American novels of its era.",
+    search: "The Virgin Suicides Jeffrey Eugenides",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['mystery','suburban','memory','grief'], avoid:['sad'], character:['observer'], length:['short'], mood:['think','feel'], time:['night'], secret:['eugenides','suburban'] }
+  },
+  {
+    title: "A Visit from the Goon Squad",
+    author: "Jennifer Egan",
+    tags: ["Music","Time","Pulitzer Prize","Experimental"],
+    why: "Linked stories spanning decades follow the people connected to a record label boss and his assistant, moving backward and forward in time. One chapter is a PowerPoint presentation. Egan's Pulitzer winner is the freshest structural experiment in American fiction.",
+    search: "A Visit from the Goon Squad Jennifer Egan",
+    match: { feeling:['curious','moved'], pace:['medium'], world:['vivid'], theme:['time','music','identity','memory'], avoid:[], character:['observer'], length:['medium'], mood:['think','challenge'], time:['evening'], secret:['music','experimental'] }
+  },
+  {
+    title: "Lincoln in the Bardo",
+    author: "George Saunders",
+    tags: ["Abraham Lincoln","Grief","Ghosts","Experimental"],
+    why: "On the night Abraham Lincoln's son Willie dies, the president visits his crypt — while in the cemetery's bardo, dozens of ghosts tell their stories. Saunders's debut novel is one of the most inventive in American fiction: funny, heartbreaking, and technically brilliant.",
+    search: "Lincoln in the Bardo George Saunders",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['grief','death','history','community'], avoid:[], character:['observer'], length:['medium'], mood:['feel','challenge'], time:['evening'], secret:['lincoln','experimental'] }
+  },
+  {
+    title: "The Brief Wondrous Life of Oscar Wao",
+    author: "Junot Díaz",
+    tags: ["Dominican Republic","Nerd","Family","Diaspora"],
+    why: "Oscar de León is an overweight Dominican-American nerd who has never been kissed and dreams of becoming the next Tolkien — and this is somehow the most powerful novel about the Dominican Republic and the dictatorship of Trujillo ever written. Díaz is a genius.",
+    search: "The Brief Wondrous Life of Oscar Wao Junot Diaz",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['identity','family','diaspora','history'], avoid:[], character:['young'], length:['medium'], mood:['feel','think'], time:['weekend'], secret:['diaspora','dominican'] }
+  },
+  {
+    title: "Americanah",
+    author: "Chimamanda Ngozi Adichie",
+    tags: ["Nigeria","America","Race","Immigration"],
+    why: "Ifemelu leaves Nigeria for America and must navigate a racial identity she didn't have at home. Adichie's novel about what it means to be Black in America — as seen by someone for whom it isn't innate — is one of the most necessary books of the century.",
+    search: "Americanah Chimamanda Ngozi Adichie",
+    match: { feeling:['curious','moved'], pace:['medium'], world:['vivid'], theme:['race','identity','immigration','love'], avoid:[], character:['strong'], length:['long'], mood:['understand','think'], time:['weekend'], secret:['nigeria','race'] }
+  },
+  {
+    title: "Half of a Yellow Sun",
+    author: "Chimamanda Ngozi Adichie",
+    tags: ["Nigeria","Biafra","War","Love"],
+    why: "The Nigerian-Biafran War of the late 1960s, seen through three people: a professor's girlfriend, his houseboy, and a British writer. Adichie's second novel is the great novel of that war — unflinching about atrocity and deeply compassionate about the people caught in it.",
+    search: "Half of a Yellow Sun Chimamanda Ngozi Adichie",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['war','love','identity','survival'], avoid:['darkness'], character:['strong'], length:['long'], mood:['feel','understand'], time:['weekend'], secret:['nigeria','war'] }
+  },
+  {
+    title: "Things Fall Apart",
+    author: "Chinua Achebe",
+    tags: ["Nigeria","Colonialism","Tradition","Classic"],
+    why: "Okonkwo is a warrior and yam farmer in an Igbo village, and the novel follows the arrival of European missionaries and colonial administrators who destroy everything he knows. Achebe's 1958 novel is the most important African novel ever written — and one of the most important novels, period.",
+    search: "Things Fall Apart Chinua Achebe",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['colonialism','tradition','identity','change'], avoid:[], character:['strong'], length:['short'], mood:['understand','think'], time:['afternoon'], secret:['nigeria','colonialism'] }
+  },
+  {
+    title: "Disgrace",
+    author: "J.M. Coetzee",
+    tags: ["South Africa","Post-Apartheid","Shame","Booker Prize"],
+    why: "A Cape Town professor has an affair with a student and is disgraced — he retreats to his daughter's farm in the Eastern Cape, where violence arrives. Coetzee's Booker winner is difficult, morally precise, and utterly unflinching about what post-apartheid South Africa actually looked like.",
+    search: "Disgrace J.M. Coetzee",
+    match: { feeling:['unsettled','curious'], pace:['medium'], world:['vivid'], theme:['shame','race','power','violence'], avoid:['darkness'], character:['anti'], length:['short'], mood:['think','challenge'], time:['evening'], secret:['south-africa','coetzee'] }
+  },
+  {
+    title: "The Vegetarian",
+    author: "Han Kang",
+    tags: ["Korea","Body","Violence","Three Novellas"],
+    why: "A Korean woman decides to stop eating meat, and the decision ripples through everyone around her as an act of profound refusal. Han Kang's triptych is one of the most unsettling things written in the last twenty years — about the body, desire, and the violence of normality.",
+    search: "The Vegetarian Han Kang",
+    match: { feeling:['unsettled','curious'], pace:['medium'], world:['domestic'], theme:['identity','freedom','body','violence'], avoid:['darkness'], character:['strong'], length:['short'], mood:['challenge','think'], time:['night'], secret:['korea','han-kang'] }
+  },
+  {
+    title: "Human Acts",
+    author: "Han Kang",
+    tags: ["Korea","Gwangju Massacre","Trauma","History"],
+    why: "Multiple perspectives on the 1980 Gwangju Uprising in South Korea, where hundreds of pro-democracy protesters were killed. Han Kang's second novel to be translated into English is one of the most important books about political violence — about how a society survives collective trauma.",
+    search: "Human Acts Han Kang",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['trauma','history','survival','memory'], avoid:['darkness'], character:['observer'], length:['short'], mood:['understand','feel'], time:['evening'], secret:['korea','political'] }
+  },
+  {
+    title: "Season of Migration to the North",
+    author: "Tayeb Salih",
+    tags: ["Sudan","Colonialism","Identity","Classic"],
+    why: "A Sudanese man returns from studying in England to find a mysterious stranger in his village, whose story becomes an obsession. Salih's short masterpiece inverts Heart of Darkness — the most important Arabic novel of the twentieth century and one of the most powerful novels about colonialism.",
+    search: "Season of Migration to the North Tayeb Salih",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['historical'], theme:['colonialism','identity','desire','memory'], avoid:[], character:['unreliable'], length:['short'], mood:['think','challenge'], time:['evening'], secret:['sudan','colonialism'] }
+  },
+  {
+    title: "So Long a Letter",
+    author: "Mariama Bâ",
+    tags: ["Senegal","Women","Marriage","Friendship"],
+    why: "A recently widowed Senegalese woman writes a letter to her lifelong friend, reflecting on their marriages, their friendship, and the constraints of women's lives in postcolonial Senegal. A slim, urgent, essential novel about sisterhood and the cost of tradition.",
+    search: "So Long a Letter Mariama Ba",
+    match: { feeling:['moved','curious'], pace:['fast'], world:['vivid'], theme:['marriage','friendship','freedom','identity'], avoid:[], character:['strong'], length:['short'], mood:['understand','feel'], time:['afternoon'], secret:['senegal','feminist'] }
+  },
+  {
+    title: "The Sympathizer",
+    author: "Viet Thanh Nguyen",
+    tags: ["Vietnam","Spy","Pulitzer Prize","Politics"],
+    why: "A North Vietnamese spy embedded in the South Vietnamese army flees to America after the fall of Saigon. Nguyen's Pulitzer winner is narrated with acidic wit and moral complexity — the Vietnam War from the other side, in the voice of a man who belongs to both sides and neither.",
+    search: "The Sympathizer Viet Thanh Nguyen",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['historical'], theme:['war','identity','politics','colonialism'], avoid:[], character:['unreliable'], length:['medium'], mood:['think','challenge'], time:['weekend'], secret:['vietnam','pulitzer'] }
+  },
+  {
+    title: "A Gentleman in Moscow",
+    author: "Amor Towles",
+    tags: ["Russia","Hotel","History","Elegant"],
+    why: "A Russian count is sentenced to house arrest in the Metropol Hotel in 1922 — and spends the next thirty years making a complete life within its walls as Soviet history churns outside. Witty, warm, and extraordinarily pleasurable. The most elegant novel of its decade.",
+    search: "A Gentleman in Moscow Amor Towles",
+    match: { feeling:['hopeful','curious'], pace:['medium'], world:['historical'], theme:['resilience','community','history','identity'], avoid:[], character:['witty'], length:['long'], mood:['escape','company'], time:['evening'], secret:['russia','elegant'] }
+  },
+  {
+    title: "The Alchemist",
+    author: "Paulo Coelho",
+    tags: ["Fable","Journey","Dream","Philosophy"],
+    why: "A Spanish shepherd boy sets off to find a treasure in Egypt and encounters omens, alchemists, and wisdom at every turn. The best-selling Portuguese-language novel of all time is a fable about following your dreams — simple, sincere, and genuinely moving.",
+    search: "The Alchemist Paulo Coelho",
+    match: { feeling:['hopeful','curious'], pace:['fast'], world:['vivid'], theme:['destiny','self-discovery','faith'], avoid:[], character:['young'], length:['short'], mood:['escape','feel'], time:['afternoon'], secret:['fable','philosophy'] }
+  },
+  {
+    title: "The Hitchhiker's Guide to the Galaxy",
+    author: "Douglas Adams",
+    tags: ["Comedy","Space","Absurdism","British"],
+    why: "Moments before Earth is demolished to make way for a hyperspace bypass, Arthur Dent is whisked off by his alien friend Ford Prefect. Adams's comedy is one of the funniest things ever written — and underneath the jokes, genuinely philosophical.",
+    search: "The Hitchhiker's Guide to the Galaxy Douglas Adams",
+    match: { feeling:['exhilarated','hopeful'], pace:['fast'], world:['space'], theme:['absurdism','friendship','philosophy'], avoid:[], character:['witty'], length:['short'], mood:['laugh','escape'], time:['afternoon'], secret:['comedy','british'] }
+  },
+  {
+    title: "The Pillars of the Earth",
+    author: "Ken Follett",
+    tags: ["Medieval","Architecture","Epic","Cathedral"],
+    why: "The building of a cathedral in twelfth-century England, spanning decades and generations, with love, war, and cathedral architecture woven together. Follett's doorstop is one of the great popular epics — unputdownable, richly researched, and full of memorable characters.",
+    search: "The Pillars of the Earth Ken Follett",
+    match: { feeling:['exhilarated','curious'], pace:['fast'], world:['historical'], theme:['ambition','power','love','art'], avoid:[], character:['strong'], length:['long'], mood:['escape','feel'], time:['weekend'], secret:['medieval','epic'] }
+  },
+  {
+    title: "The Goldfinch",
+    author: "Donna Tartt",
+    tags: ["New York","Art","Grief","Pulitzer Prize"],
+    why: "A boy survives a bombing at a New York museum that kills his mother, and walks out clutching a famous Dutch painting. Tartt's Pulitzer winner follows him through decades of grief, addiction, and antiques dealing — it's Dickensian in scope and emotional force.",
+    search: "The Goldfinch Donna Tartt",
+    match: { feeling:['moved','curious'], pace:['slow'], world:['vivid'], theme:['grief','art','loss','identity'], avoid:['darkness'], character:['young'], length:['long'], mood:['feel','escape'], time:['weekend'], secret:['art','new-york'] }
+  },
+  {
+    title: "A Little Life",
+    author: "Hanya Yanagihara",
+    tags: ["New York","Friendship","Trauma","Devastating"],
+    why: "Four friends in New York, and the unbearable weight of one man's past. You will not emerge unchanged. The most emotionally demanding novel on this shelf — and the one with the most devoted readers, who describe it as the most powerful book they've ever read.",
+    search: "A Little Life Hanya Yanagihara",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['vivid'], theme:['trauma','friendship','survival','love'], avoid:['darkness','sad'], character:['strong'], length:['long'], mood:['feel','challenge'], time:['weekend'], secret:['devastating','friendship'] }
+  },
+  {
+    title: "Tomorrow, and Tomorrow, and Tomorrow",
+    author: "Gabrielle Zevin",
+    tags: ["Video Games","Friendship","Love","Creative Work"],
+    why: "Two people meet as children in a hospital and reconnect as adults to build video games together — and nearly everything else. Zevin's novel about creativity, collaboration, and the ambiguity of love is one of the most original novels about friendship in years.",
+    search: "Tomorrow and Tomorrow and Tomorrow Gabrielle Zevin",
+    match: { feeling:['moved','hopeful'], pace:['medium'], world:['vivid'], theme:['friendship','creativity','love','work'], avoid:[], character:['strong'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['video-games','friendship'] }
+  },
+  {
+    title: "Cutting for Stone",
+    author: "Abraham Verghese",
+    tags: ["Ethiopia","Medicine","Family","Epic"],
+    why: "Twin boys born in an Addis Ababa mission hospital are raised by adopted parents, become surgeons, and eventually discover the truth about their origins in a story that spans continents and decades. A richly observed, compassionate epic about medicine and love.",
+    search: "Cutting for Stone Abraham Verghese",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['vivid'], theme:['family','medicine','identity','love'], avoid:[], character:['young'], length:['long'], mood:['feel','escape'], time:['weekend'], secret:['ethiopia','medicine'] }
+  },
+  {
+    title: "The Shadow of the Wind",
+    author: "Carlos Ruiz Zafón",
+    tags: ["Barcelona","Mystery","Books","Gothic"],
+    why: "A boy in post-war Barcelona discovers a forgotten novel in the Cemetery of Forgotten Books and becomes obsessed with tracing its mysterious author. A gothic mystery and a love letter to literature — dark, romantic, and utterly compelling.",
+    search: "The Shadow of the Wind Carlos Ruiz Zafon",
+    match: { feeling:['curious','exhilarated'], pace:['fast'], world:['historical'], theme:['books','mystery','obsession'], avoid:[], character:['young'], length:['long'], mood:['escape','think'], time:['night'], secret:['barcelona','gothic'] }
+  },
+  {
+    title: "The Kite Runner",
+    author: "Khaled Hosseini",
+    tags: ["Afghanistan","Friendship","Guilt","War"],
+    why: "Two boys grow up together in Kabul — one privileged, one a servant — until an act of cowardice separates them. Hosseini's debut is one of the most powerful novels about guilt, atonement, and the Afghanistan that existed before everything changed.",
+    search: "The Kite Runner Khaled Hosseini",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['historical'], theme:['guilt','friendship','war','family'], avoid:['darkness'], character:['young'], length:['medium'], mood:['feel','understand'], time:['evening'], secret:['afghanistan','guilt'] }
+  },
+  {
+    title: "A Thousand Splendid Suns",
+    author: "Khaled Hosseini",
+    tags: ["Afghanistan","Women","War","Friendship"],
+    why: "Two Afghan women from different generations are bound together by circumstance and form an unlikely but profound bond. Hosseini's second novel is even more emotionally devastating than the first — about the specific suffering of women in Afghanistan, and their extraordinary courage.",
+    search: "A Thousand Splendid Suns Khaled Hosseini",
+    match: { feeling:['moved','unsettled'], pace:['fast'], world:['historical'], theme:['war','friendship','survival','women'], avoid:['darkness'], character:['strong'], length:['medium'], mood:['feel','understand'], time:['weekend'], secret:['afghanistan','women'] }
+  },
+  {
+    title: "The Shining",
+    author: "Stephen King",
+    tags: ["Horror","Hotel","Family","Psychological"],
+    why: "Jack Torrance takes his family to be the winter caretaker of an isolated Colorado hotel — and the hotel has plans for all of them. King at the height of his powers: the Overlook Hotel is one of the great locations in fiction, and the psychological horror is genuinely relentless.",
+    search: "The Shining Stephen King",
+    match: { feeling:['unsettled','exhilarated'], pace:['fast'], world:['cold'], theme:['family','psychology','horror','isolation'], avoid:['darkness'], character:['young'], length:['long'], mood:['escape','challenge'], time:['night'], secret:['horror','stephen-king'] }
+  },
+  {
+    title: "It",
+    author: "Stephen King",
+    tags: ["Horror","Childhood","Friendship","Maine"],
+    why: "Seven children in 1950s Maine face a shapeshifting monster that preys on fear — and must face it again thirty years later as adults. King's sprawling masterpiece is as much about childhood friendship and the loss of innocence as it is about horror.",
+    search: "It Stephen King",
+    match: { feeling:['exhilarated','moved'], pace:['slow'], world:['historical'], theme:['childhood','friendship','fear','memory'], avoid:['darkness'], character:['young'], length:['long'], mood:['escape','feel'], time:['night'], secret:['horror','childhood'] }
+  },
+  {
+    title: "The Picture of Dorian Gray",
+    author: "Oscar Wilde",
+    tags: ["Victorian","Gothic","Morality","Classic"],
+    why: "A beautiful young man sells his soul so that his portrait ages instead of him, then spends decades pursuing every pleasure while the painting grows grotesque. Wilde's only novel is decadent, witty, and finally devastating — a moral fable that never moralises.",
+    search: "The Picture of Dorian Gray Oscar Wilde",
+    match: { feeling:['curious','unsettled'], pace:['medium'], world:['historical'], theme:['morality','beauty','corruption','identity'], avoid:[], character:['witty'], length:['short'], mood:['think','escape'], time:['evening'], secret:['victorian','gothic'] }
+  },
+  {
+    title: "Rebecca",
+    author: "Daphne du Maurier",
+    tags: ["Gothic","Cornwall","Mystery","Classic"],
+    why: "A young woman marries a wealthy widower and moves to his grand estate — where his first wife's presence still dominates everything. Du Maurier's gothic thriller has one of the most famous opening sentences in English and one of the most satisfying plots.",
+    search: "Rebecca Daphne du Maurier",
+    match: { feeling:['exhilarated','unsettled'], pace:['fast'], world:['historical'], theme:['identity','mystery','jealousy','marriage'], avoid:[], character:['observer'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['gothic','mystery'] }
+  },
+  {
+    title: "Jamaica Inn",
+    author: "Daphne du Maurier",
+    tags: ["Cornwall","Smugglers","Gothic","Adventure"],
+    why: "A young woman arrives at her aunt's isolated inn on the Cornish moors and discovers it's the base for a gang of wreckers. Du Maurier's adventure thriller is atmospheric, propulsive, and full of rain-lashed moors. The perfect novel for a stormy evening.",
+    search: "Jamaica Inn Daphne du Maurier",
+    match: { feeling:['exhilarated','curious'], pace:['fast'], world:['historical'], theme:['mystery','adventure','crime'], avoid:[], character:['strong'], length:['medium'], mood:['escape','feel'], time:['night'], secret:['cornwall','gothic'] }
+  },
+  {
+    title: "The Hunchback of Notre-Dame",
+    author: "Victor Hugo",
+    tags: ["Paris","Medieval","Gothic","Classic"],
+    why: "Quasimodo, the deformed bell-ringer of Notre-Dame, loves the beautiful Romani dancer Esmeralda from afar. Hugo's novel is really about Paris and about the people the city makes invisible — operatically sad, visually magnificent, and genuinely moving.",
+    search: "The Hunchback of Notre-Dame Victor Hugo",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['love','society','beauty','justice'], avoid:['sad'], character:['observer'], length:['long'], mood:['feel','think'], time:['weekend'], secret:['paris','classic'] }
+  },
+  {
+    title: "Flowers for Algernon",
+    author: "Daniel Keyes",
+    tags: ["Intelligence","Science","Disability","Classic Sci-Fi"],
+    why: "Charlie Gordon, a man with an intellectual disability, undergoes an experimental procedure that rapidly increases his intelligence — and the novel follows him through both experiences. Keyes's story is one of the most emotionally devastating in science fiction.",
+    search: "Flowers for Algernon Daniel Keyes",
+    match: { feeling:['moved','unsettled'], pace:['medium'], world:['historical'], theme:['identity','intelligence','loneliness','science'], avoid:['sad'], character:['young'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['disability','classic-scifi'] }
+  },
+  {
+    title: "Slaughterhouse-Five",
+    author: "Kurt Vonnegut",
+    tags: ["WWII","Time Travel","Satire","Anti-War"],
+    why: "Billy Pilgrim becomes unstuck in time and keeps experiencing moments from his life — including the firebombing of Dresden — out of order. Vonnegut's anti-war masterpiece is funny, despairing, and written with a simplicity that makes its emotional effect all the greater.",
+    search: "Slaughterhouse-Five Kurt Vonnegut",
+    match: { feeling:['curious','unsettled'], pace:['fast'], world:['historical'], theme:['war','absurdism','time','trauma'], avoid:[], character:['observer'], length:['short'], mood:['laugh','think'], time:['afternoon'], secret:['vonnegut','anti-war'] }
+  },
+  {
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    tags: ["1920s","American Dream","Love","Classic"],
+    why: "Nick Carraway narrates the story of the mysterious millionaire Jay Gatsby, who has reinvented himself for one reason: to win back Daisy Buchanan. Fitzgerald's novel about the corruption of the American dream has the most perfect final paragraph in American fiction.",
+    search: "The Great Gatsby F. Scott Fitzgerald",
+    match: { feeling:['moved','curious'], pace:['medium'], world:['historical'], theme:['obsession','class','love','identity'], avoid:[], character:['observer'], length:['short'], mood:['think','feel'], time:['evening'], secret:['american-dream','1920s'] }
+  },
+  {
+    title: "Tender Is the Night",
+    author: "F. Scott Fitzgerald",
+    tags: ["Riviera","1920s","Decline","Romance"],
+    why: "Dick Diver is a brilliant psychiatrist presiding over a golden expatriate life on the French Riviera — and the novel follows his long, beautiful unravelling. Fitzgerald's most autobiographical novel is sadder and more complex than Gatsby, and underrated.",
+    search: "Tender Is the Night F. Scott Fitzgerald",
+    match: { feeling:['moved','unsettled'], pace:['slow'], world:['historical'], theme:['decline','love','identity','class'], avoid:['sad'], character:['observer'], length:['medium'], mood:['feel','think'], time:['evening'], secret:['fitzgerald','riviera'] }
   }
 ];
 
@@ -11233,8 +12009,6 @@ function goBack() {
 }
 
 function showReveal() {
-  clearSession();
-  updateResumeBtn();
   showScreen('screen-loading');
   // Cycle through literary quotes while loading
   let qi = Math.floor(Math.random() * LOADING_QUOTES.length);
@@ -11766,6 +12540,9 @@ function confirmSelection() {
   document.getElementById('confirm-modal').classList.remove('visible');
   if (selectedBookIndex === null) return;
   const book = currentSuggestions[selectedBookIndex];
+  // User has reached the final destination — safe to clear the saved session now.
+  clearSession();
+  updateResumeBtn();
   openDetailScreen(book);
 }
 
@@ -11923,12 +12700,25 @@ function updateShelfBadges() {
 /* ── Card list picker ── */
 let openPickerCardIndex = null;
 
+let _activeDropdownBtn = null;
+let _activeDropdownEl  = null;
+
+function _positionDropdown() {
+  if (!_activeDropdownBtn || !_activeDropdownEl) return;
+  const r = _activeDropdownBtn.getBoundingClientRect();
+  _activeDropdownEl.style.top  = (r.bottom + 4) + 'px';
+  _activeDropdownEl.style.left = Math.min(r.left, window.innerWidth - 252) + 'px';
+}
+
+// Reposition on scroll of any scrollable ancestor (capture phase catches all).
+document.addEventListener('scroll', _positionDropdown, true);
+
 function openDropdown(btn, dd) {
   if (dd.parentElement !== document.body) document.body.appendChild(dd);
-  const r = btn.getBoundingClientRect();
+  _activeDropdownBtn = btn;
+  _activeDropdownEl  = dd;
   dd.style.position = 'fixed';
-  dd.style.top  = (r.bottom + 4) + 'px';
-  dd.style.left = Math.min(r.left, window.innerWidth - 252) + 'px';
+  _positionDropdown();
   dd.classList.add('open');
   btn.classList.add('open');
 }
@@ -11997,82 +12787,6 @@ function detailAddToList(listId) {
 
 /* ── Shelf screen ── */
 let prevScreen = 'screen-landing';
-
-function shareResult() {
-  const baseURL = window.location.href.split('?')[0];
-  const activeDetail = document.getElementById('screen-detail')?.classList.contains('active');
-
-  let shareText, shareURL;
-
-  if (activeDetail) {
-    // Sharing a specific book from the detail screen
-    const title = document.getElementById('detail-title')?.textContent.trim();
-    shareText = title
-      ? `Someone thinks you'd love "${title}" — take the quiz and see what you get.`
-      : `Find your next book with this quiz — it actually works.`;
-    shareURL = title
-      ? baseURL + '?book=' + encodeURIComponent(title)
-      : baseURL;
-  } else {
-    // Sharing the shortlist from the results screen
-    const titles = currentSuggestions.map(b => b.title);
-    shareText = titles.length
-      ? `The quiz matched me with "${titles[0]}" — take it yourself and see what you get.`
-      : `Find your next book with this quiz — it actually works.`;
-    shareURL = titles.length
-      ? baseURL + '?list=' + encodeURIComponent(titles.join('|'))
-      : baseURL;
-  }
-
-  const shareData = { title: 'Book Match Quiz', text: shareText, url: shareURL };
-
-  if (navigator.share) {
-    navigator.share(shareData).catch(() => {});
-  } else {
-    const copyText = shareText + ' ' + shareURL;
-    navigator.clipboard.writeText(copyText).then(() => {
-      const btns = document.querySelectorAll('#share-btn-reveal, #share-btn-detail');
-      btns.forEach(btn => {
-        const orig = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = orig; }, 2000);
-      });
-    }).catch(() => {});
-  }
-}
-
-function handleSharedURL() {
-  const params = new URLSearchParams(window.location.search);
-
-  // ?book=Title — open a specific book's detail page
-  if (params.has('book')) {
-    const title = decodeURIComponent(params.get('book'));
-    const book = books.find(b => b.title === title);
-    if (book) {
-      currentSuggestions = [book];
-      openDetailScreen(book);
-      showScreen('screen-detail');
-      // Hide the "back to shortlist" button since there's no shortlist
-      const backBtn = document.querySelector('.detail-back');
-      if (backBtn) backBtn.style.display = 'none';
-      return true;
-    }
-  }
-
-  // ?list=Title1|Title2|Title3 — show a shared shortlist
-  if (params.has('list')) {
-    const titles = decodeURIComponent(params.get('list')).split('|');
-    const sharedBooks = titles.map(t => books.find(b => b.title === t)).filter(Boolean);
-    if (sharedBooks.length) {
-      currentSuggestions = sharedBooks;
-      renderReveal(sharedBooks);
-      showScreen('screen-reveal');
-      return true;
-    }
-  }
-
-  return false;
-}
 
 function openShelf() {
   prevScreen = document.querySelector('.screen.active')?.id || 'screen-landing';
@@ -12163,156 +12877,8 @@ function esc(s) { return s.replace(/'/g,"\\'"); }
 /* ── Init ── */
 let currentSuggestions = [];
 updateShelfBadges();
-handleSharedURL();
 
 function restart() { startQuiz(); }
-
-/* ══════════════════════════════════════════
-   KEYBOARD SHORTCUTS
-   1–4 pick answer, Enter/Space advance
-══════════════════════════════════════════ */
-document.addEventListener('keydown', (e) => {
-  if (e.repeat) return; // ignore held keys
-  if (!document.getElementById('screen-quiz').classList.contains('active')) return;
-  if (isAnimating) return;
-  const num = parseInt(e.key);
-  if (num >= 1 && num <= 4) {
-    const opts = document.querySelectorAll('.option-btn');
-    if (opts[num - 1]) opts[num - 1].click();
-    return;
-  }
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    const btn = document.getElementById('btn-next');
-    if (btn && btn.classList.contains('visible')) btn.click();
-  }
-});
-
-/* ══════════════════════════════════════════
-   SESSION SAVE / RESTORE
-══════════════════════════════════════════ */
-function saveSession() {
-  try {
-    localStorage.setItem('bdwab_path', JSON.stringify(path));
-    localStorage.setItem('bdwab_answers', JSON.stringify(answers));
-  } catch(e) {}
-}
-
-function clearSession() {
-  try {
-    localStorage.removeItem('bdwab_path');
-    localStorage.removeItem('bdwab_answers');
-  } catch(e) {}
-}
-
-function hasSavedSession() {
-  try { return !!localStorage.getItem('bdwab_path'); } catch(e) { return false; }
-}
-
-function resumeSession() {
-  try {
-    path    = JSON.parse(localStorage.getItem('bdwab_path'));
-    answers = JSON.parse(localStorage.getItem('bdwab_answers'));
-    selectedValue = answers[currentQId()] || null;
-    showScreen('screen-quiz');
-    renderQuestion(false);
-  } catch(e) { startQuiz(); }
-}
-
-// Show/hide the resume button on landing
-function updateResumeBtn() {
-  const btn = document.getElementById('btn-resume');
-  if (btn) btn.classList.toggle('visible', hasSavedSession());
-}
-
-/* ══════════════════════════════════════════
-   DARK MODE
-══════════════════════════════════════════ */
-function toggleDark() {
-  const isDark = document.body.classList.toggle('dark');
-  try { localStorage.setItem('bdwab_dark', isDark ? '1' : '0'); } catch(e) {}
-  updateDarkBtns();
-}
-
-function updateDarkBtns() {
-  const isDark = document.body.classList.contains('dark');
-  document.querySelectorAll('.btn-dark-toggle').forEach(btn => {
-    btn.textContent = isDark ? '○ Light' : '☽ Dark';
-  });
-}
-
-/* ══════════════════════════════════════════
-   PAGE TURN SOUND
-══════════════════════════════════════════ */
-let soundMuted = false;
-try { soundMuted = localStorage.getItem('bdwab_mute') === '1'; } catch(e) {}
-
-// Pool of 4 pre-loaded Audio elements — each flip gets its own instance so
-// rapid page turns never interrupt each other or leave audio in a broken state.
-const _POOL_SIZE  = 4;
-const _audioPool  = [];
-let   _poolIndex  = 0;
-let   _flipOffset = 0;
-
-for (let i = 0; i < _POOL_SIZE; i++) {
-  const a = new Audio('page-flip.mp3');
-  a.preload = 'auto';
-  a.volume  = 0.7;
-  _audioPool.push(a);
-}
-
-// Calculate start offset once the first element has metadata.
-// All pool elements share the same file so duration is identical.
-_audioPool[0].addEventListener('loadedmetadata', () => {
-  _flipOffset = Math.max(0, _audioPool[0].duration - 1.5);
-});
-
-// iOS Safari requires audio to be "activated" inside a user gesture.
-// On first touchstart use a throwaway element — never touches the pool.
-document.addEventListener('touchstart', function() {
-  const act = new Audio('page-flip.mp3');
-  act.volume = 0;
-  act.play().then(() => act.pause()).catch(() => {});
-}, { once: true, passive: true });
-
-function playPageTurn() {
-  if (soundMuted) return;
-  try {
-    // Grab the next element in the pool (round-robin).
-    const snd = _audioPool[_poolIndex % _POOL_SIZE];
-    _poolIndex++;
-    snd.pause();
-    snd.currentTime = _flipOffset;
-    const p = snd.play();
-    if (p && p.catch) p.catch(() => {});
-    // Stop exactly when the 1500 ms flip animation ends.
-    setTimeout(() => { try { snd.pause(); } catch(e) {} }, 1500);
-  } catch(e) {}
-}
-
-function toggleMute() {
-  soundMuted = !soundMuted;
-  try { localStorage.setItem('bdwab_mute', soundMuted ? '1' : '0'); } catch(e) {}
-  updateMuteBtns();
-}
-
-function updateMuteBtns() {
-  document.querySelectorAll('.btn-mute').forEach(btn => {
-    btn.textContent = soundMuted ? '♪ off' : '♪ on';
-    btn.title = soundMuted ? 'Unmute page sound' : 'Mute page sound';
-    btn.classList.toggle('muted', soundMuted);
-  });
-}
-
-/* ── Init on load ── */
-(function init() {
-  try {
-    if (localStorage.getItem('bdwab_dark') === '1') document.body.classList.add('dark');
-  } catch(e) {}
-  updateDarkBtns();
-  updateMuteBtns();
-  updateResumeBtn();
-})();
 </script>
 </body>
 </html>
