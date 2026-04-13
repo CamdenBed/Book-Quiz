@@ -10993,7 +10993,6 @@ function drawFlipFrame(ctx, W, H, t, direction) {
 }
 
 function playCanvasFlip(direction, onMidpoint, onComplete) {
-  playPageTurn();
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
   const card   = stage.querySelector('.question-card');
@@ -11209,6 +11208,7 @@ function selectOption(value, el) {
 
 function goNext() {
   if (!selectedValue || isAnimating) return;
+  playPageTurn(); // called directly in click handler — satisfies autoplay policy on all browsers/platforms
   if (isLastQuestion()) {
     showReveal();
   } else {
@@ -11225,6 +11225,7 @@ function goBack() {
   if (path.length <= 1) {
     showScreen('screen-landing');
   } else {
+    playPageTurn(); // called directly in click handler — satisfies autoplay policy on all browsers/platforms
     path.pop();
     selectedValue = answers[currentQId()] || null;
     renderQuestion(true, 'back');
@@ -12257,12 +12258,12 @@ _flipAudio.addEventListener('loadedmetadata', () => {
   _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
 });
 
-// iOS Safari requires audio to be "activated" inside a user gesture before
-// it will play. On first touchstart, silently play-then-pause the element
-// so later plays (even inside requestAnimationFrame) work on all iOS versions.
+// Safari (iOS + macOS) and some mobile browsers require audio to be
+// "activated" inside a direct user gesture before it will play.
+// On the very first interaction, silently play-then-pause the element
+// so the audio context is unlocked for the rest of the session.
 // We do NOT call .load() — that interrupts any queued play.
-document.addEventListener('touchstart', function _iosAudioActivate() {
-  document.removeEventListener('touchstart', _iosAudioActivate);
+function _activateAudioContext() {
   const savedVol = _flipAudio.volume;
   _flipAudio.volume = 0;
   _flipAudio.play().then(() => {
@@ -12270,7 +12271,9 @@ document.addEventListener('touchstart', function _iosAudioActivate() {
     _flipAudio.currentTime = 0;
     _flipAudio.volume = savedVol;
   }).catch(() => { _flipAudio.volume = savedVol; });
-}, { passive: true });
+}
+document.addEventListener('touchstart', _activateAudioContext, { once: true, passive: true });
+document.addEventListener('click',      _activateAudioContext, { once: true });
 
 function playPageTurn() {
   if (soundMuted) return;
