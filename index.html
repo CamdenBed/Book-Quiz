@@ -12258,22 +12258,14 @@ _flipAudio.addEventListener('loadedmetadata', () => {
   _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
 });
 
-// Safari (iOS + macOS) and some mobile browsers require audio to be
-// "activated" inside a direct user gesture before it will play.
-// On the very first interaction, silently play-then-pause the element
-// so the audio context is unlocked for the rest of the session.
-// We do NOT call .load() — that interrupts any queued play.
-function _activateAudioContext() {
-  const savedVol = _flipAudio.volume;
-  _flipAudio.volume = 0;
-  _flipAudio.play().then(() => {
-    _flipAudio.pause();
-    _flipAudio.currentTime = 0;
-    _flipAudio.volume = savedVol;
-  }).catch(() => { _flipAudio.volume = savedVol; });
-}
-document.addEventListener('touchstart', _activateAudioContext, { once: true, passive: true });
-document.addEventListener('click',      _activateAudioContext, { once: true });
+// iOS Safari requires audio to be "activated" inside a user gesture.
+// On first touchstart, use a *separate* throwaway element so the activation
+// never interferes with _flipAudio (which may also play on the same gesture).
+document.addEventListener('touchstart', function() {
+  const act = new Audio('page-flip.mp3');
+  act.volume = 0;
+  act.play().then(() => act.pause()).catch(() => {});
+}, { once: true, passive: true });
 
 function playPageTurn() {
   if (soundMuted) return;
