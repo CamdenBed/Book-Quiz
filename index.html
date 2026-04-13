@@ -1002,6 +1002,21 @@
     .modal-confirm, .modal-cancel { font-size: 16px; padding: 0.75rem 1.5rem; text-align: center; }
   }
 
+  /* ── Very small phones (≤ 380px — iPhone SE, Galaxy A series) ── */
+  @media (max-width: 380px) {
+    .landing-nav { padding: 0.75rem 1rem; }
+    .hero-left { padding: 1.75rem 1rem 1.5rem; }
+    .hero-right { padding: 1.5rem 1rem; }
+    .hero-headline { font-size: clamp(26px, 8vw, 32px); }
+    .quiz-header { padding: 0.6rem 1rem; }
+    .quiz-body { padding: 0.4rem 1rem; }
+    .option-btn { padding: 0.5rem 0.75rem; min-height: 68px; }
+    .option-label { font-size: 15px; }
+    .quiz-footer { padding: 0.35rem 1rem; }
+    .modal-box { margin: 0.75rem; max-width: calc(100vw - 1.5rem); }
+    .reveal-container, .detail-container, .shelf-container { padding: 1.25rem 1rem; }
+  }
+
   /* ═══════════ DARK MODE ═══════════ */
   body.dark {
     --ink: #ede6d8; --ink-mid: #b8a990; --ink-light: #6e6358;
@@ -10978,6 +10993,7 @@ function drawFlipFrame(ctx, W, H, t, direction) {
 }
 
 function playCanvasFlip(direction, onMidpoint, onComplete) {
+  playPageTurn();
   const canvas = document.getElementById('flip-canvas');
   const stage  = canvas.parentElement;
   const card   = stage.querySelector('.question-card');
@@ -10995,16 +11011,19 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
   const optsBottom = opts ? opts.getBoundingClientRect().bottom : cardRect.bottom;
   let H = optsBottom - fixedTop + 55;
 
+  const dpr = window.devicePixelRatio || 1;
+
   canvas.style.position = 'fixed';
   canvas.style.top      = fixedTop  + 'px';
   canvas.style.left     = fixedLeft + 'px';
-  canvas.width          = W;
-  canvas.height         = H;
+  canvas.width          = W * dpr;
+  canvas.height         = H * dpr;
   canvas.style.width    = W + 'px';
   canvas.style.height   = H + 'px';
   canvas.style.display  = 'block';
 
   const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
   const DURATION = 1500; // ms — slow, deliberate page turn
   let midpointFired = false;
   const startTime = performance.now();
@@ -11024,8 +11043,9 @@ function playCanvasFlip(direction, onMidpoint, onComplete) {
         const newH = newOpts.getBoundingClientRect().bottom - newQNum.getBoundingClientRect().top + 55;
         if (newH > H) {
           H = newH;
-          canvas.height = H;
+          canvas.height = H * dpr;
           canvas.style.height = H + 'px';
+          ctx.scale(dpr, dpr); // re-apply after resize resets the context
         }
       }
     }
@@ -11137,10 +11157,6 @@ function renderQuestion(animate, direction) {
 
   // Clear the reaction note — already clipped, nothing visible changes.
   if (reactionArea) reactionArea.innerHTML = '';
-
-  // Play sound synchronously here — before rAF — so iOS Safari's gesture
-  // requirement is satisfied (rAF is one frame outside the gesture window on older iOS).
-  playPageTurn();
 
   // One rAF so the browser commits before the canvas measures, then flip.
   requestAnimationFrame(() => {
@@ -12155,6 +12171,7 @@ function restart() { startQuiz(); }
    1–4 pick answer, Enter/Space advance
 ══════════════════════════════════════════ */
 document.addEventListener('keydown', (e) => {
+  if (e.repeat) return; // ignore held keys
   if (!document.getElementById('screen-quiz').classList.contains('active')) return;
   if (isAnimating) return;
   const num = parseInt(e.key);
@@ -12240,22 +12257,24 @@ _flipAudio.addEventListener('loadedmetadata', () => {
   _flipOffset = Math.max(0, _flipAudio.duration - 1.5);
 });
 
-// iOS Safari suspends audio until a user gesture has occurred.
-// On the very first tap/click, call load() inside the gesture so the
-// audio element is "activated" and future plays work without restriction.
-let _audioReady = false;
-function _activateAudio() {
-  if (_audioReady) return;
-  _audioReady = true;
-  _flipAudio.load();
-}
-document.addEventListener('touchstart', _activateAudio, { passive: true });
-document.addEventListener('click',      _activateAudio);
+// iOS Safari requires audio to be "activated" inside a user gesture before
+// it will play. On first touchstart, silently play-then-pause the element
+// so later plays (even inside requestAnimationFrame) work on all iOS versions.
+// We do NOT call .load() — that interrupts any queued play.
+document.addEventListener('touchstart', function _iosAudioActivate() {
+  document.removeEventListener('touchstart', _iosAudioActivate);
+  const savedVol = _flipAudio.volume;
+  _flipAudio.volume = 0;
+  _flipAudio.play().then(() => {
+    _flipAudio.pause();
+    _flipAudio.currentTime = 0;
+    _flipAudio.volume = savedVol;
+  }).catch(() => { _flipAudio.volume = savedVol; });
+}, { passive: true });
 
 function playPageTurn() {
   if (soundMuted) return;
   try {
-    _flipAudio.pause();
     _flipAudio.currentTime = _flipOffset;
     const p = _flipAudio.play();
     if (p && p.catch) p.catch(() => {});
