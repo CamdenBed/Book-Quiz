@@ -480,7 +480,7 @@
   .detail-shelf-btn:hover { border-color: var(--ink); color: var(--ink); }
   .detail-shelf-btn.on-shelf { border-color: var(--accent-light); color: var(--accent-light); cursor: default; }
 
-  .detail-header { margin-bottom: 2.5rem; }
+  .detail-header { margin-bottom: 2.5rem; text-align: center; }
   .detail-eyebrow {
     font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--ink-light); margin-bottom: 1rem;
@@ -493,19 +493,19 @@
     font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-mid);
     margin-bottom: 1.5rem;
   }
-  .detail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .detail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; justify-content: center; }
   .detail-tag {
     padding: 0.35rem 1rem; border: 1px solid var(--ink-faint);
     font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid);
   }
-  .detail-divider { width: 52px; height: 1px; background: var(--ink-faint); margin-bottom: 2rem; }
+  .detail-divider { width: 52px; height: 1px; background: var(--ink-faint); margin: 0 auto 2rem; }
   .detail-why {
     font-family: var(--serif); font-size: 22px; line-height: 1.8;
     color: var(--ink-mid); font-style: italic; margin-bottom: 2.5rem;
     padding-left: 1.5rem; border-left: 2px solid var(--accent-light);
   }
 
-  .detail-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .detail-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; justify-content: center; }
   .detail-btn-learn {
     padding: 0.9rem 2.25rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
     font-family: var(--body); font-size: 18px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
@@ -12530,6 +12530,7 @@ function confirmSelection() {
 }
 
 function openDetailScreen(book) {
+  window._activeDetailBook = book;
   document.getElementById('detail-title').textContent = book.title;
   document.getElementById('detail-author').textContent = 'by ' + book.author;
   document.getElementById('detail-why').textContent = book.why;
@@ -13004,6 +13005,57 @@ updateShelfBadges();
 })();
 
 function restart() { startQuiz(); }
+
+function shareResult() {
+  const isDetail = document.getElementById('screen-detail').classList.contains('active');
+  let shareTitle = 'Blind Date with a Book';
+  let shareText;
+
+  if (isDetail && window._activeDetailBook) {
+    const b = window._activeDetailBook;
+    shareText = 'My book match: \u201c' + b.title + '\u201d by ' + b.author + '\n\nFind your perfect read \u2192 ';
+  } else {
+    const books = (currentSuggestions || []).slice(0, 3);
+    const list = books.map(b => '\u201c' + b.title + '\u201d by ' + b.author).join('\n');
+    shareText = 'My book matches:\n' + list + '\n\nFind your perfect read \u2192 ';
+  }
+
+  const url = window.location.href;
+
+  function flashBtn(text) {
+    const btn = document.querySelector('.screen.active .btn-share');
+    if (!btn) return;
+    const orig = btn.textContent;
+    btn.textContent = text;
+    setTimeout(() => { btn.textContent = orig; }, 2200);
+  }
+
+  if (navigator.share) {
+    navigator.share({ title: shareTitle, text: shareText, url: url }).catch(() => {});
+  } else {
+    const full = shareText + url;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(full).then(() => flashBtn('Link copied!')).catch(() => {
+        legacyCopy(full);
+        flashBtn('Link copied!');
+      });
+    } else {
+      legacyCopy(full);
+      flashBtn('Link copied!');
+    }
+  }
+}
+
+function legacyCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+}
 </script>
 </body>
 </html>
